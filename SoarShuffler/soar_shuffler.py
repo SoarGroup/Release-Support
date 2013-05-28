@@ -3,10 +3,12 @@ import zipfile
 import shutil
 import pickle
 import re
+import pdb
 
 SPL = dict()
-Repository_Dir = "C:\\Soar\\repository\\trunk\\"
-Output_Dir = "C:\\Soar\\output\\"
+Repository_Dir = "/Users/mazzin/Soar/repository/"
+Output_Dir = "/Users/mazzin/Soar/_Release_Output/"
+Lib_Dir = "/Users/mazzin/Dropbox/soar/Compiled/lib"
 
 def clean_output_dir():
     if (os.path.exists(Output_Dir)):
@@ -46,7 +48,6 @@ def load_project_list():
                         SPL[current_project]['copyList'].append((split_entry[0],split_entry[1]))
     print "Project list loaded."
 
-				
 def prune_and_pickle(shouldPrune):  	
     with open('Soar_Projects_Touchdates.txt', 'r') as f_touchdates:
         SPL2 = pickle.load(f_touchdates)
@@ -105,7 +106,7 @@ def zip_project(projectName):
                     for f in files:
                         fname = os.path.join(root, f)
                         dname = os.path.join(destination, os.path.relpath(fname, source))
-                        #print "-- Adding", fname, dname
+                        #print "-- 108 Adding", fname, dname
                         dest_zip.write(fname, dname , zipfile.ZIP_DEFLATED)
                     if not files and not dirs:
                         dname = os.path.join(destination, os.path.relpath(root, source)) + "/"
@@ -115,18 +116,19 @@ def zip_project(projectName):
                         dest_zip.writestr(zipInfo, "")
             else:
                 dname = os.path.join(destination, os.path.basename(source))
-                #print "-- Adding", source, dname
+                print "-- 118 Adding dname ", dname
                 dest_zip.write(source, dname , zipfile.ZIP_DEFLATED)
         for zinfo in dest_zip.filelist:
-            if (re.search('\\.sh', zinfo.filename)):
+            if ('.sh' in zinfo.filename):
                 zinfo.external_attr = 2180841472
                 zinfo.internal_attr = 1
                 zinfo.create_system = 3
-            if (re.search('\\.command', zinfo.filename)):
+            if ('.command' in zinfo.filename):
                 zinfo.external_attr = 2180988928
                 zinfo.internal_attr = 0
                 zinfo.create_system = 3
 
+# make these all string replaces like d,f
 
 def specialize_project(projectName, platformName):
     print "Specializing", projectName,"for",platformName
@@ -135,6 +137,7 @@ def specialize_project(projectName, platformName):
     SPL_New['out']=SPL[projectName]['out']
     SPL_New['copyList']=list()
     for a,b in SPL[projectName]["copyList"]:
+        print "Platform name is ", platformName, "!!!!"
         if ((platformName == "windows_64") or (platformName == "windows_32")):
             a = re.sub("RELEASE_DIR", "win", a)
             a = re.sub("\.LAUNCH_EXTENSION", ".bat", a)
@@ -144,7 +147,12 @@ def specialize_project(projectName, platformName):
                 a = re.sub("COMPILE_DIR", "windows32", a)
             if (re.search("\.DLL_EXTENSION",a)):
                 a = re.sub("\.DLL_EXTENSION", ".dll", a)
-                a = re.sub("\\\\lib", "\\\\", a)
+#                 a = re.sub(r"\lib", r"\", a)
+                #pdb.set_trace()
+                d,f = os.path.split(a)
+                a = os.path.join(d,f[3:])
+#                a = os.path.join(f)
+                #.replace(r"\lib", "\\")
         elif ((platformName == "linux_64") or (platformName == "linux_32")):
             a = re.sub("\.DLL_EXTENSION", ".so", a)
             a = re.sub("RELEASE_DIR", "linux", a)
@@ -164,7 +172,7 @@ def specialize_project(projectName, platformName):
             else:
                 a = re.sub("\.DLL_EXTENSION", ".dylib", a)
         SPL_New['copyList'].append((a,b))
-        #print "Adding", a, b
+        print "Adding", a, b
     return SPL_New
             
 def print_attr(fileName):
@@ -185,9 +193,11 @@ def doit(shouldPrune=True):
             SPL_New[p + "-OSX"] = specialize_project(p,"OSX")
     for p, i in SPL_New.iteritems():
         SPL[p] = i
-    prune_and_pickle(shouldPrune)
+    #prune_and_pickle(shouldPrune)
     for p, i in SPL.iteritems():
         if SPL[p]["type"] == "zip":
             zip_project(p)
         elif SPL[p]["type"] == "copy":
             copy_project(p)
+
+doit(False)
