@@ -65,6 +65,10 @@ def prune_and_pickle(shouldPrune):
                 if (SPL[p]["touchdate"] == SPL2[p]["touchdate"]):
                     print "Skipping", p, "because it has not been modified."
                     del SPL[p]
+def ignore_list(src, names):
+    import pdb
+    pdb.set_trace()
+    return [n for n in names if n.startswith(".svn") or n.startswith(".git")]
     
 def copy_project(projectName):
     destination_path = os.path.join(Output_Dir, SPL[projectName]['out'])
@@ -84,7 +88,7 @@ def copy_project(projectName):
                 os.makedirs(destination)
         print "--> Starting", source, "|", destination
         if (os.path.isdir(source)):
-            shutil.copytree(source, os.path.join(destination,os.path.basename(source)))
+            shutil.copytree(source, os.path.join(destination,os.path.basename(source)), ignore=ignore_list)
         else:
             shutil.copy2(source, destination)		
       
@@ -103,7 +107,10 @@ def zip_project(projectName):
                 destination = b
             if (os.path.isdir(source)):
                 for root, dirs, files in os.walk(source):
-                    for f in files:
+                    if (".svn" in root or ".git" in root):
+                        print "Ignoring ", root
+                        continue
+                    for f in files:                        
                         fname = os.path.join(root, f)
                         dname = os.path.join(destination, os.path.relpath(fname, source))
                         #print "-- 108 Adding", fname, dname
