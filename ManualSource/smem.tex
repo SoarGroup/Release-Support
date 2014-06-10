@@ -264,6 +264,27 @@ The \emph{neg-query} command requires that the retrieved long-term identifier do
 \end{verbatim}
 The syntax of this command is identical to that of regular/positive \emph{query} command.
 
+\item
+The \emph{math-query} command requires that the retrieved long term identifier contains an attribute value pair that meets a specified mathematical condition. 
+This condition can either be a conditional query or a superlative query. 
+Conditional queries are of the format:
+\begin{verbatim}
+<s> ^smem.command.math-query.<cue-attribute>.<condition-name> <cue-value>
+\end{verbatim}
+Superlative queries do not use a value argument and are of the format:
+\begin{verbatim}
+<s> ^smem.command.math-query.<cue-attribute>.<condition-name>
+\end{verbatim}
+Values used in math queries must be integer or float type values.
+Currently supported condition names are:
+\begin{description}
+  \item[less] A value less than the given argument
+  \item[greater] A value greater than the given argument
+  \item[less-or-equal] A value less than or equal to the given argument
+  \item[greater-or-equal] A value greater than or equal to the given argument
+  \item[max] The maximum value for the attribute
+  \item[min] The minimum value for the attribute
+\end{description}
 \end{itemize}
 
 \section{Performance}
@@ -276,6 +297,11 @@ Because only perfect matches are acceptable, and there is no symbol variablizati
 Preliminary empirical study shows that semantic memory maintains sub-millisecond retrieval time for a large class of queries, even in very large stores (millions of nodes/edges).
 
 Once the number of long-term identifiers overcomes initial overhead (about 1000 WMEs), initial empirical study shows that semantic storage requires far less than 1KB per stored WME.
+
+\subsection{Math queries}
+There are some additional performance considerations when using math queries during retrieval.
+Initial testing indicates that conditional queries show the same time growth with respect to the number of memories as similar non-math restricted queries, however the actual time for retrieval may be slightly longer.
+Superelative queries will often show a worse result than similar non-superelative queries, because the current implementation of semantic memory requires them to iterate over any memory that mathes all other involved cues.
 
 \subsection{Performance Tweaking}
 
