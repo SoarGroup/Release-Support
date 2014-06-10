@@ -7,8 +7,8 @@ import pdb
 
 SPL = dict()
 Repository_Dir = "/Users/mazzin/git/Soar/"
-Input_Dir = "/Users/mazzin/git/Soar/Release/SoarShuffler/Input/"
-Output_Dir = "/Users/mazzin/git/Soar/Release/SoarShuffler/Output/"
+Input_Dir = "/Users/mazzin/git/Soar/Release/Shuffler_Input/"
+Output_Dir = "/Users/mazzin/git/Soar/Release/Shuffler_Output/"
 
 def clean_output_dir():
     if (os.path.exists(Output_Dir)):
@@ -102,9 +102,11 @@ def zip_project(projectName):
         for a,b in SPL[projectName]["copyList"]:
             source = os.path.join(Repository_Dir, a)
             if b == "top":
-                destination = ""
+#                 destination = ""
+                destination = os.path.join(projectName)
             else:
-                destination = b
+#                 destination = b
+                destination = os.path.join(projectName,b)
             if (os.path.isdir(source)):
                 for root, dirs, files in os.walk(source):
                     if (".svn" in root or ".git" in root):
