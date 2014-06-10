@@ -869,15 +869,26 @@ selected
 \index{preference!numeric-indifferent}
 \index{numeric-indifferent preference|see{preference!numeric-indifferent}}
 \item [Numeric-Indifferent (= \emph{number})]
-	A \soar{numeric-indifferent} preference is used to bias the random selection from mutually indifferent values.
-	This preference includes a unary indifferent preference, so an operator with a \soar{numeric-indifferent} preference will not force a tie impasse.
-	When a set of operators are determined to be indifferent based on all other asserted preference types and at least one operator has a numeric-indifferent preference, the decision mechanism will choose an operator based on their numeric-indifferent values and the exploration policy.
-	The available exploration policies and how they calculate selection probability are detailed in the documentation for the \soar{indifferent-selection} command on page \pageref{indifferent-selection}.
-	When a single operator is given multiple numeric-indifferent preferences, they are either averaged or summed into a single value based on the setting of the \soar{numeric-indifferent-mode} command (see page \pageref{numeric-indifferent-mode}).
-	
-	Numeric-indifferent preferences that are created by RL rules can be adjusted by the reinforcement learning mechanism.
-	In this way, it's possible for an agent to begin a task with only arbitrarily initialized numeric indifferent preferences and with experience learn to make the optimal decisions.
-	See chapter \ref{RL} for more information.
+	A \soar{numeric-indifferent} preference is used to bias the random selection
+	from mutually indifferent values. This preference includes a unary
+	indifferent preference, so an operator with a \soar{numeric-indifferent}
+	preference will not force a tie impasse. When a set of operators are
+	determined to be indifferent based on all other asserted preference types
+	and at least one operator has a numeric-indifferent preference, the decision
+	mechanism will choose an operator based on their numeric-indifferent values
+	and the exploration policy. The available exploration policies and how they
+	calculate selection probability are detailed in the documentation for the
+	\soar{indifferent-selection} command on page
+	\pageref{indifferent-selection}. When a single operator is given multiple
+	numeric-indifferent preferences, they are either averaged or summed into a
+	single value based on the setting of the \soar{numeric-indifferent-mode}
+	command (see page \pageref{numeric-indifferent-mode}).
+
+	Numeric-indifferent preferences that are created by RL rules can be adjusted
+	by the reinforcement learning mechanism. In this way, it's possible for an
+	agent to begin a task with only arbitrarily initialized numeric indifferent
+	preferences and with experience learn to make the optimal decisions. See
+	chapter \ref{RL} for more information.
 	
 \index{preference!require}
 \index{"!|see{preference!require}}
@@ -1177,7 +1188,7 @@ state that the production tested. Thus, if a production tests multiple
 states, the preferences and working memory elements in its actions are
 considered to be created in the most recent of those states (and is not
 considered to have been created in the other states). The architecture
-automatically detects if a preference or working memory elmenet created
+automatically detects if a preference or working memory element created
 in a substate is also linked to a superstate.
 
 These working memory elements and preferences will not be removed when
@@ -1272,16 +1283,28 @@ other support.  Justification are not added to production memory, but
 are otherwise treated as an instantiated productions that have already
 fired.
 
+\index{justification!conditions}
 Justifications include any negated conditions that were in the original
-productions that participated in producing the results, and that test for
-the absence of superstate working memory elements. Negated conditions that
-test for the absence of working memory elements that are local to the
-substate are not included, which can lead to overgeneralization
-in the justification (see Section \ref{CHUNKING-problems} on page
-\pageref{CHUNKING-problems} for details). 
+productions that participated in producing the results, and that test for the
+absence of superstate working memory elements. Negated conditions that test for
+the absence of working memory elements that are local to the substate are not
+included, which can lead to overgeneralization in the justification (see Section
+\ref{CHUNKING-problems} on page \pageref{CHUNKING-problems} for details).
+
+Justifications can also include operator evaluation knowledge that led to the
+selection of the operator that produced the result.  For example, the conditions
+of any production that creates a prohibit preference for an operator in the substate that was not selected will be backtraced through
+and may produce additional conditions in the justification.  Moreover, if the
+add-desirability-prefs learn setting is on, conditions from other preference
+types (better, best, worse, worst indifferent) can be included as well.  For a more
+complete description of how Soar chooses which desirability preferences to
+include, see Section \ref{CDPS} on page \pageref{CDPS}.
 \index{learning!overgeneral}
 \index{chunk!overgeneral}
 \index{justification!overgeneral}
+\index{desirability preference} 
+\index{preference!desirability}
+\index{Context-Dependent Preference Set}
 
 % ----------------------------------------------------------------------------
 \subsection{Removal of Substates: Impasse Resolution}

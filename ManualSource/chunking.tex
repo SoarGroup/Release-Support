@@ -151,16 +151,13 @@ determine the conditions for the chunk.
 
 In order for the chunk to apply at the appropriate time, its conditions must
 test exactly those working memory elements that were necessary to produce the
-results of the subgoal. 
-Soar computes a chunk's conditions based on the
-productions that fire in the subgoal, beginning with the results of
-the subgoal,
-and then \emph{backtracing} through the productions that created 
-each result.  It recursively backtraces through the working memory
-elements that matched the conditions of the productions, finding the
-actions that led to the WME's creation, etc., until conditions are
-found that test elements that are linked to a superstate.
-\index{backtracing}
+results of the subgoal. Soar computes a chunk's conditions based on the
+productions that fire in the subgoal, beginning with the results of the subgoal,
+and then \emph{backtracing} through the productions that created each result. 
+It recursively backtraces through the working memory elements that matched the
+conditions of the productions, finding the actions that led to the WME's
+creation, etc., until conditions are found that test elements that are linked to
+a superstate. \index{backtracing}
 
 \index{working memory!trace}
 \index{trace!memory}
@@ -266,26 +263,6 @@ This prints out a trace of the conditions as they are collected.
 \index{backtracing}
 \index{chunking!conditions}
 
-\index{desirability preference} 
-Certain productions do not participate in backtracing. If a production creates
-only a \soar{reject} preference or a desirability preference (\soar{better},
-\soar{worse}, \soar{indifferent}, or \soar{parallel}), then neither the
-preference nor the objects that led to its creation will be included in the
-chunk. (The exception to this is that if the desirability or \soar{reject}
-preference is a {\em result} of a subgoal, it will be in the chunk's actions.)
-Desirability and reject preferences should be used only as search control for
-choosing between legal alternatives and should not be used to guarantee the
-correctness of the problem solving. The argument is that such preferences
-should affect only the \emph{efficiency} and not the \emph{correctness} of
-problem solving, and therefore are not necessary to produce the results.
-Necessity preferences (\soar{require} or \soar{prohibit}) should be used to
-enforce the correctness of problem solving; the productions that create these
-preferences will be included in backtracing.
-\index{preference!require}
-\index{preference!prohibit}
-\index{require preference}
-\index{prohibit preference}
-
 Given that results can be created at any point during a subgoal, it is
 possible for one result to be relevant to another result. Whether or not the 
 first result is included in the chunk for the second result depends on the
@@ -295,6 +272,218 @@ elements are not linked to the superstate, then the result is traced through.
 In some cases, there may be more than one set of links, so it is possible for
 a result to be both backtraced through, and included as a condition.
 
+\index{desirability preference} 
+\index{preference!desirability}
+\index{Context-Dependent Preference Set}
+Some operator evaluations productions, i.e. rules that did not actually produce
+the result but did lead to the selection of the operator, can also participate
+in backtracing.  These rules produce a set of desirability preferences that we
+call the context-dependent preference set (CDPS).  The rules that produced the
+preferences in the CDPS are backtraced through to potentially add additional
+conditions to the chunk.
+
+Not all operator evaluation preferences are included in the CDPS.
+Traditionally the argument has been that operator evaluation preferences should
+affect only the \emph{efficiency} and not the \emph{correctness} of problem
+solving, and therefore are not necessary to produce the results. As a result,
+desirability preferences, namely \soar{reject}, (\soar{better},
+\soar{worse}, \soar{best}, \soar{worst}, or \soar{indifferent}), were not included
+in the CDPS and hence would not be backtraced through when creating chunks. (The
+exception to this is that if the desirability or \soar{reject} preference is a
+{\em result} of a subgoal, it will be in the chunk's actions.) The philosophy
+behind this was that desirability and reject preferences should be used only as
+search control for choosing between legal alternatives and should not be used to
+guarantee the correctness of the problem solving. In contrast, necessity
+preferences (\soar{require} or \soar{prohibit}) were used to enforce the
+correctness of problem solving, and the productions that created these
+preferences were always included in backtracing.
+\index{require preference}
+\index{prohibit preference}
+\index{preference!require}
+\index{preference!prohibit}
+\index{preference!acceptable}
+\index{preference!reject}
+\index{preference!better}
+\index{preference!worse}
+\index{preference!best}
+\index{preference!worst}
+\index{preference!indifferent}
+\index{preference!numeric-indifferent}
+
+This is still the default behavior.  Only prohibit and require preference are
+included in the CDPS. In some case, though, this may lead to over-general chunks
+(see Section \ref{CHUNKING-problems} on page \pageref{CHUNKING-problems} for
+details).  As of Soar 9.3.3, there is a new learning option (see Section
+\ref{learn} on page \pageref{learn} for details) that will include a broader
+range of desirability preferences in the CDPS. The rules
+that determine which desirability preferences are included in the CDPS -- it
+depends on whether a particular desirability preferences played a
+role in the selection of the operator -- are documented in
+Section \ref{CDPS} on page \pageref{CDPS}.
+
+% ----------------------------------------------------------------------------
+\section{The Context-Dependent Preference Set}
+\label{CDPS}
+\index{Context-Dependent Preference Set}
+
+As described in the beginning of this chapter, chunking summarizes the
+processing required to produce the results of sub-goals.  Traditionally, the
+philosophy behind how an agent should be designed was
+that the path of operator selections and applications from an initial state in a
+sub-state to a result would always have all necessary tests in the operator
+proposal conditions and any goal test, so only those items would need to be
+“summarized”. The idea was that in a properly designed agent, a sub-state's
+operator evaluation preferences lead to a more efficient search of the space but
+do not influence the “correctness” of the result. As a result, the knowledge
+used by rules that produce such evaluation preferences should not be included
+in any chunks produced from that sub-state.
+
+\index{chunking!overgeneral}
+\index{chunking!incorrect chunks}
+\index{incorrect chunks}
+\index{overgeneral chunk}
+In practice, however, a Soar program can be written so that search control does
+affect the correctness of search.  A few examples can be found in Section
+\ref{CHUNKING-problems} on page \pageref{CHUNKING-problems}.  Moreover,
+reinforcement learning rules are often used to direct the search to those states
+that provide more reward, consequently making the idea of correctness much
+fuzzier.   As a result, there may be cases when it is useful to encode
+goal-attainment knowledge into operator evaluation rules. Unfortunately, chunks
+created in such a problem space will be overgeneral because important parts of
+the superstate that were tested by operator evaluation rules do not appear as
+conditions in the chunks that summarize the processing in that problem state.
+The context-dependent preference set is a way to address this issue.
+
+\emph{The context-dependent preference set (CDPS) is the set of
+\textbf{relevant} operator evaluation preferences that led to the selection of
+an operator in a sub-goal.} Whenever Soar creates either a justification or a
+chunk, it recursively backtraces through rules to determine what conditions to include in the final chunk or justification.  With the CDPS, not only does Soar backtrace through each rule that created a matched working
+memory element, but it also backtraces through every rule that
+created a preferences in the CDPS for the selected operator when that rule fired. By
+backtracing through that additional set of preferences at each step of the
+backtrace, an agent will create more specific chunks that incorporate the
+goal-attainment knowledge encoded in the operator evaluation rules.
+
+\index{desirability preference}
+\index{preference!desirability}
+\index{necessity preference}
+\index{preference!necessity}
+All necessity preferences, i.e. prohibit and require preferences, are always
+included in the CDPS since they inherently encode the correctness of whether an
+operator is applicable in a problem space.  In contrast, desirability
+preferences (rejects, betters, worses, bests, worsts and indifferents) are
+included depending on the role they play in the selection of the operator (and
+whether the add-desirability-prefs learn setting is active).
+
+\index{decision!procedure}
+How Soar determines which of those preferences to include in the CDPS is determined by the preference semantics it uses to choose an operator.
+During the decision phase, operator preferences are evaluated in a sequence of
+seven steps or filters, in an effort to select a single operator. Each step
+handles a specific type of preference.  \emph{As the preference semantics are applied
+at each step to incrementally filter the candidates to a potential selected operator, the CDPS
+is incrementally built up based on the preferences that were instrumental in applying each filter.}
+
+The following outline describes the logic that happens at each step.  For a more
+detailed description of the various filters (but not the CDPS) see Appendix
+\ref{PREFERENCES} on page \pageref{PREFERENCES}.  Note that depending on the set of preferences being processed, impasses may occur at some
+of these stages, in which case, no operator is selected and the CDPS is emptied.
+ Moreover, if the candidate set is reduced to zero or one, the decision process
+will exit with a finalized CDPS. For simplicity's sake, this explanation assumes
+that there are no impasses and the decision process continues.
+
+\begin{itemize}
+\index{preference!require}
+\index{require preference}
+\index{"!}
+\item Require Filter: 
+\begin{itemize}
+\item If an operator is selected based on a require preference, that preference
+is added to the CDPS.  The logic behind this step is straightforward, the
+require preference directly resulted in the selection of the operator.
+\end{itemize}
+
+\index{preference!prohibit}
+\index{prohibit preference}
+\index{preference!reject}
+\index{reject preference}
+\item Prohibit/Reject Filters: 
+\begin{itemize}
+\item If there exists at least one prohibit or reject preference, all prohibit
+and reject preferences for the eliminated candidates are added to the CDPS.  The logic
+behind this stage is that the conditions that led to the exclusion of the
+prohibited and rejected candidates is what allowed the final operator to be
+selected from among that particular set of surviving candidates.
+\end{itemize}
+
+\index{preference!worse}
+\index{worse preference}
+\index{preference!better}
+\index{better preference}
+\item Better/Worse Filter: 
+\begin{itemize}
+\item For every candidate that is not worse than some other candidate, add all better/worse preferences involving the candidate.
+\end{itemize}
+
+\index{preference!best}
+\index{best preference}
+\item Best Filter: 
+\begin{itemize}
+\item Add any best preferences for remaining candidates to the CDPS. 
+\end{itemize}
+
+\index{preference!worst}
+\index{worst preference}
+\item Worst Filter:
+\begin{itemize}
+\item If any remaining candidate has a worst preference which leads to that
+candidate being removed from consideration, that worst preference is added to
+the CDPS.  Again, the logic is that the conditions that led to
+that candidate not being selected allowed the final operator to be chosen.
+\end{itemize}
+
+\index{preference!indifferent}
+\index{indifferent preference}
+\item Indifferent Filter: 
+\begin{itemize}
+\item This is the final stage, so the operator is now selected based on the
+agent's exploration policy.  How indifferent preferences are added to the CDPS
+depends on whether any numeric indifferent preferences exist.
+\begin{enumerate}
+\item If there exists at least one numeric indifferent preference, then every
+numeric preferences for the winning candidate is added to the CDPS.  There can
+be multiple such preferences. Moreover, all binary indifferent preferences
+between that winning candidate and candidates without a numeric preference are
+added.
+\item If all indifferent preferences are non-numeric, then any unary indifferent
+preferences for the winning candidate are added to the CDPS.  Moreover, all
+binary indifferent preferences between that winning candidate and other
+candidates are added.
+\end{enumerate}
+\item The logic behind adding binary indifferent preferences between the
+selected operator and the other final candidates is that those binary
+indifferent preferences prevented a tie impasse and allowed the final
+candidate to be chosen by the exploration policy from among those mutually
+indifferent preferences.
+\end{itemize}
+\end{itemize}
+
+Note that there may be cases where two or more rules create the same type of
+preference for a particular candidate.  In those cases, only the first
+preference encountered is added to the CDPS.  Adding all of them can produce
+over-specific chunks.  It may still be
+possible to learn similar chunks with those other preferences if the agent sub-goals
+again in a similar context.
+
+As of version 9.3.3, desirability preferences will not be added to the CDPS by
+default.  The setting must be turned on via the learn command's
+“add-desirability-prefs” setting.  See Section \ref{learn} on page \pageref{learn} for more
+information.  Necessity preferences will always be added to the CDPS regardless
+of setting.
+
+\index{justification!conditions}
+Note that the CDPS also affects the conditions of justifications, so the
+add-desirability-prefs setting does have an effect on the agent even if learning
+is turned off.
 
 % ----------------------------------------------------------------------------
 \section{Variablizing Identifiers}
@@ -400,7 +589,6 @@ processing that led to the creation of a result. Below is a description of
 five known problems in chunking.
 
 \subsection{Using search control to determine correctness}
-\index{desirability preference}
 
 Overgeneral chunks can be created if a result of problem solving in a subgoal
 is dependent on search-control knowledge. Recall that desirability
@@ -422,9 +610,6 @@ correctness of search. Here are two examples:\vspace{-12pt}
   	result that is dependent on the operator occurring after all others,
   	this fact will not be captured in the conditions of the chunk.
 \end{enumerate}
-\index{necessity preference} 
-\index{preference!require} \index{preference!prohibit}
-\index{require preference} \index{prohibit preference}
 
 In both of these cases, part of the test for producing a result is {\em
 implicit} in search control productions. This move allows the explicit state
@@ -433,11 +618,38 @@ guaranteed to satisfy some of the requirements for success. However, chunks
 created in such a problem space will be overgeneral because the implicit parts
 of the state test do not appear as conditions. 
 
-\textbf{Solution:} To avoid this problem, necessity preferences
-(\soar{require} and \soar{prohibit}) should be used whenever a control
-decision is being made that also incorporates goal-attainment knowledge.  The
-necessity preferences are included in the backtrace by chunking, thereby
-avoiding overgenerality.
+\index{desirability preference}
+\index{preference!desirability}
+\index{necessity preference}
+\index{preference!necessity}
+\index{Context-Dependent Preference Set}
+\textbf{Solution:} To avoid this problem, the context-dependent preference set
+can be used to include any search-control knowledge that incorporates
+goal-attainment knowledge in the backtrace used by chunking;  this will produce
+chunks with additional conditions that resulted from the search-control
+preferences, thereby avoiding overgenerality.  By default, all necessity
+preferences (\soar{require} and \soar{prohibit}) are included in the CDPS.  If
+goal-attainment knowledge is also included in desirability prefs, such as
+\soar{better}, \soar{worse}, \soar{best}, \soar{worst}, or \soar{indifferent},
+the add-desirability-prefs setting of the CDPS (Section \ref{learn} on \pageref{learn}) 
+can be turned on to incorporate them into the backtrace and hence
+any resulting chunks.   The rules that determine which desirability preferences
+are included in the CDPS -- it depends on whether a particular desirability
+preferences played an important role in the selection of an
+operator that ultimately led to the result -- are documented in Section \ref{CDPS} on \pageref{CDPS}.
+\index{necessity preference} 
+\index{require preference}
+\index{prohibit preference}
+\index{preference!require}
+\index{preference!prohibit}
+\index{preference!acceptable}
+\index{preference!reject}
+\index{preference!better}
+\index{preference!worse}
+\index{preference!best}
+\index{preference!worst}
+\index{preference!indifferent}
+\index{preference!numeric-indifferent}
 
 \subsection{Testing for local negated conditions}
 

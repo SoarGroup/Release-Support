@@ -47,18 +47,9 @@ given identifier and attribute; its output includes: \vspace{-10pt}
 \begin{enumerate}
 \item a possibly empty set of candidate augmentations that may be conflicting,
 	indifferent, or parallel\vspace{-10pt}
-\item possibly, a flag, \soar{number\_of\_winners}, created only if there is
-	not an impasse (the candidates are not conflicting)\vspace{-10pt}
-\item possibly, the creation of an impasse object in working memory (if the
+\item possibly, an impasse type (if the
 	candidates are conflicting)
 \end{enumerate}
-
-If a single winner is chosen or there are a set of mutually indifferent
-winners, number\_of\_winners is 1. If all of the winners are mutually
-parallel, then number\_of\_winners is All.  This allows the decision procedure
-to distinguish a set of mutually parallel candidates that should all be
-installed in working memory from a set of mutually indifferent candidates that
-should have only one value installed or maintained.
 }
 
 \index{decision!procedure}
@@ -123,23 +114,21 @@ Section \ref{ARCH-impasses} on page \pageref{ARCH-impasses}).
 
 \item[RejectFilter ($-$) ] This filter removes the candidates that have
 	reject preferences in memory. 
+\index{preference!reject}
+\index{reject preference}
+\index{-}
+
+\item[Exit Point 1]
 	\begin{itemize}
 	\item At this point, if the set of remaining candidates is either empty or has one
 	member, preference semantics terminates and this set is returned.
 	\item Otherwise, the remaining candidates are passed to the
 	BetterWorseFilter.
 	\end{itemize}
-\index{preference!reject}
-\index{reject preference}
 \index{-}
 
 \item[BetterWorseFilter ($>$), ($<$) ] This filter removes any candidates that are worse
 	than another candidate.
-\begin{itemize}
-\item If the set of remaining candidates is empty, a conflict impasse is created
-	returning the set of conflicted operators (all candidates passed to this filter).
-\item Otherwise, pass any remaining candidates to the BestFilter.
-\end{itemize}
 \index{preference!worse}
 \index{worse preference}
 \index{preference!better}
@@ -147,6 +136,17 @@ Section \ref{ARCH-impasses} on page \pageref{ARCH-impasses}).
 \index{<}
 \index{>}
 
+\item[Exit Point 2]
+	\begin{itemize}
+	\item If the set of remaining candidates is empty, a conflict impasse is created
+	returning the set of all candidates passed into this filter, i.e. all of the
+	conflicted operators.
+	\item If the set of remaining candidates has one
+	member, preference semantics terminates and this set is returned.
+	\item Otherwise, the remaining candidates are passed to the
+	BestFilter.
+	\end{itemize}
+\index{-}
 
 \item[BestFilter ($>$) ] If some remaining candidate has a best preference,
 	this filter removes any candidates that do not have
@@ -156,68 +156,46 @@ Section \ref{ARCH-impasses} on page \pageref{ARCH-impasses}).
 \index{preference!best}
 \index{best preference}
 
-\item[WorstFilter ($<$) ] If all remaining candidates have worst preferences, this filter
-	has no effect. Otherwise, the filter removes any candidates that have
-	a worst preference.
+\item[Exit Point 3]
 	\begin{itemize}
-	\item Once again, if the set of remaining candidates is either empty or has one
+	\item At this point, if the set of remaining candidates is either empty or has one
 	member, preference semantics terminates and this set is returned.
 	\item Otherwise, the remaining candidates are passed to the
-	IndifferentTest.
+	WorstFilter.
 	\end{itemize}
+\index{-}
+
+\item[WorstFilter ($<$) ] This filter removes any candidates that have
+	a worst preference. If all remaining candidates have worst preferences or there
+	are no worst preferences, this filter has no effect.
 \index{preference!worst}
 \index{worst preference}
 
+\item[Exit Point 4]
+	\begin{itemize}
+	\item At this point, if the set of remaining candidates is either empty or has one
+	member, preference semantics terminates and this set is returned.
+	\item Otherwise, the remaining candidates are passed to the
+	IndifferentFilter.
+	\end{itemize}
+\index{-}
+
 \index{=}
-\item[IndifferentTest (=) ] This operation traverses the remaining candidates and marks 
+\item[IndifferentFilter (=) ] This operation traverses the remaining candidates and marks 
 	each candidate for which one of the following is true:
 	\begin{itemize}
 	\item the candidate has a unary indifferent preference
 	\item the candidate has a numeric indifferent preference
-	\item the candidate is binary indifferent to all of the remaining candidate operators
 	\end{itemize}
-	If some candidate is left unmarked, then the procedure signals a tie impasse and returns 
-	the complete set of candidates that passed into the IndifferentTest. Otherwise, the candidates
-	are mutually indifferent, in which case an operator is chosen according to the method set
-	by the \textbf{indifferent-selection} command, described on page \pageref{indifferent-selection}.
-\nocomment{
-This filter returns them as indifferent. 
-	If they are not, and this is an operator, a tie impasse is
-	declared and preference semantics terminates.
+	This filter then checks every candidate that is not one of the above two types
+	to see if it has a binary indifferent preference with every other candidate.
+	If one of the candidates fails this test, then the procedure signals a tie impasse
+	and returns the complete set of candidates that were passed into the 
+	IndifferentFilter. Otherwise, the candidates are mutually indifferent, in which case 
+	an operator is chosen according to the method set by the 
+	\textbf{indifferent-selection} command, described on 
+	page \pageref{indifferent-selection}.
 \index{preference!indifferent}
 \index{indifferent preference}
-	\comment{that makes no sense....also, "calling routine" below}
-\begin{itemize}
-\item If the candidates are all mutually indifferent, terminate preference
-	semantics with all of the candidates in the item set and set
-	number\_of\_winners to one. The calling routine then selects one
-	of the indifferent candidates.
-\item Otherwise ---
-	If the non-mutually indifferent candidates are for operators, generate
-	a tie impasse, with all of the candidates as items, not just those
-	that are not mutually indifferent.
-\item Otherwise ---
-	The candidates are passed to the ParallelFilter.
-\end{itemize}
-
-
-\index{&}
-\item[ParallelFilter (\&) ] If all of the remaining candidates are mutually
-	parallel, they're returned as mutually parallel. Otherwise, a tie
-	impasse is returned.  A candidate is mutually parallel to the set of
-	other candidates if it has a unary parallel preference, or if it has
-	either of the two possible 
-	relative parallels between each candidate.
-\index{preference!parallel}
-\index{parallel preference}
-\begin{itemize}
-\item If all of the candidates are mutually parallel
-	terminate preference semantics with all of 
-	the candidates in the item set and set number\_of\_winners to All.
-\item Otherwise ---
-	Generate a tie impasse with all the non-mutually parallel
-	candidates in the item set.
-\end{itemize}
-}
 \end{description}
 
