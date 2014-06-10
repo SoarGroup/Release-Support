@@ -6,9 +6,9 @@ import re
 import pdb
 
 SPL = dict()
-Repository_Dir = "/Users/mazzin/Soar/repository/"
-Output_Dir = "/Users/mazzin/Soar/_Release_Output/"
-Lib_Dir = "/Users/mazzin/Dropbox/soar/Compiled/lib"
+Repository_Dir = "/Users/mazzin/git/Soar/"
+Input_Dir = "/Users/mazzin/git/Soar/Release/SoarShuffler/Input/"
+Output_Dir = "/Users/mazzin/git/Soar/Release/SoarShuffler/Output/"
 
 def clean_output_dir():
     if (os.path.exists(Output_Dir)):
@@ -31,7 +31,7 @@ def find_latest_date(projectName):
                 if (this_time > latest_date):
                     latest_date = this_time
     return latest_date
-            
+
 def load_project_list():
     with open('Soar_Projects_Filelist.py', 'r') as f_filelist:
         for line in f_filelist:
@@ -48,7 +48,7 @@ def load_project_list():
                         SPL[current_project]['copyList'].append((split_entry[0],split_entry[1]))
     print "Project list loaded."
 
-def prune_and_pickle(shouldPrune):  	
+def prune_and_pickle(shouldPrune):
     with open('Soar_Projects_Touchdates.txt', 'r') as f_touchdates:
         SPL2 = pickle.load(f_touchdates)
     for p,d in SPL.iteritems():
@@ -69,7 +69,7 @@ def ignore_list(src, names):
     import pdb
     pdb.set_trace()
     return [n for n in names if n.startswith(".svn") or n.startswith(".git")]
-    
+
 def copy_project(projectName):
     destination_path = os.path.join(Output_Dir, SPL[projectName]['out'])
     print "Copying project", projectName
@@ -90,8 +90,8 @@ def copy_project(projectName):
         if (os.path.isdir(source)):
             shutil.copytree(source, os.path.join(destination,os.path.basename(source)), ignore=ignore_list)
         else:
-            shutil.copy2(source, destination)		
-      
+            shutil.copy2(source, destination)
+
 def zip_project(projectName):
     destination_zip = os.path.join(Output_Dir, SPL[projectName]['out'],(projectName+".zip"))
     print "Zipping project", projectName
@@ -110,7 +110,7 @@ def zip_project(projectName):
                     if (".svn" in root or ".git" in root):
                         print "Ignoring ", root
                         continue
-                    for f in files:                        
+                    for f in files:
                         fname = os.path.join(root, f)
                         dname = os.path.join(destination, os.path.relpath(fname, source))
                         #print "-- 108 Adding", fname, dname
@@ -181,12 +181,12 @@ def specialize_project(projectName, platformName):
         SPL_New['copyList'].append((a,b))
         print "Adding", a, b
     return SPL_New
-            
+
 def print_attr(fileName):
     with zipfile.ZipFile(fileName, 'r') as dest_zip:
         for zinfo in dest_zip.filelist:
             print zinfo.filename, zinfo.internal_attr, zinfo.external_attr, zinfo.create_system
-    
+
 def doit(shouldPrune=True):
     if (not shouldPrune): clean_output_dir()
     load_project_list()
@@ -207,4 +207,4 @@ def doit(shouldPrune=True):
         elif SPL[p]["type"] == "copy":
             copy_project(p)
 
-doit(False)
+# doit(False)

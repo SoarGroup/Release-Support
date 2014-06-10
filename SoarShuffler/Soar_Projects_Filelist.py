@@ -3,10 +3,10 @@ SoarTutorial_9.3.3
     out=SoarSuite/
     # Missing: PythonCLI.py
     # Missing: TestPythonSML.py, (joseph will re-add)
-    Compiled/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
-    Compiled/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
-    Compiled/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
-    Compiled/COMPILE_DIR/out/java=bin/java
+    Release/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
+    Release/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
+    Release/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
+    Release/Shuffler_Input/COMPILE_DIR/out/java=bin/java
     Documentation/pdf/Soar Tutorial Part 1.pdf=Documentation
     Documentation/pdf/Soar Tutorial Part 2.pdf=Documentation
     Documentation/pdf/Soar Tutorial Part 3.pdf=Documentation
@@ -46,17 +46,17 @@ SoarTutorial_9.3.3
     Agents/water-jug-rl=Agents/water-jug-rl
     Agents/water-jug-simple=Agents/water-jug-simple
     Agents/water-jug-tie=Agents/water-jug-tie
-    Compiled/VisualSoar/VisualSoar.jar=bin
-    Compiled/Soar2D/Eaters_TankSoar.jar=bin
+    Release/Shuffler_Input/jars/VisualSoar.jar=bin
+    Release/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
     Domains/Eaters_TankSoar/agents/eaters=Agents/Eaters
     Domains/Eaters_TankSoar/agents/tanksoar=Agents/TankSoar
     Domains/Eaters_TankSoar/config/eaters.cnf=config
     Domains/Eaters_TankSoar/config/maps/eaters=config/maps/eaters
     Domains/Eaters_TankSoar/config/maps/tanksoar=config/maps/tanksoar
     Domains/Eaters_TankSoar/config/tanksoar.cnf=config
-    Compiled/lib/commons-logging-1.1.1.jar=bin/java
-    Compiled/lib/log4j-1.2.15.jar=bin/java
-    Compiled/lib/stopwatch-0.4-with-deps.jar=bin/java
+    Release/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
+    Release/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
+    Release/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
     Release/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
     Release/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
     Release/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
