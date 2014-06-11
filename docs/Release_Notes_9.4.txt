@@ -1,0 +1,65 @@
+=================================== 
+Soar 9.4 Release Notes, June 2014
+===================================
+
+This release of Soar continues the 9.3 line. It includes the ability to
+include search control knowledge into chunks, a new form of integrated
+Tcl support, improved episodic and semantic memory and a large
+assortment of bug fixes and user interface enhancements.  All learning
+mechanisms are disabled by default.
+
+Soar can be downloaded by following the download link on the Soar home
+page at:
+
+        http://sitemaker.umich.edu/soar
+
+Soar releases include source code, demo programs, and a number of
+applications that serve as examples of how to interface Soar to an
+external environment.  There is support for integrating Soar with C++,
+Java, Tcl and Python applications.  Many tools that aid in development
+of Soar programs are also available.  The newly expanded download
+section of the wiki allows you to browse and download all of the
+different distributions, tools and agents.
+
+[Help and Contact information]
+
+You can find many helpful resources on the Soar wiki at:
+
+        https://code.google.com/p/soar/wiki/Home?tm=6
+
+To contact the Soar group, you may join and post to one of our mailing
+lists:
+
+For general Soar-related discussion and announcements:
+        
+        soar-group@lists.sourceforge.net
+
+For more technical developer discussion:
+         
+        soar-sml-list@lists.sourceforge.net
+
+Also, please do not hesitate to file bugs on our issue tracker:
+
+        http://code.google.com/p/soar/issues/list
+
+To avoid redundant entries, please search for duplicate issues first.
+
+=========================== 
+Important Changes for 9.3.3
+===========================
+
+(6) By default, chunk names use a new naming scheme. They are now based on the rule that created the result rather than type of impasse.
+
+    For example, in Soar 9.3.2 a chunk may be named
+
+    'chunk*impasse*state*no*change*3'
+
+    while in Soar 9.3.3, it would be called something like
+
+    'chunk*apply-create-result*d3-2'
+
+    - That name indicates (a) that the rule 'apply-create-result' is the matched rule which resulted in the chunk, (b) that it was created at decision cycle 3 and (c) was the second chunk created at that decision cycle.
+
+    - Note that if a chunk is created based on another chunk, the prefix of the chunk-name will be something like chunk-2*apply-create-result*d12-1, instead of chunk-chunk*apply-create-result*d12-1.
+
+    - The chunk naming scheme can be changed back to the old mechanism via the command...

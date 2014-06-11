@@ -1,23 +1,25 @@
-===================================
+=================================== 
 Soar 9.3.3 Release Notes, June 2014
 ===================================
 
-This release of Soar continues the 9.3 line. It includes the ability to include
-search control knowledge into chunks, a new form of integrated Tcl support,
-improved episodic and semantic memory and a large assortment of bug fixes and
-user interface enhancements.  All learning mechanisms are disabled by default.
+This release of Soar continues the 9.3 line. It includes the ability to
+include search control knowledge into chunks, a new form of integrated
+Tcl support, improved episodic and semantic memory and a large
+assortment of bug fixes and user interface enhancements.  All learning
+mechanisms are disabled by default.
 
-Soar can be downloaded by following the download link on the Soar home page at:
+Soar can be downloaded by following the download link on the Soar home
+page at:
 
         http://sitemaker.umich.edu/soar
 
 Soar releases include source code, demo programs, and a number of
- applications that serve as examples of how to interface Soar to an
- external environment.  There is support for integrating Soar with C++,
- Java, and Python applications.  Many tools that aid in development of
- Soar programs are also available.  The newly expanded download section
- of the wiki allows you to browse and download all of the different
- distributions, tools and agents.
+applications that serve as examples of how to interface Soar to an
+external environment.  There is support for integrating Soar with C++,
+Java, Tcl and Python applications.  Many tools that aid in development
+of Soar programs are also available.  The newly expanded download
+section of the wiki allows you to browse and download all of the
+different distributions, tools and agents.
 
 [Help and Contact information]
 
@@ -25,13 +27,16 @@ You can find many helpful resources on the Soar wiki at:
 
         https://code.google.com/p/soar/wiki/Home?tm=6
 
-To contact the Soar group, you may join and post to one of our mailing lists:
+To contact the Soar group, you may join and post to one of our mailing
+lists:
 
-        For general Soar-related discussion and announcements:
-                 soar-group@lists.sourceforge.net
+For general Soar-related discussion and announcements:
+        
+        soar-group@lists.sourceforge.net
 
-         For more technical developer discussion:
-                 soar-sml-list@lists.sourceforge.net
+For more technical developer discussion:
+         
+        soar-sml-list@lists.sourceforge.net
 
 Also, please do not hesitate to file bugs on our issue tracker:
 
@@ -39,262 +44,389 @@ Also, please do not hesitate to file bugs on our issue tracker:
 
 To avoid redundant entries, please search for duplicate issues first.
 
-===========================
+=========================== 
 Important Changes for 9.3.3
 ===========================
 
---------
-Chunking
+-------- 
+Chunking 
 --------
 
 (1) Soar can now include search control knowledge in chunks.
 
-This is done by keeping track of all *relevant* search control rules that produced preferences that influenced the selection of the operator that produced a result.  This set of preferences, called the context-dependent preference set (CDPS), will be backtraced through, possibly producing additional conditions in a chunk.  This setting is off by default but can be enabled by 'learn --desirability-prefs' or 'learn -p'. This new feature can allow chunking to be used in situations that would previously produce over-general chunks. See the Soar Manual for more information.
+This is done by keeping track of all *relevant* search control rules
+that produced preferences that influenced the selection of the operator
+that produced a result.  This set of preferences, called the
+context-dependent preference set (CDPS), will be backtraced through,
+possibly producing additional conditions in a chunk.  This setting is
+off by default but can be enabled by 'learn --desirability-prefs' or
+'learn -p'. This new feature can allow chunking to be used in situations
+that would previously produce over-general chunks. See the Soar Manual
+for more information.
 
-(2) The settings 'enable-through-local-negations' and 'disable-through-local-negations' have been renamed to be more succinct and consistent with other settings.  They are now 'local-negations' and 'no-local-negations'.  The short version is still '-n' and '-N'.
-
-----------------------------
+---------------------------- 
 Episodic and Semantic Memory
 ----------------------------
 
 (1) Epmem search now uses less memory and computational resources.
 
-(2) Default epmem storage trigger is now decision cycle instead of output generation
+(2) Default epmem storage trigger is now each decision cycle instead of
+after output generation.
 
-(3) Soar now uses a new schema for both databases.  This means old databases can no longer be loaded.  A utility will be provided to convert from the old schema to the new one.
+(3) Soar now uses a new schema for both databases.  This means old
+databases can no longer be loaded.  A utility will soon be provided to
+convert from the old schema to the new one.
 
-(4) Users can now specify mathematical constraints to their smem retrieval cues.  See the manual for more information.
+(4) Users can now specify mathematical constraints to their smem
+retrieval cues.  See the manual for more information.
 
-(5) Both systems now have a new append-database setting that determines whether Soar will erase the database when starting or re-initializing via init-soar.
+(5) Both systems now have a new append-database setting that determines
+whether Soar will erase the database when starting or re-initializing
+via init-soar.
 
-    - Databases are now closed upon init-soar.  With append-mode on, this will have no effect on memories.
+    - Databases are now closed upon init-soar.  With append-mode on,
+    this will have no effect on memories.
 
-    - Soar will now warn users that initializing Soar can clear their memories.  Only shown when changing epmem/smem settings such that they are storing to a file with append mode off.
+    - Soar will now warn users that initializing Soar can clear their
+    memories.  Only shown when changing epmem/smem settings such that
+    they are storing to a file with append mode off.
 
-    - Soar will now notify user that there was no change to epmem/smem memories when reinitializing if append mode is on.
+    - Soar will now notify users that there was no change to epmem/smem
+    memories when reinitializing if append mode is on.
 
-(6) Both systems now handle database settings with more flexibility.  Users may change path/database/append-database settings arbitrarily until they get what they'd like.  It will not effect any changes until you step Soar or do something that requires that memory system.
+(6) Both systems now handle database settings with more flexibility. 
+Users may change path/database/append-database settings arbitrarily
+until they get what they'd like.  It will not effect any changes until
+you step Soar or do something that requires that memory system.
 
-(7) Users can now switch from database to memory mode on the fly without losing your data.  (The opposite will not work though.)
+(7) Users can now switch from database to memory mode on the fly without
+losing your data.  (The opposite will not work though.)
 
-(8) Soar will now no longer automatically switch to database mode the first time that you set the path.
+(8) Soar will now no longer automatically switch to database mode the
+first time that you set the path.
 
-(9) SMem and epmem now have options for -on, -off, -e, -d, --enable, --disable parameters to epmem and smem to make interface consistent with other systems.
+(9) SMem and epmem now have options for --on, --off, -e, -d, --enable,
+--disable parameters to epmem and smem to make interface consistent with
+other systems.
 
-(10) Soar now has an 'epmem --init' command.  This will close and re-initialize the database like 'smem --init'.
+(10) Soar now has an 'epmem --init' command.  This will close and
+re-initialize the database like 'smem --init'.
 
---------------
-User Interface
+-------------- 
+User Interface 
 --------------
 
 (1) TclSoarLib
 
-    - Soar now includes a dynamically-loaded module that alters the Soar command line interface to allow you to use Tcl code on the command line and within your agent.  For example, users can use Tcl variables and functions directly within their soar code or make tcl function calls on the RHS of rules.
+    - Soar now includes a dynamically loaded module that alters the Soar
+    command line interface to allow you to use Tcl code on the command
+    line and within your agent.  For example, users can use Tcl
+    variables and functions directly within their soar code or make tcl
+    function calls on the RHS of rules.
 
-    - This mode is enabled via a new Soar command 'cli'.  For example, to load the new Tcl module, users can enter a 'cli tcl on' command, and Soar will look for a DLL in the same directory called TclSoarLib and load it if found.  Similarly, using an argument of Python will try to load PythonSoarLib, if it exists.  (which doesn't)
+    - This mode is enabled via a new Soar command 'cli'.  For example,
+    to load the new Tcl module, users can enter a 'cli tcl on' command,
+    and Soar will look for a DLL in the same directory called TclSoarLib
+    and load it if found.  Similarly, using an argument of Python will
+    try to load PythonSoarLib, if it exists.  (which doesn't)
 
-(2) Soar has a new C-based command line interface for Soar that supports multiple agents (now called cli).
+(2) Soar has a new C-based command line interface for Soar that supports
+multiple agents (now called cli).
 
-    - Adds four new commands to manipulate agents: list, create, delete, switch
+    - Adds four new commands to manipulate agents: list, create, delete,
+    switch
 
-    - If more than one agent exists, the CLI will enter multi-agent mode, in which the CLI will print the output of all agents simulataneously, with each of their trace messages prefixed with the agent's color-coded name.  (Currently color does not show up on windows machines.)
+    - If more than one agent exists, the CLI will enter multi-agent
+    mode, in which the CLI will print the output of all agents
+    simulataneously, with each of their trace messages prefixed with the
+    agent's color-coded name.  (Currently color does not show up on
+    windows machines.)
 
-(3) Soar will now give feedback on many commands and errors that it did not before.
+(3) Soar will now give feedback on many commands and errors that it did
+not before.
 
-(4) Soar will now give more informative messages to various command line errors instead of just always saying "invalid attribute".
+(4) Soar will now give more informative messages to various command line
+errors instead of just always saying "invalid attribute".
 
-(5) Commands now display their settings using a consistent display theme that should be much clearer.
+(5) Commands now display their settings using a consistent display theme
+that should be much clearer.
 
-(6) By default, chunk names use a new naming scheme. They are now based on the rule that created the result rather than type of impasse.
-
-    For example, in Soar 9.3.2 a chunk may be named
-
-    'chunk*impasse*state*no*change*3'
-
-    while in Soar 9.3.3, it would be called something like
-
-    'chunk*apply-create-result*d3-2'
-
-    - That name indicates (a) that the rule 'apply-create-result' is the matched rule which resulted in the chunk, (b) that it was created at decision cycle 3 and (c) was the second chunk created at that decision cycle.
-
-    - Note that if a chunk is created based on another chunk, the prefix of the chunk-name will be something like chunk-2*apply-create-result*d12-1, instead of chunk-chunk*apply-create-result*d12-1.
-
-    - The chunk naming scheme can be changed back to the old mechanism via the command...
-
+---------------------- 
+Reinforcement Learning 
 ----------------------
-Reinforcement Learning
-----------------------
 
-(1) Reinforcement learning now has a new trace mechanism to help users understand why operators are selected.  When enabled, all proposed operators at all goal levels will be recorded in the trace, along with their names,  other attribute-value pairs, and transition probabilities derived from their numeric preferences. The format in which the trace is printed is designed to be used by the program dot, which is part of the Graphviz suite.  See the help entry for rl for more information.
+(1) Reinforcement learning now has a new trace mechanism to help users
+understand why operators are selected.  When enabled, all proposed
+operators at all goal levels will be recorded in the trace, along with
+their names, other attribute-value pairs, and transition probabilities
+derived from their numeric preferences. The format in which the trace is
+printed is designed to be used by the program dot, which is part of the
+Graphviz suite.  See the help entry for rl for more information.
 
-(2) Reinforcement learning now has a new experimental delta-bar-delta mode mode based on the work in Richard S. Sutton's paper "Adapting Bias by Gradient Descent: An Incremental Version of Delta-Bar-Delta". Delta Bar Delta is implemented in Soar RL as a decay mode. It changes the way all the rules in the eligibility trace get their values updated. The key idea is that the agent uses meta parameters to keep track of how much a rule's RL value has been updated recently, and if a rule gets updates in the same direction multiple times in a row then subsequent updates in the same direction will have more effect. In some sense, DBD acts like momentum for the learning rate.
+(2) Reinforcement learning now has a new experimental delta-bar-delta
+mode based on the work in Richard S. Sutton's paper "Adapting Bias by
+Gradient Descent: An Incremental Version of Delta-Bar-Delta". Delta Bar
+Delta is implemented in Soar RL as a decay mode. It changes the way all
+the rules in the eligibility trace get their values updated. The key
+idea is that the agent uses meta parameters to keep track of how much a
+rule's RL value has been updated recently, and if a rule gets updates in
+the same direction multiple times in a row then subsequent updates in
+the same direction will have more effect. In some sense, DBD acts like
+momentum for the learning rate.
 
-(3) Users can now record a log file that contains every update to productions' reinforcement learning values with the 'update-log-path' setting.  For example, 'rl --set update-log-path rl_log.txt' would start recording a log to the file rl_log.txt
+(3) Users can now record a log file that contains every update to
+productions' reinforcement learning values with the 'update-log-path'
+setting.  For example, 'rl --set update-log-path rl_log.txt' would start
+recording a log to the file rl_log.txt
 
-(4) The Soar 'preferences' command now prints the actual probabilities for operators based on the current selection method. Soar previously always assumed softmax.
+(4) The Soar 'preferences' command now prints the actual probabilities
+for operators based on the current selection method. Soar previously
+always assumed softmax.
 
+--------- 
+Bug Fixes 
 ---------
-Bug Fixes
----------
 
-(1) Fixed issue 105 in which a rule with an empty RHS caused a crash in Soar.
+(1) Fixed issue 105 in which a rule with an empty RHS caused a crash in
+Soar.
 
-(2) Fixed issue 127 Soar no longer inaccurately classifies certain rule firings as operator proposals.  Instead of just looking for an attribute named operator in a rhs action, it checks to see if that id element points to a real state and hence is a real operator proposal.  If so, it gives i-support to all of the rhs make actions of that rule firing.
+(2) Fixed issue 127 Soar no longer inaccurately classifies certain rule
+firings as operator proposals.  Instead of just looking for an attribute
+named operator in a rhs action, it checks to see if that id element
+points to a real state and hence is a real operator proposal.  If so, it
+gives i-support to all of the rhs make actions of that rule firing.
 
-(3) Fixed issue 130 in which Soar would exit with the error "Wanted to create a GDS for a WME level different from the instantiation level.....Big problems....exiting".
+(3) Fixed issue 130 in which Soar would exit with the error "Wanted to
+create a GDS for a WME level different from the instantiation
+level.....Big problems....exiting".
 
-(4) Fixed issue 132 in which memory corruption could occur when wma and epmem are both active.
+(4) Fixed issue 132 in which memory corruption could occur when wma and
+epmem are both active.
 
-(5) Fixed issue 133 in which extremely low decay rates caused Soar to crash.
+(5) Fixed issue 133 in which extremely low decay rates caused Soar to
+crash.
 
-(6) Fixed bug that resulted in epmem recording breaking after init-soar.  Soar will now properly close and re-initialize epmem.
+(6) Fixed bug that resulted in epmem recording breaking after init-soar.
+ Soar will now properly close and re-initialize epmem.
 
 (7) Fixed bug in epmem retrieval that could result in failed queries.
 
-(8) Fixed bug in smem that caused Soar to crash when attempting to print from smem after the settings pointing it to the correct database were configured but before it was first used.  It will now connect to the database before printing.
+(8) Fixed bug in smem that caused Soar to crash when attempting to print
+from smem after the settings pointing it to the correct database were
+configured but before it was first used.  It will now connect to the
+database before printing.
 
-(9) Fixed a segfault in smem, triggered when a previously unhashed value appeared in a neg-query.
+(9) Fixed a segfault in smem, triggered when a previously unhashed value
+appeared in a neg-query.
 
-(10) Fixed bug in which LTIs with i-supported children were not properly forgotten.
+(10) Fixed bug in which LTIs with i-supported children were not properly
+forgotten.
 
-(11) Fixed bug in cli that caused crashes on certain commands like an empty echo command.
+(11) Fixed bug in cli that caused crashes on certain commands like an
+empty echo command.
 
-(12) Fixed bug in mincli identifier printing shortcut works again (You can type "S1" to print S1 instead of print S1)
+(12) Fixed bug in cli identifier printing shortcut. (You can againg type
+"S1" to print S1 instead of print S1)
 
-(13) Fixed bug in which data was not being written to epmem/smem databases when using the cli.  It now shuts down and deletes kernel, allowing proper clean-up.
+(13) Fixed bug in which data was not being written to epmem/smem
+databases when using the cli.  It now shuts down and deletes kernel,
+allowing proper clean-up.
 
 (14) Fixed bug in which Python callbacks silently ignored exceptions.
 
 (15) Fixed memory leak in Eaters when a wme is replaced.
 
-(16) Fixed bug due to dubious logic in ParseXML that could cause working memory to grow unnecessarily large.
+(16) Fixed bug due to dubious logic in ParseXML that could cause working
+memory to grow unnecessarily large.
 
-(17) Fixed a bug in which very large messages could not be passed via an SML filter callback.
+(17) Fixed a bug in which very large messages could not be passed via an
+SML filter callback.
 
--------------------------
+------------------------- 
 Building From Source Code
 -------------------------
 
-(1) The debug build is now the default.  Build script now uses --opt for an optimized build instead of --dbg.
+(1) The debug build is now the default.  Build script now uses --opt for
+an optimized build instead of --dbg.
 
 (2) Added option for static build (--static).
 
 (3) Build script for iOS updated for latest version.
 
-(4) Tcl SWIG interface updated and fully functional with latest version of Soar and the latest version of ActiveTcl (8.6).
+(4) Tcl SWIG interface updated and fully functional with latest version
+of Soar and the latest version of ActiveTcl (8.6).
 
 (5) Can now build C# SWIG wrappers.
 
-(6) Building soar without single compilation units (--no-scu) now works again.
+(6) Building soar without single compilation units (--no-scu) now works
+again.
 
-(7) On OSX, build process now uses clang/clang++
+(7) On OSX, build process now uses clang/clang++.
 
-(8) Now has LSB support, which can facilitate compilation on certain *nix system.
+(8) Now has LSB support, which can facilitate compilation on certain
+*nix system.
 
+====================== 
+Other Changes in 9.3.3 
 ======================
-Other Changes in 9.3.3
-======================
 
---------------
-User Interface
+-------------- 
+User Interface 
 --------------
 
-(1) Preferences command will now indicate whether a WME has different support at different levels, as well as whether the WME is linked to a state but has no support there.
+(1) Preferences command will now indicate whether a WME has different
+support at different levels, as well as whether the WME is linked to a
+state but has no support there.
 
-(2) When verbose mode is on, Soar will print the filename of each file being sourced as it sources them.
+(2) When verbose mode is on, Soar will print the filename of each file
+being sourced as it sources them.
 
-(3) Soar now properly explains that a rule has bad RHS when it either it creates a variable that is not tested in a positive condition on the LHS (negative conditions don't count) or it passes an unbound variable to a rhs function.
+(3) Soar now properly explains that a rule has bad RHS when it either it
+creates a variable that is not tested in a positive condition on the LHS
+(negative conditions don't count) or it passes an unbound variable to a
+rhs function.
 
-(4) cli and mincli now prints port and what type of kernel it's creating.
+(4) The cli now prints the port used and what type of kernel it's
+creating.
 
+--------------- 
+Episodic Memory 
 ---------------
-Episodic Memory
----------------
 
-(1) Soar now only prints out new king episode for an epmem search if a new episode has actually been crowned king (considered best).
+(1) Soar now only prints out new king episode for an epmem search if a
+new episode has actually been crowned king (considered best).
 
-(2) Epmem search now uses most constraining values for ^before and ^after (smallest for before, largest for after)
+(2) Epmem search now uses most constraining values for ^before and
+^after (smallest for before, largest for after)
 
-(3) 'epmem --stats' now shows how many ^prev and ^retrieve commands have been made
+(3) 'epmem --stats' now shows how many ^prev and ^retrieve commands have
+been made
 
 (4) Statistics for previous epmem queries once again available.
 
+-------- 
+Chunking 
 --------
-Chunking
---------
 
-(1) The settings 'enable-through-local-negations' and 'disable-through-local-negations' have been renamed to be more succinct and consistent with other settings.  They are now 'local-negations' and 'no-local-negations'.
+(1) The settings 'enable-through-local-negations' and
+'disable-through-local-negations' have been renamed to be more succinct
+and consistent with other settings.  They are now 'local-negations' and
+'no-local-negations'.  The short version is still '-n' and '-N'.
 
-(2) After changing chunking settings, Soar will give feedback of all current settings.
+(2) After changing chunking settings, Soar will give feedback of all
+current settings.
 
+--------- 
+Bug Fixes 
 ---------
-Bug Fixes
----------
 
-(1) Fixed bug that occurred when epmem is queried with an LTI which was promoted (stored into smem) in the middle of its most recent interval.  Soar now sets the priority to its promotion time instead of the interval start time.
+(1) Fixed bug that occurred when epmem is queried with an LTI, which was
+promoted (stored into smem), in the middle of its most recent interval. 
+Soar now sets the priority to its promotion time instead of the interval
+start time.
 
-(2) Fixed bug that resulted in epmem activation count not being properly tracked.
+(2) Fixed bug that resulted in epmem activation count not being properly
+tracked.
 
-(3) Fixed bug in epmem storage bug that would occur when it attempted to recurse through a Y-shaped linkage between wme's.
+(3) Fixed bug in epmem storage bug that would occur when it attempted to
+recurse through a Y-shaped linkage between wme's.
 
-(4) Fixed bug in smem where Soar would give users no feedback that certain smem -add commands were bad (for example smem -add {fdsfds})
+(4) Fixed bug in smem where Soar would give users no feedback that
+certain smem -add commands were bad (for example smem -add {fdsfds})
 
-(5) Fixed working memory activation bug due to the fact that the test for the o-support set of a WME is not sufficiently tight. In particular, if one of the tested WMEs has i-support, but *that i-support is removed at the same time as a rule that depends on it fires*, the result of that rule will have that i-supported WME in it's o-set.
+(5) Fixed working memory activation bug due to the fact that the test
+for the o-support set of a WME is not sufficiently tight. In particular,
+if one of the tested WMEs has i-support, but *that i-support is removed
+at the same time as a rule that depends on it fires*, the result of that
+rule will have that i-supported WME in it's o-set.
 
-(6) Fixed bug in which a newline would not be printed when sourcing a soar file in which a soar command is issued immediately after a production is loaded in that same file.
+(6) Fixed bug in which a newline would not be printed when sourcing a
+soar file in which a soar command is issued immediately after a
+production is loaded in that same file.
 
-(7) Fixed bug in default rules for A* search, when start == goal.  The change here is that the total-estimated-cost should be updated when estimated-cost != 0, and final-cost should be updated when estimated-cost == 0. This is changed from the original code where the total-estimated-cost is updated if path-cost != 0, which would fail if start == goal, where path-cost == estimated-cost == total-estimated-cost == final-cost == 0.  The change makes sense when you think about A* () when the estimated cost is 0, that means you've reached the desired state, so the final cost is known.  Otherwise, the total cost is still an estimate, so the final cost is not stated and it's only a total *estimated* cost.
+(7) Fixed bug in default rules for A* search, when start == goal.  The
+change here is that the total-estimated-cost should be updated when
+estimated-cost != 0, and final-cost should be updated when
+estimated-cost == 0. This is changed from the original code where the
+total-estimated-cost is updated if path-cost != 0, which would fail if
+start == goal, where path-cost == estimated-cost == total-estimated-cost
+== final-cost == 0.  The change makes sense when you think about A* ()
+when the estimated cost is 0, that means you've reached the desired
+state, so the final cost is known.  Otherwise, the total cost is still
+an estimate, so the final cost is not stated and it's only a total
+*estimated* cost.
 
-(8) Fixed bug with calls to output handlers that occurred when command WMEs are deleted.
+(8) Fixed bug with calls to output handlers that occurred when command
+WMEs are deleted.
 
-(9) Fixed some bugs that resulted in Soar not adding a new line when it should have.  Handling of newlines is more consistent. (but still not perfect.)
+(9) Fixed some bugs that resulted in Soar not adding a new line when it
+should have.  Handling of newlines is more consistent. (but still not
+perfect.)
 
-(10) Fixed bug in which Soar would not return an error message despite a command's parameters being invalid.
+(10) Fixed bug in which Soar would not return an error message despite a
+command's parameters being invalid.
 
-(11) Fixed bug in Eaters and TankSoar when attempting to update an output's status twice.
+(11) Fixed bug in Eaters and TankSoar when attempting to update an
+output's status twice.
 
-(12) Fixed bug caused by newline issues in jar manifest files. If a manifest file doesn't have a terminating newline, certain system setups will fail to read the last line, and the resulting jar file will be missing that line.
+(12) Fixed bug caused by newline issues in jar manifest files. If a
+manifest file doesn't have a terminating newline, certain system setups
+will fail to read the last line, and the resulting jar file will be
+missing that line.
 
 (13) Fixed bug detecting correct python library on *nix platforms.
 
-(14) Fixed compiling bugs because of inconsistent mac/windows/linux linefeeds.
+(14) Fixed compiling bugs because of inconsistent mac/windows/linux
+linefeeds.
 
 (15) Fixed compile error in GDS debug code.
 
--------------------------
+------------------------- 
 Building From Source Code
 -------------------------
 
 (1) Java SWIG source generation improved.
 
-(2) Scons no longer traverse hidden directories looking for targets to build
+(2) Scons no longer traverse hidden directories looking for targets to
+build
 
-(3) Fixed bug in which scons was not properly rebuilding sml_java when it should have.
+(3) Fixed bug in which scons was not properly rebuilding sml_java when
+it should have.
 
-(4) Scons will no longer try to build java targets when swig is not installed
+(4) Scons will no longer try to build java targets when swig is not
+installed
 
-(5) Fixed bug in which it would not properly copy files into directories that starts with a '.'
+(5) Fixed bug in which it would not properly copy files into directories
+that starts with a '.'
 
 (6) Project/Solution generation for MS Visual Studio now works better
 
-(7) Kernel now has doxygen setup files for automatic code help generation
+(7) Kernel now has doxygen setup files for automatic code help
+generation
 
-(8) Added --python option to scons for different python versions, which takes a path to the python executable. Scons will then use it to determine the appropriate python libraries for building the SML client.
+(8) Added --python option to scons for different python versions, which
+takes a path to the python executable. Scons will then use it to
+determine the appropriate python libraries for building the SML client.
 
-------------
-Code Changes
-------------
-(This section is really only really relevant to people who modify or interface to the source code.)
+------------ 
+Code Changes 
+------------ 
+(This section is really only really relevant to people who modify or interface 
+to the source code.)
 
-(1) Significant refactoring and reorganization of epmem/smem code for clarity
+(1) Significant refactoring and reorganization of epmem/smem code for
+clarity
 
 (2) Migrated to new episodic memory and semantic memory database schemas
 
-    - Designed to be much easier to understand.  Database relations are now strict.
+    - Designed to be much easier to understand.  Database relations are
+    now strict.
 
-    - Eliminated the temporal hash table.  Epmem will now look up constants from four symbol lookup tables instead.
+    - Eliminated the temporal hash table.  Epmem will now look up
+    constants from four symbol lookup tables instead.
 
-    - In general, epmem is now more similar to smem database, and both use same schema versioning representation.
+    - In general, epmem is now more similar to smem database, and both
+    use same schema versioning representation.
 
 (3) Lots of new debugging facilities
 
@@ -302,20 +434,36 @@ Code Changes
 
     - More debug messages in general
 
-    - Many debug messages now print out things using the same function rather than an assortment of different ways (cout, printf, callbacks, etc.)
+    - Many debug messages now print out things using the same function
+    rather than an assortment of different ways (cout, printf,
+    callbacks, etc.)
 
 (4) Added new CLI utility functions to support more consistent printing
 
-(5) Added new Soar Instance class that acts as a consistent hub across various SML configurations. It is a singleton object that correspond to an instance of the soar dll, as opposed to an agent or kernel.  Added initially to support the TclSoarLib dll, but could also be used for other things as well.
+(5) Added new Soar Instance class that acts as a consistent hub across
+various SML configurations. It is a singleton object that corresponds to
+an instance of the soar dll, as opposed to an agent or kernel.  Added
+initially to support the TclSoarLib dll, but could also be used for
+other things as well.
 
-(6) An internal output manager to simplify and consolidate the various way that different portions of the Soar code produce output.  It also allows us to re-direct output dynamically to other listeners (or multiple ones), for example a database.
+(6) An internal output manager to simplify and consolidate the various
+way that different portions of the Soar code produce output.  It also
+allows us to re-direct output dynamically to other listeners (or
+multiple ones), for example a database.
 
-(7) Removed code for various experimental modes created by previous graduate students.
+(7) Removed code for various experimental modes created by previous
+graduate students.
 
-(8) Scons updated and hacked to support Visual Studio 2013 until official version does.
+(8) Scons updated and hacked to support Visual Studio 2013 until
+official version does.
 
-(9) CppUnit, PCRE removed.  STLSoft replaced with simpler timer implementation.
+(9) CppUnit, PCRE removed.  STLSoft replaced with simpler timer
+implementation.
 
-(10) All support of obsolete unary parallel and binary parallel preferences now removed
+(10) All support of obsolete unary parallel and binary parallel
+preferences now removed
 
-(11) TestSoarPerformance now has some #defines to allow you to set a different test agent, change the number of trials and control the amount of information printed.
+(11) TestSoarPerformance now has some #defines to allow you to set a
+different test agent, change the number of trials and control the amount
+of information printed.
+
