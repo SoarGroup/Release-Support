@@ -130,25 +130,13 @@ User Interface
     and load it if found.  Similarly, using an argument of Python will
     try to load PythonSoarLib, if it exists.  (which doesn't)
 
-(2) Soar has a new C-based command line interface for Soar that supports
-multiple agents (now called cli).
-
-    - Adds four new commands to manipulate agents: list, create, delete,
-    switch
-
-    - If more than one agent exists, the CLI will enter multi-agent
-    mode, in which the CLI will print the output of all agents
-    simulataneously, with each of their trace messages prefixed with the
-    agent's color-coded name.  (Currently color does not show up on
-    windows machines.)
-
-(3) Soar will now give feedback on many commands and errors that it did
+(2) Soar will now give feedback on many commands and errors that it did
 not before.
 
-(4) Soar will now give more informative messages to various command line
+(3) Soar will now give more informative messages to various command line
 errors instead of just always saying "invalid attribute".
 
-(5) Commands now display their settings using a consistent display theme
+(4) Commands now display their settings using a consistent display theme
 that should be much clearer.
 
 ---------------------- 
@@ -274,19 +262,34 @@ Other Changes in 9.3.3
 User Interface 
 --------------
 
-(1) Preferences command will now indicate whether a WME has different
+(1) Soar has a new C-based command line interface for Soar that supports
+multiple agents (called mcli).
+
+    - Adds four new commands to manipulate agents: list, create, delete,
+    switch
+
+    - If more than one agent exists, the CLI will enter multi-agent
+    mode, in which the CLI will print the output of all agents
+    simulataneously, with each of their trace messages prefixed with the
+    agent's color-coded name.
+    
+    - Caveats:  Currently color does not show up on windows machines. On
+      linux and macs, colors are configured to look best on a dark
+      background color.
+
+(2) Preferences command will now indicate whether a WME has different
 support at different levels, as well as whether the WME is linked to a
 state but has no support there.
 
-(2) When verbose mode is on, Soar will print the filename of each file
+(3) When verbose mode is on, Soar will print the filename of each file
 being sourced as it sources them.
 
-(3) Soar now properly explains that a rule has bad RHS when it either it
+(4) Soar now properly explains that a rule has bad RHS when it either it
 creates a variable that is not tested in a positive condition on the LHS
 (negative conditions don't count) or it passes an unbound variable to a
 rhs function.
 
-(4) The cli now prints the port used and what type of kernel it's
+(5) The cli now prints the port used and what type of kernel it's
 creating.
 
 --------------- 
