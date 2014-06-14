@@ -359,6 +359,7 @@ SoarSuite_9.3.3
   Release/docs/Building_Soar.txt=Documentation
   Release/docs/Release_Notes_9.3.3.txt=Documentation
   Release/docs/license.txt=top
+  SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
 SoarSuite_9.3.3-source
   type=zip
   out=SoarSuite/
@@ -367,6 +368,7 @@ SoarSuite_9.3.3-source
   SoarSuite/scons=scons
   SoarSuite/TestCLI=TestCLI
   SoarSuite/Tests=Tests
+  SoarSuite/tcl=tcl
   SoarSuite/build_lsb.sh=top
   SoarSuite/build.bat=top
   SoarSuite/SConstruct=top
@@ -376,6 +378,7 @@ SoarSuite_9.3.3-source
   Release/docs/Release_Notes_9.3.3.txt=Documentation
   Release/Shuffler_Input/jars/VisualSoar.jar=bin
   Agents/default=Agents/default
+  SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
 RoomsWorld_9.3.3
   type=multiplatform-zip
   out=Domains/
