@@ -34,7 +34,7 @@ This information is identical to what is available via the \emph{time} statistic
 
 Episodic memory records new episodes without deliberate action/consideration by the agent. 
 The timing and frequency of recording new episodes is controlled by the \soarb{phase} and \soarb{trigger} parameters.  
-The \soarb{phase} parameter sets the phase in the decision cycle (default: end of Output phase) during which episodic memory stores episodes and processes commands.  
+The \soarb{phase} parameter sets the phase in the decision cycle (default: end of each decision cycle) during which episodic memory stores episodes and processes commands.  
 The value of the \soarb{trigger} parameter indicates to the architecture the event that concludes an episode: adding a new augmentation to the output-link (default) or each decision cycle.
 
 For debugging purposes, the \soarb{force} parameter allows the user to manually request that an episode be recorded (or not) during the current decision cycle.  
@@ -70,6 +70,10 @@ Episodic memory uses SQLite to facilitate efficient and standardized storage and
 The episodic store can be maintained in memory or on disk (per the \soarb{database} and \soarb{path} parameters).  
 If the store is located on disk, users can use any standard SQLite programs/components to access/query its contents. 
 See the later discussion on performance (\ref{EPMEM-perf}) for additional parameters dealing with databases on disk.
+
+\soarb{Note 1}: As of version 9.3.3, Soar now uses a new schema for the episodic memory database. This means old databases can no longer be loaded.  A conversion utility is available on the Soar wiki to convert from the old schema to the new one.
+
+\soarb{Note 2}: Be aware that the \soarb{append-database} setting determines whether Soar will erase the episodic memory database when re-initializing with an \soarb{init-soar} command.  With \soarb{append-database} on, this will have no effect on memories, but, when \soarb{append-database} is off, Soar will erase the entire database upon re-initialization.
 
 \section{Retrieving Episodes}
 \label{EPMEM-retrieval}

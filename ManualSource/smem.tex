@@ -127,6 +127,10 @@ The semantic store can be maintained in memory or on disk (per the \soarb{databa
 If the store is located on disk, users can use any standard SQLite programs/components to access/query its contents.
 However, using a disk-based semantic store is very costly (performance is discussed in greater detail in Section \ref{SMEM-perf} on page \pageref{SMEM-perf}), and running in memory is recommended for most runs.
 
+\soarb{Note 1}: As of version 9.3.3, Soar now uses a new schema for the semantic memory database. This means old databases can no longer be loaded.  A conversion utility is available on the Soar wiki to convert from the old schema to the new one.
+
+\soarb{Note 2}: Be aware that the \soarb{append-database} setting determines whether Soar will erase the semantic memory database when re-initializing with an \soarb{init-soar} command.  With \soarb{append-database} on, this will have no effect on memories, but, when \soarb{append-database} is off, Soar will erase the entire database upon re-initialization.
+
 The \soarb{lazy-commit} parameter is a performance optimization. 
 If set to \soarb{on} (default), disk databases will not reflect semantic memory changes until the Soar kernel shuts down. 
 This improves performance by avoiding disk writes. 
