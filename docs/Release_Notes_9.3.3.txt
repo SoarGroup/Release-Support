@@ -256,6 +256,15 @@ again.
 (8) Now has LSB support, which can facilitate compilation on certain
 *nix system.
 
+==========
+Known Bugs
+==========
+
+(1) On some platforms, the SoarJavaDebugger may crash when exiting.
+
+See https://code.google.com/p/soar/issues/list for the current list of issues
+and feature requests.
+
 ====================== 
 Other Changes in 9.3.3 
 ======================
@@ -472,8 +481,10 @@ preferences now removed
 different test agent, change the number of trials and control the amount
 of information printed.
 
+-------------------------------------
+
 =====================
-TclSoarLib Release Notes
+TclSoarLib
 Author: Mazin Assanie
 5/27/14
 =====================
@@ -548,15 +559,8 @@ Building from Source Code
 Known Bugs
 ==========
 
-1.  If you call a tcl function from the command line that returns a list as a 
-    result, it will only print one element from the list.  
-    
-    For now, you can can get around this by enclosing the command in a puts, 
-    for example:
-
-      puts [info globals]
-
-2.	Turn off tcl mode causes a crash on some systems.  Don’t do for now.
+1.  Turning off tcl mode causes a crash on some systems.  That option is
+    currently disabled as a result.
 
 =======
 Caveats
