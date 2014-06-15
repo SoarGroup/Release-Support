@@ -246,16 +246,26 @@ Working_Memory_Activation_Tracker_Example
     type=zip
     out=Unsupported/
     Unsupported/WMActivationTracker=top
+TclSoarLib_9.3.3
+  type=multiplatform-zip
+  out=SoarSuite/
+  Release/Shuffler_Input/COMPILE_DIR/out/libTcl_sml_ClientInterface.DLL_EXTENSION=top
+  Release/Shuffler_Input/COMPILE_DIR/out/libtclsoarlib.DLL_EXTENSION=top
+  Release/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=top
+  Release/Shuffler_Input/COMPILE_DIR/out/tcl=tcl
+  SoarSuite/Tcl/TclSoarLib_README.txt=top
 SoarTutorial_9.3.3
   type=multiplatform-zip
   out=SoarSuite/
-  # Missing: PythonCLI.py
-  # Missing: TestPythonSML.py, (joseph will re-add)
   Release/Shuffler_Input/jars/VisualSoar.jar=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
   Release/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
+  Release/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
   Release/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
   Release/Shuffler_Input/COMPILE_DIR/out/java=bin/java
+  Release/Shuffler_Input/COMPILE_DIR/out/libTcl_sml_ClientInterface.DLL_EXTENSION=bin
+  Release/Shuffler_Input/COMPILE_DIR/out/libtclsoarlib.DLL_EXTENSION=bin
+  Release/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
+  Release/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Documentation/Agents_readme.txt=Agents/
   Documentation/pdf/Soar Tutorial Part 1.pdf=Documentation
   Documentation/pdf/Soar Tutorial Part 2.pdf=Documentation
@@ -267,6 +277,7 @@ SoarTutorial_9.3.3
   Documentation/pdf/Soar Tutorial Part 8 - SMem.pdf=Documentation
   Documentation/pdf/Soar Tutorial Part 9 - EpMem.pdf=Documentation
   Documentation/pdf/SoarManual.pdf=Documentation
+  SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Agents/arithmetic=Agents/arithmetic
   Agents/blocks-world-RL=Agents/blocks-world-RL
   Agents/blocks-world-hierachical-lookahead=Agents/blocks-world-hierachical-lookahead
@@ -349,13 +360,12 @@ SoarSuite_9.3.3
   type=multiplatform-zip
   out=SoarSuite/
   Release/Shuffler_Input/COMPILE_DIR/out=bin
-  # Missing: PythonCLI.py
-  # Missing: TestPythonSML.py, (joseph will re-add)
   Release/Shuffler_Input/jars/VisualSoar.jar=bin
   Agents/default=Agents/default
   Release/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
   Release/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
   Documentation/pdf/SoarManual.pdf=Documentation
+  SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Release/docs/Building_Soar.txt=Documentation
   Release/docs/Release_Notes_9.3.3.txt=Documentation
   Release/docs/license.txt=top
@@ -365,8 +375,10 @@ SoarSuite_9.3.3-source
   SoarSuite/Core=Core
   SoarSuite/Java=Java
   SoarSuite/scons=scons
+  SoarSuite/Tcl=Tcl
   SoarSuite/TestCLI=TestCLI
   SoarSuite/Tests=Tests
+  SoarSuite/build_ios.sh=top
   SoarSuite/build_lsb.sh=top
   SoarSuite/build.bat=top
   SoarSuite/SConstruct=top
@@ -375,7 +387,6 @@ SoarSuite_9.3.3-source
   Release/docs/license.txt=top
   Release/docs/Release_Notes_9.3.3.txt=Documentation
   Release/Shuffler_Input/jars/VisualSoar.jar=bin
-  Agents/default=Agents/default
 RoomsWorld_9.3.3
   type=multiplatform-zip
   out=Domains/
