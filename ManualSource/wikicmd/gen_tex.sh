@@ -1,5 +1,5 @@
 #!/bin/sh
-PYTHON=python
+PYTHON=python2
 
 preproc() {
 	sed '/#summary/d' $1
