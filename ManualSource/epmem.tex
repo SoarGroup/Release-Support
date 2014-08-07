@@ -92,6 +92,21 @@ Malformed commands (including attempts at multiple retrieval types) will result 
 After a command has been processed, episodic memory will ignore it until some aspect of the command structure changes (via addition/removal of WMEs).  
 When this occurs, the result structure is cleared and the new command (if one exists) is processed.
 
+All retrieved episodes are recreated exactly as stored, except for any operators that have an acceptable preference, which are recreated with the attribute \soar{operator*}.
+For example, if the original episode was:
+
+\begin{verbatim}
+(<s> ^operator <o1> +)
+(<o1> ^name move)
+\end{verbatim}
+
+A retrieval of the episode would become:
+
+\begin{verbatim}
+(<s> ^operator* <o1>)
+(<o1> ^name move)
+\end{verbatim}
+
 \subsection{Cue-Based Retrievals}
 Cue-based retrieval commands are used to search for an episode in the store that best matches an agent-supplied cue, while adhering to optional modifiers.  
 A cue is composed of WMEs that partially describe a top-state of working memory in the retrieved episode.  
