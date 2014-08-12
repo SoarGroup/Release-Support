@@ -1,36 +1,29 @@
 #!/bin/sh
-PYTHON=python2
 
-preproc() {
-	sed '/#summary/d' $1
-}
-
-if ! $PYTHON -V 2>&1 | awk '{split($2, v, "."); if (v[1] != 2 || v[2] < 4) exit 1}'
-then
-	echo "moin2latex.py needs 2.4 <= Python version < 3.0"
-	exit 1
-fi
+rm -rf tex
 
 if [ ! -d wiki ]
 then
-	svn co http://soar.googlecode.com/svn/wiki
-elif ! svn update wiki | grep -q Updated
-then
-	exit 0
+	git clone git@github.com:SoarGroup/Soar.wiki.git wiki
+else
+	pushd wiki
+	git fetch
+	git checkout HEAD
+	popd
 fi
 
-rm -rf tex
+cp -R wiki/Manuals\ and\ FAQs/CLI/ CLI
 mkdir tex
 
-for f in wiki/cmd_*.wiki
+for f in CLI/cmd-*.md
 do
-	tf=`echo "$f" | sed 's:^wiki/cmd_::
-	                     s:_:-:g
-	                     s:wiki$:tex:'`
-	printf "$tf "
-	preproc "$f" | $PYTHON moin2latex.py > "tex/$tf" || exit 1
+	c=`basename $f | cut -c 5- | rev | cut -c 4- | rev`
+	perl markdown.pl --html4tags $f > $f.html
+	html2latex $f.html
+	mv $f.tex $c.tex
+	tf=$c.tex
+	mv $tf tex/$tf || exit 1
 done
-printf "\n"
 
 # make sure every command listed on the wiki is included in the
 # interface section of the manual
@@ -44,6 +37,8 @@ do
 		echo UNUSED: $f
 	fi
 done
+
+rm -rf CLI wiki
 
 if [ -n "$unused" ]
 then
