@@ -71,9 +71,13 @@ The episodic store can be maintained in memory or on disk (per the \soarb{databa
 If the store is located on disk, users can use any standard SQLite programs/components to access/query its contents. 
 See the later discussion on performance (\ref{EPMEM-perf}) for additional parameters dealing with databases on disk.
 
-\soarb{Note 1}: As of version 9.3.3, Soar now uses a new schema for the episodic memory database. This means old databases can no longer be loaded.  A conversion utility is available on the Soar wiki to convert from the old schema to the new one.
+Note that changes to storage parameters, for example \soarb{database, path} and \soarb{append} will not have an effect until the database is used after an initialization. This happens either shortly after launch (on first use) or after a database initialization command is issued. To switch databases or database storage types while running, set your new parameters and then perform an --init command.
 
-\soarb{Note 2}: Be aware that the \soarb{append-database} setting determines whether Soar will erase the episodic memory database when re-initializing with an \soarb{init-soar} command.  With \soarb{append-database} on, this will have no effect on memories, but, when \soarb{append-database} is off, Soar will erase the entire database upon re-initialization.
+The \soarb{path} parameter specifies the file system path the database is stored in. When \soarb{path} is set to a valid file system path and \soarb{database} mode is set to \emph{file}, then the SQLite database is written to that path.
+
+The \soarb{append} parameter will determine whether all existing facts stored in a database on disk will be erased when episodic memory loads. Note that this affects \soarb{init-soar} also.  In other words, if the \soarb{append} setting is off, all episodes stored will be lost when an init-soar is performed. For episodic memory, \soarb{append} mode is \soarb{off} by default.
+
+\soarb{Note}: As of version 9.3.3, Soar now uses a new schema for the episodic memory database. This means databases from 9.3.2 and below can no longer be loaded.  A conversion utility will be available in Soar 9.4 to convert from the old schema to the new one.
 
 \section{Retrieving Episodes}
 \label{EPMEM-retrieval}
