@@ -1,5 +1,5 @@
 =================================== 
-Soar 9.3.4 Release Notes, June 2014
+Soar 9.3.3 Release Notes, June 2014
 ===================================
 
 This release of Soar continues the 9.3 line. It includes the ability to
@@ -45,7 +45,7 @@ Also, please do not hesitate to file bugs on our issue tracker:
 To avoid redundant entries, please search for duplicate issues first.
 
 =========================== 
-Important Changes for 9.3.4
+Important Changes for 9.3.3
 ===========================
 
 -------- 
@@ -266,7 +266,7 @@ See https://code.google.com/p/soar/issues/list for the current list of issues
 and feature requests.
 
 ====================== 
-Other Changes in 9.3.4 
+Other Changes in 9.3.3 
 ======================
 
 -------------- 

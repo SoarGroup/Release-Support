@@ -45,10 +45,10 @@ Also, please do not hesitate to file bugs on our issue tracker:
 To avoid redundant entries, please search for duplicate issues first.
 
 =========================== 
-Important Changes for 9.3.3
+Important Changes for 9.4
 ===========================
 
-(6) By default, chunk names use a new naming scheme. They are now based on the rule that created the result rather than type of impasse.
+(1) By default, chunk names use a new naming scheme. They are now based on the rule that created the result rather than type of impasse.
 
     For example, in Soar 9.3.2 a chunk may be named
 
@@ -63,3 +63,32 @@ Important Changes for 9.3.3
     - Note that if a chunk is created based on another chunk, the prefix of the chunk-name will be something like chunk-2*apply-create-result*d12-1, instead of chunk-chunk*apply-create-result*d12-1.
 
     - The chunk naming scheme can be changed back to the old mechanism via the command...
+    
+Bug Fixes
+=========
+
+() Fixed bug where using multiple printing functions that used the agent's temporary string buffer would produce incorrect, duplicate output.  Printing functions that used that buffer now use output manager version that rotates between several string buffers.
+
+Technical Changes
+=================
+Note: Github has trouble displaying history for files that are moved or renamed.  For example, if you look at the SVS history on github's web interface, you'll see only one commit.  The commit history on the actual SVS folder does exist in the repository but is not viewable on github.  This is a known github limitation that they are apparently working on.  Other git interfaces, like the one in Eclipse, are also be affected.  Using the command line or a more robust interface like SourceTree will allow you to see the full history of commits for those files and directories.
+
+() Standardized formatting for all C++ files.
+    - Fixed all non-unix line feeds
+() Symbol refactoring
+    - "common" macro eliminated. Easier for debugging.
+
+() Removed crusty code
+    - Removed all USE_MACROS, USE_TCL, and _cplusplus deprecated code blocks.
+
+() Standardized some conventions
+    - Removed Bool typecast and standardized to built-in bool.
+    - Removed use of TRUE/FALSE and standardized to built-in true/false.  
+    - Consolidated all agent params to thisAgent
+
+() Reorganized some code
+    - Moved random functions from utilities to better places.  
+    - Added test.cpp, stats.cpp, rhs.cpp
+    - Eliminated gdatastructs.h, utilities.h
+    - Renamed io.soar to io_soar to match its header file
+
