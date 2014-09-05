@@ -1,5 +1,5 @@
 @echo off
-set SOAR_HOME=%~dp0
-set PATH=%SOAR_HOME%bin;%PATH%
+set SOAR_HOME=%~dp0bin
+set PATH=%SOAR_HOME%;%PATH%
 start javaw -jar bin\VisualSoar.jar
 
