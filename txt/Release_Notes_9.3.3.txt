@@ -1,5 +1,5 @@
 =================================== 
-Soar 9.3.4 Release Notes, June 2014
+Soar 9.3.3 Release Notes, June 2014
 ===================================
 
 This release of Soar continues the 9.3 line. It includes the ability to
@@ -45,7 +45,7 @@ Also, please do not hesitate to file bugs on our issue tracker:
 To avoid redundant entries, please search for duplicate issues first.
 
 =========================== 
-Important Changes for 9.3.4
+Important Changes for 9.3.3
 ===========================
 
 -------- 
@@ -266,7 +266,7 @@ See https://code.google.com/p/soar/issues/list for the current list of issues
 and feature requests.
 
 ====================== 
-Other Changes in 9.3.4 
+Other Changes in 9.3.3 
 ======================
 
 -------------- 
@@ -490,10 +490,10 @@ Author: Mazin Assanie
 =====================
 
 - Seamlessly turns Soar prompt into a Tcl prompt with a single command.
-  -	Uses a combination of C++ and Tcl code.
-  -	Processes commands in embedded Tcl interpreters, which calls Soar commands 
+  - Uses a combination of C++ and Tcl code.
+  - Processes commands in embedded Tcl interpreters, which calls Soar commands 
     as needed.
-  -	Productions can make Tcl calls by writing “(exec tcl  | <Tcl code> |)” 
+  - Productions can make Tcl calls by writing “(exec tcl  | <Tcl code> |)” 
     clauses
   on the RHS of rules.  Soar symbols and variables can be include in RHS item.
 - Very simple installation process.  
@@ -501,9 +501,9 @@ Author: Mazin Assanie
     in the same directory as the latest Soar dll.
 - Provides Tcl capabilities to both local and remote clients, including the 
   java-based C-Soar debugger.
--	Processes Tcl commands from both the Soar command line and any files sourced.
+-   Processes Tcl commands from both the Soar command line and any files sourced.
 - Each agent has its own Tcl interpreter.
--	Tested on OSX Maverick, Windows 7, and Ubuntu 12.04.
+-   Tested on OSX Maverick, Windows 7, and Ubuntu 12.04.
 
 =====
 Usage
@@ -523,10 +523,10 @@ To disable:
 Binary Installation
 ===================
 
-1.	Install ActiveTcl 8.6+ (http://www.activestate.com/activetcl/downloads)
+1.  Install ActiveTcl 8.6+ (http://www.activestate.com/activetcl/downloads)
     - We recommend that you use the default install location.
 
-2.	Download the SoarSuite binary for your platform from the Soar wiki
+2.  Download the SoarSuite binary for your platform from the Soar wiki
     - https://code.google.com/p/soar/wiki/Downloads
     - TclSoarLib is automatically included in the SoarSuite download.
 
@@ -534,17 +534,17 @@ Binary Installation
 Building from Source Code
 =========================
 
-1.	Make sure ActiveTcl 8.6 is installed.  
+1.  Make sure ActiveTcl 8.6 is installed.  
     - http://www.activestate.com/activetcl/downloads
     - We recommend that you use the default install location.
 
-2.	Download the SoarSuite source code from the wiki or check out the
+2.  Download the SoarSuite source code from the wiki or check out the
     SVN repository
     - https://code.google.com/p/soar/wiki/Downloads
     - Follow the standard build instructions for your platform until you get to 
       the build step
 
-3.	When you get to the compilation step, specify either the “all” or the 
+3.  When you get to the compilation step, specify either the “all” or the 
     “tclsoarlib” build target.  
 
     For example, on Windows:
@@ -566,14 +566,14 @@ Known Bugs
 Caveats
 =======
 
-1.	You cannot turn tcl on in a sourced file that has tcl code in it
+1.  You cannot turn tcl on in a sourced file that has tcl code in it
 
 Soar cannot deal with such files because it does not load the tcl interpreter 
 until the source command completes.  Future versions can remedy this issue.  A 
 more immediate solution would be to have TclSoarLib automatically loaded on 
 Soar launch, if it exists.
 
-2.	Currently uses two aliasing mechanism
+2.  Currently uses two aliasing mechanism
 
 Because the module wraps known soar commands, aliases are problematic.  For now 
 TclSoarLib follows previous implementations and switches to its own alias 
@@ -581,7 +581,7 @@ system.  When Tcl mode is turned on, aliases defined in alias.Tcl are used.
 Soar aliases previously defined will no longer be recognized until Tcl mode 
 is turned off.  Future versions can remedy this issue.
 
-3.	Only one RHS Tcl call will produce output. 
+3.  Only one RHS Tcl call will produce output. 
  
 Soar rhs commands “write” (and  even something like “cmd echo”) will always 
 work.  But only the last Tcl function called can produce output, for example a 
@@ -598,18 +598,18 @@ actions.
 Future versions can remedy this issue, but it may require a different 
 implementation for rhs output.
 
-4.	Does not support Tk code
+4.  Does not support Tk code
 
 Tk is a widget toolkit that many Tcl programs use to provide a GUI, for 
 example the old Soar TSI debugger.  Future versions can remedy this issue.
 
-5.	Tcl code that tries to do low-level Soar functions may or may not work.
+5.  Tcl code that tries to do low-level Soar functions may or may not work.
 
 Creating and deleting a kernel will certainly not work.  But other things like 
 creating an agent, other sml calls, other swig calls may work fine.  This 
 caveat is inherent to the design of Tcl as a plug-in without a main event loop.
 
-6.	Tcl code that requires a Tcl event loop may or may not work
+6.  Tcl code that requires a Tcl event loop may or may not work
 
 One example is the Tcl “after” command.  Future versions can remedy this issue.
 
