@@ -1,5 +1,5 @@
 =================================== 
-Soar 9.4 Release Notes, June 2014
+Soar 9.4 Release Notes, Sept 2014
 ===================================
 
 This release of Soar continues the 9.3 line. It includes the ability to
@@ -44,11 +44,41 @@ Also, please do not hesitate to file bugs on our issue tracker:
 
 To avoid redundant entries, please search for duplicate issues first.
 
-=========================== 
-Important Changes for 9.4
-===========================
+=================
+Important Changes
+=================
 
-(1) By default, chunk names use a new naming scheme. They are now based on the rule that created the result rather than type of impasse.
+(1) Soar now includes the Spatial Visual System.  
+    
+    - This component allows agents to reason about the spatial relationship between objects.  
+    - This component was based on a developmental version but has been significantly updated. 
+      - Fully integrated into the latest version of Soar
+      - Now works on all platforms
+      - Can be enabled and disabled like other sub-modules
+      - Old obsolete filters removed
+      - All the latest filters from current research added
+      - Lots of code clean up and refactoring
+      - Lots of bug fixes
+      - Quicker to build and rebuild
+    - SVS is off by default.
+
+(2) Soar will now silently load a 'settings.soar' in every agent created.  This allows you to set personal global settings and aliases for your Soar environment that will persist across runs.  For example, if you always run with tcl mode on, this would be a good place to set it.
+
+3) New semantic memory utility commands:
+
+'smem --remove' 
+
+Remove concepts from semantic memory manually.
+
+'smem --query' 
+
+Manually search for a concept that matches a cue.
+
+'smem --history'
+
+Show the activation history of a concept in semantic memory.
+
+(4) By default, chunk names use a new naming scheme. They are now based on the rule that created the result rather than type of impasse.
 
     For example, in Soar 9.3.2 a chunk may be named
 
@@ -56,39 +86,107 @@ Important Changes for 9.4
 
     while in Soar 9.3.3, it would be called something like
 
-    'chunk*apply-create-result*d3-2'
+    'chunk*my-create-result*d3-2'
 
-    - That name indicates (a) that the rule 'apply-create-result' is the matched rule which resulted in the chunk, (b) that it was created at decision cycle 3 and (c) was the second chunk created at that decision cycle.
+    - That name indicates (a) that the rule 'my-create-result' is the matched rule which resulted in the chunk, (b) that it was created at decision cycle 3 and (c) was the second chunk created at that decision cycle.
 
-    - Note that if a chunk is created based on another chunk, the prefix of the chunk-name will be something like chunk-2*apply-create-result*d12-1, instead of chunk-chunk*apply-create-result*d12-1.
+    - Note that if a chunk is created based on another chunk, the prefix of the chunk-name will be something like chunk-2*my-create-result*d12-1, instead of chunk-chunk*my-create-result*d12-1.
 
-    - The chunk naming scheme can be changed back to the old mechanism via the command...
+    - The chunk naming scheme can be changed back to the old mechanism via the command 
     
+    'chunk-name-format --long'
+    
+    - The other two naming conventions are '--numbered' and '--rule' (default)
+
+(5) New 'pbreak 'command has been added to set interrupts on a production at run-time.
+
+    'pbreak' [--set|--clear] <rule-name>: sets or clears an interrupt on a rule
+    'pbreak' [--print]: prints all rules that have interrupts set
+
+  
+(6) For both episodic and semantic memory, the 'append-database' parameter has been shorted to 'append'.
+
+(7) If a user switches file mode or path parameters when a database is already open, Soar will warn users that they must do a smem --init or epmem --init command to finalize settings.
+
+(8) Soar will now automatically convert semantic and episodic memory databases from the old schema to the new (9.3.2 and below used the old schema).
+
+(9) When printing a single LTI, Soar will no longer print a verbose header.
+
+(10) Some user interface feedback will no longer have an SMem or EPmem prefix.  This will be no longer necessary when output manager handles in 9.5.
+
+(11) Soar will now always tell the user when erasing the contents of an episodic or semantic memory store, regardless of whether in file or memory mode.
+
+(12) Epmem will now warn that it cannot append to an in-memory database.
+
+=========
 Bug Fixes
 =========
 
-() Fixed bug where using multiple printing functions that used the agent's temporary string buffer would produce incorrect, duplicate output.  Printing functions that used that buffer now use output manager version that rotates between several string buffers.
+(1) Fixed bugs where some epmem and smem commands crashed Soar if performed before the first use of database.  Those commands will now try to attach to the database first.
 
-Technical Changes
-=================
-Note: Github has trouble displaying history for files that are moved or renamed.  For example, if you look at the SVS history on github's web interface, you'll see only one commit.  The commit history on the actual SVS folder does exist in the repository but is not viewable on github.  This is a known github limitation that they are apparently working on.  Other git interfaces, like the one in Eclipse, are also be affected.  Using the command line or a more robust interface like SourceTree will allow you to see the full history of commits for those files and directories.
+(2) Fixed bug where memory corruption and crashing could occur when semantic memory tried to access a preference that no longer existed.  (Issue 176)
 
-() Standardized formatting for all C++ files.
+(3) Fixed bug where smem statistics of node and edges were becoming corrupted after init-soar or smem --init
+
+(4) Fixed bug where using multiple printing functions that used the agent's temporary string buffer would produce incorrect, duplicate output.  Printing functions that used that buffer now use output manager version that rotates between several string buffers.
+
+(5) Fixed potential resource leak that could occur when a file was not closed after a memory allocation or file read failed.
+
+(6) When printing from semantic memory, Soar will now add pipe symbols around string constants that may appear to be identifiers. (Issue 182)
+
+(7) When printing from semantic memory, Soar will now add pipe symbols around attributes that have spaces in them. (Issue 185)
+
+(8) Fixed potential bug with fake architectural instantiations that had a few uninitialized variables.
+
+===========================
+Technical Changes and Fixes
+===========================
+
+(1) Soar code is now hosted on github
+    - Code that generates the Soar manual now pulls from github repository.
+    - Projects are now all separate repos
+    
+    Note: Github has trouble displaying history for files that are moved or renamed.  For example, if you look at the SVS history on github's web interface, you'll see only one commit.  The commit history on the actual SVS folder does exist in the repository but is not viewable on github.  This is a known github limitation that they are apparently working on.  Other git interfaces, like the one in Eclipse, are also be affected.  Using the command line or a more robust interface like SourceTree will allow you to see the full history of commits for those files and directories.
+
+(2) Standardized formatting for all C++ files.
+    - Formatting style now used in Soar code documented in the Contributions.md file
     - Fixed all non-unix line feeds
-() Symbol refactoring
-    - "common" macro eliminated. Easier for debugging.
 
-() Removed crusty code
-    - Removed all USE_MACROS, USE_TCL, and _cplusplus deprecated code blocks.
+(3) Symbol refactoring
+    - Symbol struct changed from a large struct containing a union of sub-structs into a more object-oriented model.  There are now five different structs for each symbol types that inherit from a base symbol struct.  This is a major refactoring and eliminates need for the common macro that was previously used to access symbol data common to all symbol type. 
+    - Many symbol-related functions now member functions of symbol struct
 
-() Standardized some conventions
+(4) Removed crusty code
+    - Removed all USE_MACROS, all USE_TCL, all USE_X_DISPLAY and some _cplusplus deprecated code blocks.
+    - Removed obsolete references to Soar 6.
+    - Removed comments that were obsolete or add little value
+
+(5) Standardized conventions
     - Removed Bool typecast and standardized to built-in bool.
     - Removed use of TRUE/FALSE and standardized to built-in true/false.  
-    - Consolidated all agent params to thisAgent
+    - Consolidated all agent variable/parameter names to use thisAgent
 
-() Reorganized some code
+(6) Reorganized code
     - Moved random functions from utilities to better places.  
     - Added test.cpp, stats.cpp, rhs.cpp
-    - Eliminated gdatastructs.h, utilities.h
+    - Eliminated gdatastructs.h, utilities.h, soarkernel.h
     - Renamed io.soar to io_soar to match its header file
+    - Consolidated a lot of scattered #defines to kernel.h, so developers can see in one place what can be changed.  May make compile time longer when changing one of these settings, but most people aren't likely to do that often.  Making them more visible seems like a worthwhile trade-off.
+    - Consolidated many enums into enums.h
+    - Improved includes and more forward declarations to eliminate includes
 
+(7) Main scons script now has --tcl parameter to specify a custom path to Tcl when compiling TclSoarLib or the Tcl SWIG interface.
+
+(8) Main scons script now has --scu flag to be explicit about using single compilation units (default).
+
+(9) Various include issues that prevented non-scu builds on some platforms have been fixed.
+
+(10) Bug fixed that was breaking LSB builds in non-scu compilations.
+
+(11) CSharp SWIG interface should build again.
+
+(12) Main scons script will report and handle issues with the MSVC compiler better.
+
+(13) New episodic memory unit tests have been added.
+
+(14) Soar will now properly build on Macs with non-Apple JDK.
