@@ -1,6 +1,8 @@
 #!/bin/sh
 PYTHON=python
 
+echo "Generating Soar CLI latex files. (../cli_help.cpp)"
+
 preproc() {
 	sed '/#summary/d' $1
 }
@@ -10,6 +12,8 @@ then
 	echo "moin2latex.py needs 2.4 <= Python version < 3.0"
 	exit 1
 fi
+
+echo "Downloading wiki files from repository..."
 
 if [ ! -d wiki ]
 then
@@ -24,6 +28,8 @@ fi
 rm -rf tex
 mkdir tex
 
+echo "Converting to latex..."
+
 for f in wiki/cmd_*.wiki
 do
 	tf=`echo "$f" | sed 's:^wiki/cmd_::
@@ -37,8 +43,11 @@ printf "\n"
 # make sure every command listed on the wiki is included in the
 # interface section of the manual
 
+echo "Making sure every command listed on the wiki is included in the interface section of the manual..."
+
 for f in tex/*
 do
+    printf "$f "
 	f=`echo $f | awk -F. '{print $1}'`
 	if ! grep -q "input{wikicmd/$f}" ../interface.tex
 	then
@@ -47,9 +56,13 @@ do
 	fi
 done
 
+echo "Cleaning up..."
 rm -rf wiki
 
 if [ -n "$unused" ]
 then
+    echo "Unused file $n found.  Make sure it is in interface.tex.\nFailed to generate all CLI latex files."
 	exit 1
 fi
+
+echo "Successfully generated CLI latex files from wiki entries!"
