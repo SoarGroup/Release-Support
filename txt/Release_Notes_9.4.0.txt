@@ -62,7 +62,11 @@ Important Changes
       - Quicker to build and rebuild
     - SVS is off by default.
 
-(2) Soar will now silently load a 'settings.soar' in every agent created.  This allows you to set personal global settings and aliases for your Soar environment that will persist across runs.  For example, if you always run with tcl mode on, this would be a good place to set it.
+(2) Soar will now silently load a 'settings.soar' in every agent created.  This allows you to set personal global settings and aliases for your Soar environment that will persist across runs.  
+
+This is an especially useful new feature for TclSoarLib users, as it
+provides a way to activate tcl interpreting from initial launch.  This
+allows users to immediately source files on launch that contain tcl code.  
 
 3) New semantic memory utility commands:
 
