@@ -247,6 +247,6 @@ been fixed.
 (12) Main scons script will report and handle issues with the MSVC compiler
 better.
 
-(13) New episodic memory unit tests have been added.
+(13) New episodic memory and SVS unit tests have been added.
 
 (14) Soar will now properly build on Macs with non-Apple JDK.
