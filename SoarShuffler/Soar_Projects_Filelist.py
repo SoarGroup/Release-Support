@@ -137,146 +137,146 @@ Water_Jug_Tie_Agent
 SoarManual
   type=copy
   out=Documentation/
-  Documentation/pdf/SoarManual.pdf=top
+  Release-Support/pdf/SoarManual.pdf=top
 SoarTutorial
   type=copy
   out=Documentation/
-  Documentation/pdf/Soar Tutorial Part 1.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 2.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 3.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 4.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 5.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 6.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 7 - RL.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 8 - SMem.pdf=SoarTutorial
-  Documentation/pdf/Soar Tutorial Part 9 - EpMem.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 1.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 2.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 3.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 4.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 5.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 6.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 7 - RL.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 8 - SMem.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 9 - EpMem.pdf=SoarTutorial
 Episodic_Memory_Sizer
     type=zip
     out=AgentDevelopmentTools/
-    AgentDevelopmentTools/epmem-size=top
+    Other-Agent-Development-Tools/epmem-size=top
 QuickLink
     type=zip
     out=AgentDevelopmentTools/
-    AgentDevelopmentTools/QuickLink=top
+    Other-Agent-Development-Tools/QuickLink=top
 State2Dot
     type=zip
     out=AgentDevelopmentTools/
-    AgentDevelopmentTools/State2Dot=top
+    Other-Agent-Development-Tools/State2Dot=top
 UltraEdit_Soar_Formatting_Wordfile
     type=zip
     out=AgentDevelopmentTools/
-    AgentDevelopmentTools/UltraEdit_Wordfile=top
+    Other-Agent-Development-Tools/UltraEdit_Wordfile=top
 VisualSoar_Source
     type=zip
     out=AgentDevelopmentTools/
-    AgentDevelopmentTools/VisualSoar=top
+    VisualSoar=top
 Vim_Soar_Formatting_Plugin
     type=zip
     out=AgentDevelopmentTools/
-    AgentDevelopmentTools/vimplugin=top
+    Other-Agent-Development-Tools/vimplugin=top
 SoarQnA
     type=zip
     out=Domains/
-    Domains/SoarQnA=top
+    Domains-SoarQnA=top
 SoarTextIO
     type=zip
     out=Domains/
-    Domains/SoarTextIO=top
+    Domains-SoarTextIO=top
 WordNet
     type=zip
     out=Domains/
-    Domains/wn=top
+    Domains-WordNet=top
 WordNet_With_Parse_Trees
     type=zip
     out=Domains/
-    Domains/wsd=top
+    Domains-WordNet-with-Parse-Trees=top
 CSharp_Interface_Example
     type=zip
-    out=ExampleDomainDevelopmentCode/
-    ExampleDomainDevelopmentCode/CSharp=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/CSharp=top
 PHP_Interface_Example
     type=zip
-    out=ExampleDomainDevelopmentCode/
-    ExampleDomainDevelopmentCode/PHP=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/PHP=top
 Python_Interface_Example
     type=zip
-    out=ExampleDomainDevelopmentCode/
-    ExampleDomainDevelopmentCode/Soar_Exp=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/Soar_Exp=top
 Soar_Scratch_Pad_Example
     type=zip
-    out=ExampleDomainDevelopmentCode/
-    ExampleDomainDevelopmentCode/SoarScratchPad=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/SoarScratchPad=top
 Tower_Of_Hanoi_SML_Example
     type=zip
-    out=ExampleDomainDevelopmentCode/
-    ExampleDomainDevelopmentCode/TOHSML=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/TOHSML=top
 Soar_Filter_C_Example
     type=zip
-    out=Unsupported/
-    Unsupported/FilterC=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/FilterC=top
 Soar_Filter_Tcl_Example
     type=zip
-    out=Unsupported/
-    Unsupported/FilterTcl=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/FilterTcl=top
 Java_Missionaries_and_Cannibals_Example
     type=zip
-    out=Unsupported/
-    Unsupported/JavaMissionaries=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/JavaMissionaries=top
 Java_Tower_of_Hanoi_Example
     type=zip
-    out=Unsupported/
-    Unsupported/JavaTOH=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/JavaTOH=top
 LoggerJava_Example
     type=zip
-    out=Unsupported/
-    Unsupported/LoggerJava=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/LoggerJava=top
 LoggerWinC_Example
     type=zip
-    out=Unsupported/
-    Unsupported/LoggerWinC=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/LoggerWinC=top
 RL_Command_Line_Interface_Example
     type=zip
-    out=Unsupported/
-    Unsupported/RlCli=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/RlCli=top
 Soar_Obfuscator
     type=zip
-    out=Unsupported/
-    Unsupported/SoarObfuscator=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/SoarObfuscator=top
 Working_Memory_Activation_Tracker_Example
     type=zip
-    out=Unsupported/
-    Unsupported/WMActivationTracker=top
+    out=Examples-and-Unsupported/
+    Examples-and-Unsupported/WMActivationTracker=top
 TclSoarLib_9.4.0
   type=multiplatform-zip
   out=SoarSuite/
-  Release/Shuffler_Input/COMPILE_DIR/out/libTcl_sml_ClientInterface.DLL_EXTENSION=top
-  Release/Shuffler_Input/COMPILE_DIR/out/libtclsoarlib.DLL_EXTENSION=top
-  Release/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=top
-  Release/Shuffler_Input/COMPILE_DIR/out/tcl=tcl
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libTcl_sml_ClientInterface.DLL_EXTENSION=top
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libtclsoarlib.DLL_EXTENSION=top
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=top
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=tcl
   SoarSuite/Tcl/TclSoarLib_README.txt=top
 SoarTutorial_9.4.0
   type=multiplatform-zip
   out=SoarSuite/
-  Release/Shuffler_Input/jars/VisualSoar.jar=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/java=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/libTcl_sml_ClientInterface.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libtclsoarlib.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
-  Documentation/Agents_readme.txt=Agents/
-  Documentation/pdf/Soar Tutorial Part 1.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 2.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 3.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 4.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 5.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 6.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 7 - RL.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 8 - SMem.pdf=Documentation
-  Documentation/pdf/Soar Tutorial Part 9 - EpMem.pdf=Documentation
-  Documentation/pdf/SoarManual.pdf=Documentation
+  Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libTcl_sml_ClientInterface.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libtclsoarlib.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
+  Release-Support/txt/Agents_readme.txt=Agents/
+  Release-Support/pdf/Soar Tutorial Part 1.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 2.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 3.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 4.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 5.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 6.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 7 - RL.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 8 - SMem.pdf=Documentation
+  Release-Support/pdf/Soar Tutorial Part 9 - EpMem.pdf=Documentation
+  Release-Support/pdf/SoarManual.pdf=Documentation
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Agents/arithmetic=Agents/arithmetic
   Agents/blocks-world-RL=Agents/blocks-world-RL
@@ -304,71 +304,71 @@ SoarTutorial_9.4.0
   Agents/water-jug-rl=Agents/water-jug-rl
   Agents/water-jug-simple=Agents/water-jug-simple
   Agents/water-jug-tie=Agents/water-jug-tie
-  Release/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
-  Domains/Eaters_TankSoar/agents/eaters=Agents/Eaters
-  Domains/Eaters_TankSoar/agents/tanksoar=Agents/TankSoar
-  Domains/Eaters_TankSoar/config/eaters.cnf=config
-  Domains/Eaters_TankSoar/config/maps/eaters=config/maps/eaters
-  Domains/Eaters_TankSoar/config/maps/tanksoar=config/maps/tanksoar
-  Domains/Eaters_TankSoar/config/tanksoar.cnf=config
-  Release/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
-  Release/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
-  Release/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
-  Release/scripts/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
-  Release/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
-  Release/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
-  Release/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
+  Release-Support/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
+  Domains-Eaters-TankSoar/agents/eaters=Agents/Eaters
+  Domains-Eaters-TankSoar/agents/tanksoar=Agents/TankSoar
+  Domains-Eaters-TankSoar/config/eaters.cnf=config
+  Domains-Eaters-TankSoar/config/maps/eaters=config/maps/eaters
+  Domains-Eaters-TankSoar/config/maps/tanksoar=config/maps/tanksoar
+  Domains-Eaters-TankSoar/config/tanksoar.cnf=config
+  Release-Support/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
+  Release-Support/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
+  Release-Support/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
+  Release-Support/scripts/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
+  Release-Support/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
+  Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
+  Release-Support/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
 TankSoar_9.4.0
   type=multiplatform-zip
   out=Domains/
-  Release/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
-  Release/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger-api.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/java/sml.jar=bin/java
-  Release/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
-  Release/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
-  Release/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
-  Domains/Eaters_TankSoar/agents/tanksoar=agents/
-  Domains/Eaters_TankSoar/config/tanksoar.cnf=config
-  Domains/Eaters_TankSoar/config/maps/tanksoar=config/maps/tanksoar
+  Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
+  Release-Support/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger-api.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/sml.jar=bin/java
+  Release-Support/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
+  Release-Support/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
+  Release-Support/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
+  Domains-Eaters-TankSoar/agents/tanksoar=agents/
+  Domains-Eaters-TankSoar/config/tanksoar.cnf=config
+  Domains-Eaters-TankSoar/config/maps/tanksoar=config/maps/tanksoar
 Eaters_9.4.0
   type=multiplatform-zip
   out=Domains/
-  Release/scripts/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
-  Release/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger-api.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
-  Release/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/java
-  Release/Shuffler_Input/COMPILE_DIR/out/java/sml.jar=bin/java
-  Release/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
-  Release/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
-  Release/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
-  Domains/Eaters_TankSoar/agents/eaters=agents/
-  Domains/Eaters_TankSoar/config/eaters.cnf=config
-  Domains/Eaters_TankSoar/config/maps/eaters=config/maps/eaters
+  Release-Support/scripts/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
+  Release-Support/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger-api.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/sml.jar=bin/java
+  Release-Support/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
+  Release-Support/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
+  Release-Support/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
+  Domains-Eaters-TankSoar/agents/eaters=agents/
+  Domains-Eaters-TankSoar/config/eaters.cnf=config
+  Domains-Eaters-TankSoar/config/maps/eaters=config/maps/eaters
 SoarSuite_9.4.0
   type=multiplatform-zip
   out=SoarSuite/
-  Release/Shuffler_Input/COMPILE_DIR/out=bin
-  Release/Shuffler_Input/jars/VisualSoar.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out=bin
+  Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
   Agents/default=Agents/default
-  Release/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
-  Release/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
-  Documentation/pdf/SoarManual.pdf=Documentation
+  Release-Support/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
+  Release-Support/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
+  Release-Support/pdf/SoarManual.pdf=Documentation
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
-  Release/docs/Building_Soar.txt=Documentation
-  Release/docs/Release_Notes_9.4.0.txt=Documentation
-  Release/docs/license.txt=top
+  Release-Support/txt/Building_Soar.txt=Documentation
+  Release-Support/txt/Release_Notes_9.4.0.txt=Documentation
+  Release-Support/txt/license.txt=top
 SoarSuite_9.4.0-source
   type=zip
   out=SoarSuite/
@@ -382,33 +382,33 @@ SoarSuite_9.4.0-source
   SoarSuite/build_lsb.sh=top
   SoarSuite/build.bat=top
   SoarSuite/SConstruct=top
-  Documentation/pdf/SoarManual.pdf=Documentation
-  Release/docs/Building_Soar.txt=top
-  Release/docs/license.txt=top
-  Release/docs/Release_Notes_9.4.0.txt=Documentation
-  Release/Shuffler_Input/jars/VisualSoar.jar=bin
+  Release-Support/pdf/SoarManual.pdf=Documentation
+  Release-Support/txt/Building_Soar.txt=top
+  Release-Support/txt/license.txt=top
+  Release-Support/txt/Release_Notes_9.4.0.txt=Documentation
+  Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
 RoomsWorld_9.4.0
   type=multiplatform-zip
   out=Domains/
-  Release/scripts/RELEASE_DIR/RoomsWorld.LAUNCH_EXTENSION=top
-  Release/Shuffler_Input/COMPILE_DIR/soar_robot_server=top
+  Release-Support/scripts/RELEASE_DIR/RoomsWorld.LAUNCH_EXTENSION=top
+  Release-Support/Shuffler_Input/COMPILE_DIR/soar_robot_server=top
 InfiniteMario-9.4.0
   type=zip
   out=Domains/
-  Domains/InfiniteMario=InfiniteMario/
+  Domains-InfiniteMario=InfiniteMario/
 DiceQnA
   type=zip
   out=Domains/
-  Domains/DiceQnA=DiceQnA/
+  Domains-DiceQnA=DiceQnA/
 Dice
   type=zip
   out=Domains/
-  Domains/Dice=Dice/
+  Domains-Dice=Dice/
 GGP
   type=zip
-  out=GeneratingTools/
-  GeneratingTools/GGP=GGP/
+  out=Domains/
+  Domains-General-Game-Playing=GGP/
 PDDL
   type=zip
-  out=GeneratingTools/
-  GeneratingTools/PDDL=PDDL/
+  out=Domains/
+  Domains-Planning-Domain-Definition-Language=PDDL/

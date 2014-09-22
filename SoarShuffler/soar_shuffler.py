@@ -7,8 +7,8 @@ import pdb
 
 SPL = dict()
 Repository_Dir = "/Users/mazzin/git/Soar/"
-Input_Dir = "/Users/mazzin/git/Soar/Release/Shuffler_Input/"
-Output_Dir = "/Users/mazzin/git/Soar/Release/Shuffler_Output/"
+Input_Dir = "/Users/mazzin/git/Soar/Release-Support/Shuffler_Input/"
+Output_Dir = "/Users/mazzin/git/Soar/Release-Support/Shuffler_Output/"
 
 def clean_output_dir():
     if (os.path.exists(Output_Dir)):
