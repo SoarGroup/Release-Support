@@ -1,41 +1,47 @@
-=================================== 
-Soar 9.4 Release Notes, Sept 2014
-===================================
+==================================== 
+Soar 9.4 Release Notes, October 2014
+====================================
 
-This release of Soar continues the 9.3 line. It includes the ability to
-include search control knowledge into chunks, a new form of integrated
-Tcl support, improved episodic and semantic memory and a large
-assortment of bug fixes and user interface enhancements.  All learning
-mechanisms are disabled by default.
+This release of Soar includes the the much anticipated Soar Spatial Visual
+System (SVS), various important bug fixes, new commands for semantic memory, a
+new command to set interrupts on productions at run-time, a new chunk naming
+scheme, and an automated mechanism to convert old semantic and episodic memory
+databases to the newest format and a lot of code clean-up/refactoring.  SVS and
+all learning mechanisms are off by default.
 
 Soar can be downloaded by following the download link on the Soar home
 page at:
 
-        http://soar.eecs.umich.edu/articles/downloads/soar-suite
+     http://soar.eecs.umich.edu/articles/downloads/soar-suite
 
 Soar releases include source code, demo programs, and a number of
 applications that serve as examples of how to interface Soar to an
 external environment.  There is support for integrating Soar with C++,
 Java, Tcl and Python applications.  Many tools that aid in development
-of Soar programs are also available.  The newly expanded download
-section of the web site allows you to browse and download all of the
+of Soar programs are also available.  The download section of the web site
+allows you to browse and download all of the
 different distributions, tools and agents.
 
 [Help and Contact information]
 
 You can find many helpful resources on the Soar home page at:
 
-        https://soar.eecs.umich.edu
+     https://soar.eecs.umich.edu
 
-To contact the Soar group or get help, simply sign up on the web site.  
-This will give you access to the forums, where you can ask questions and 
-participate in Soar-related discussions.  It will also register you
-for our announcement mailing list.  You can also sign up to be notified
-of new topics in the forums related to your interests.
+To contact the Soar group, you may join and post to one of our mailing
+lists:
+
+For general Soar-related discussion and announcements:
+        
+        soar-group@lists.sourceforge.net
+
+For more technical developer discussion:
+         
+        soar-sml-list@lists.sourceforge.net
 
 Also, please do not hesitate to file bugs on our issue tracker:
 
-        https://github.com/SoarGroup/Soar/issues
+     https://github.com/SoarGroup/Soar/issues
 
 To avoid redundant entries, please search for duplicate issues first.
 

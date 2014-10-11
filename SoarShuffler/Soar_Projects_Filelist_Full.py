@@ -246,14 +246,6 @@ Working_Memory_Activation_Tracker_Example
     type=zip
     out=Examples-and-Unsupported/
     Examples-and-Unsupported/WMActivationTracker=top
-TclSoarLib_9.4.0
-  type=multiplatform-zip
-  out=SoarSuite/
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/libTcl_sml_ClientInterface.DLL_EXTENSION=top
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/libtclsoarlib.DLL_EXTENSION=top
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=top
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=tcl
-  SoarSuite/Tcl/TclSoarLib_README.txt=top
 SoarTutorial_9.4.0
   type=multiplatform-zip
   out=SoarSuite/
