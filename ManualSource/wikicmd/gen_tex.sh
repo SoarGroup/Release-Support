@@ -3,42 +3,32 @@ PYTHON=python
 
 echo "Generating Soar CLI latex files. (../cli_help.cpp)"
 
-preproc() {
-	sed '/#summary/d' $1
-}
-
 if ! $PYTHON -V 2>&1 | awk '{split($2, v, "."); if (v[1] != 2 || v[2] < 4) exit 1}'
 then
 	echo "moin2latex.py needs 2.4 <= Python version < 3.0"
 	exit 1
 fi
 
-echo "Downloading wiki files from repository..."
-
-if [ ! -d wiki ]
-then
-	git clone git@github.com:SoarGroup/soar-cli-documentation.git wiki
-else
-	pushd wiki
-	git fetch
-	git checkout HEAD
-	popd
-fi
-
 rm -rf tex
 mkdir tex
 
-echo "Converting to latex..."
+eecho "Downloading wiki files from repository..."
 
-for f in wiki/cmd_*.wiki
-do
-	tf=`echo "$f" | sed 's:^wiki/cmd_::
-	                     s:_:-:g
-	                     s:wiki$:tex:'`
-	printf "$tf "
-	preproc "$f" | $PYTHON moin2latex.py > "tex/$tf" || exit 1
+git clone https://github.com/SoarGroup/Soar.wiki.git
+
+echo "Converting to html..."
+
+for file in Soar.wiki/ManualsAndFAQs/CLI/cmd_*.md; do
+	base=`basename $file`
+	stripped=${base%.*}
+	stripped=${stripped#cmd_}
+	stripped=${stripped//_/-}
+
+	pandoc $file -f markdown_github -t latex -o tex/$stripped.tex
+	sed -i '' 's/@{}llll@{}/@{}p{4cm}p{6cm}p{4cm}p{2cm}@{}/g' tex/$stripped.tex
+	sed -i '' 's/@{}lll@{}/@{}p{3cm}p{5cm}p{8cm}@{}/g' tex/$stripped.tex
+	sed -i '' 's/@{}ll@{}/@{}p{8cm}p{8cm}@{}/g' tex/$stripped.tex
 done
-printf "\n"
 
 # make sure every command listed on the wiki is included in the
 # interface section of the manual
@@ -47,8 +37,7 @@ echo "Making sure every command listed on the wiki is included in the interface 
 
 for f in tex/*
 do
-    printf "$f "
-	f=`echo $f | awk -F. '{print $1}'`
+	f=${f%.*}
 	if ! grep -q "input{wikicmd/$f}" ../interface.tex
 	then
 		unused=1
@@ -57,7 +46,7 @@ do
 done
 
 echo "Cleaning up..."
-rm -rf wiki
+rm -rf Soar.wiki
 
 if [ -n "$unused" ]
 then
