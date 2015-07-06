@@ -1,0 +1,177 @@
+=========================================== 
+Soar 9.5.0.beta Release Notes, July 2015
+===========================================
+
+This release of Soar includes a new, more powerful version of chunking, which
+we call explanation-based chunking.  It also includes various important bug 
+fixes, a new off-policy reinforcement learning exploration option guaranteed to 
+converge and a new depth parameter for semantic memory.  
+
+SVS, explanation-based chunking and all other learning mechanisms are off by 
+default.
+
+========================
+Beta Version Information
+========================
+
+This version of Soar has has been a research project that has been in parallel 
+development with main branch of Soar for almost two years. As a result, we 
+currently consider this version a beta release.  Because the changes were 
+so widespread and involved, we want to spend extra time testing correctness, 
+optimizing for speed, improving memory use and creating documentation.
+
+That said, it's already being used to do some interesting new work in more than 
+one big research project at the University of Michigan. Moreover, many of the 
+low-level changes have been gradually migrated over in 9.3.4 and 9.4.0, so those
+aspects have already had a lot of field testing.
+
+=================
+Important Changes
+=================
+
+(1) Explanation-Based Chunking
+
+    Soar is now able to learn rules that are far more general than before.  
+    While previous versions of Soar would only generalize relationships 
+    between Soar short-term identifiers, Soar 9.5's EBC system will now 
+    generalize reasoning over other types of knowledge.
+
+    In more practical terms, any element in a learned rule can now be 
+    variablized.  To handle the type of reasoning that agents use with
+    these other knowlege types, Soar will add constraints on the 
+    value of variables which summarize what constraints had to be true 
+    for the original problem-solving to occur.
+
+    In general, we expect users to find that:
+
+    - Their agents will learn fewer rules that can apply to a greater number 
+      of future situations.
+    - These rules will be more general but never over-general.
+       - Note that EBC does not eliminate over-generality that can come from 
+         negatively testing structures in a substate.  That remains as the 
+         only source of over-generality.
+    - Their agents will be far less likely to be slowed down by a large 
+      number of very specific rules that never fire.  As a result, we hope 
+      that users will eventually be comfortable always leaving EBC on by 
+      default.
+
+    Caveats:
+
+    - Agents designed to work well with previous versions of chunking may not 
+      see any improvements, since their problem-solving was designed to revolve 
+      around relationships between short-term identifiers.
+    - EBC has not been tested with the context-dependent preference set, which 
+      was introduced in 9.3.4.  (off by default)  Users can still enable
+      learning search control knowlege (what the CDPS does), but Soar will give
+      a warning.
+    - Preliminary testing has shown that Soar 9.5's speed is on par with other 
+      major additions to Soar.  (based on TestSoarPerformance and a few tests
+      in the new Soar performance testing framework).
+      - While we have already found several way to improve performance, we 
+        have not thoroughly profiled the code to find ways to optimize it.  We 
+        expect more improvements in the future.
+    - Memory usage has not been profiled or optimized at all yet. Currently Soar
+      9.5 will use more memory than 9.4.
+    - You cannot turn EBC off in 9.5 beta.  While we may add an option to
+      simulate 9.4's chunking, we are not yet sure whether we can make it
+      exactly equivalent.  
+
+    For more information, see Mazin Assanie's presentation slides from the 2015
+    Soar Workshop.
+
+(2) GQ(λ) Off-Policy Learning
+
+    - This reinforcement learning option provides off-policy learning quite 
+      effectively.  This is a good approach in cases when agent training 
+      performance is less important than agent execution performance.
+    - GQ(λ) converges despite irreversible actions and other difficulties 
+      approaching the training goal.  Convergence should be guaranteed for 
+      stable environments.
+
+    Caveats:
+
+    - Should use a lower learning rate
+    - Might need to tune step-size-parameter
+    - Computational cost is marginally higher.
+    - Performance is not guaranteed to dominate Sarsa(λ) or Q(λ), but 
+      convergence should be guaranteed.
+
+    For more information, see Mitchell Bloch's presentation slides from the 2015
+    Soar Workshop.
+    
+(3) New semantic memory depth parameter
+    - Semantic memory retrievals now accept a "depth" parameter with an 
+      integer value.  
+    - Soar will limit retrieval to a wme graph of that height.
+
+(4) Various bug fixes
+    - Full listing will be included with the official 9.5 release.  If you 
+      need to know more now, you can visit our github site and browse the 
+      commit history of the development branch.
+
+(5) Many low-level architectural changes and a lot of code clean-up and 
+    refactoring.
+    - New test representation
+    - More object-oriented
+    - Centralized output manager
+    - General memory manager that allows memory management to no longer be 
+      agent-specific
+    - Vastly improved debug output for Soar data structures
+    - Lots of new unit tests.  About 50 of them are new ones created for the 
+      new explanation-based chunking capabilities.  We're also in the process 
+      of porting a few hundred unit tests from the java-based version of Soar.
+    - Eliminated a few third-party libraries Soar that was dependent on
+    - A new performance testing framework that will allow us to compare a
+      broader range of agents
+
+=============
+Contributions
+=============
+
+Alex Turner for his many contributions getting this release out as well as the 
+new unit and performance testing frameworks, Nathan Glenn for his Lexer, parser
+and scons build improvements, and to Soar Technology for funding a portion of 
+9.5's development in 2014.  Also, credit to Mitchell Bloch for the GQ(λ) 
+Off-Policy Learning option and Steven Jones for the semantic memory depth 
+parameter.  And, Mazin Assanie for explanation-based chunking and all the 
+architecture changes, clean-up, refactoring and bug fixes.
+
+===================
+General Information
+===================
+
+Soar can be downloaded by following the download link on the Soar home
+page at:
+
+     http://soar.eecs.umich.edu/articles/downloads/soar-suite
+
+Soar releases include source code, demo programs, and a number of
+applications that serve as examples of how to interface Soar to an
+external environment.  There is support for integrating Soar with C++,
+Java, Tcl and Python applications.  Many tools that aid in development
+of Soar programs are also available.  The download section of the web site
+allows you to browse and download all of the different distributions, 
+tools and agents.
+
+[Help and Contact information]
+
+You can find many helpful resources on the Soar home page at:
+
+     https://soar.eecs.umich.edu
+
+To contact the Soar group, you may join and post to one of our mailing
+lists:
+
+For general Soar-related discussion and announcements:
+        
+        soar-group@lists.sourceforge.net
+
+For more technical developer discussion:
+         
+        soar-sml-list@lists.sourceforge.net
+
+Also, please do not hesitate to file bugs on our issue tracker:
+
+     https://github.com/SoarGroup/Soar/issues
+
+To avoid redundant entries, please search for duplicate issues first.
