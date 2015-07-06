@@ -295,6 +295,38 @@ Currently supported condition names are:
 \end{description}
 \end{itemize}
 
+\subsection{Retrieval with Depth}
+For either cue-based or non-cue-based retrieval, it is possible to retrieve a long-term identifier with additional depth. Using the depth parameter allows the agent to retrieve a greater amount of the memory structure than it would have by retrieving not only the long-term identifier's attributes and values, but also by recursively adding to Working Memory the attributes and values of that long-term identifier's children.
+
+Depth is an additional command attribute like query:
+\begin{verbatim}
+<s> ^smem.command.query <cue>
+    ^smem.command.depth <integer>
+\end{verbatim}
+
+For instance, the following rule uses depth with a cue-based retrieval:
+\begin{verbatim}
+sp {smem*sample*query
+    (state <s> ^smem.command <sc>
+               ^input-link.foo <bar>)
+-->
+    (<sc> ^query <q>
+          ^depth 2)
+    (<q> ^name <any-name>
+         ^foo <bar>
+         ^associate <lti>
+         ^age 25)
+}
+\end{verbatim}
+
+In the example above and without using depth, the long-term identifier referenced by
+\begin{verbatim}
+^associate <lti>
+\end{verbatim}
+would not also have its attributes and values be retrieved. With a depth of 2 or more, that long-term identifier also has its attributes and values added to Working Memory.
+
+Depth is not yet extensively tested. Also, it can incur a large cost depending on the specified depth and the structures stored in Semantic Memory.
+
 \section{Performance}
 \label{SMEM-perf}
 
