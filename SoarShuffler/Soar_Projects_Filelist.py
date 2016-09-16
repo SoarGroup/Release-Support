@@ -1,139 +1,3 @@
-Algebra_Agent
-  type=zip
-  out=Agents/
-  Agents/algebra=top
-Arithmetic_Agent
-  type=zip
-  out=Agents/
-  Agents/arithmetic=top
-Arithmetic-SMem_Agent
-  type=zip
-  out=Agents/
-  Agents/arithmetic-smem=top
-BlocksWorld_Hierarchical_Lookahead_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-hierachical-lookahead=top
-BlocksWorld_Hierarchical_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-hierarchical=top
-BlocksWorld_Lookahead_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-lookahead=top
-BlocksWorld_Hierarchical_State_Evaluation_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-lookahead-state-evaluation=top
-BlocksWorld_Subgoaling_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-operator-subgoaling=top
-BlocksWorld_Subgoaling_RL_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-operator-subgoaling-RL=top
-BlocksWorld_RL_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-RL=top
-BlocksWorld_Simple_Agent
-  type=zip
-  out=Agents/
-  Agents/blocks-world-simple=top
-Episodic_Memory_Counting_Agent
-  type=zip
-  out=Agents/
-  Agents/count-epmem=top
-Counting_Agent
-  type=zip
-  out=Agents/
-  Agents/count-test-files=top
-Eight_Puzzle_Agent
-  type=zip
-  out=Agents/
-  Agents/eight-puzzle=top
-Episodic_Memory_Tutorial_Agent
-  type=zip
-  out=Agents/
-  Agents/epmem-tutorial=top
-Fifteen_Puzzle_Agent
-  type=zip
-  out=Agents/
-  Agents/fifteen-puzzle=top
-Graph_Search_Agent
-  type=zip
-  out=Agents/
-  Agents/graph-search=top
-Graph_Search_SMem_Agent
-  type=zip
-  out=Agents/
-  Agents/graph-search-smem=top
-Hello_World_Operator_Agent
-  type=zip
-  out=Agents/
-  Agents/hello-world-operator=top
-Hello_World_Rule_Agent
-  type=zip
-  out=Agents/
-  Agents/hello-world-rule=top
-KB_Agent
-  type=zip
-  out=Agents/
-  Agents/kb=top
-Left_Right_RL_Agent
-  type=zip
-  out=Agents/
-  Agents/left-right=top
-Missionaries_And_Cannibals_Simple_Agent
-  type=zip
-  out=Agents/
-  Agents/mac=top
-Missionaries_And_Cannibals_Planning_Agent
-  type=zip
-  out=Agents/
-  Agents/mac-planning=top
-Reinforcement_Learning_Unit_Test_Agent
-  type=zip
-  out=Agents/
-  Agents/rl-unit=top
-Semantic_Memory_Tutorial_Agent
-  type=zip
-  out=Agents/
-  Agents/smem-tutorial=top
-Soar7_Agent_Collection
-  type=zip
-  out=Agents/
-  Agents/soar7=top
-Tower_Of_Hanoi_Recursive_Agent
-  type=zip
-  out=Agents/
-  Agents/towers-of-hanoi-recursive=top
-Tower_Of_Hanoi_Simple_Agent
-  type=zip
-  out=Agents/
-  Agents/towers-of-hanoi-simple=top
-Water_Jug_Hierarchical_Agent
-  type=zip
-  out=Agents/
-  Agents/water-jug-hierarchy=top
-Water_Jug_Look_Ahead_Agent
-  type=zip
-  out=Agents/
-  Agents/water-jug-look-ahead=top
-Water_Jug_Reinforcement_Learning_Agent
-  type=zip
-  out=Agents/
-  Agents/water-jug-rl=top
-Water_Jug_Simple_Agent
-  type=zip
-  out=Agents/
-  Agents/water-jug-simple=top
-Water_Jug_Tie_Agent
-  type=zip
-  out=Agents/
-  Agents/water-jug-tie=top
 SoarManual
   type=copy
   out=Documentation/
@@ -150,103 +14,7 @@ SoarTutorial
   Release-Support/pdf/Soar Tutorial Part 7 - RL.pdf=SoarTutorial
   Release-Support/pdf/Soar Tutorial Part 8 - SMem.pdf=SoarTutorial
   Release-Support/pdf/Soar Tutorial Part 9 - EpMem.pdf=SoarTutorial
-Episodic_Memory_Sizer
-    type=zip
-    out=AgentDevelopmentTools/
-    Other-Agent-Development-Tools/epmem-size=top
-QuickLink
-    type=zip
-    out=AgentDevelopmentTools/
-    Other-Agent-Development-Tools/QuickLink=top
-State2Dot
-    type=zip
-    out=AgentDevelopmentTools/
-    Other-Agent-Development-Tools/State2Dot=top
-UltraEdit_Soar_Formatting_Wordfile
-    type=zip
-    out=AgentDevelopmentTools/
-    Other-Agent-Development-Tools/UltraEdit_Wordfile=top
-VisualSoar_Source
-    type=zip
-    out=AgentDevelopmentTools/
-    VisualSoar=top
-Vim_Soar_Formatting_Plugin
-    type=zip
-    out=AgentDevelopmentTools/
-    Other-Agent-Development-Tools/vimplugin=top
-SoarQnA
-    type=zip
-    out=Domains/
-    Domains-SoarQnA=top
-SoarTextIO
-    type=zip
-    out=Domains/
-    Domains-SoarTextIO=top
-WordNet
-    type=zip
-    out=Domains/
-    Domains-WordNet=top
-WordNet_With_Parse_Trees
-    type=zip
-    out=Domains/
-    Domains-WordNet-with-Parse-Trees=top
-CSharp_Interface_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/CSharp=top
-PHP_Interface_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/PHP=top
-Python_Interface_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/Soar_Exp=top
-Soar_Scratch_Pad_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/SoarScratchPad=top
-Tower_Of_Hanoi_SML_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/TOHSML=top
-Soar_Filter_C_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/FilterC=top
-Soar_Filter_Tcl_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/FilterTcl=top
-Java_Missionaries_and_Cannibals_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/JavaMissionaries=top
-Java_Tower_of_Hanoi_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/JavaTOH=top
-LoggerJava_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/LoggerJava=top
-LoggerWinC_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/LoggerWinC=top
-RL_Command_Line_Interface_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/RlCli=top
-Soar_Obfuscator
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/SoarObfuscator=top
-Working_Memory_Activation_Tracker_Example
-    type=zip
-    out=Examples-and-Unsupported/
-    Examples-and-Unsupported/WMActivationTracker=top
-SoarTutorial_9.5.0
+SoarTutorial_9.6.0
   type=multiplatform-zip
   out=SoarSuite/
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
@@ -259,6 +27,7 @@ SoarTutorial_9.5.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Release-Support/txt/Agents_readme.txt=Agents/
+  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
   Release-Support/pdf/Soar Tutorial Part 1.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 2.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 3.pdf=Documentation
@@ -310,7 +79,7 @@ SoarTutorial_9.5.0
   Release-Support/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
   Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
   Release-Support/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
-TankSoar_9.5.0
+TankSoar_9.6.0
   type=multiplatform-zip
   out=Domains/
   Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
@@ -329,7 +98,7 @@ TankSoar_9.5.0
   Domains-Eaters-TankSoar/agents/tanksoar=agents/
   Domains-Eaters-TankSoar/config/tanksoar.cnf=config
   Domains-Eaters-TankSoar/config/maps/tanksoar=config/maps/tanksoar
-Eaters_9.5.0
+Eaters_9.6.0
   type=multiplatform-zip
   out=Domains/
   Release-Support/scripts/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
@@ -348,7 +117,7 @@ Eaters_9.5.0
   Domains-Eaters-TankSoar/agents/eaters=agents/
   Domains-Eaters-TankSoar/config/eaters.cnf=config
   Domains-Eaters-TankSoar/config/maps/eaters=config/maps/eaters
-SoarSuite_9.5.0
+SoarSuite_9.6.0
   type=multiplatform-zip
   out=SoarSuite/
   Release-Support/Shuffler_Input/COMPILE_DIR/out=bin
@@ -359,9 +128,10 @@ SoarSuite_9.5.0
   Release-Support/pdf/SoarManual.pdf=Documentation
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Release-Support/txt/Building_Soar.txt=Documentation
-  Release-Support/txt/Release_Notes_9.5.0.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
+  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
   Release-Support/txt/license.txt=top
-SoarSuite_9.5.0-source
+SoarSuite_9.6.0-source
   type=zip
   out=SoarSuite/
   SoarSuite/Core=Core
@@ -375,32 +145,18 @@ SoarSuite_9.5.0-source
   SoarSuite/build.bat=top
   SoarSuite/SConstruct=top
   Release-Support/pdf/SoarManual.pdf=Documentation
+  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
   Release-Support/txt/Building_Soar.txt=top
   Release-Support/txt/license.txt=top
-  Release-Support/txt/Release_Notes_9.5.0.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
-RoomsWorld_9.5.0
+RoomsWorld_9.6.0
   type=multiplatform-zip
   out=Domains/
   Release-Support/scripts/RELEASE_DIR/RoomsWorld.LAUNCH_EXTENSION=top
   Release-Support/Shuffler_Input/COMPILE_DIR/soar_robot_server=top
-InfiniteMario-9.5.0
+InfiniteMario-9.6.0
   type=zip
   out=Domains/
   Domains-InfiniteMario=InfiniteMario/
-DiceQnA
-  type=zip
-  out=Domains/
-  Domains-DiceQnA=DiceQnA/
-Dice
-  type=zip
-  out=Domains/
-  Domains-Dice=Dice/
-GGP
-  type=zip
-  out=Domains/
-  Domains-General-Game-Playing=GGP/
-PDDL
-  type=zip
-  out=Domains/
-  Domains-Planning-Domain-Definition-Language=PDDL/
+  

@@ -246,7 +246,7 @@ Working_Memory_Activation_Tracker_Example
     type=zip
     out=Examples-and-Unsupported/
     Examples-and-Unsupported/WMActivationTracker=top
-SoarTutorial_9.5.0
+SoarTutorial_9.6.0
   type=multiplatform-zip
   out=SoarSuite/
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
@@ -259,6 +259,7 @@ SoarTutorial_9.5.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Release-Support/txt/Agents_readme.txt=Agents/
+  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
   Release-Support/pdf/Soar Tutorial Part 1.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 2.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 3.pdf=Documentation
@@ -310,7 +311,7 @@ SoarTutorial_9.5.0
   Release-Support/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
   Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
   Release-Support/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
-TankSoar_9.5.0
+TankSoar_9.6.0
   type=multiplatform-zip
   out=Domains/
   Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
@@ -329,7 +330,7 @@ TankSoar_9.5.0
   Domains-Eaters-TankSoar/agents/tanksoar=agents/
   Domains-Eaters-TankSoar/config/tanksoar.cnf=config
   Domains-Eaters-TankSoar/config/maps/tanksoar=config/maps/tanksoar
-Eaters_9.5.0
+Eaters_9.6.0
   type=multiplatform-zip
   out=Domains/
   Release-Support/scripts/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
@@ -348,7 +349,7 @@ Eaters_9.5.0
   Domains-Eaters-TankSoar/agents/eaters=agents/
   Domains-Eaters-TankSoar/config/eaters.cnf=config
   Domains-Eaters-TankSoar/config/maps/eaters=config/maps/eaters
-SoarSuite_9.5.0
+SoarSuite_9.6.0
   type=multiplatform-zip
   out=SoarSuite/
   Release-Support/Shuffler_Input/COMPILE_DIR/out=bin
@@ -359,9 +360,10 @@ SoarSuite_9.5.0
   Release-Support/pdf/SoarManual.pdf=Documentation
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Release-Support/txt/Building_Soar.txt=Documentation
-  Release-Support/txt/Release_Notes_9.5.0.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
+  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
   Release-Support/txt/license.txt=top
-SoarSuite_9.5.0-source
+SoarSuite_9.6.0-source
   type=zip
   out=SoarSuite/
   SoarSuite/Core=Core
@@ -377,14 +379,15 @@ SoarSuite_9.5.0-source
   Release-Support/pdf/SoarManual.pdf=Documentation
   Release-Support/txt/Building_Soar.txt=top
   Release-Support/txt/license.txt=top
-  Release-Support/txt/Release_Notes_9.5.0.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
+  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
-RoomsWorld_9.5.0
+RoomsWorld_9.6.0
   type=multiplatform-zip
   out=Domains/
   Release-Support/scripts/RELEASE_DIR/RoomsWorld.LAUNCH_EXTENSION=top
   Release-Support/Shuffler_Input/COMPILE_DIR/soar_robot_server=top
-InfiniteMario-9.5.0
+InfiniteMario-9.6.0
   type=zip
   out=Domains/
   Domains-InfiniteMario=InfiniteMario/
