@@ -1,0 +1,21 @@
+Soar-CLI Command Line Options
+    -l            Listen on, i.e. launches Soar kernel in new thread
+    -n            No syntax coloring
+    -p <port>     Listens on port <port>
+    -s <file>     Sources file <file> on load
+
+Soar Java Debugger Command Line Options
+
+    -remote             Use a remote connection (with default ip and port values)
+    -ip xxx             Use this IP value (implies remote connection)
+    -port ppp           Use this port (implies remote connection, without any remote options we start a local kernel)
+    -agent <name>       On a remote connection select this agent as initial agent
+    -agent <name>       On a local connection use this as the name of the initial agent
+    -source <path>      Load this file of productions on launch (only valid for local kernel)
+    -quitonfinish       When combined with source causes the debugger to exit after sourcing that one file
+    -listen ppp         Use this port to listen for remote connections (only valid for a local kernel)
+    -maximize           Start with maximized window
+    -width <width>      Start with this window width
+    -height <height>    Start with this window height
+    -x <x> -y <y>       Start with this window position
+    -cascade            Cascade each window that starts (offseting from the -x <x> -y <y> if given). This option now always on. (Providing width/height/x/y => not a maximized window)

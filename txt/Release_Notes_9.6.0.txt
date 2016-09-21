@@ -1,0 +1,141 @@
+=========================================== 
+Soar 9.6.0 Release Notes, September 2016
+===========================================
+
+This release of Soar includes two key new features:  (1) the first non-beta
+release of a new, far more powerful rule learning mechanism, which we call 
+explanation-based chunking, (2) a new instance-based model of semantic memory
+that can be used in a greater variety of ways and integrates with other aspects
+of Soar much more cleanly, (3) an explanation mechanism that provides
+interactive exploration of an agent's learning history and, (4) a visualizer 
+that creates graphical representations of Soar's memory systems and even some 
+of its processing.  It also includes various important bug fixes and code 
+improvements.
+
+=================
+Important Changes
+=================
+
+(1) Explanation-Based Chunking
+
+    Soar now does much deeper analysis of problem-solving in a substate
+    to learn rules that are far more general than those found in other
+    rule-based architectures or previous versions of Soar. To achieve this,
+    explanation-based chunking combines an improved version of Soar's
+    instance-based backtracing algorithm with explanation-based variable 
+    identity analysis and constraint tracking.  It is also able to integrate
+    operator selection knowledge into rules and build rules in many
+    situations where Soar could not before.
+     
+    While previous versions of Soar would only generalize relationships 
+    between Soar short-term identifiers, Soar 9.5's EBC system will now 
+    generalize reasoning over all other types of knowledge.
+
+    In more practical terms, any element in a learned rule can now be 
+    variablized.  To handle the type of reasoning that agents use with
+    these other knowlege types, Soar will add constraints on the 
+    value of variables which summarize what constraints had to be true 
+    for the original problem-solving to occur.
+
+    In general, we expect users to find that:
+    - Their agents will learn fewer rules that can apply to a greater number 
+      of future situations.
+    - These rules will be more general but never over-general.
+       - Note that EBC has mechanisms to detect sources of generality and
+         correctness issues.
+    - Their agents will be far less likely to be slowed down by a large 
+      number of very specific rules that never fire.  As a result, we hope 
+      that users will eventually be comfortable always leaving EBC on by 
+      default.
+    - Agent designers no longer need to do a lot of special-purpose engineering 
+      to allow their agents to get work well with chunking.  People should now
+      be able to just turn it on.
+
+(2) Instance-Based Semantic Memory
+
+    Note:  Semantic memory databases from version 9.5 and below are not
+           compatible with Soar 9.6.  There is a version of Soar 9.5
+           available w
+            
+(3) Semantic Memory Exporting
+
+(3) Explainer
+(4) Visualizer
+(5) User-Interface Streamlining and Other Improvements
+    - New 'soar' command
+    - New 'output' command
+    - New 'debug' command
+    - New 'tcl' command
+    - Caveats
+      - One is not backward compatible:  set-stop-phase
+      - Eliminated soarnews, editproduction, set-load-library-location
+      
+(5) Various bug fixes
+
+(5) Many low-level architectural changes and a lot of code clean-up and 
+    refactoring.
+    - New test representation
+    - More object-oriented
+    - Centralized output manager
+    - General memory manager that allows memory management to no longer be 
+      agent-specific
+    - Vastly improved debug output for Soar data structures
+    - Lots of new unit tests.  About 50 of them are new ones created for the 
+      new explanation-based chunking capabilities.  We're also in the process 
+      of porting a few hundred unit tests from the java-based version of Soar.
+    - Eliminated a few third-party libraries Soar that was dependent on
+    - A new performance testing framework that will allow us to compare a
+      broader range of agents
+
+=============
+Contributions
+=============
+
+Alex Turner for his many contributions getting this release out as well as the 
+new unit and performance testing frameworks, Nathan Glenn for his Lexer, parser
+and scons build improvements, and to Soar Technology for funding a portion of 
+9.5's development in 2014.  Also, credit to Mitchell Bloch for the GQ(λ) 
+Off-Policy Learning option and Steven Jones for adding semantic memory debugging
+options like depth and query.  And to, Mazin Assanie for explanation-based 
+chunking, instance-based semantic memory, the explainer, visualizer, all the 
+architecture changes, clean-up, refactoring and bug fixes.
+
+===================
+General Information
+===================
+
+Soar can be downloaded by following the download link on the Soar home
+page at:
+
+     http://soar.eecs.umich.edu/articles/downloads/soar-suite
+
+Soar releases include source code, demo programs, and a number of
+applications that serve as examples of how to interface Soar to an
+external environment.  There is support for integrating Soar with C++,
+Java, Tcl and Python applications.  Many tools that aid in development
+of Soar programs are also available.  The download section of the web site
+allows you to browse and download all of the different distributions, 
+tools and agents.
+
+[Help and Contact information]
+
+You can find many helpful resources on the Soar home page at:
+
+     https://soar.eecs.umich.edu
+
+To contact the Soar group, you may join and post to one of our mailing
+lists:
+
+For general Soar-related discussion and announcements:
+        
+        soar-group@lists.sourceforge.net
+
+For more technical developer discussion:
+         
+        soar-sml-list@lists.sourceforge.net
+
+Also, please do not hesitate to file bugs on our issue tracker:
+
+     https://github.com/SoarGroup/Soar/issues
+
+To avoid redundant entries, please search for duplicate issues first.
