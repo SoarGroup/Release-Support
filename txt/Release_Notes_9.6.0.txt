@@ -150,6 +150,10 @@ New Features
            sub-system of Soar no longer requires other sub-systems to also
            also be initialized.  As a result, smem --init no longer clears
            clears all memories and init-soar will no longer excise rules.
+           
+    Warning:  Episodic memory has been modified to work with the new model of
+              semantic memory and does pass all current unit tests.  That said
+              we have not yet explored new use cases that should be possible.
 
 (3) Stream-lined User Interface
 
