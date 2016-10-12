@@ -1,0 +1,114 @@
+The following shows the new command structure for Soar 9.6.0 and how the commands from previous versions of Soar map to it.
+
+Note:  Soar 9.6.0 is 99.9% backwards compatible with 9.5.1, so this shouldn't actually be painful
+
+------------------
+9.6.0 Command List
+------------------
+alias
+chunk
+debug
+decide
+echo
+epmem
+explain
+file-system
+gp
+help
+load
+output
+preferences
+print
+production
+rl
+run
+save
+smem
+soar
+sp
+stats
+svs
+trace
+visualize
+wm
+
+------------------                  ---------------------
+Soar 9.5.0 Command                  Soar 9.6.0 Equivalent
+------------------                  ---------------------
+add-wme                             wm add
+alias
+allocate                            debug allocate
+capture-input                       save percepts
+cd
+chunk-name-format                   chunk naming-style
+cli                                 soar tcl
+clog                                output log
+command-to-file                     output command-to-file
+default-wme-depth                   output print-depth
+dirs
+echo
+echo-commands                       (DEPRECATED)
+edit-production                     (DEPRECATED)
+epmem
+excise                              production excise
+explain-backtraces                  (DEPRECATED)
+firing-counts                       production firing-counts
+gds-print                           print --gds
+gp
+gp-max                              soar gp-max
+help
+indifferent-selection               decide indifferent-selection
+init-soar                           soar init
+internal-symbols                    debug internal-symbols
+learn                               chunk
+load-library                        load library
+ls
+matches                             production matches
+max-chunks                          chunk max-chunks
+max-dc-time                         soar max-dc-time
+max-elaborations                    soar max-elaborations
+max-goal-depth                      soar max-goal-depth
+max-memory-usage                    soar max-memory-usage
+max-nil-output-cycles               soar max-nil-output-cycles
+memories                            production memory-usage
+multi-attributes                    production optimize-attribute
+numeric-indifferent-mode            production numeric-indifferent-mode
+o-support-mode                      (DEPRECATED)
+pbreak                              production break
+popd
+port                                debug port
+predict                             decide predict
+preferences
+print
+production-find                     production find
+pushd
+pwatch                              production watch
+pwd
+rand                                (DEPRECATED)
+remove-wme                          wm remove
+replay-input                        load percepts
+rete-net                            load rete-network
+rl
+run
+save-backtraces                     (DEPRECATED)
+select                              decide select
+set-library-location                (DEPRECATED)
+set-stop-phase                      soar stop-phase
+smem
+soarnews                            (DEPRECATED)
+source                              load file
+sp
+srand                               soar set-random-seed
+stats
+stop-soar                           soar stop
+svs
+time                                debug time
+timers                              soar timers
+unalias                             alias -r
+verbose                             output verbose
+version                             soar version
+waitsnc                             soar wait-snc
+warnings                            output warnings
+watch                               trace
+watch-wmes                          wm watch
+wma                                 wm activation
