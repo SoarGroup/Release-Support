@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="690.19205"
-     inkscape:cy="430.55718"
+     inkscape:zoom="1.979899"
+     inkscape:cx="759.74914"
+     inkscape:cy="182.79377"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -34,10 +34,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1680"
-     inkscape:window-height="1003"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-width="1131"
+     inkscape:window-height="916"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -748,10 +748,10 @@
        xml:space="preserve">^value </text>
     <text
        id="text3418"
-       style="font-size:15.00694846999999900px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Consolas;fill-opacity:1"
+       style="font-size:15.00694847px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;font-family:Consolas"
        y="1277.6521"
        x="714.62878"
-       xml:space="preserve">f)</text>
+       xml:space="preserve">false)</text>
     <text
        id="text3420"
        style="font-size:15.00694846999999900px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Consolas;fill-opacity:1"
