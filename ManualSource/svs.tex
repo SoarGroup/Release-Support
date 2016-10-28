@@ -5,7 +5,7 @@
 \index{svs}
 
 \begin{figure}
-\insertfigure{Figures/svs-setup}{5in}
+\insertfigure{Figures/svs-setup}{4in}
 \insertcaption{(a) Typical environment setup without using SVS. (b) Same environment using SVS.}
 \label{fig:svs-setup}
 \end{figure}
@@ -32,7 +32,7 @@ Group nodes represent objects that are the aggregates of their child nodes, such
 The shape of a group node is the union of the shapes of its children.
 Structuring complex objects in this way allows Soar to reason about them naturally at different levels of abstraction.
 The agent can query SVS for relationships between the car as a whole with other objects (e.g. does it intersect the pole?), or the relationships between its parts (e.g. are the wheels pointing left or right with respect to the chassis?).
-The scene graph always contains at least a root node, the \emph{world node}.
+The scene graph always contains at least a root node: the \emph{world node}.
 
 \begin{figure}
 \insertfigure{Figures/scene_graph}{5in}
@@ -98,6 +98,9 @@ to draw that on a substate first stop drawing the topstate with
 The Scene Graph Edit Language (SGEL) is a simple, plain text, line oriented language that is used by SVS to modify the contents of the scene graph.
 Typically, the scene graph is used to represent the state of the external environment, and the programmer sends SGEL commands reflecting changes in the environment to SVS via the Agent::SendSVSInput function in the SML API.
 These commands are buffered by the agent and processed at the beginning of each input phase.
+Therefore, it is common to send scene changes through SendSVSInput \emph{before} the input phase.
+If you send SGEL commands at the end of the input phase, 
+the results won't be processed until the following decison cycle.
 
 Each SGEL command begins with a single word command type and ends with a newline.
 The four command types are
@@ -166,6 +169,8 @@ Changing the color tag on box7 to green. \\
 The Soar agent initiates commands in SVS via the \soarb{\^{}command} link, 
 similar to semantic and episodic memory. These commands allow the agent to 
 modify the scene graph and extract filters. 
+Commands are processed during the output phase and the results are added to 
+working memory during the input phase. 
 SVS supports the following commands:
 
 \begin{description}
@@ -305,12 +310,16 @@ The following example deletes the shape tag from the node \texttt{box5}.
 This command is commonly used to compute spatial relationships in the scene graph.
 More generally, it puts the result of a filter pipeline (described in section \ref{sec:svs-filters}) in working memory.
 Its syntax is the same as filter pipeline syntax.
-Once evaluated, SVS will put a \soarb{\^{}result} attribute on the command's identifier.
+During the input phase, SVS will evaluate the filter and 
+put a \soarb{\^{}result} attribute on the command's identifier.
 Under the \soarb{\^{}result} attribute is a multi-valued \soarb{\^{}record} attribute.
 Each record corresponds to an output value from the head of the filter pipeline, along with the parameters that produced the value.
 With the regular \texttt{extract} command, these records will be updated as the scene graph
 changes. With the \texttt{extract\_once} command, the records will be created once
 and will not change. 
+Note that you should not change the structure of a filter once it is created 
+(SVS only processes a command once). 
+Instead to extract something different you must create a new command. 
 The following is an example of an extract command which tests whether the 
 car and pole objects are intersecting. The \soar{\^{}status} and \soar{\^{}result} wmes are 
 added by SVS when the command is finished. 
@@ -367,7 +376,7 @@ This is placed into working memory as the result of the extract command:
 \end{verbatim}
 
 Notice that a \soarb{\^{}status} success is placed on each identifier corresponding to a filter.
-A \soarb{\^{}result} WME is placed on the extract command with a single record with value \soarb{f} for false.
+A \soarb{\^{}result} WME is placed on the extract command with a single record with value \soarb{false}.
 
 \subsection{Result lists}
 
@@ -533,20 +542,21 @@ Writing new filters for SVS is conceptually simple.
 \begin{enumerate}
 \item Write a C++ class that inherits from the appropriate filter subclass.
 \item Register the new class in a global table of all filters (\texttt{filter\_table.cpp}).
+\item Recompile the kernel. 
 \end{enumerate}
 
 \subsection{Filter subclasses}
 
 The fact that filter inputs and outputs are lists rather than single values introduces some complexity to how filters are implemented.
 Depending on the functionality of the filter, the multiple inputs into multiple parameters must be combined in different ways, and sets of inputs will map in different ways onto the output values.
-Furthermore, the outputs of filters are cached so that if the filter does not repeat computations on sets of inputs that do not change.
+Furthermore, the outputs of filters are cached so that the filter does not repeat computations on sets of inputs that do not change.
 To shield the user from this complexity, a set of generally useful filter paradigms were implemented as subclasses of the basic \texttt{filter} class.
 When writing custom filters, try to inherit from one of these classes instead of from \texttt{filter} directly.
 
 \subsubsection{Map filter}
 This is the most straightforward and useful class of filters.
 A filter of this class takes the Cartesian product of all input values in all parameters,
-and performs the same computation on each combinatino, generating one output.
+and performs the same computation on each combination, generating one output.
 In other words, this class implements a one-to-one mapping from input combinations to output values.
 
 To write a new filter of this class, inherit from the \texttt{map\_filter} class, 
