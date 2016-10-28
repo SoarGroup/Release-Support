@@ -12,7 +12,7 @@ SRC = a-blockscode.tex a-gds.tex a-grammars.tex a-preferences.tex a-support.tex 
 all : trans_wiki manual.pdf
 
 trans_wiki ::
-	cd wikicmd && sh gen_tex.sh
+	cd wikicmd && bash gen_tex.sh
 
 manual.pdf : manual.ind $(SRC)
 	$(LATEX) manual

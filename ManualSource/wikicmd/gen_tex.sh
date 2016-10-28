@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 PYTHON=python
 
 echo "Generating Soar CLI latex files. (../cli_help.cpp)"
@@ -12,7 +12,7 @@ fi
 rm -rf tex
 mkdir tex
 
-eecho "Downloading wiki files from repository..."
+echo "Downloading wiki files from repository..."
 
 git clone https://github.com/SoarGroup/Soar.wiki.git
 
@@ -25,9 +25,9 @@ for file in Soar.wiki/ManualsAndFAQs/CLI/cmd_*.md; do
 	stripped=${stripped//_/-}
 
 	pandoc $file -f markdown_github -t latex -o tex/$stripped.tex
-	sed -i '' 's/@{}llll@{}/@{}p{4cm}p{6cm}p{4cm}p{2cm}@{}/g' tex/$stripped.tex
-	sed -i '' 's/@{}lll@{}/@{}p{3cm}p{5cm}p{8cm}@{}/g' tex/$stripped.tex
-	sed -i '' 's/@{}ll@{}/@{}p{8cm}p{8cm}@{}/g' tex/$stripped.tex
+	sed -i 's/@{}llll@{}/@{}p{4cm}p{6cm}p{4cm}p{2cm}@{}/g' tex/$stripped.tex
+	sed -i 's/@{}lll@{}/@{}p{3cm}p{5cm}p{8cm}@{}/g' tex/$stripped.tex
+	sed -i 's/@{}ll@{}/@{}p{8cm}p{8cm}@{}/g' tex/$stripped.tex
 done
 
 # make sure every command listed on the wiki is included in the
