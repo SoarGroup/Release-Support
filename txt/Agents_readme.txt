@@ -1,6 +1,6 @@
 # Soar 9 demos/README
 # John Laird
-# April 2012
+# April 2016
 # 
 # Classic AI problems implemented for Soar 9
 #
