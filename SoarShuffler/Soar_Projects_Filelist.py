@@ -27,7 +27,9 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Release-Support/txt/Agents_readme.txt=Agents/
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
   Release-Support/pdf/Soar Tutorial Part 1.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 2.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 3.pdf=Documentation
@@ -129,23 +131,26 @@ SoarSuite_9.6.0
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Release-Support/txt/Building_Soar.txt=Documentation
   Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
   Release-Support/txt/license.txt=top
 SoarSuite_9.6.0-source
   type=zip
   out=SoarSuite/
   SoarSuite/Core=Core
   SoarSuite/Java=Java
+  SoarSuite/MinCLI=MinCLI
   SoarSuite/scons=scons
+  SoarSuite/SoarCLI=SoarCLI
   SoarSuite/Tcl=Tcl
-  SoarSuite/TestCLI=TestCLI
   SoarSuite/Tests=Tests
   SoarSuite/build_ios.sh=top
   SoarSuite/build_lsb.sh=top
   SoarSuite/build.bat=top
   SoarSuite/SConstruct=top
   Release-Support/pdf/SoarManual.pdf=Documentation
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
   Release-Support/txt/Building_Soar.txt=top
   Release-Support/txt/license.txt=top
   Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
@@ -159,4 +164,3 @@ InfiniteMario-9.6.0
   type=zip
   out=Domains/
   Domains-InfiniteMario=InfiniteMario/
-  
