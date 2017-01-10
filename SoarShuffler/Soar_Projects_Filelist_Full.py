@@ -13,7 +13,7 @@ Arithmetic-SMem_Agent
 BlocksWorld_Hierarchical_Lookahead_Agent
   type=zip
   out=Agents/
-  Agents/blocks-world-hierachical-lookahead=top
+  Agents/blocks-world-hierarchical-LA=top
 BlocksWorld_Hierarchical_Agent
   type=zip
   out=Agents/
@@ -25,7 +25,7 @@ BlocksWorld_Lookahead_Agent
 BlocksWorld_Hierarchical_State_Evaluation_Agent
   type=zip
   out=Agents/
-  Agents/blocks-world-lookahead-state-evaluation=top
+  Agents/blocks-world-lookahead-state-eval=top
 BlocksWorld_Subgoaling_Agent
   type=zip
   out=Agents/
@@ -259,7 +259,10 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Release-Support/txt/Agents_readme.txt=Agents/
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
+  Release-Support/txt/license.txt=top
   Release-Support/pdf/Soar Tutorial Part 1.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 2.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 3.pdf=Documentation
@@ -273,9 +276,9 @@ SoarTutorial_9.6.0
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Agents/arithmetic=Agents/arithmetic
   Agents/blocks-world-RL=Agents/blocks-world-RL
-  Agents/blocks-world-hierachical-lookahead=Agents/blocks-world-hierachical-lookahead
+  Agents/blocks-world-hierarchical-LA=Agents/blocks-world-hierarchical-LA
   Agents/blocks-world-hierarchical=Agents/blocks-world-hierarchical
-  Agents/blocks-world-lookahead-state-evaluation=Agents/blocks-world-lookahead-state-evaluation
+  Agents/blocks-world-lookahead-state-eval=Agents/blocks-world-lookahead-state-eval
   Agents/blocks-world-lookahead=Agents/blocks-world-lookahead
   Agents/blocks-world-operator-subgoaling-RL=Agents/blocks-world-operator-subgoaling-RL
   Agents/blocks-world-operator-subgoaling=Agents/blocks-world-operator-subgoaling
@@ -361,7 +364,8 @@ SoarSuite_9.6.0
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Release-Support/txt/Building_Soar.txt=Documentation
   Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
   Release-Support/txt/license.txt=top
 SoarSuite_9.6.0-source
   type=zip
@@ -377,10 +381,11 @@ SoarSuite_9.6.0-source
   SoarSuite/build.bat=top
   SoarSuite/SConstruct=top
   Release-Support/pdf/SoarManual.pdf=Documentation
-  Release-Support/txt/Building_Soar.txt=top
-  Release-Support/txt/license.txt=top
+  Release-Support/txt/Building_Soar.txt=Documentation
   Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
+  Release-Support/txt/license.txt=top
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
 RoomsWorld_9.6.0
   type=multiplatform-zip
