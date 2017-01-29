@@ -7,7 +7,7 @@
 # Arithmetic:
 #    Does multicolumn addition and subtraction using simple
 #    addition facts. Automatically generates, solves, and verifies
-#    1000 problems. Demonstrates hierarchical task decomposition
+#    1000 problems. Demonstrates hierarchical task decomposition 
 #    and chunking over the decomposition. 
 # Blocks-World: Stack blocks
 #    Demonstrates means-ends analysis, operator-subgoaling, and look-ahead
