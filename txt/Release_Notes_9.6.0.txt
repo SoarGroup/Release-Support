@@ -404,13 +404,12 @@ Other Changes
 
 (6) Minor new features
 
-    - New command 'save chunks' will save current chunks quickly
     - New command 'save agent' that will save production memory, semantic memory
       and some important settings to a single file.  Semantic memory is stored
       as a series of 'smem --add' commands.
+    - New command 'save chunks' will save current chunks to a new file quickly
     - New command 'chunk stats' that displays lots of global statistics about 
       learning that occurred
-    - New command 'smem --clear' to clear the database even if append mode is on
     - New option 'production excise -n', which will excise all rules that have 
       not fired
     - New option 'production firing-count -f', which will print the firing 
@@ -446,12 +445,6 @@ Other Changes
     - Three new options to interrupt when rules are learned
     - New production keyword :watch-chunks to specify chunks that you later want 
       explained
-    - New CLI command line interface, 'soar', that replaces mCli, testCLI and 
-      minCLI which are no longer included
-      - Multi-agent CLI based on mCLI but using testCLI's better structure
-      - Now includes options to turn off syntax coloring for those using a light 
-        color scheme
-      - Now supports multi-line input
     - New option 'soar keep-all-top-oprefs' the will maintain all preferences 
       for top-level WMEs.  By default, Soar will not add preferences to
       a top-level WME if it already has support.  This is desirable for 
@@ -463,11 +456,20 @@ Other Changes
       are assigned identities to match those in the deep copied preferences, 
       which means that when EBC backtraces through those preferences, it will
       chain back to the original reasoning that created what was copied.
+    - New CLI command line interface, 'soar', that replaces mCli, testCLI and 
+      minCLI which are no longer included
+      - Multi-agent CLI based on mCLI but using testCLI's better structure
+      - Now includes options to turn off syntax coloring for those using a light 
+        color scheme
+      - Now supports multi-line input
 
 (7) Minor enhancements
 
-    - Soar now guesses command and sub-command names in places that it did
-      not before.  (Especially useful with new commands.)
+    - Soar guesses sub-command names in places that it did not before.
+    - The help command will also now try to guess which command the user meant.
+    - Issuing the help command with a Soar 9.4.0 command that no longer exists
+      will still display the correct new command help and inform the user about 
+      the command change.
     - Trace now presents trace options in an organized way and gives feedback
       when changing items.
     - EBC will intelligently merge disjunctions when learning rules, eliminating
