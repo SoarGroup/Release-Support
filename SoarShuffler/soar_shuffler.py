@@ -35,6 +35,7 @@ def find_latest_date(projectName):
 def load_project_list():
     with open('Soar_Projects_Filelist.py', 'r') as f_filelist:
         for line in f_filelist:
+            print "Parsing line ", line
             line = str.strip(line)
             if (not line[0]=="#"):
                 split_entry = str.split(line,"=")

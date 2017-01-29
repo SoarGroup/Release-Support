@@ -1,19 +1,3 @@
-SoarManual
-  type=copy
-  out=Documentation/
-  Release-Support/pdf/SoarManual.pdf=top
-SoarTutorial
-  type=copy
-  out=Documentation/
-  Release-Support/pdf/Soar Tutorial Part 1.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 2.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 3.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 4.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 5.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 6.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 7 - RL.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 8 - SMem.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 9 - EpMem.pdf=SoarTutorial
 SoarTutorial_9.6.0
   type=multiplatform-zip
   out=SoarSuite/
@@ -27,7 +11,10 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Release-Support/txt/Agents_readme.txt=Agents/
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
+  Release-Support/txt/license.txt=top
   Release-Support/pdf/Soar Tutorial Part 1.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 2.pdf=Documentation
   Release-Support/pdf/Soar Tutorial Part 3.pdf=Documentation
@@ -41,9 +28,9 @@ SoarTutorial_9.6.0
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Agents/arithmetic=Agents/arithmetic
   Agents/blocks-world-RL=Agents/blocks-world-RL
-  Agents/blocks-world-hierachical-lookahead=Agents/blocks-world-hierachical-lookahead
+  Agents/blocks-world-hierarchical-LA=Agents/blocks-world-hierarchical-LA
   Agents/blocks-world-hierarchical=Agents/blocks-world-hierarchical
-  Agents/blocks-world-lookahead-state-evaluation=Agents/blocks-world-lookahead-state-evaluation
+  Agents/blocks-world-lookahead-state-eval=Agents/blocks-world-lookahead-state-eval
   Agents/blocks-world-lookahead=Agents/blocks-world-lookahead
   Agents/blocks-world-operator-subgoaling-RL=Agents/blocks-world-operator-subgoaling-RL
   Agents/blocks-world-operator-subgoaling=Agents/blocks-world-operator-subgoaling
@@ -79,44 +66,6 @@ SoarTutorial_9.6.0
   Release-Support/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
   Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
   Release-Support/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
-TankSoar_9.6.0
-  type=multiplatform-zip
-  out=Domains/
-  Release-Support/scripts/RELEASE_DIR/TankSoar.LAUNCH_EXTENSION=top
-  Release-Support/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger-api.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/sml.jar=bin/java
-  Release-Support/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
-  Release-Support/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
-  Release-Support/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
-  Domains-Eaters-TankSoar/agents/tanksoar=agents/
-  Domains-Eaters-TankSoar/config/tanksoar.cnf=config
-  Domains-Eaters-TankSoar/config/maps/tanksoar=config/maps/tanksoar
-Eaters_9.6.0
-  type=multiplatform-zip
-  out=Domains/
-  Release-Support/scripts/RELEASE_DIR/Eaters.LAUNCH_EXTENSION=top
-  Release-Support/Shuffler_Input/jars/Eaters_TankSoar.jar=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger-api.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/java
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/java/sml.jar=bin/java
-  Release-Support/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
-  Release-Support/Shuffler_Input/jars/commons-logging-1.1.1.jar=bin/java
-  Release-Support/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
-  Domains-Eaters-TankSoar/agents/eaters=agents/
-  Domains-Eaters-TankSoar/config/eaters.cnf=config
-  Domains-Eaters-TankSoar/config/maps/eaters=config/maps/eaters
 SoarSuite_9.6.0
   type=multiplatform-zip
   out=SoarSuite/
@@ -129,34 +78,6 @@ SoarSuite_9.6.0
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Release-Support/txt/Building_Soar.txt=Documentation
   Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
   Release-Support/txt/license.txt=top
-SoarSuite_9.6.0-source
-  type=zip
-  out=SoarSuite/
-  SoarSuite/Core=Core
-  SoarSuite/Java=Java
-  SoarSuite/scons=scons
-  SoarSuite/Tcl=Tcl
-  SoarSuite/TestCLI=TestCLI
-  SoarSuite/Tests=Tests
-  SoarSuite/build_ios.sh=top
-  SoarSuite/build_lsb.sh=top
-  SoarSuite/build.bat=top
-  SoarSuite/SConstruct=top
-  Release-Support/pdf/SoarManual.pdf=Documentation
-  Release-Support/txt/SoarJavaDebugger_README.txt=Documentation
-  Release-Support/txt/Building_Soar.txt=top
-  Release-Support/txt/license.txt=top
-  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
-  Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
-RoomsWorld_9.6.0
-  type=multiplatform-zip
-  out=Domains/
-  Release-Support/scripts/RELEASE_DIR/RoomsWorld.LAUNCH_EXTENSION=top
-  Release-Support/Shuffler_Input/COMPILE_DIR/soar_robot_server=top
-InfiniteMario-9.6.0
-  type=zip
-  out=Domains/
-  Domains-InfiniteMario=InfiniteMario/
-  

@@ -1,13 +1,13 @@
 # Soar 9 demos/README
 # John Laird
-# April 2012
+# April 2016
 # 
 # Classic AI problems implemented for Soar 9
 #
 # Arithmetic:
 #    Does multicolumn addition and subtraction using simple
 #    addition facts. Automatically generates, solves, and verifies
-#    1000 problems. Demonstrates hierarchical task decomposition 
+#    1000 problems. Demonstrates hierarchical task decomposition
 #    and chunking over the decomposition. 
 # Blocks-World: Stack blocks
 #    Demonstrates means-ends analysis, operator-subgoaling, and look-ahead
@@ -42,4 +42,3 @@
 # Default:
 #    Holds rules used for implementing common problem solving
 #    strategies including look-ahead search and operator subgoaling.
-
