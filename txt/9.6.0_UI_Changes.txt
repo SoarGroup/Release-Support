@@ -108,7 +108,7 @@ svs
 time                                debug time
 timers                              soar timers
 unalias                             alias -r
-verbose                             output verbose
+verbose                             (DEPRECATED)
 version                             soar version
 waitsnc                             soar wait-snc
 warnings                            output warnings

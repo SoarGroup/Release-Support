@@ -2,11 +2,11 @@
 Soar-CLI Command Line Options
 -----------------------------
     -l            Listen on, i.e. launches Soar kernel in new thread
-    -n            No syntax coloring
+    -n            No syntax coloring (speeds things up, also Windows doesn't support our color code)
     -p <port>     Listens on port <port>
     -s <file>     Sources file <file> on load
 
-To manage multiple agents, you can use the commands "create", "list", and "switch".
+To manage multiple agents, you can use the commands "create", "list", and "switch".  These are Soar-CLI commands, not native Soar commands.
 
 ---------------------------------------
 Soar Java Debugger Command Line Options
