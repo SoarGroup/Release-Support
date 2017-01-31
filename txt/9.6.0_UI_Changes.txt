@@ -75,7 +75,7 @@ max-memory-usage                    soar max-memory-usage
 max-nil-output-cycles               soar max-nil-output-cycles
 memories                            production memory-usage
 multi-attributes                    production optimize-attribute
-numeric-indifferent-mode            production numeric-indifferent-mode
+numeric-indifferent-mode            decide numeric-indifferent-mode
 o-support-mode                      (DEPRECATED)
 pbreak                              production break
 popd
@@ -115,3 +115,45 @@ warnings                            output warnings
 watch                               trace
 watch-wmes                          wm watch
 wma                                 wm activation
+
+-------------------------------
+Finding 9.5.0 commands in 9.6.0
+-------------------------------
+alias
+chunk
+- chunk-name-format, learn, max-chunks
+debug
+- allocate, internal-symbols, port, time
+decide
+- numeric-indifferent-mode, indifferent-selection, predict, select, srand
+echo
+epmem
+explain
+file-system
+- pwd, ls, cd, dirs, pushd, popd
+gp
+help
+load
+- load-library, source, replay-input, rete-net, 
+output
+- clog, command-to-file, default-wme-depth, verbose, warnings
+preferences
+print
+- gds-print
+production
+- excise, firing-counts, matches, memories, multi-attributes, pbreak, production-find, pwatch
+rl
+run
+save
+- capture-input, rete-net
+smem
+soar
+- cli, gp-max, init-soar, max-dc-time, max-elaborations, max-goal-depth, max-memory-usage, max-nil-output-cycles, set-stop-phase, stop-soar, timers, version, wait-snc
+sp
+stats
+svs
+trace
+- watch
+visualize
+wm
+- add-wme, remove-wme, watch
