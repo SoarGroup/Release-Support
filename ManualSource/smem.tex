@@ -44,11 +44,14 @@ Whereas working memory is a single, connected, directed graph, semantic memory c
 
 \end{itemize}
 
-\emph{Long-term} identifiers (LTIs) are defined as identifiers that exist in semantic memory.
-The specific letter-number combination that labels an LTI (e.g. S5 or C7) is permanently associated with that long-term identifier: any retrievals of the long-term identifier are guaranteed to return the associated letter-number pair.  
-For clarity, when printed, a long-term identifier is prefaced with the {@} symbol (e.g. {@}S5 or {@}C7). 
-Also, when presented in a figure, long-term identifiers will be indicated by a double-circle. 
-For instance, Figure \ref{fig:smem-concept} depicts the long-term identifier {@}A68, with four augmentations, representing the addition fact of ${6+7=13}$ (or, rather, 3, carry 1, in context of multi-column arithmetic).
+From Soar 9.6 onward, \emph{Long-term} identifiers (LTIs) are defined as identifiers that exist in semantic memory \emph{only}.
+Each LTI is permanently associated with a specific number that labels it (e.g. {@}5 or {@}7).
+Instances of an LTI can be loaded into working memory as regular \emph{short-term} identifiers (STIs) linked with that specific LTI.
+For clarity, when printed, a short-term identifier associated with an LTI is followed with the label of that LTI.
+For example, if the working memory ID L7 is associated with the LTI named {@}29, printing that STI would appear as \soar{L7 ({@}29)}. 
+
+When presented in a figure, long-term identifiers will be indicated by a double-circle. 
+For instance, Figure \ref{fig:smem-concept} depicts the long-term identifier {@}68, with four augmentations, representing the addition fact of ${6+7=13}$ (or, rather, 3, carry 1, in context of multi-column arithmetic).
 
 \begin{figure}
 \insertfigure{Figures/smem-concept}{1.5in}
@@ -61,18 +64,13 @@ Integrating long-term identifiers in Soar presents a number of theoretical and i
 This section discusses the state of integration with each of Soar's memories/learning mechanisms.
 
 \subsubsection{Working Memory}
-Long-term identifiers exist as peers with short-term identifiers in Working Memory.
+Long-term identifiers themselves never exist in working memory. Rather, instances of LTIs are loaded into working memory through queries or retrievals, and manipulated just like any other working memory ID. Changes to any such working memory identifiers do not directly have any effect upon linked LTIs in semantic memory. Changes to LTIs themselves only occur though \soar{store} commands on the command link  or through command-line directives such as \soar{smem --add} (see below).
+
+Each time an agent loads an instance of a certain LTI from semantic memory into working memory using queries or retrievals, the instance created will always be a new STI.
 
 \subsubsection{Procedural Memory}
-Soar's production parser (i.e. the \soarb{sp} command) has been modified to allow specification of long-term identifiers (prefaced with an {@} symbol) in any context where a variable is valid.
-If a rule contains a long-term identifier that is not currently in semantic memory, a fatal error will be raised and Soar will quit.  
-Once added to the rete, the long-term identifier is treated as a constant for matching purposes.  
-If specified as the value of a WME in an action, a long-term identifier will be added to working memory if it does not already exist.  
-There is also preliminary support for chunking over long-term identifiers.
-
-It is currently possible to create production actions wherein the identifier of a new WME is a long-term identifier that exists neither in the production conditions, nor as the attribute or value of a prior action.  
-Such rules will wreak havoc within Soar and are not supported.  
-They will be detected and disallowed in future versions of semantic memory.
+Soar productions may use various conditions to test whether an STI is associated with an LTI or whether two STIs are linked to the same LTI (see Section \ref{SYNTAX-pm-predicates} on page \pageref{SYNTAX-pm-predicates}).
+LTI names (e.g. {@}6) may \emph{not} appear in the action side of productions.
 
 \subsubsection{Episodic Memory}
 Episodic memory (see Section \ref{EPMEM} on page \pageref{EPMEM}) faithfully captures short- vs. long-term identifiers, including the episode of transition.  
@@ -81,7 +79,7 @@ Cues are handled in much the same way as cue-based retrievals, with respect to t
 \section{Storing Semantic Knowledge}
 \label{SMEM-store}
 
-An agent stores a long-term identifier to semantic memory by creating a \emph{store} command: this is a WME whose identifier is the \emph{command} link of a state's \emph{smem} structure, the attribute is \emph{store}, and the value is an identifier (short or long).
+An agent stores a long-term identifier to semantic memory by creating a \emph{store} command: this is a WME whose identifier is the \emph{command} link of a state's \emph{smem} structure, the attribute is \emph{store}, and the value is a short-term identifier.
 
 \begin{verbatim}
 <s> ^smem.command.store <identifier>
@@ -98,9 +96,8 @@ Storage is guaranteed to succeed and a status WME will be created, where the ide
 <s> ^smem.result.success <identifier>
 \end{verbatim}
 
-Any short-term identifiers that compose the stored WMEs will be converted to long-term identifiers. 
-If a long-term identifier is the value of a store command, the stored WMEs replace those associated with the LTI in semantic memory. 
-It should be noted that between issuing store commands, it is possible that the augmentations of a long-term identifier in working memory are inconsistent with those in semantic memory.
+If the identifier used in the store command is not linked to any existing LTIs, a new LTI will be created in smem which will be linked to the stored STI. If the identifier used in the store command is already linked to an LTI, the store will overwrite that long-term memory.
+For example, if LTI \soar{{@}5} had augmentations \soar{\carat A do \carat B re \carat C mi}, and a \soar{store} command used short-term identifier \soar{L35} which was linked to \soar{{@}5} but had only the augmentation \soar{\carat D fa}, the LTI \soar{{@}5} would be changed to only have \soar{\carat D fa}.
 
 \subsection{User-Initiated Storage}
 Semantic memory provides agent designers the ability to store semantic knowledge via the \soarb{add} switch of the \soarb{smem} command (see Section \ref{smem} on page \pageref{smem}).  
@@ -120,6 +117,7 @@ Unlike agent storage, declarative storage is automatically recursive.
 Thus, this command instance will add a new long-term identifier (represented by the temporary 'arithmetic' variable) with three augmentations.  
 The value of each augmentation will each become an LTI with two constant attribute/value pairs.  
 Manual storage can be arbitrarily complex and use standard dot-notation.
+The add command also supports hardcoded LTI ids such as \soar{{@}1} in place of variables.
 
 \subsection{Storage Location}
 Semantic memory uses SQLite to facilitate efficient and standardized storage and querying of knowledge.  
@@ -162,13 +160,13 @@ When this occurs, the result structure is cleared and the new command (if one ex
 
 \subsection{Non-Cue-Based Retrievals}
 A non-cue-based retrieval is a request by the agent to reflect in working memory the current augmentations of a long-term identifier in semantic memory. 
-The command WME has a \emph{retrieve} attribute and a long-term identifier value:
+The command WME has a \emph{retrieve} attribute and an LTI-linked identifier value:
 
 \begin{verbatim}
 <s> ^smem.command.retrieve <lti>
 \end{verbatim}
 
-If the value of the command is not a long-term identifier, an error will result: 
+If the value of the command is not an LTI-linked identifier, an error will result: 
 
 \begin{verbatim}
 <s> ^smem.result.failure <lti>
@@ -188,7 +186,7 @@ A cue-based retrieval performs a search for a long-term identifier in semantic m
 
 A cue is composed of WMEs that describe the augmentations of a long-term identifier.  
 A cue WME with a constant value denotes an exact match of both attribute and value.  
-A cue WME with a long-term identifier as its value denotes an exact match as well.  
+A cue WME with an LTI-linked identifier as its value denotes an exact match as well.  
 A cue WME with a short-term identifier as its value denotes an exact match of attribute, but with any value (constant or identifier).  
 
 A cue-based retrieval command has a \emph{query} attribute and an identifier value, the cue:
@@ -213,7 +211,7 @@ sp {smem*sample*query
 }
 \end{verbatim}
 
-In this example, assume that the \soar{<lti>} variable will match a long-term identifier and the \soar{<bar>} variable will match a constant.  
+In this example, assume that the \soar{<lti>} variable will match a short-term identifier which is linked to a long-term identifier and that the \soar{<bar>} variable will match a constant.  
 Thus, the query requests retrieval of a long-term identifier from semantic memory with augmentations that satisfy ALL of the following requirements:
 
 \begin{itemize}
@@ -225,7 +223,7 @@ Attribute \soar{name} and ANY value
 Attribute \soar{foo} and value equal to the value of variable \soar{<bar>} at the time this rule fires
 
 \item 
-Attribute \soar{associate} and value equal to the long-term identifier \soar{<lti>} at the time this rule fires
+Attribute \soar{associate} and value equal to the long-term identifier of \soar{<lti>} at the time this rule fires
 
 \item 
 Attribute \soar{age} and integer value \soar{25}
@@ -245,10 +243,9 @@ Otherwise, two WMEs are added:
 <s> ^smem.result.retrieved <retrieved-lti>
 \end{verbatim}
 
-During a cue-based retrieval it is possible that the retrieved long-term identifier is not in working memory.  
-If this is the case, semantic memory will add the long-term identifier to working memory with letter-number pair as was originally stored.
+The result \soar{<retrieved-lti>} will be a new short-term identifier linked to the result LTI. 
 
-As with non-cue-based retrievals all of the augmentations of the long-term identifier in semantic memory are added as new WMEs to working memory.
+As with non-cue-based retrievals, all of the augmentations of the long-term identifier in semantic memory are added as new WMEs to working memory. If these augmentations include other LTIs in smem, they too are instantiated into new short-term identifiers in working memory.
 
 It is possible that multiple long-term identifiers match the cue equally well. 
 In this case, semantic memory will retrieve the long-term identifier that was most recently stored/retrieved.
@@ -258,7 +255,7 @@ The cue-based retrieval process can be further tempered using optional modifiers
 \begin{itemize}
 
 \item 
-The \emph{prohibit} command requires that the retrieved long-term identifier is not equal to a supplied long-term identifier:
+The \emph{prohibit} command requires that the retrieved long-term identifier is not equal to that linked with the supplied long-term identifier:
 \begin{verbatim}
 <s> ^smem.command.prohibit <bad-lti>
 \end{verbatim}
