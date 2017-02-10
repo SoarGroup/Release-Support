@@ -387,7 +387,7 @@ states that might be considered in solving a problem, that is, they define the
 Soar programs are implicitly organized in terms of problem spaces
 because the conditions for proposing operators will restrict an operator
 to be considered only when it is relevant.  The complete problem space
-for the blocks world is show in Figure \ref{fig:blocks-ps}.  Typically,
+for the blocks world is shown in Figure \ref{fig:blocks-ps}.  Typically,
 when Soar solves a problem in this problem space, it does not explicitly
 generate all of the states, examine them, and then create a path.
 Instead, Soar is \emph{in} a specific state at a given time (represented
@@ -418,7 +418,6 @@ procedure), learning, and how  input and output fit in.
 % ----------------------------------------------------------------------------
 \section{Working memory: The Current Situation} 
 \label{ARCH-wm}
-\index{working memory|textbf}
 
 \index{working memory}
 Soar represents the current problem-solving situation in its \emph{working
@@ -431,20 +430,20 @@ the status in problem solving.
 \index{identifier}
 \index{attribute}
 \index{value}
-Working memory contains elements called working memory elements, or WME's for
+Working memory contains elements called working memory elements, or WMEs for
 short. Each WME contains a very specific piece of information; for example, a WME
 might say that ``B1 is a block''. 
-Several WME's collectively may provide more information about the same
+Several WMEs collectively may provide more information about the same
 \textit{object}, for example, ``B1 is a block'', ``B1 is named A'', ``B1 is on
-the table'', etc. These WME's are related because they are all contributing to
+the table'', etc. These WMEs are related because they are all contributing to
 the description of something that is internally known to Soar as ``B1''. B1 is
-called an \textit{identifier}; the group of WME's that share this identifier
+called an \textit{identifier}; the group of WMEs that share this identifier
 are referred to as an \textit{object} in working memory. 
 Each WME describes a different \textit{attribute} of the object, for example,
 its name or type or location; each \textit{attribute} has a \textit{value} associated
 with it, for example, the name is A, the type is block, and the position is on
 the table. Therefore, each WME is an identifier-attribute-value triple, and
-all WME's with the same identifier are part of the same object.
+all WMEs with the same identifier are part of the same object.
 
 \index{working memory!object}
 \index{identifier}
@@ -453,16 +452,16 @@ all WME's with the same identifier are part of the same object.
 \index{link}
 Objects in working memory are \emph{linked} to other objects: The value of one
 WME may be an identifier of another object. For example, a WME might say that
-``B1 is ontop of T1'', and another collection of WME's might describe the
+``B1 is ontop of T1'', and another collection of WMEs might describe the
 object T1: ``T1 is a table'', ``T1 is brown'', and ``T1 is ontop of F1''. And
-still another collection of WME's might describe the object F1: ``F1 is a
+still another collection of WMEs might describe the object F1: ``F1 is a
 floor'', etc. All objects in working memory must be linked to a state, either
 directly or indirectly (through other objects). Objects that are not linked to
 a state will be automatically removed from working memory by the Soar
 architecture. 
 
 \index{augmentation|see{working memory element}}
-WME's are also often called \textit{augmentations} because they
+WMEs are also often called \textit{augmentations} because they
 ``augment'' the object, providing more detail about it. While these two
 terms are somewhat redundant, WME is a term that is used more often to
 refer to the contents of working memory, while augmentation is a term
@@ -506,7 +505,7 @@ There is no predefined relationship between objects in working memory and
 real objects, such as \soar{block A}; features of an object, such as the
 color \soar{red} or shape \soar{cube}; a relation between objects, such as \soar{ontop}; classes of
 objects, such as \soar{blocks}; etc. The actual names of attributes and
-values have no meaning to the Soar architecture (aside from a few WME's
+values have no meaning to the Soar architecture (aside from a few WMEs
 created by the architecture itself). For example, Soar doesn't care whether
 the things in the blocks world are called ``blocks'' or ``cubes'' or
 ``chandeliers''. It is up to the Soar programmer to pick suitable labels and to
@@ -541,7 +540,7 @@ state when that operator is no longer selected as the current operator.\vspace{-
 \item The architecture automatically removes i-supported WMEs when the productions that created them no longer match.\vspace{-8pt}
 \item The I/O system removes sensory data from the input-link when it
 is no longer valid. \vspace{-8pt}
-\item The architecture automatically removes WME's that are no longer linked to 
+\item The architecture automatically removes WMEs that are no longer linked to 
 a state (because some other WME has been removed).
 \end{enumerate}
 
@@ -567,7 +566,7 @@ candidates operators to be compared before they are selected.
 % ----------------------------------------------------------------------------
 \section{Production Memory: Long-term Knowledge} 
 \label{ARCH-pm}
-\index{production memory|textbf}
+\index{production memory}
 \index{production}
 
 \begin{figure}
@@ -670,11 +669,11 @@ rules automatically based on whether they propose and compare operators,
 apply operators, or elaborate the state. 
 
 \subsection{Production Actions and Persistence}
-\index{I-support}
+\index{i-support}
 \index{production actions}
 \label{ARCH-prefmem-persistence}
 \index{persistence}
-\index{O-support}
+\index{o-support}
 \index{operator!support}
 \label{PAGE:O-support}
 
@@ -686,14 +685,14 @@ the production instantiation that created them continues to match.  When
 the production instantiation no longer matches, the situation has
 changed, making the preference no longer relevant.  Soar automatically
 removes the preferences in such cases.  These preferences are said to
-have \emph{I-support} (for ``instantiation support'').  Similarly, state
+have \emph{i-support} (for ``instantiation support'').  Similarly, state
 elaborations are simple inferences that are valid only so long as the
 production matches.  Working memory elements created as state
-elaborations also have I-support and remain in working memory only as
+elaborations also have i-support and remain in working memory only as
 long as the production instantiation that created them continues to
 match working memory.  For example, the set of relevant operators changes
 as the state changes, thus the proposal of operators is done with
-I-supported preferences. This way, the operator proposals will be
+i-supported preferences. This way, the operator proposals will be
 retracted when they no longer apply to the current situation.
 
 However, the actions of productions that \emph{apply} an operator, either by
@@ -706,28 +705,29 @@ that the second block is clear, so the condition will no longer be
 satisfied.
 
 Thus, operator application productions do not retract their actions, even
-if they no longer match working memory.  This is called \emph{O-support}
+if they no longer match working memory.  This is called \emph{o-support}
+
 (for ``operator support''). Working memory elements that participate in
 the application of operators are maintained throughout the existence of
 the state in which the operator is applied, unless explicitly removed (or
 if they become unlinked).  Working memory elements are removed by a
 \emph{reject} action of a operator-application rule.  
-\index{O-support!reject}
+\index{o-support!reject}
 
-Whether a working memory element receives O-support or I-support is
+Whether a working memory element receives o-support or i-support is
 determined by the structure of the production instantiation that creates
 the working memory element.  O-support is given only to working memory
 elements created by operator-application productions.
 
 An operator-application production tests the current operator of a state
 and modifies the state. Thus, a working memory element receives
-O-support if it is for an augmentation of the current state or
+o-support if it is for an augmentation of the current state or
 substructure of the state, and the conditions of the instantiation that
 created it test augmentations of the current operator.  
 
 When productions are matched, all productions that have their conditions
 met fire creating or removing working memory elements.  Also, working
-memory elements and preferences that lose I-support are removed from
+memory elements and preferences that lose i-support are removed from
 working memory. Thus, several new working memory elements and
 preferences may be created, and several existing working memory elements
 and preferences may be removed at the same time.  (Of
@@ -750,7 +750,7 @@ The selection of the current operator is determined by the \emph{preferences} in
 current operator, or information about how suggested operators compare
 to other operators.  Preferences refer to operators by using the
 identifier of a working memory element that stands for the operator.
-After preferences have been created for a state, the decision procedures
+After preferences have been created for a state, the decision procedure
 evaluates them to select the current operator for that state.
 
 For an operator to be selected, there will be at least one preference
@@ -944,16 +944,16 @@ The execution of a Soar program proceeds through a number of
 \item Proposal: Productions fire (and retract) to interpret new data (state 
 elaboration), propose operators for the current situation (operator
 proposal), and compare proposed operators (operator comparison).  All of
-the actions of these productions are I-supported.  All matched
+the actions of these productions are i-supported.  All matched
 productions fire in parallel (and all retractions occur in parallel),
 and matching and firing continues until there are no more additional
 complete matches or retractions of productions (\emph{quiescence}).
 \item Decision: A new operator is selected, or an impasse is detected
 and a new state is created.
 \item Application: Productions fire to apply the operator (operator
-application).  The actions of these productions will be O-supported.
+application).  The actions of these productions will be o-supported.
 Because of changes from operator application productions, other
-productions with I-supported actions may also match or retract. Just as
+productions with i-supported actions may also match or retract. Just as
 during proposal, productions fire and retract in parallel until quiescence.
 \item Output: Output commands are sent to the external environment.
 \end{enumerate}
@@ -991,7 +991,7 @@ Cycle
 
 
 ProposalPhase
-  while (some I-supported productions are waiting to fire or retract)
+  while (some i-supported productions are waiting to fire or retract)
     FireNewlyMatchedProductions;
     RetractNewlyUnmatchedProductions;
 
@@ -1194,7 +1194,7 @@ in a substate is also linked to a superstate.
 These working memory elements and preferences will not be removed when
 the impasse is resolved because they are still linked to a superstate,
 and therefore, they are called the \textit{results of the subgoal}.  A
-result has either I-support or O-support; the determination of support is
+result has either i-support or o-support; the determination of support is
 described below.
 
 %A production that creates a result is illustrated in Figure \ref{fig:result}.
@@ -1243,20 +1243,20 @@ superstate.
 
 \subsubsection*{Justifications: Determination of support for results}
 
-\index{I-support!of result}
-\index{O-support!of result}
-Some results receive I-support, while others receive O-support.  The
+\index{i-support!of result}
+\index{o-support!of result}
+Some results receive i-support, while others receive o-support.  The
 type of support received by a result is determined by the function it
 plays in the superstate, and not the function it played in the state in
 which it was created. For example, a result might be created through
 operator application in the state that created it; however, it might
 only be a state elaboration in the superstate. The first function would
-lead to O-support, but the second would lead to I-support.
+lead to o-support, but the second would lead to i-support.
 
 \index{justification}
 \index{justification!creation}
-In order for the architecture to determine whether a result receives I-support
-or O-support, Soar must first determine the function that the working
+In order for the architecture to determine whether a result receives i-support
+or o-support, Soar must first determine the function that the working
 memory element or preference plays
 (that is, whether the result should be considered an operator application or
 not). To do this, Soar creates a temporary production, called a
@@ -1273,17 +1273,20 @@ conditions that test working memory elements created in the subgoal.
 \item[The action] of the justification is the result of the subgoal.
 \end{description} 
 
-Soar determines I-support or O-support for the justification just as it
+Soar determines i-support or o-support for the justification just as it
 would for any other production, as described in Section
 \ref{ARCH-prefmem-persistence}.  If the justification is an operator
-application, the result will receive O-support.  Otherwise, the result
-gets I-support from the justification. If such a result loses
-I-support from the justification, it will be retracted if there is no
+application, the result will receive o-support.  Otherwise, the result
+gets i-support from the justification. If such a result loses
+i-support from the justification, it will be retracted if there is no
 other support.  Justification are not added to production memory, but
 are otherwise treated as an instantiated productions that have already
 fired.
 
 \index{justification!conditions}
+\index{learning!overgeneral}
+\index{chunk!overgeneral}
+\index{justification!overgeneral}
 Justifications include any negated conditions that were in the original
 productions that participated in producing the results, and that test for the
 absence of superstate working memory elements. Negated conditions that test for
@@ -1299,9 +1302,6 @@ add-desirability-prefs learn setting is on, conditions from other preference
 types (better, best, worse, worst indifferent) can be included as well.  For a more
 complete description of how Soar chooses which desirability preferences to
 include, see Section \ref{CDPS} on page \pageref{CDPS}.
-\index{learning!overgeneral}
-\index{chunk!overgeneral}
-\index{justification!overgeneral}
 \index{desirability preference} 
 \index{preference!desirability}
 \index{Context-Dependent Preference Set}
@@ -1401,17 +1401,17 @@ superstate lead to inconsistency.
 In order to detect inconsistencies, Soar maintains a {\em dependency set}
 for every subgoal/substate.  The dependency set consists of all working
 memory elements that were tested in the conditions of productions that
-created O-supported working memory elements that are directly or
-indirectly linked to the substate.  Thus, whenever such an O-supported
+created o-supported working memory elements that are directly or
+indirectly linked to the substate.  Thus, whenever such an o-supported
 working memory element is created, Soar records which working memory
 elements that exist in a superstate were tested, directly or indirectly
 in creating that working memory element. \index {dependency-set} Whenever
 any of the working memory elements in the dependency set of a substate
 change, the substate is regenerated.
 
-Note that the creation of I-supported structures in a subgoal does not
-increase the dependency set, nor do O-supported results.  Thus, only
-subgoals that involve the creation of internal O-support working memory
+Note that the creation of i-supported structures in a subgoal does not
+increase the dependency set, nor do o-supported results.  Thus, only
+subgoals that involve the creation of internal o-support working memory
 elements risk regeneration, and then only when the basis for the
 creation of those elements changes.
 
@@ -1449,13 +1449,13 @@ created and added to working memory.
 
 %The decision procedure will detect an operator no-change impasse as soon
 %as an operator is selected and added to working memory by checking to
-%see whether or not productions will create O-supported actions during
-%the next application phae.  If no O-suppored actions will be created,
+%see whether or not productions will create o-supported actions during
+%the next application phae.  If no o-supported actions will be created,
 %the decision procedure will immediately create an operator no-change
 %impasse, and then proceed to output, input, and so on.  In these cases,
 %the operator no-change is made in the same decision as the operator
 %selection.  There will be cases where the operator no-change happens on
-%the following decisions, such as when there are O-supported productions
+%the following decisions, such as when there are o-supported productions
 %that will fire, but do not lead to a change in the selected operator.
 
 The second change when there are multiple substates is that at each

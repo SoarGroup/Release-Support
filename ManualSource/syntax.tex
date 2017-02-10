@@ -442,8 +442,8 @@ command.
 A production may also include an optional \emph{production type}, which
 may specify that the production should be considered a default
 production (\soar{:default}) or a chunk (\soar{:chunk}), or may specify
-that a production should be given O- support (\soar{:o-support}) or
-I-support (\soar{:i-support}).  Users are discouraged from using these
+that a production should be given o-support (\soar{:o-support}) or
+i-support (\soar{:i-support}).  Users are discouraged from using these
 types.  These types are described in Section \ref{sp}, which begins on
 Page \pageref{sp}.
 
@@ -612,7 +612,6 @@ The following table gives examples of legal and illegal variable names.
 \subsubsection{Predicates for values}
 \label{SYNTAX-pm-predicates}    %perf-pred}
 \index{predicates}
-\index{=}
 \index{<>}
 \index{<}
 \index{<=}
@@ -820,7 +819,7 @@ sp {default*evaluate-object
 \subsubsection*{Notes}
 
 One use of negated conditions to avoid is testing for the absence of the
-working memory element that a production creates with I-support; this
+working memory element that a production creates with i-support; this
 would lead to an ``infinite loop'' in your Soar program, as Soar would
 repeatedly fire and retract the production.
 
@@ -1497,8 +1496,8 @@ removed. This is applied recursively, so that all item that become
 unlinked are removed.
 
 The reject should be used with an action that will be o-supported.
-If reject is attempted with I-support, the working memory element will
-reappear if the reject loses I-support and the element still has
+If reject is attempted with i-support, the working memory element will
+reappear if the reject loses i-support and the element still has
 support.  
 
 % ----------------------------------------------------------------------------
@@ -1533,7 +1532,6 @@ production for the selection of operators:
 \index{<}
 \index{=}
 \index{&}
-\index{"@}
 
 
 The identifier and value will always be variables, such as
@@ -1555,7 +1553,7 @@ the \soar{preferences} command).
 Productions are never needed to delete preferences because preferences
 will be retracted when the production no longer matches.  Preferences
 should never be created by operator application rules, and they should
-always be created by rules that will give only I-support to their actions.
+always be created by rules that will give only i-support to their actions.
 
 % ----------------------------------------------------------------------------
 \subsubsection{Shorthand notations for preference creation}
