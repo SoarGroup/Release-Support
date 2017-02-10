@@ -337,6 +337,7 @@ used by rules that produce such evaluation preferences should not be included
 in any chunks produced from that sub-state.
 
 \index{chunking!overgeneral}
+\index{chunk!overgeneral}
 \index{chunking!incorrect chunks}
 \index{incorrect chunks}
 \index{overgeneral chunk}
@@ -651,6 +652,9 @@ operator that ultimately led to the result -- are documented in Section \ref{CDP
 
 \subsection{Testing for local negated conditions}
 
+\index{negated conditions}
+\index{chunking!negated conditions}
+
 Overgeneral chunks can be created when negated conditions test for the absence
 of a working memory element that, if it existed, would be local to the
 substate.  Chunking has no mechanism for determining \textit{why} a given
@@ -674,9 +678,6 @@ allow-local-negations on}. There are many cases where local negations
 are safe to ignore (and hence this mode reduces performance), but it can
 substantially reduce the number of overgeneral chunks in big agents (and aid in
 debugging).
-
-\index{negated!conditions}
-\index{chunking!negated conditions}
 
 \subsection{Testing for the substate}
 
