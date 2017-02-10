@@ -644,6 +644,10 @@ are six predicates that can be used:
 \index{type comparisons}
 \index{not equal test}
 
+\nocomment{
+	TODO: INSERT NEW SMEM CONDITIONS
+	}
+
 The following table shows examples of legal and illegal predicates:
 
 \begin{tabular}{| l | l |} \hline
@@ -823,6 +827,17 @@ working memory element that a production creates with i-support; this
 would lead to an ``infinite loop'' in your Soar program, as Soar would
 repeatedly fire and retract the production.
 
+Also note that syntactically it is invalid for the first condition of a rule
+to be a negated condition. For example, the following production would fail
+to load:
+
+\begin{verbatim}
+sp {example*invalid-negated-first-condition
+   (state <s> -^road <r>
+               ^car <c>)
+   -->
+   ... }
+\end{verbatim}
 
 % ----------------------------------------------------------------------------
 \subsubsection{Negated conjunctions of conditions}
@@ -2060,18 +2075,18 @@ tool, so that learning may be turned off in specific problem spaces,
 preventing otherwise buggy behavior.
 
 The \soar{dont-learn} and \soar{force-learn} RHS actions are to be used with
-specific settings for the \soar{learn} command (see page \pageref{learn}.)
-Using the \soar{learn} command, learning may be set to one of \soar{on},
-\soar{off}, \soar{except}, or \soar{only}; learning must be set to
-\soar{except} for the \soar{dont-learn} RHS action to have any effect and
-learning must be set to \soar{only} for the \soar{force-learn} RHS action to
-have any effect.
+specific settings for the \soar{chunk} command (see page \pageref{chunk}.)
+Using the \soar{chunk} command, learning may be set to one of \soar{always},
+\soar{never}, \soar{flagged}, or \soar{unflagged}; chunking must be set to
+\soar{flagged} for the \soar{force-learn} RHS action to have any effect and
+chunking must be set to \soar{unflagged} for the \soar{dont-learn} RHS action
+to have any effect.
 
 \begin{description}
 \index{dont-learn}
-\item [\soarb{dont-learn} --- ] When learning is set to \soar{except},
+\item [\soarb{dont-learn} --- ] When chunking is set to \soar{unflagged},
         by default chunks can be formed in all states; the \soar{dont-learn}
-        RHS action will cause learning to be turned off for the specified
+        RHS action will cause chunking to be turned off for the specified
         state.
 
 \begin{verbatim}
@@ -2081,15 +2096,15 @@ sp {turn-learning-off
     (dont-learn <s>) }
 \end{verbatim}
 
-        The \soar{dont-learn} RHS action applies when \soar{learn} is 
-	set to \soar{-except}, and has no effect when other settings for
-        \soar{learn} are used.
+        The \soar{dont-learn} RHS action applies when \soar{chunk} is 
+	    set to \soar{unflagged}, and has no effect when other settings for
+        \soar{chunk} are used.
 
 
 \index{force-learn}
-\item [\soarb{force-learn} --- ] When learning is set to \soar{only},
+\item [\soarb{force-learn} --- ] When learning is set to \soar{flagged},
         by default chunks are not formed in any state; the \soar{force-learn}
-        RHS action will cause learning to be turned on for the specified
+        RHS action will cause chunking to be turned on for the specified
         state.
 
 \begin{verbatim}
@@ -2099,9 +2114,9 @@ sp {turn-learning-on
     (force-learn <s>) }
 \end{verbatim}
 
-        The \soar{force-learn} RHS action applies when \soar{learn}
-	is set to \soar{-only}, and has no effect when other settings for
-        \soar{learn} are used.
+        The \soar{force-learn} RHS action applies when \soar{chunk}
+	    is set to \soar{flagged}, and has no effect when other settings for
+        \soar{chunk} are used.
 
 \end{description}
 

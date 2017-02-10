@@ -28,10 +28,10 @@ New Features
     what can be generalized and what constraints must be placed on those
     generalizations.  It can generalize any symbol type and even some
     right-hand side (RHS) functions. It also has several new mechanisms
-	  that allow it to create useful chunks in situations where Soar could
-	  not before.  For example, it can repair ungrounded conditions and RHS
-	  actions, which allows EBC to learn rules from results that are results
-	  only because they augment a previous result from that sub-state. 
+    that allow it to create useful chunks in situations where Soar could
+    not before.  For example, it can repair ungrounded conditions and RHS
+    actions, which allows EBC to learn rules from results that are results
+    only because they augment a previous result from that sub-state. 
     
     In general, we expect agents using EBC to:
     
@@ -76,14 +76,14 @@ New Features
 
     A full discussion of the challenges posed by the previous semantic memory 
     model is not in the scope of these release notes, but the basic problem was
-	  as follows. (a) The fixed mapping between a single structure in LTM and a 
-	  single structure in STM made it difficult to reason hypothetically about 
-	  long-term knowledge. (b) The fixed mapping could also cause unexpected 
-	  knowledge merging across multiple retrievals. (c) Finally, the model made it 
-	  challenging to learn correct knowledge when using semantic memories because 
-	  their basic nature could violate assumptions that the PSCM makes --for 
-	  example, that rules can explain how a piece of knowledge in one state is 
-	  relevant to another.
+    as follows. (a) The fixed mapping between a single structure in LTM and a 
+    single structure in STM made it difficult to reason hypothetically about 
+    long-term knowledge. (b) The fixed mapping could also cause unexpected 
+    knowledge merging across multiple retrievals. (c) Finally, the model made it 
+    challenging to learn correct knowledge when using semantic memories because 
+    their basic nature could violate assumptions that the PSCM makes --for 
+    example, that rules can explain how a piece of knowledge in one state is 
+    relevant to another.
     
     In Soar 9.6.0's model, each memory system is independent and does not share
     any structures with other memory systems.  Every retrieval or query from 
@@ -99,7 +99,7 @@ New Features
     to a long-term memory that could be used for future storage and retrieval.
     In Soar 9.6.0, new mechanisms are available using the aforementioned links
     to achieve the same functionality, but in a more flexible way.  These links
-	  can be utilized in two ways. 
+    can be utilized in two ways. 
     
     First, new left-hand side (LHS) tests allow agents to compare two short-term 
     identifiers to see if they came from the same long-term identifier.  
@@ -273,10 +273,10 @@ New Features
     11.  wm
     
     
-	Along with streamlining the command interface, the presentation and 
-	feedback for the commands have been improved in this release. In addition to
-	generally adding better feedback and error messages, many commands now have
-	two new pieces of functionality:
+    Along with streamlining the command interface, the presentation and 
+    feedback for the commands have been improved in this release. In addition to
+    generally adding better feedback and error messages, many commands now have
+    two new pieces of functionality:
     
     (a)  Summary Screens
     
@@ -342,7 +342,7 @@ New Features
     now incorporate learning into their agents, the complexity of the
     analysis it performs makes it far more difficult to understand how the 
     learned rules were formed.  The explainer is a new module that has been
-	  developed to help ameliorate this problem.
+    developed to help ameliorate this problem.
     
     When requested, the explainer will make a very detailed record of everything 
     that happened during a learning episode.  Using the 'explain' command, 
@@ -363,7 +363,7 @@ New Features
     constraints that the problem-solving placed on values that a particular 
     identity can have, and (4) specific statistics about that chunk, such as 
     whether correctness issues were detected or whether it required repair to
-	  make it fully operational.
+    make it fully operational.
     
     Finally, the explainer will also create the data necessary to visualize
     all of the processing described in an image using the new 'visualize'
@@ -394,8 +394,8 @@ New Features
 
     One capability of the visualizer is that it has many different options 
     to customize what is generated. Among these are options that provide totally
-	  different styles of presentation (node vs record, full rule vs name), an 
-	  option not to include structures created by the architecture, and an option  
+    different styles of presentation (node vs record, full rule vs name), an 
+    option not to include structures created by the architecture, and an option  
     to automatically launch a viewer to see the image generated.
 
 =================
@@ -416,7 +416,7 @@ Other Changes
       counts of all rules that have fired at least once.
     - New trace options (replaces watch command)
       - Trace now has an informative help screen breaking down all the different
-        settings with more informative names anddetailing which ones fall under 
+        settings with more informative names and detailing which ones fall under 
         which trace levels and which ones must be turned on manually.  (Use 
         'trace' to see screen.)
       - Trace now gives feedback when options change.
@@ -585,7 +585,7 @@ Other Changes
       unnoticed.)
     - Max-chunks no longer allows max-chunks + 1 chunks to be created
     - Fixed RETE crash that happened when a non-reteloc had an ^operator
-	    augmentation.
+      augmentation.
     - Fixed crashes that can occur because RHS values that are null can 
       appear non-null because they can have bit sets to indicate which of the 
       four types of RHS values. Some parts of the kernel did not appreciate 
@@ -602,8 +602,8 @@ Other Changes
       load-library.
     - Fixed GDS crash that occurred when Soar was trying to elaborate the 
       GDS for the top level, where a GDS does not exist.  This previously 
-	    occured as a result of an identifier created in the substate that is
-	    passed up to the top state as a result.
+      occured as a result of an identifier created in the substate that is
+      passed up to the top state as a result.
     - Soar no longer calls smem_attach every decision cycle.
     - Build date should now always be updated for optimized builds
     - Fixed the crash when trying to learn chunk with 2 unconnected goal states.
@@ -632,7 +632,7 @@ Other Changes
       for the template conditions.
     - Fixed long-standing memory leak in RL template instance creation
       (it had existed since at least 9.3.2).  It wasn't cleaning up a cached
-	  list of conditions.
+    list of conditions.
     - Fixed bug in RL code where it couldn't handle conjunctive constraints
       when building an RL template instance.  There was a part of the code
       that was commented out because it would segfault in certain cases with
@@ -700,9 +700,9 @@ Other Changes
       maps
     - Now caches eq_test when adding tests.  That's when every conjunctive
       test is first made, so it is easy to do there. Using the cached eq_test
-	    instead of code that searches a conjunctive test resulted in a nice
-	    kernel-wide speedup.  Most places in the kernel that used to traverse the
-	    list now just use this pointer.
+      instead of code that searches a conjunctive test resulted in a nice
+      kernel-wide speedup.  Most places in the kernel that used to traverse the
+      list now just use this pointer.
     - Caches a pointer to a memory stat that allocate_memory records so that it
       doesn't have to look it up in the array with every allocate.  (Nate 
       Derbinsky's idea.)

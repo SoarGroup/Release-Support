@@ -62,35 +62,33 @@ subgoal, \emph{unless} one of the following conditions is true:
 
 \index{learn}
 \begin{enumerate}
-\item Learning is \soar{off}. (See Section \ref{learn} on page \pageref{learn}
-	for details of \soar{learn} used to turn learning off.) 
+\item Chunking is \soar{off}. (See Section \ref{chunk} on page \pageref{chunk}
+	for details of \soar{chunk} and how to turn chunking on or off.
+	When \soar{chunk} is set to \soar{always} chunks are built.  
+	When \soar{chunk} is set to \soar{never}, chunks are not built.)
 
-	Learning can be set to \soar{on} or \soar{off}.
-	When \soar{learn} is \soar{on} chunks are built.  
-	When \soar{learn} is \soar{off}, chunks are not built. 
+\item The chunking option \soar{bottom-only} is \soar{on} and a chunk has
+	already been built for a subgoal of the state that generated the results. 
+	(See Section \ref{chunk} on page \pageref{chunk} for details of 
+	\soar{chunk} used with the \soar{bottom-only} setting.) 
 
-\item Learning is set to \soar{bottom-up} and a chunk has already 
-	been built for a subgoal of the state that generated the results. 
-	(See Section \ref{learn} on page \pageref{learn} for details of 
-	\soar{learn} used to set learning to bottom-up.) 
-
-	With bottom-up learning, chunks are learned only in states in which no
+	With bottom-only chunking, chunks are learned only in states in which no
 	subgoal has yet generated a chunk. In this mode, chunks are learned
 	only for the ``bottom'' of the subgoal hierarchy and not the
 	intermediate levels. With experience, the subgoals at the bottom will
 	be replaced by the chunks, allowing higher level subgoals to be
 	chunked.\footnote{For some tasks, bottom-up chunking facilitates
-	modelling power-law speedups, although its long-term theoretical
+	modeling power-law speedups, although its long-term theoretical
 	status is problematic.}
-	\index{bottom-up chunking}
-	\index{chunking!bottom-up}
+	\index{bottom-only chunking}
+	\index{chunking!bottom-only}
 	
 	\nocomment{this would be the appropriate place in the manual to discuss
 		the rationale behind the existence of bottom-up chunking. I
 		don't believe it's explained anywhere. 
 		}
 
-\item The learning flag \soar{through-local-negations} is disabled, and the
+\item The chunk setting \soar{allow-local-negations} is \soar{off}, and the
   result is dependent on a test for the negation of a subgoal WME. Testing a
   local negation can result in an overgeneral chunk (see Section
   \ref{CHUNKING-problems} on page \pageref{CHUNKING-problems}). In this mode,
@@ -116,7 +114,7 @@ subgoal, \emph{unless} one of the following conditions is true:
 	condition.  
 	\index{quiescence t (augmentation)} \index{exhaustion}
       
-\item Learning has been temporarily turned off via a call to the
+\item Chunking has been temporarily turned off via a call to the
 	\soar{dont-learn} production action (described on page
 	\pageref{SYNTAX-pm-actions-learning} in Section 
 	\ref{SYNTAX-pm-actions-learning}).
@@ -314,7 +312,7 @@ This is still the default behavior.  Only prohibit and require preference are
 included in the CDPS. In some case, though, this may lead to over-general chunks
 (see Section \ref{CHUNKING-problems} on page \pageref{CHUNKING-problems} for
 details).  As of Soar 9.3.3, there is a new learning option (see Section
-\ref{learn} on page \pageref{learn} for details) that will include a broader
+\ref{chunk} on page \pageref{chunk} for details) that will include a broader
 range of desirability preferences in the CDPS. The rules
 that determine which desirability preferences are included in the CDPS -- it
 depends on whether a particular desirability preferences played a
@@ -631,7 +629,7 @@ preferences, thereby avoiding overgenerality.  By default, all necessity
 preferences (\soar{require} and \soar{prohibit}) are included in the CDPS.  If
 goal-attainment knowledge is also included in desirability prefs, such as
 \soar{better}, \soar{worse}, \soar{best}, \soar{worst}, or \soar{indifferent},
-the add-desirability-prefs setting of the CDPS (Section \ref{learn} on \pageref{learn}) 
+the add-desirability-prefs setting of the CDPS (Section \ref{chunk} on \pageref{chunk}) 
 can be turned on to incorporate them into the backtrace and hence
 any resulting chunks.   The rules that determine which desirability preferences
 are included in the CDPS -- it depends on whether a particular desirability
@@ -670,9 +668,9 @@ data can be made a result by attaching it to the superstate. This increases
 the number of chunks learned, but a negated condition for the superstate can
 be used that leads to correct chunks.
 
-Alternatively, Soar's learning mode can be set to reject chunks when the
-backtrace encounters a local negation, by setting \soar{learn
---through-local-negations disable}. There are many cases where local negations
+Alternatively, Soar's chunking mode can be set to reject chunks when the
+backtrace encounters a local negation, by setting \soar{chunk
+allow-local-negations on}. There are many cases where local negations
 are safe to ignore (and hence this mode reduces performance), but it can
 substantially reduce the number of overgeneral chunks in big agents (and aid in
 debugging).
@@ -732,16 +730,22 @@ structures to one.
 This can occur when a subgoal creates a local structure, which is then linked to a
 superstate, becoming a result. A new WME added to this structure is also a result, as
 as it is linked to the superstate. However, if that WME is created
-with a rule that matches the local state only (not the superstate), Soar cannot build a chunk for the
-result, as it is unable to determine how the new WME is linked to the
-superstate.
+with a rule that matches the local state only (not the superstate), Soar cannot
+build a chunk for the result, as it is unable to determine how the new WME is linked
+to the superstate.
 
-For example, assume that an agent builds up a structure consisting of an identifier called \soar{\carat thing} attached to a substate, and then adds
-\soar{\carat property foo} as an augmentation to \soar{thing}. If the agent now matches \soar{thing} on the substate, and creates a WME on a
-superstate linked to the same identifier, that identifier, along with its augmentation \soar{\carat property foo}, becomes a result, and a chunk is formed.
-Now, if a rule in the subgoal adds another augmentation to the \soar{thing} identifier, (\soar{\carat property bar}, say), that augmentation will also be 
-a result, as it is linked to an identifier which is linked to a superstate. However, if that rule matches the identifier through the substate, the chunking
-process cannot determine how it is linked to the superstate, and a chunk cannot be created.
+For example, assume that an agent builds up a structure consisting of an identifier
+called \soar{\carat thing} attached to a substate, and then adds
+\soar{\carat property foo} as an augmentation to \soar{thing}.
+If the agent now matches \soar{thing} on the substate, and creates a WME on a
+superstate linked to the same identifier, that identifier, along with its
+augmentation \soar{\carat property foo}, becomes a result, and a chunk is formed.
+Now, if a rule in the subgoal adds another augmentation to the \soar{thing}
+identifier, (\soar{\carat property bar}, say), that augmentation will also be
+a result, as it is linked to an identifier which is linked to a superstate.
+However, if that rule matches the identifier through the substate, the chunking
+process cannot determine how it is linked to the superstate, and a chunk cannot
+be created.
 
 
 \textbf{Solution:} If the substructure of a result must be revised, the rules
