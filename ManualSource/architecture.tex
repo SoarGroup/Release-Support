@@ -863,7 +863,7 @@ selected
 	chooses randomly from among the alternatives. (The
 	\soar{indifferent-selection} function can be used to change this
 	behavior as described on
-	page \pageref{indifferent-selection} in Chapter
+	page \pageref{decide-indifferent-selection} in Chapter
 	\ref{INTERFACE}.)\vspace{-8pt}
 
 \index{preference!numeric-indifferent}
@@ -879,10 +879,10 @@ selected
 	and the exploration policy. The available exploration policies and how they
 	calculate selection probability are detailed in the documentation for the
 	\soar{indifferent-selection} command on page
-	\pageref{indifferent-selection}. When a single operator is given multiple
+	\pageref{decide-indifferent-selection}. When a single operator is given multiple
 	numeric-indifferent preferences, they are either averaged or summed into a
 	single value based on the setting of the \soar{numeric-indifferent-mode}
-	command (see page \pageref{numeric-indifferent-mode}).
+	command (see page \pageref{decide-numeric-indifferent-mode}).
 
 	Numeric-indifferent preferences that are created by RL rules can be adjusted
 	by the reinforcement learning mechanism. In this way, it's possible for an
@@ -1398,8 +1398,10 @@ arises, the problem being solved in the subgoal may no longer be the
 problem that actually needs to be solved.  Luckily, not all changes to a
 superstate lead to inconsistency.
 
-In order to detect inconsistencies, Soar maintains a {\em dependency set}
-for every subgoal/substate.  The dependency set consists of all working
+In order to detect inconsistencies, Soar maintains a 
+\emph{dependency set} for every \\
+subgoal/substate. 
+The dependency set consists of all working
 memory elements that were tested in the conditions of productions that
 created o-supported working memory elements that are directly or
 indirectly linked to the substate.  Thus, whenever such an o-supported

@@ -8,7 +8,7 @@
 
 \nocomment{for each command, use the 'funsum' command with a brief
 	description. This writes to the manual.glo file which can be edited
-	into the funtion summary and index (see that file for more
+	into the function summary and index (see that file for more
 	instructions). This is a bit tedious, but the reason I've set it up
 	this way is that the command set is in flux right now -- this lessens
 	the chance that a command will be inadvertently omitted from the
@@ -122,11 +122,18 @@ section are:
 \end{quote}
 These commands are all frequently used anytime Soar is run.
 
-\input{wikicmd/tex/soar}
-\input{wikicmd/tex/gp}
+\divider 
+\input{wikicmd/tex/soar} 
+\divider
+\input{wikicmd/tex/gp} 
+\divider
 \input{wikicmd/tex/help}
+\divider 
 \input{wikicmd/tex/run}
+\divider 
 \input{wikicmd/tex/sp}
+\divider 
+
 
 \section{Examining Memory Systems}
 \label{MEMORY}
@@ -171,10 +178,15 @@ productions loaded is high.  \soar{production watch} is related to \soar{watch},
 to specific, named productions. \soar{production firing-counts} is used to see if how many times
 certain rules fire.  
 
+\divider 
 \input{wikicmd/tex/preferences}
+\divider 
 \input{wikicmd/tex/production}
+\divider 
 \input{wikicmd/tex/print}
+\divider 
 \input{wikicmd/tex/wm}
+\divider 
 
 % ****************************************************************************
 % ----------------------------------------------------------------------------
@@ -215,11 +227,17 @@ complex).  \textbf{output print-depth} is related to the \textbf{print} command.
 is useful for understanding how much work Soar is doing. Soar applications that include a graphical interface or other
 simulation environment will often require the use of \textbf{echo} 
 
+\divider 
 \input{wikicmd/tex/echo}
+\divider 
 \input{wikicmd/tex/output}
+\divider 
 \input{wikicmd/tex/stats}
+\divider 
 \input{wikicmd/tex/trace}
+\divider 
 \input{wikicmd/tex/visualize}
+\divider 
 
 % ----------------------------------------------------------------------------
 \section{Configuring Soar's Runtime Parameters}
@@ -254,13 +272,21 @@ The specific commands described in this section are:
 \end{quote}
 
 % ----------------------------------------------------------------------------
+\divider 
 \input{wikicmd/tex/chunk}
+\divider 
 \input{wikicmd/tex/explain}
+\divider 
 \input{wikicmd/tex/decide}
+\divider 
 \input{wikicmd/tex/epmem}
+\divider 
 \input{wikicmd/tex/rl}
+\divider 
 \input{wikicmd/tex/smem}
+\divider 
 \input{wikicmd/tex/svs}
+\divider 
 
 % ----------------------------------------------------------------------------
 
@@ -295,7 +321,9 @@ The specific commands described in this section are:
 \end{description}
 \end{quote}
 
-The \textbf{load file} command, previously know as \textbf{soar} is used for nearly every Soar program.  The
+(See also the \href{output}{output} command.)
+
+The \textbf{load file} command, previously known as \textbf{source} is used for nearly every Soar program.  The
 directory functions are important to understand so that users can
 navigate directories/folders to load/save the files of interest.  
 Saving and loading percept streams are used mainly  when Soar needs to interact with an
@@ -303,10 +331,13 @@ external environment.  Users might take advantage of these commands when
 debugging agents, but care should be used in adding and removing wmes this
 way as they do not fall under Soar's truth maintenance system.
 
+\divider 
 \input{wikicmd/tex/file-system}
-\input{wikicmd/tex/output}
+\divider 
 \input{wikicmd/tex/load}
+\divider 
 \input{wikicmd/tex/save}
+\divider 
 
 % ***************************************************************************
 % ----------------------------------------------------------------------------
@@ -336,5 +367,7 @@ The specific commands described in this section are:
 \end{description}
 \end{quote}
 
+\divider 
 \input{wikicmd/tex/alias}
+\divider 
 \input{wikicmd/tex/debug}

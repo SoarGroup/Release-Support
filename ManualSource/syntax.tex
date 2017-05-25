@@ -272,8 +272,8 @@ value. The objects in working memory illustrated by this figure are:
 (X44 ^unit grams ^property mass)
 \end{verbatim} \vspace{12pt}
 
-In this example, object \soar{O43} and object \soar{O87} are both linked to
-object \soar{O53} through \soar{(O53 \carat contains O43)} and \soar{(O53
+In this example, object \soar{O43} and object \soar{O87} are both linked to object \soar{O53} \\
+through \soar{(O53 \carat contains O43)} and \soar{(O53
 \carat contains O87)}, respectively (the \soar{contains} attribute
 is a multi-valued attribute). Likewise, object \soar{O53} is linked to object
 \soar{O43} through \soar{(O43 \carat inside O53)} and linked to object
@@ -1413,10 +1413,10 @@ sp {blocks-world*propose*move-block
         attribute path, or a structure can be given as the value for an
         attribute path. 
 
-\item Structured-value notation may also be combined with negations and with
+\item Structured-value notation can be combined with negations and with
         multi-attributes. 
 
-\item Structured-value notation may not be used in the actions of productions.
+\item Structured-value notation can not be used in the actions of productions.
 
 \end{itemize}
 
@@ -1789,9 +1789,10 @@ sp {
 \end{verbatim}
 
 \item [\soarb{abs, atan2, sqrt, sin, cos} --- ]   
-        These symbols provide prefix notation unary mathematical functions
-        (they each take one argument). These symbols work similarly to C
-        functions: They will take either integer or real-number arguments. The
+        These symbols provide prefix notation unary \\ 
+        mathematical functions (they each take one argument). 
+        These symbols work similarly to C functions:
+        They will take either integer or real-number arguments. The
         first function (\soar{abs}) returns an integer when its argument is an
         integer and otherwise returns a real number, and the last four
         functions always return a real number.  \soar{atan2} returns as

@@ -69,7 +69,7 @@ In the more general case, multiple RL rules can match a single state-operator pa
 all numeric indifferent preferences for an operator are summed when calculating the operator's Q-value\footnote{
 This is assuming the value of \soarb{numeric-indifferent-mode} is set to \soarb{sum}.
 In general, the RL mechanism only works correctly when this is the case, and we assume this case in the rest of the chapter.
-See page \pageref{numeric-indifferent-mode} for more information about this parameter.}.
+See page \pageref{decide-numeric-indifferent-mode} for more information about this parameter.}.
 In this context, RL rules can be interpreted more generally as binary features in a linear approximator of each state-operator pair's Q-value, and their numeric indifferent preference values their weights.
 In other words,
 $$Q(s, a) = w_1 \phi_2 (s, a) + w_2 \phi_2 (s, a) + \ldots + w_n \phi_n (s, a)$$
@@ -146,7 +146,9 @@ For example:
     (R3 ^duration 5)
 \end{verbatim}  
 
-The \verb=(R2 ^source environment)=, \verb=(R3 ^source intrinsic)=, and \verb=(R3 ^duration 5)= WMEs are arbitrary and ignored by RL, but were added by the agent to keep track of where the rewards came from and for how long.
+The \verb=(R2 ^source environment)=, \verb=(R3 ^source intrinsic)=, and \verb=(R3 ^duration 5)= \\
+WMEs are arbitrary and ignored by RL, but were added by the agent to keep 
+track of where the rewards came from and for how long.
 
 Note that the \soarb{reward-link} is not part of the \soarb{io} structure and is not modified directly by the environment.
 Reward information from the environment should be copied, via rules, from the \soarb{input-link} to the \soarb{reward-link}.
@@ -230,7 +232,7 @@ Note that rewards will still be collected during the gap, but they are discounte
 
 Gap propagation can be disabled by setting the \soarb{temporal-extension} parameter of the \soarb{rl} command to \soarb{off}.
 When gap propagation is disabled, the RL rules preceding a gap are updated using $Q(s_{t+1}, a_{t+1}) = 0$.
-The \soarb{rl} setting of the \soarb{watch} command (see Section \ref{watch} on page \pageref{watch}) is useful in identifying gaps.
+The \soarb{rl} setting of the \soarb{watch} command (see Section \ref{trace} on page \pageref{trace}) is useful in identifying gaps.
 
 
 \subsection{RL and Substates}
@@ -292,7 +294,8 @@ Soar's automatic subgoaling and RL mechanisms can be combined to naturally imple
 
 \subsection{Eligibility Traces}
 \label{RL-et}
-The RL mechanism supports eligibility traces, which can improve the speed of learning by updating RL rules across multiple sequential steps.
+The RL mechanism supports eligibility traces, which can improve the speed of learning by 
+updating RL rules across multiple sequential steps. \\
 The \soarb{eligibility-trace-decay-rate} and \soarb{eligibility-trace-tolerance} parameters control this mechanism.
 By setting \soarb{eligibility-trace-decay-rate} to \soarb{0} (default), eligibility traces are in effect disabled.
 When eligibility traces are enabled, the particular algorithm used is dependent upon the learning policy.
@@ -301,7 +304,7 @@ For Q-Learning, the eligibility trace implementation is \emph{Watkin's Q($\lambd
 
 \subsubsection{Exploration}
 
-The \soarb{indifferent-selection} command (page \pageref{indifferent-selection}) determines how operators are selected based on their numeric indifferent preferences.
+The \soarb{indifferent-selection} command (page \pageref{decide-indifferent-selection}) determines how operators are selected based on their numeric indifferent preferences.
 Although all the indifferent selection settings are valid regardless of how the numeric indifferent preferences were arrived at, the \soarb{epsilon-greedy} and \soarb{boltzmann} settings are specifically designed for use with RL and correspond to the two most common exploration strategies.
 In an effort to maintain backwards compatibility, the default exploration policy is \soarb{softmax}.
 As a result, one should change to \soarb{epsilon-greedy} or \soarb{boltzmann} when the reinforcement learning mechanism is enabled.

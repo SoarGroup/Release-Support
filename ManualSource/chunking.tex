@@ -255,8 +255,8 @@ result, and collects all of the working memory elements that are linked to a
 superstate. This method ignores when the working memory elements were created,
 thus allowing the conditions of one chunk to test the results of a chunk
 learned earlier in the subgoal. The user can observe the backtracing process
-by setting setting backtracing on, using the watch command: \soar{watch
-backtracing -on} (see Section \ref{watch} on page \pageref{watch}). 
+by setting setting backtracing on, using the watch command: \soar{trace
+backtracing -on} (see Section \ref{trace} on page \pageref{trace}). 
 This prints out a trace of the conditions as they are collected.
 \index{backtracing}
 \index{chunking!conditions}
@@ -475,7 +475,7 @@ again in a similar context.
 
 As of version 9.3.3, desirability preferences will not be added to the CDPS by
 default.  The setting must be turned on via the learn command's
-“add-desirability-prefs” setting.  See Section \ref{learn} on page \pageref{learn} for more
+“add-desirability-prefs” setting.  See Section \ref{chunk} on page \pageref{chunk} for more
 information.  Necessity preferences will always be added to the CDPS regardless
 of setting.
 

@@ -37,7 +37,8 @@ It is important to note, however, key differences:
 \begin{itemize}
 
 \item 
-Currently semantic memory only supports attributes that are symbolic constants (string, integer, or decimal), but \emph{not} attributes that are identifiers
+Currently semantic memory only supports attributes that are symbolic constants \\
+(string, integer, or decimal), but \emph{not} attributes that are identifiers
 
 \item 
 Whereas working memory is a single, connected, directed graph, semantic memory can be disconnected, consisting of multiple directed, connected sub-graphs
@@ -73,13 +74,13 @@ Soar productions may use various conditions to test whether an STI is associated
 LTI names (e.g. {@}6) may \emph{not} appear in the action side of productions.
 
 \subsubsection{Episodic Memory}
-Episodic memory (see Section \ref{EPMEM} on page \pageref{EPMEM}) faithfully captures short- vs. long-term identifiers, including the episode of transition.  
-Cues are handled in much the same way as cue-based retrievals, with respect to the differences in semantics of a short- vs. long-term identifier.
+Episodic memory (see Section \ref{EPMEM} on page \pageref{EPMEM}) faithfully captures LTI-linked STIs, including the episode of transition. 
+Retrieved episodes contain STIs as they existed during the episode, regardless of any changes to linked LTIs that transpired since the episode occurred.
 
 \section{Storing Semantic Knowledge}
 \label{SMEM-store}
 
-An agent stores a long-term identifier to semantic memory by creating a \emph{store} command: this is a WME whose identifier is the \emph{command} link of a state's \emph{smem} structure, the attribute is \emph{store}, and the value is a short-term identifier.
+An agent stores a long-term identifier in semantic memory by creating a \emph{store} command: this is a WME whose identifier is the \emph{command} link of a state's \emph{smem} structure, the attribute is \emph{store}, and the value is a short-term identifier.
 
 \begin{verbatim}
 <s> ^smem.command.store <identifier>

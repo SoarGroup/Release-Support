@@ -14,42 +14,108 @@
 There are a number of Soar ``commands'' that are shorthand for other Soar
 commands: 
 
-\begin{small}
-\begin{tabular}{ l l r }
-Alias  & Command & Page \\  \hline
+\begin{longtable}[l]{@{\extracolsep{\fill}}p{3cm}p{6cm}p{1cm}@{}}
+	Alias  & Command & Page \\ \hline
+\end{longtable}
+\vspace{-18pt}
+\begin{footnotesize}
+%\begin{longtable}{ l l r }
+\begin{longtable}[c]{@{}p{5cm}p{8cm}p{5cm}@{}}
 \soar{?}  & \soar{help} & \pageref{help}\\
 \soar{a}  & \soar{alias} & \pageref{alias}\\
-\soar{aw} & \soar{wm add} & \pageref{wm}\\
+\soar{add-wme} & \soar{wm add} & \pageref{wm-add}\\
+\soar{allocate} & \soar{debug allocate} & \pageref{debug-allocate}\\
+\soar{aw} & \soar{wm add} & \pageref{wm-add}\\
+\soar{c} & \soar{explain chunk} & \pageref{explain-chunk}\\
+\soar{capture-input} & \soar{save percepts} & \pageref{save-percepts}\\
 \soar{chdir} & \soar{cd} & \pageref{cd}\\
+\soar{chunk-name-format} & \soar{chunk naming-style} & \pageref{chunk}\\
+\soar{cli} & \soar{soar tcl} & \pageref{soar-tcl}\\
+\soar{clog} & \soar{output log} & \pageref{output-log}\\
+\soar{command-to-file} & \soar{output command-to-file} & \pageref{output-command-to-file}\\
+\soar{cs} & \soar{chunk stats} & \pageref{chunk-debugging}\\
+\soar{cts} & \soar{output command-to-file} & \pageref{output-command-to-file}\\
 \soar{d}  & \soar{run -d 1} & \pageref{run}\\
 \soar{dir} & \soar{ls} & \pageref{ls}\\
 \soar{e}  & \soar{run -e 1} & \pageref{run}\\
-\soar{ex} & \soar{production excise} & \pageref{production }\\
-\soar{fc} & \soar{production firing-counts} & \pageref{production}\\
+\soar{echo-commands} & \soar{output echo-commands} & \pageref{output-echo-commands}\\
+\soar{ef} & \soar{explain formation} & \pageref{explain-formation}\\
+\soar{ei} & \soar{explain identities} & \pageref{explain-identity}\\
+\soar{es} & \soar{explain stats} & \pageref{explain-stats}\\
+\soar{et} & \soar{explain explanation-trace} & \pageref{explain-trace}\\
+\soar{ex} & \soar{production excise} & \pageref{production-excise}\\
+\soar{fc} & \soar{production firing-counts} & \pageref{production-firing-counts}\\
+\soar{firing-counts} & \soar{production firing-counts} & \pageref{production-firing-counts}\\
+\soar{gds\_print} & \soar{print --gds} & \pageref{print}\\
+\soar{gp-max} & \soar{soar max-gp} & \pageref{soar-max-gp}\\
 \soar{h} & \soar{help} & \pageref{help}\\
-\soar{inds} & \soar{decide indifferent-selection} & \pageref{decide}\\
-\soar{init} & \soar{soar init} & \pageref{soar}\\
-\soar{interrupt} & \soar{soar stop} & \pageref{soar}\\
-\soar{is} & \soar{soar init} & \pageref{soar}\\
+\soar{i} & \soar{explain instantiation} & \pageref{explain-instantiation}\\
+\soar{indifferent-selection} & \soar{decide indifferent-selection} & \pageref{decide-indifferent-selection}\\
+\soar{inds} & \soar{decide indifferent selection} & \pageref{decide-indifferent-selection}\\
+\soar{inds} & \soar{decide indifferent-selection} & \pageref{decide-indifferent-selection}\\
+\soar{init} & \soar{soar init} & \pageref{soar-init}\\
+\soar{internal-symbols} & \soar{debug internal-symbols} & \pageref{debug-internal-symbols}\\
+\soar{interrupt} & \soar{soar stop} & \pageref{soar-stop}\\
+\soar{is} & \soar{soar init} & \pageref{soar-init}\\
+\soar{load-library} & \soar{load library} & \pageref{load-library}\\
 \soar{man} & \soar{help} & \pageref{help}\\ 
+\soar{matches} & \soar{production matches} & \pageref{production-matches}\\
+\soar{max-chunks} & \soar{chunk max-chunks} & \pageref{chunk-max-chunks}\\
+\soar{max-dc-time} & \soar{soar max-dc-time} & \pageref{soar-max-dc-time}\\
+\soar{max-elaborations} & \soar{soar max-elaborations} & \pageref{soar-max-elaborations}\\
+\soar{max-goal-depth} & \soar{soar max-goal-depth} & \pageref{soar-max-goal-depth}\\
+\soar{max-memory-usage} & \soar{soar max-memory-usage} & \pageref{soar-max-memory-usage}\\
+\soar{max-nil-output-cycles} & \soar{soar max-nil-output-cycles} & \pageref{soar-max-nil-output-cycles}\\
+\soar{memories} & \soar{production memory-usage} & \pageref{production-memory-usage}\\
+\soar{multi-attributes} & \soar{production optimize-attribute} & \pageref{production-optimize-attribute}\\
+\soar{numeric-indifferent-mode} & \soar{decide numeric-indifferent-mode} & \pageref{decide-numeric-indifferent-mode}\\
 \soar{p}  & \soar{print} & \pageref{print}\\
+\soar{pbreak} & \soar{production break} & \pageref{production-break}\\
 \soar{pc} & \soar{print --chunks} & \pageref{print}\\
-\soar{pr} & \soar{preferences} & \pageref{preferences}\\
-\soar{pw} & \soar{production watch} & \pageref{production}\\
-\soar{rn} & \soar{load rete-net} & \pageref{load}\\
-\soar{rw} & \soar{wm remove} & \pageref{wm}\\
-\soar{set-default-depth} & \soar{output print-depth} & \pageref{output}\\ 
-\soar{ss} & \soar{soar stop} & \pageref{soar}\\
+\soar{port} & \soar{debug port} & \pageref{debug-port}\\
+\soar{predict} & \soar{decide predict} & \pageref{decide-predict}\\
+\soar{production-find} & \soar{production find} & \pageref{production-find}\\
+\soar{ps} & \soar{print --stack} & \pageref{print}\\
+\soar{pw} & \soar{production watch} & \pageref{production-watch}\\
+\soar{pwatch} & \soar{production watch} & \pageref{production-watch}\\
+\soar{quit} & \soar{exit} & \pageref{exit}\\
+\soar{r} & \soar{run} & \pageref{run}\\
+\soar{remove-wme} & \soar{wm remove} & \pageref{wm-remove}\\
+\soar{replay-input} & \soar{load percepts} & \pageref{load-percepts}\\
+\soar{rete-net} & \soar{load rete-network} & \pageref{load-rete-network}\\
+\soar{rn} & \soar{load rete-network} & \pageref{load-rete-network}\\
+\soar{rw} & \soar{wm remove} & \pageref{wm-remove}\\
+\soar{s} & \soar{run 1} & \pageref{run}\\
+\soar{select} & \soar{decide select} & \pageref{decide-select}\\
+\soar{set-default-depth} & \soar{output print-depth} & \pageref{output-print-depth}\\ 
+\soar{set-stop-phase} & \soar{soar stop-phase} & \pageref{soar-stop-phase}\\
+\soar{soarnews} & \soar{soar} & \pageref{soar}\\
+\soar{source} & \soar{load file} & \pageref{load-file}\\
+\soar{srand} & \soar{decide srand} & \pageref{decide-srand}\\
+\soar{ss} & \soar{soar stop} & \pageref{soar-stop}\\
 \soar{st} & \soar{stats} & \pageref{stats}\\
-\soar{step} & \soar{run 1} & \pageref{run}\\ 
-\soar{stop} & \soar{soar stop} & \pageref{soar}\\ 
+\soar{step} & \soar{run -d 1} & \pageref{run}\\ 
+\soar{stop} & \soar{soar stop} & \pageref{soar-stop}\\ 
+\soar{stop-soar} & \soar{soar-stop} & \pageref{soar-stop}\\
+\soar{tcl} & \soar{soar tcl} & \pageref{soar-tcl}\\
+\soar{time} & \soar{debug time} & \pageref{debug-time}\\
+\soar{timers} & \soar{soar timers} & \pageref{soar-timers}\\
 \soar{topd} & \soar{pwd} & \pageref{pwd}\\
-\soar{un} & \soar{alias -d} & \pageref{alias}\\
-\soar{unalias} & \soar{alias -d} & \pageref{alias}\\
+\soar{un} & \soar{alias -r} & \pageref{alias}\\
+\soar{unalias} & \soar{alias -r} & \pageref{alias}\\
+\soar{varprint} & \soar{print -v -d 100} & \pageref{print}\\
+\soar{verbose} & \soar{trace -A} & \pageref{trace}\\
+\soar{version} & \soar{soar version} & \pageref{soar-version}\\
 \soar{w}  & \soar{trace} & \pageref{trace}\\
-\soar{wmes} & \soar{print -i} & \pageref{print}\\
-\end{tabular}
-\end{small} \vspace{24pt}
+\soar{waitsnc} & \soar{soar wait-snc} & \pageref{soar-wait-snc}\\
+\soar{warnings} & \soar{output warnings} & \pageref{output-warnings}\\
+\soar{watch} & \soar{trace} & \pageref{trace}\\
+\soar{watch-wmes} & \soar{wm watch} & \pageref{wm-watch}\\
+\soar{wma} & \soar{wm activation} & \pageref{wm-activation}\\
+\soar{wmes} & \soar{print -depth 0 -internal} & \pageref{print}\\
+\soar{wt} & \soar{explain wm-trace} & \pageref{explain-trace}\\
+\end{longtable}
+\end{footnotesize} \vspace{24pt}
 
 \newpage
 % ----------------------------------------------------------------------------
@@ -60,7 +126,7 @@ The following table lists the commands in Soar. See the referenced page number
 for a complete description of each command.
 
 \begin{small}
-\begin{longtable}{ l p{8cm} r }
+\begin{longtable}{ l p{10cm} r }
 Command  & Summary & Page \\  \hline
 \input{funclist}
 \end{longtable}
