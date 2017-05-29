@@ -325,7 +325,7 @@ This is of greater concern when dealing with file-based databases, versus in-mem
 The size of each page, however, may be important whether databases are disk- or memory-based. 
 This setting can have far-reaching consequences, such as index B+-tree depth. 
 While this setting can be dependent upon a particular situation, a good heuristic is that short, simple runs should use small values of the page size (\soarb{1k}, \soarb{2k}, \soarb{4k}), whereas longer, more complicated runs will benefit from larger values (\soarb{8k}, \soarb{16k}, \soarb{32k}, \soarb{64k}). 
-One known situation of concern is that as indexed tables accumulate many rows (~millions), insertion time of new rows can suffer an infrequent, but linearly increasing burst of computation. 
+One known situation of concern is that as indexed tables accumulate many rows (\tild millions), insertion time of new rows can suffer an infrequent, but linearly increasing burst of computation. 
 In episodic memory, this situation will typically arise with many episodes and/or many working memory changes. 
 Increasing the page size will reduce the intensity of the spikes at the cost of increasing disk I/O and average/total time for episode storage. 
 Thus, the settings of page size for long, complicated runs establishes the desired balance of reactivity (i.e. max computation) and average speed. 
