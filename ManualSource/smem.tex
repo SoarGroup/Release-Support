@@ -132,7 +132,7 @@ The \soarb{path} parameter specifies the file system path the database is stored
 
 The \soarb{append} parameter will determine whether all existing facts stored in a database on disk will be erased when semantic memory loads. Note that this affects \soarb{init-soar} also.  In other words, if the \soarb{append} setting is off, all semantic facts stored to disk will be lost when an init-soar is performed. For semantic memory, \soarb{append} mode is \soarb{on} by default.
 
-\soarb{Note}: As of version 9.3.3, Soar now uses a new schema for the episodic memory database. This means databases from 9.3.2 and below can no longer be loaded.  A conversion utility will be available in Soar 9.4 to convert from the old schema to the new one.
+\soarb{Note}: As of version 9.3.3, Soar used a new schema for the semantic memory database. This means databases from 9.3.2 and below can no longer be loaded.  A conversion utility was be available in Soar 9.4 to convert from the old schema to the new one.%TODO Mazin, could you talk about the import/export command, here?
 
 The \soarb{lazy-commit} parameter is a performance optimization. 
 If set to \soarb{on} (default), disk databases will not reflect semantic memory changes until the Soar kernel shuts down. 
@@ -187,7 +187,7 @@ A cue-based retrieval performs a search for a long-term identifier in semantic m
 
 A cue is composed of WMEs that describe the augmentations of a long-term identifier.  
 A cue WME with a constant value denotes an exact match of both attribute and value.  
-A cue WME with an LTI-linked identifier as its value denotes an exact match as well.  
+A cue WME with an LTI-linked identifier as its value denotes an exact match of attribute and linked LTI.  
 A cue WME with a short-term identifier as its value denotes an exact match of attribute, but with any value (constant or identifier).  
 
 A cue-based retrieval command has a \emph{query} attribute and an identifier value, the cue:
@@ -224,7 +224,7 @@ Attribute \soar{name} and ANY value
 Attribute \soar{foo} and value equal to the value of variable \soar{<bar>} at the time this rule fires
 
 \item 
-Attribute \soar{associate} and value equal to the long-term identifier of \soar{<lti>} at the time this rule fires
+Attribute \soar{associate} and value equal to the linked long-term identifier of \soar{<lti>} at the time this rule fires
 
 \item 
 Attribute \soar{age} and integer value \soar{25}
