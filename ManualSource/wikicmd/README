@@ -4,7 +4,9 @@ command. It first split the single wiki page into one page for each
 first level heading, which should demarcate a single command. These
 files are kept in the wiki/ subdirectory. Each wiki page is then passed
 through moin2latex.py which generates a latex source file in the tex/
-subdirectory. These files are referenced and automatically included in
+subdirectory. This output is then passed through soarman_format.py
+for additional latex-specific formatting and margin-handling. 
+These resulting files are referenced and automatically included in
 interface-8.6.tex.
 
 The google code wiki syntax is a subset of MoinMoin wiki syntax. The
