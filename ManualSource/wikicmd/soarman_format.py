@@ -29,9 +29,9 @@ def get_edit_list(pathname):
     FOOTNOTE_WIDTH = 89         # " for footnotesize verbatim text
     SCRIPT_WIDTH = 110          # " for scriptsize verbatim text
     
-    BAD_LABELS = ['\\label{synopsis}','\\label{options}','\\label{description}','\\label{summary-screen}',
-                  '\\label{parameters}','\\label{examples}','\\label{example}','\\label{default-aliases}','\\label{see-also}',
-                  '\\label{watch}','\\label{warnings}','\\label{timers}','\\label{usage}','\\label{statistics}']
+    BAD_LABELS = ['\\label{synopsis','\\label{options','\\label{description','\\label{summary-screen',
+                  '\\label{parameters','\\label{examples','\\label{example','\\label{default-aliases','\\label{see-also',
+                  '\\label{performance-parameters','\\label{watch}','\\label{warnings}','\\label{timers}','\\label{usage}','\\label{statistics}']
     
     index = -1                  # Variable for keeping string.find results
     lnum = 0                    # Current line number
@@ -59,12 +59,13 @@ def get_edit_list(pathname):
                 #   Colons outside headers are a hack for ensuring that headers appear before subsequent tables.
                 index = line.find(":}\\label{")
                 if index != -1:
-                    edit_list[lnum].append( (lnum, line[index:-1], line[index+1:-1]+':') )
-                # Remove useless reused labels
-                index = str_find_list(line, BAD_LABELS)
-                if index != -1:
-                    index2 = line.find('}',index)
-                    edit_list[lnum].append( (lnum, line[index:index2+1], '') )
+                    edit_list[lnum].append( (lnum, line[index:-1], '}:') ) #line[index+1:-1]+':') )
+                else:
+                    # Remove useless reused labels (separate to cheaply avoid conflict with colon removal)
+                    index = str_find_list(line, BAD_LABELS)
+                    if index != -1:
+                        index2 = line.find('}',index)
+                        edit_list[lnum].append( (lnum, line[index:index2+1], '') )
                 
                 ### SCANNING FIXES:
                 # Search for tables
