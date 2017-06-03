@@ -1,8 +1,7 @@
 % ----------------------------------------------------------------------------
 \typeout{--------------- appendix: GDS ------------------}
 \chapter[A Goal Dependency Set Primer]{
-A Goal Dependency Set Primer\footnote{A preliminary draft by Robert Wray, contact at \texttt{wrayre@acm.org}.
-}}
+A Goal Dependency Set Primer}
 
 \label{GDS}
 \index{GDS}
@@ -37,7 +36,7 @@ A Goal Dependency Set Primer\footnote{A preliminary draft by Robert Wray, contac
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 This document briefly describes the Goal Dependency Set (GDS), which
-was introduced with Soar~8.  There are three sections: a brief
+was introduced with the current version of Soar.  There are three sections: a brief
 discussion of the motivation for the GDS, a discussion of the
 consequences of the GDS from a behavior developer/modeler's point of
 view, and some details on the kernel implementation of the GDS, for
@@ -74,20 +73,19 @@ the kernel level, states are still called ``goals'' and ``goal'' is often
 still used to refer to states.    As a result, a
 confusion in terminology results, with ``\textbf{Goal} Dependency Set'' a 
 specific example, even though ``goals'' have not been
-an explicit, behavior-level Soar construct since Soar~6}.  In Soar, any
+an explicit, behavior-level Soar construct since Soar~6.}.  In Soar, any
 action (application) of an operator receives an o-support preference.
 This preference makes the resulting WME persistent: it will remain in
-memory until explicitly removed (or until its local state is removed),
+memory until explicitly removed or until its local state is removed,
 regardless of whether it continues to be justified.
 
 Persistent WMEs are pervasive in Soar, because operators are the main
 unit of problem solving.  Persistence is necessary for taking any
 non-monotonic step in a problem space.  However, persistent WMEs also
 are dependent on WMEs in the superstate context.  The problem in
-Soar~7, especially when trying to create large-scale systems like
-TacAir-Soar \cite{Jones99:Automated}, is that the knowledge developer
+Soar~7, especially when trying to create a large-scale system \cite{Jones99:Automated}, is that the knowledge developer
 must always think about which dependencies can be ``ignored'' and
-which need to result in a reconsideration of the persistent WME.  For
+which may affect the persistent WME.  For
 example, imagine an exploration robot that makes a persistent decision
 to travel to some distant destination based, in part, on its power
 reserves.  Now suppose that the agent notices that its power reserves
@@ -101,7 +99,7 @@ problem is that the knowledge designer has to consider \emph{all}
 possible interactions between all o-supported WMEs and all contexts.
 Soar systems often use the architecture's impasse mechanism to realize
 a form of decomposition.  These potential interactions mean that the
-knowledge developer cannot focus on individual problem spaces when
+knowledge developer cannot focus on individual problem spaces in isolation when
 creating knowledge, which makes knowledge development more difficult.
 Further, in all but the simplest systems, the knowledge designer will
 miss some potential interactions.  The result is agents are that were
@@ -167,8 +165,8 @@ ignoring this complication for clarity.}  I-support is illustrated in
 Figure~\ref{'ncc'}. A copy of {\bf A} in the subgoal, {\bf A$_s$}, is
 retracted automatically when {\bf A} changes to {\bf A'}.  The
 substate WME persists only as long as it remains justified by {\bf A}.
-This justification is called ``instantiation support'' (I-support) in
-Soar (and should not be confused with result \emph{justifications}.)
+This is called ``instantiation support'' (I-support) in
+Soar.
 
 In the broadest sense, we can say that some feature $<$b$>$ is
 ``dependent'' upon another element $<$a$>$ if $<$a$>$ was used in the
@@ -181,30 +179,16 @@ create {\bf 1}.
 
 In Soar 7, some features are insensitive to dependent changes.  These
 features are often referred to as ``persistent WMEs'' because, unlike
-i-supported WMEs, they remain in memory until explicitly removed.
-There are two different types of this stronger persistence: o-support
-and c-support.  
-
-Any feature created by the action of an operator
+i-supported WMEs, they remain in memory until explicitly removed. Any feature created by the action of an operator
 receives ``operator support.''  An o-supported feature remains in
 memory until explicitly rejected (or until the superstructure to which
 it is attached is removed).  Removal is architecturally
 independent of the WME's instantiating conditions.
 
-Context-support affects the persistence of an operator itself, rather
-than its effects.  Once a unique operator has been chosen by the
-decision procedure, the choice persists until explicitly re-decided
-(via a reconsider preference).  C-support ensures that the WME for a
-selected operator remains available even if the production that
-proposed the operator is no longer instantiated.  Soar~8 eliminates
-c-support, so that operators now persist only as long as they receive
-instantiation support.  This change was integral to the overall
-solution Soar~8 provides, but is distinct from the GDS.
-
 The GDS provides a solution to the first problem.  When {\bf A}
 changes, the persistent WME {\bf 1} may be no longer consistent with
 its context (e.g., {\bf A'}).  The specific solution is inspired by
-the chunking algorithm.  In Soar~8, whenever an o-supported WME is
+the dependency analysis portion of the chunking algorithm.  In Soar~8, whenever an o-supported WME is
 created in the local state, the superstate dependencies of that new
 feature are determined and added to the {\em goal dependency set}
 (GDS) of that state. Conceptually speaking, whenever a working memory
@@ -212,9 +196,9 @@ change occurs, the dependency sets for every state in the context
 hierarchy are compared to working memory changes.\footnote{The
 implementation is slightly different, trading additional memory
 overhead to avoid scanning all the goal dependency sets after each WM
-change.  See the next section.  }  If a removed element is found in a
+change.  See the next section.  }  \textbf{If a removed element is found in a
 GDS, the state is removed from memory (along with all existing
-substructure). The dependency set includes only dependencies for
+substructure).} The dependency set includes only dependencies for
 o-supported features.  For example, in Figure~\ref{'gds'}, at time
 $t_0$, because only i-supported features have been created in the
 subgoal, the dependency set is empty.
@@ -235,9 +219,7 @@ directly to the goal's dependency set.  In Figure~\ref{'gds'}, the
 persistent subgoal item {\bf 3} is dependent upon {\bf A} and {\bf
 D}. These superstate WMEs are added to the subgoal's dependency set when
 {\bf 3} is added to working memory at time $t_1$.  It does not matter
-that {\bf A} is i-supported and {\bf D} o-supported.\footnote{In addition,
-superstate WMEs can also include context slot preferences, which 
-are represented in the architecture as working memory elements.}
+that {\bf A} is i-supported and {\bf D} o-supported.
 \item [Local I-Supported Features:] Local i-supported features are not
 added to the goal dependency set.  Instead, the superstate WMEs that
 led to the creation of the i-supported feature are determined and
@@ -314,10 +296,10 @@ as an explicit agent task \cite{Jones99:Automated}.
 
 When remembering or avoiding an expensive computation, the
 agent/designer is making a commitment to retain something even though
-it might not be supported in the current context.  In Soar~8, these
+it might not be supported in the current context.  \textbf{In Soar~8, these
 WMEs should be asserted in the top state.  \emph{For many Soar systems,
 especially those focused on execution in a dynamic environment, 
-most o-supported elements will need to be stored on the top state.} 
+most o-supported elements will need to be stored on the top state.}} 
 
 For any kind of local, non-monotonic reasoning about the context
 (counting, projection planning), features should be stored locally.
@@ -327,7 +309,7 @@ over-reaction, formal and empirical analysis have suggested that this
 solution is less computationally expensive than attempting to identify
 the specific dependent assumption \cite{Wray03:Ensuring}.
 
-
+\nocomment{
 \subsection*{Operator Elaborations}
 
 Operator elaborations (i.e., placing some information on an operator
@@ -465,7 +447,7 @@ to reallocate memory for the GDS if we need to add to it later.)
 
 \end{itemize}
 
-
+}
 
 %\bibliography{general,personal,soar}
 %\bibliographystyle{acm}
