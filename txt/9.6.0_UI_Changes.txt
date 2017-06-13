@@ -50,7 +50,7 @@ command-to-file                     output command-to-file
 default-wme-depth                   output print-depth
 dirs
 echo
-echo-commands                       (DEPRECATED)
+echo-commands                       output echo-commands
 edit-production                     (DEPRECATED)
 epmem
 excise                              production excise

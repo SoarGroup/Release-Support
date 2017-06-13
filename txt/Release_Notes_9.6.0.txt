@@ -19,19 +19,26 @@ New Features
 
 (1) Explanation-Based Chunking (EBC)
 
-    Soar's general learning mechanism has now been almost completely
-    re-written and does deeper analysis of problem-solving in a substate
-    to learn rules that are far more general than those found in other
-    rule-based architectures or previous versions of Soar. To achieve this,
-    explanation-based chunking combines an improved version of Soar's
-    instance-based dependency analysis with an explanation-based analysis of 
-    what can be generalized and what constraints must be placed on those
-    generalizations.  It can generalize any symbol type and even some
-    right-hand side (RHS) functions. It also has several new mechanisms
-    that allow it to create useful chunks in situations where Soar could
-    not before.  For example, it can repair ungrounded conditions and RHS
-    actions, which allows EBC to learn rules from results that are results
-    only because they augment a previous result from that sub-state. 
+    Explanation-based chunking (EBC) is a powerful, new learning mechanism that 
+    allows your agent to learn rules on the fly based on the its problem-solving 
+    and interactions it has with its environment. Soar's chunking learning 
+    algorithm has now been almost completely -written and does far deeper 
+    analysis of problem-solving in a substate to learn rules that are more 
+    general than those found in other rule-based architectures or previous 
+    versions of Soar. EBC significantly improves Soar’s ability to learn 
+    knowledge that will transfer to future situations
+
+    To achieve this, explanation-based chunking combines an improved version of 
+    Soar's instance-based dependency analysis with an explanation-based analysis 
+    of how knowledge was used by the rules in the substate.  EBC uses this to
+    determine what can be generalized (and what cannot) and exactly which 
+    constraints must be placed on those generalizations.  It can generalize 
+    any symbol type (not just identifiers any more) and even some right-hand 
+    side (RHS) functions. It also has several new mechanisms that allow it to 
+    create useful chunks in situations where Soar could not before.  For 
+    example, it can repair ungrounded conditions and RHS actions, which allows 
+    EBC to learn rules from results that augments a previous result from that 
+    sub-state. 
     
     In general, we expect agents using EBC to:
     
@@ -47,59 +54,96 @@ New Features
         will eventually be comfortable always leaving EBC on. Nearly every demo 
         agent we have now works with chunking completely on in all states.
         
-    The latest version of EBC has several new settings to help with debugging
-    as well, such as being able to interrupt when chunking attempts to 
-    learn a rule or detects a situation that may point to correctness issues.  
+
+    This version of EBC has many new critical mechanisms and bug fixes that did 
+    not exist in the 9.5.0 beta, most notably (1) using identity analysis for 
+    Soar identifier variablization instead of the traditional Soar 
+    variablization heuristic that was used in 9.5.0 and (2) the ability to 
+    repair partially-operational rules, which allows agents to learn in many 
+    situations that it previously could not, (3) the generation of more robust 
+    justifications that have the full explanatory power of chunks, (4) the 
+    ability to fine-tune learning by specifying working memory elements that are
+    guaranteed to never be multivalued in a particular domain or agent and (5) 
+    the ability to learn rules that will re-create links to semantic memory 
+    that were created during problem-solving.
     
-    In general, this version of EBC is much more robust and stable.
-    It is actively being used to learn procedural knowledge from task execution
-    by multiple University of Michigan research projects that have very 
-    complex agents.  This version of EBC has many new critical mechanisms 
-    and bug fixes that did not exist in the 9.5.0 beta, most notably (1) using
-    identity analysis for Soar identifier variablization instead of the 
-    traditional Soar variablization heuristic that was used in 9.5.0 and (2) the
-    ability to repair partially-operational rules, which allows agents to learn 
-    in many situations that it previously could not, (3) the generation of 
-    more robust justifications that have the full explanatory power of chunks,
-    (4) the ability to fine-tune learning by specifying working memory 
-    elements that are guaranteed to never be multivalued in a particular domain
-    or agent and (5) the ability to learn rules that will re-create links to
-    semantic memory that were created during problem-solving.
+    In general, this version of EBC is much more robust and stable. It is the
+    result of 4 years of R&D and is the 3rd and final version of algorithm. Most 
+    aspects have been completely re-written since the 9.5.0 beta. The 
+    core identity analysis algorithm is entirely new and does not have the 
+    efficiency issues that the classic EBL algorithms we tried had. This new
+    algorithm combines forward propagation of identities during instantiation
+    creation, backward propagation of identities during rule learning to
+    manipulate an explicit identity set graph to determine how to generalize
+    a learned rule.  This new version also has a lot of special purpose
+    versions of the different aspect of the algorithm that allows it to be 
+    far more efficient than previous versions when learning is off.  
+     
+    Note that the new version of EBC is actively being used to achieve 
+    compelling transfer learning in multiple, current University of Michigan 
+    research projects that have very complex agents.  
 
 (2) Instance-Based Semantic Memory
 
     Soar 9.6.0 introduces a model of semantic memory that interacts with Soar's
     other memory systems in a new, more flexible way and that is more 
     parsimonious with the PSCM and other existing mechanisms like chunking. 
-    While this was a significant architectural change, we expect that most 
-    agents will require minimal changes to work with this new model.
+    In this new model, each memory system has its own completely independent 
+    identifiers that do not appear in other memory systems.
 
     A full discussion of the challenges posed by the previous semantic memory 
     model is not in the scope of these release notes, but the basic problem was
-    as follows. (a) The fixed mapping between a single structure in LTM and a 
+    as follows: (a) the fixed mapping between a single structure in LTM and a 
     single structure in STM made it difficult to reason hypothetically about 
-    long-term knowledge. (b) The fixed mapping could also cause unexpected 
-    knowledge merging across multiple retrievals. (c) Finally, the model made it 
-    challenging to learn correct knowledge when using semantic memories because 
-    their basic nature could violate assumptions that the PSCM makes --for 
-    example, that rules can explain how a piece of knowledge in one state is 
-    relevant to another.
+    long-term knowledge, (b) the fixed mapping could also cause unexpected 
+    knowledge merging across multiple retrievals, and (c) the model made it 
+    challenging to learn new rules based on knowledge retrieved from semantic 
+    memory because retrievals could interact across different substates, which
+    violates a critical implication of the PSCM that EBC requires, namely that 
+    rules can explain how a piece of knowledge in one state is related to 
+    another state.
     
+    Some advantages of this new model:
+    
+    - It is more flexible and can represent situations our previous hybrid 
+      long-term semantic memory identifiers had trouble with.  For example:
+       - Representing different versions of a semantic memory as they evolved 
+         over time in episodic memory
+       - Multiple structures that involving the same semantic memory but 
+         represent different hypothetical situations with possibly different
+         features
+       - Representing structures that can be used in different ways possibly
+         at the same time, for example semantic knowledge about words that 
+         have multiple meanings
+         
+    - It eliminates many issues where one semantic memory recall created 
+      unexpected interactions with a previous memory system recall.  
+
+    - It eliminates the mixed hybrid nature of LTIs, in which they were 
+      considered a constant in some situations and an identifier in others, 
+      which introduced a lot of complexity and stability issues.
+
+    - Since the different memory systems no longer share identifiers, 
+      re-initializing one memory system of Soar no longer requires other 
+      memory sub-systems to also be initialized.  As a result, init-soar will no 
+      longer excise rules if semantic memory is being used.  Similarly, 
+      'smem --init' no longer clears all episodic and procedural memories.
+           
     In Soar 9.6.0's model, each memory system is independent and does not share
     any structures with other memory systems.  Every retrieval or query from 
-    semantic memory creates an entirely new short-term memory structure. Under 
-    the hood, Soar now maintains links between each short-term instance with 
-    the long-term memory from which it was created.   This means that semantic 
-    memory's long term identifiers now no longer appear in working, episodic, 
-    or procedural memory (rules).  It also means that different recalls cannot 
-    unexpectedly interact, which eliminates many of the difficulties faced 
-    before.
+    semantic memory creates an entirely new short-term memory structure. This 
+    means that semantic memory's long term identifiers now no longer appear in 
+    working, episodic, or procedural memory (rules).  It also means that 
+    different recalls cannot unexpectedly interact, which eliminates many of 
+    the difficulties faced before.
 
     One capability that long-term identifiers provided was a named reference 
     to a long-term memory that could be used for future storage and retrieval.
-    In Soar 9.6.0, new mechanisms are available using the aforementioned links
-    to achieve the same functionality, but in a more flexible way.  These links
-    can be utilized in two ways. 
+    Soar 9.6.0 now maintains "invisible" links under the hood between each 
+    short-term instance with the long-term memory from which it was created.  
+    New mechanisms are available which use the aforementioned links to achieve 
+    the same functionality that LTIs provided, but in a more flexible way.  
+    These links can be utilized in two ways. 
     
     First, new left-hand side (LHS) tests allow agents to compare two short-term 
     identifiers to see if they came from the same long-term identifier.  
@@ -107,13 +151,13 @@ New Features
     Second, the agent 'store' command has been split into two commands, one 
     that will update a long-term memory based on what it is linked to, and one 
     that will always create a new long-term memory, regardless of any 
-    pre-existing links.
+    pre-existing links to a long-term memory.
     
     The following is a summary of the key changes to Soar's commands to support
     the new model.  For a more in-depth discussion of the changes, please see 
     the Soar manual.
     
-    * Syntax:
+    * Identifier Syntax:
     
       Long term identifiers  no longer have letters and are now simply an @ 
       followed by a number: '@23', for example.
@@ -121,26 +165,29 @@ New Features
     * Printing:
     
       Since the memory systems no longer share a namespace, Soar no longer needs 
-      a special smem --print command.  Use 'print @23' to print a specific 
-      long-term memory and 'print @' to print all of long-term memory.  
-      The print's --depth command is honored.
+      a special smem --print command.  You can directly use the standard print
+      command.  For example, you can use something like 'print @23' to print a 
+      specific long-term memory and 'print @' to print all of long-term memory.  
+      The print's --depth command is still honored.
     
-    * Two new LHS relational tests '@' and '!@'
+    * Rule Syntax:  Two new LHS relational tests '@' and '!@'
     
       These tests are used to determine whether two short-term identifiers are 
       linked to the same long-term identifier. For example, 
       (S1 ^attribute { @ <y> <> <y> <x> } would match an identifier <x> that 
       was not the same identifier as <y> but is linked to the same long-term 
-      identifier that <y> is linked to.
+      identifier that <y> is linked to.  This is the key new test that users
+      may need to use to reasons and manipulated semantic knowledge recalled 
+      at different times.
         
-    * Two new unary tests '@+' and '@-'
+    * Rule Syntax:  Two new unary tests '@+' and '@-'
     
       These tests are used to determine whether an identifiers is linked to 
       any long-term identifier. For example, (S1 ^attribute { @+ <x> } would 
       match an identifier <x> that was originally created in a semantic 
       memory recall. 
     
-    * Two agent store commands: 
+    * There are now two agent store commands: 
     
       (<smem-command-link> ^store <cmd>)
       (<smem-command-link> ^store-new <cmd>)
@@ -154,7 +201,7 @@ New Features
       The store-new command will always create a new instance, even if the 
       submitted short-term memory has links to long-term memories.
       
-    * New option for store-new command:
+    * The new store-new command has a special option:
     
       (<smem-command-link> ^store-new <cmd>
                            ^link-to-ltm yes)
@@ -163,93 +210,86 @@ New Features
       instance being submitted as a new LTM with new links to the long-term 
       memory structures that will be created.
       
-    * New option for query and retrieve commands:
+    * Query and retrievals now have a new option:
     
       (<smem-command-link> ^query/retrieve <c>
                            ^dont-link-to-ltm yes)
                            
       Adding this option will retrieve an instance of a semantic memory that
       is not linked to the original structures in semantic memory.
-     
-    * New feature:  smem --export <filename> [lti-id]
-    
-      This command allows agents to export their semantic knowledge into a text
-      file composed of a series of 'smem --add' commands that can be sourced.
-      This feature can also be used to migrate semantic memory databases between
-      different versions of Soar in the future.
-        
-      Note that semantic memory databases from version 9.5 and below are not
-      compatible with Soar 9.6.  So, we created a special version of Soar
-      9.5 with an export command that can create files that Soar 9.6.0 can
-      read.  More information about this process is available at the Soar home 
-      page.
+         
+(3) Spreading Activation in Semantic Memory (experimental beta version)
 
-    Note:  One positive side effect of this change is that re-initializing one 
-           sub-system of Soar no longer requires other sub-systems to also
-           also be initialized.  As a result, smem --init no longer clears
-           clears all memories and init-soar will no longer excise rules.
+    Soar 9.6.0 includes an option that will enable a spreading model of semantic 
+    memory activation. This capability may give an agent the ability to learn 
+    associations between semantic knowledge based on how it uses semantic
+    memory during task execution and problem-solving.
+    
+    * Activation is a number that allows Soar to ranks semantic memory elements.
+    * When your agent issues a query to semantic memory, the result is the 
+      semantic memory which matches the constraints of the query and also has 
+      the highest activation value.
+    * Spreading activation ranks results higher if they are more closely 
+      connected to working memory instances of those semantic memories.  
+    * Base-Level and spreading activation both contribute to the total 
+      activation value.  
+
+    In other words, when an agent has structures in working memory that were 
+    either retrieved from or stored in semantic memory, the spreading activation
+    mechanism will boost the activation of other, connected semantic memory 
+    structures.
+
+    For a more complete description, please see the manual. Spreading activation 
+    is disabled by default.
+
+    Note: This mechanism is well-tested but is still considered in beta.  The 
+          underlying model may continue to evolve and the implementation has not
+          been fully optimized.  You may notice a performance decrease when this 
+          option is enabled.  
            
-    * New feature:  smem --clear
-    
-      This command empties the contents of the semantic memory store.  No other
-      memory sub-systems are affected.  
-      
-      Note: smem --init is also available which initializes smem statistics but 
-            clears semantic memory ONLY if append mode is off.
-    
-
-(3) Stream-lined User Interface
+(4) Stream-lined User Interface
 
     During its many years of development, Soar has accumulated many disparate
     but related commands as well as many commands that are seldom-used.  As
-    of version 9.5, Soar had 77 commands.  While each provides important
-    capabilities, the sheer number of commands was overwhelming and discouraged
-    users from exploring and utilizing all of the functionality available. In 
-    an effort to improve this, we've re-designed things so that we now have a
-    command set of 25 commands.  
+    of version 9.5, Soar had 71 core commands.  While each provides important
+    capabilities, we felt that the sheer number of commands was overwhelming and 
+    discouraged users from exploring and utilizing all of the functionality 
+    available. In an effort to improve this, we've re-designed the basic command
+    structure.  Functionality has been moved but not lost. Soar now has a much
+    more approachable set of 25 core commands. 
     
-    Note: Soar 9.5 syntax CAN STILL BE USED.  Functionality has been moved but
-          not lost.  This update has been implemented in a way that should be 
+    Note: Soar 9.5 syntax CAN STILL BE USED.    This update has been implemented in a way that should be 
           completely backwards compatible with existing agents.
       
     The command set is now much more approachable and gives people cues about 
     the functionality of sub-commands. The 25 commands are:
           
     1.   alias                   Now incorporates functionality of unalias
-    2.   chunk                   Replaces learn.  Adds functionality.
+    2.   chunk                   Replaces learn.  Lots of new options.
     3.   debug                   New command that subsumes 4 previous commands
     4.   decide                  New command that subsumes 5 previous commands
     5.   echo        
     6.   epmem        
-    7.   explain                 New command to explain learning
+    7.   explain                 New command (explains why rules were learned)
     8.   gp        
     9.   help        
     10.  load                    New command that subsumes 4 previous commands
     11.  output                  New command that subsumes 6 previous commands
     12.  preferences        
-    13.  print                   Subsumes one previous command
+    13.  print                   Now includes functionality of gds-print
     14.  production              New command that subsumes 8 previous commands
     15.  rl        
     16.  run        
     17.  save                    New command that subsumes 2 previous commands
-    18.  smem        
+    18.  smem                    Several new options and sub-commands added
     19.  soar                    New command that subsumes 13 previous commands
     20.  sp        
     21.  stats        
     22.  svs        
-    23.  trace                   Prettier version of watch
+    23.  trace                   Replaces watch.  A few new options added.
     24.  visualize               New command to create graph visualizations
     25.  wm                      New command that subsumes 4 previous commands
 
-    
-    Some of these commands do have new functionality as well. For example, 
-    users can now save all chunks into a file with 'save chunks'.
-    
-    Note that some of the manual pages are now longer and may seem cumbersome when
-    viewed from the command line.  Some of the new presentation improvements
-    in the next section should help minimize the need to look things up in the
-    man pages as often.  Ultimately, we may add a multi-level help system.
-    
     Deprecated commands: 
     
     1.   explain-backtraces
@@ -271,7 +311,16 @@ New Features
     9.   soar
     10.  visualize
     11.  wm
+
+    Some of the new "meta-commands" do have new functionality as well. For 
+    example, users can now save all procedural and semantic memory into a 
+    single file with 'save agent'.
     
+    Note that some of the help pages are now longer and may seem cumbersome 
+    when viewed from the command line. The new presentation improvements, namely
+    the summary and settings screens should help minimize the need to look 
+    things up in the help pages as often.  A future version of Soar may add a 
+    multi-level help system.    
     
     Along with streamlining the command interface, the presentation and 
     feedback for the commands have been improved in this release. In addition to
@@ -302,12 +351,14 @@ New Features
  
          For a full list of sub-commands and settings:  soar ?
 
-    (b)  Sub-command and settings overview
+    (b)  Settings Screens
     
          Issuing the command followed by a '?'  will show a compact overview of
-         of all that command's settings and sub-commands.  This should give users
-         the information that they frequently need but could previously only get 
-         by looking through help pages that were sometimes very long.
+         of all that command's sub-commands, options and legal values for 
+         options.  It also the current values for all settings. Some of the
+         settings screens also show a one-line help description for each entry.
+
+         Example of the 'soar' settings screen:
 
          ====== Soar General Commands and Settings =====
          soar ?                                             Print this help listing
@@ -329,14 +380,18 @@ New Features
          To change a setting:                               soar <setting> [<value>]
          For a detailed explanation of these settings:      help soar
 
+         The goal of the settings screens is to give users the information that 
+         they frequently need but could previously only get by looking through 
+         help pages that were sometimes very long.
+    
     Commands with new summary screens: 
     - chunk, decide, explain, output, production, soar, trace
     
     Commands with new settings overview:
     - chunk, debug, decide, explain, load, output, production, save, soar, 
-      trace, trace-level, visualize, wm
+      smem, trace, visualize, wm
           
-(4) Explainer
+(5) The Explainer
 
     While explanation-based chunking makes it easier for people to 
     now incorporate learning into their agents, the complexity of the
@@ -367,43 +422,98 @@ New Features
     
     Finally, the explainer will also create the data necessary to visualize
     all of the processing described in an image using the new 'visualize'
-    command.  These visualization are one of the most effective ways to 
-    understand how a rule was formed.
+    command.  These visualization are the easiest way to quickly understand how 
+    a rule was formed.
     
-    Note that a lot of effort has been put into minimizing the cost of the 
-    explainer.  When debugging, we often let it record all chunks and
-    justifications formed because it is efficient enough to do so.
+    Note that, despite recording so much information, a lot of effort has been 
+    put into minimizing the cost of the explainer.  When debugging, we often let
+    it record all chunks and justifications formed because it is efficient 
+    enough to do so.
     
-(5) Visualizer
+(6) The Visualizer
 
     The 'visualize' command allows users to create graphical representations
-    of two things:  (1) Soar's various memory systems and (2) the complex
+    of two things: (1) Soar's various memory systems and (2) the complex
     data recorded by the explainer.  
     
     The visualizer can create images representing the following:
     
     (1) Working memory  (or some subset of it)
     (2) Semantic memory (or some subset of it)
-    (3) An episode from episodic memory
-    (4) The instantiation graph, which is a graph of all the rules that
+    (3) The instantiation graph, which is a graph of all the rules that
         fired in the substate, with conditions connected to the rule actions
         that created their matched WMEs.
-    (5) The contribution graph, which is the instantiation graph coupled
+    (4) The EBC analysis graph, which is the instantiation graph coupled
         with the final rule learned.  Conditions in the chunk are connected
         to the conditions in the instantiations from whence they came.
-
+    (5) Identity analysis graph, which is a graph that shows the reasoning
+        behind the identity analysis that EBC performed to determine how
+        elements in a rule should be variablized.  It shows every identity used
+        by problem-solving and which identities were joined to determine the 
+        final identity sets.
+  
     One capability of the visualizer is that it has many different options 
     to customize what is generated. Among these are options that provide totally
     different styles of presentation (node vs record, full rule vs name), an 
     option not to include structures created by the architecture, and an option  
-    to automatically launch a viewer to see the image generated.
+    to automatically launch a viewer to see the image generated.  The EBC
+    visualizations also have an option to color each element of the graph based 
+    on whether they share the same "identity".
+    
+    The previous semantic memory visualization code has been completely replaced 
+    by the new visualizer. Episodic memory, though, still has its visualization 
+    sub-command that is more limited.
 
+(7) GQ(λ) Off-Policy Reinforcement Learning
+
+    - This reinforcement learning option provides off-policy learning quite 
+      effectively.  This is a good approach in cases when agent training 
+      performance is less important than agent execution performance.
+    - GQ(λ) converges despite irreversible actions and other difficulties 
+      approaching the training goal.  Convergence should be guaranteed for 
+      stable environments.
+
+    Caveats:
+
+    - Should use a lower learning rate
+    - Might need to tune step-size-parameter
+    - Computational cost is marginally higher.
+    - Performance is not guaranteed to dominate Sarsa(λ) or Q(λ), but 
+      convergence should be guaranteed.
+
+    For more information, see Mitchell Bloch's presentation slides from the 2015
+    Soar Workshop.
+    
 =================
 Other Changes
 =================
 
-(6) Minor new features
-
+(7) Minor new features
+    
+    - New command:  smem --export <filename> [lti-id]
+    
+      This command allows agents to export their semantic knowledge into a text
+      file composed of a series of 'smem --add' commands that can be sourced.
+      This feature can also be used to migrate semantic memory databases between
+      different versions of Soar in the future.
+        
+      Note that semantic memory databases from version 9.5 and below are not
+      compatible with Soar 9.6.  So, we created a special version of Soar
+      9.5 with an export command that can create files that Soar 9.6.0 can
+      read.  More information about this process is available at the Soar home 
+      page.
+           
+    - New command:  smem --clear
+    
+      This command empties the contents of the semantic memory store.  No other
+      memory sub-systems are affected.  
+      
+      Note: smem --init is also available which initializes smem statistics but 
+            clears semantic memory ONLY if append mode is off.
+            
+    - Semantic memory retrievals now accept a "depth" parameter with an 
+      integer value.  Soar will limit retrieval to a working memory graph of 
+      that height.
     - New command 'save agent' that will save production memory, semantic memory
       and some important settings to a single file.  Semantic memory is stored
       as a series of 'smem --add' commands.
@@ -462,7 +572,53 @@ Other Changes
       - Now includes options to turn off syntax coloring for those using a light 
         color scheme
       - Now supports multi-line input
+    - Tons of new global and individual stats about rules learned via EBC
+    - 'stats -l' will now print the global statistics about rules learned 
+      (previously only available in the chunk command.)
+    - The output command also has a new after action report option that will
+      output some summary statistics about the agent run 
+    - The 'trace' command (previously known as watch) has a few new options. A
+      few trace options have also been moved to different watch levels:
 
+===========================================================
+                    Soar Trace Messages
+===========================================================
+------------------------- Level 1 -------------------------
+Operator decisions and states                           off -d, --decisions
+------------------------- Level 2 -------------------------
+Phases                                                  off -p, --phases
+Chunking warnings                                       off -C, --chunk-warnings
+State removals caused by GDS violation                  off -g, --gds
+State removals caused by operator consistency checks    off -o, --consistency
+------------------ Level 3: Rule firings ------------------
+Default rules                                           off -D, --default
+User rules                                              off -u, --user
+Chunks                                                  off -c, --chunks
+Justifications                                          off -j, --justifications
+Templates                                               off -T, --template
+Firings inhibited by higher-level firings               off -W, --waterfall
+------------------------- Level 4 -------------------------
+WME additions and removals                              off -w, --wmes
+------------------------- Level 5 -------------------------
+Preferences                                             off -r, --preferences
+
+------------ Additional General Trace Messages ------------
+Assertions of rules and preferences                     off -A, --assertions
+Goal dependency set changes                             off -G, --gds-wmes
+Numeric preference calculations                         off -i, --indifferent-selection
+Reinforcement learning value updates                    off -R, --rl
+WME Detail Level                                       none --nowmes, --timetags
+                                                           --fullwmes
+
+------------ Additional Chunking Trace Messages -----------
+Dependency analysis                                     off -b, --backtracing
+Rules learned (verbosity level)                    none (0) -L, --learning [0-2]
+
+--------- Additional Memory System Trace Messages ---------
+Episodic memory recording and queries                   off -e, --epmem
+Semantic memory additions                               off -s, --smem
+Working memory activation and forgetting                off -a, --wma      
+      
 (7) Minor enhancements
 
     - Soar guesses sub-command names in places that it did not before.
@@ -487,7 +643,7 @@ Other Changes
       able to do this by using production IDs to look up productions, allowing
       it to effectively clearing out references to the production from active 
       instantiations by changing the mapping to null.
-    - Soar now only assigns 'S' identifiers to states.
+    - Soar now only assigns 'S' identifiers to states and 'O' to operators.
     - Chunking can now do limited variablization of RHS functions
     - Improved feedback when chunking fails.  
       - Will list problem actions or unconnected identifiers that caused 
@@ -495,14 +651,13 @@ Other Changes
       - Will print incorrect chunk that is being rejected.
       - Will now say which rule match it's skipping because of non-chunky
         problem spaces.
-    - Turning on Tcl now only requires Tcl on, rather than CLI Tcl on
     - Since Soar no longer supports multiple equality tests in a conjuctive 
       test, we improved how it handles two equality tests in a conjunction 
       more gracefully.  (It previously just crashed later.)
       - It will reject one of the equality tests, preferring constants.
       - This is a temporary solution (behavior could change) but is better than
         aborting Soar entirely.
-    - Soar is much more aggressive about looking for the settings.soar, the Tcl
+    - Soar is more intelligent about looking for the settings.soar, the Tcl
       shared library and the Java debugger jars.  It will now search the 
       SOAR_HOME variable, the current directory and the directory that the
       Soar shared library is in.
@@ -517,8 +672,9 @@ Other Changes
     - Debugger will now use system color for background.  (Aaron Mininger)
     - Added wait RHS function. (Bob Marinier)
     - Added XCode project. (Alex Turner)
-    - New unit test framework (Alex Turner).  Now integrated with old framework
-      and tests.  Unit tests also run variants like running with the explainer,
+    - New unit test framework (Alex Turner, Mazin Assanie).  Combines old unit
+      test framework with a new one Alex Turner wrote.  Soar now has over 400
+      unit tests.  Unit tests also run variants like running with the explainer,
       performing init-soar's after tests to look for refcount leaks, running
       in different types of kernels, etc.
     - Chunk names now incorporate the number of soar-init's that have occurred.
@@ -539,6 +695,10 @@ Other Changes
     - EBC's OSK and singleton mechanism are much more efficient than in 9.5.
     - EBC will now temporarily add operator selection knowledge to an operator's
       proposal instantiation while the operator is selected.
+    - Many demo agents that could use chunking have been changed to work better 
+      with explanation-based chunking.
+    - The library of default rules has also been updated to work better with
+      EBC and produce cleaner learned rules.
     
 (8) Many bug fixes
     - All Soar issues listed on github have been either resolved or updated.
@@ -583,7 +743,7 @@ Other Changes
       Soar will handle refcount bugs more gracefully as a result.  (It will 
       still print out a warning about the identifiers, so they will not go 
       unnoticed.)
-    - Max-chunks no longer allows max-chunks + 1 chunks to be created
+    - Soar no longer allows max-chunks + 1 chunks to be created
     - Fixed RETE crash that happened when a non-reteloc had an ^operator
       augmentation.
     - Fixed crashes that can occur because RHS values that are null can 
@@ -644,6 +804,11 @@ Other Changes
     - Unit tests now use random ports to avoid collisions with other soar agents
       running.
     - Episodic memory modified to accomodate new semantic memory model.
+    - Fixed several trace settings that were not printing the correct 
+      information
+    - Fixed slowdown caused by overly complex naming of chunks and 
+      justifications, which required some search of working memory to determine
+      impasse type.
           
 (9) Many low-level architectural changes and a lot of code clean-up and 
     refactoring.
@@ -712,7 +877,23 @@ Other Changes
     - Several #defined debug traces have been moved over to the dprint mechanism
       which can be toggled on more easily and will also be compiled out in a
       release build.
-
+    - Implemented various internal inventory mechanisms to insure proper 
+      clean-up of Soar data structures.  These types of problems aren’t easily 
+      found with normal leak tools.  Instantiations, preferences, WMEs, GDSs, 
+      identity sets, tests, RHS values, RHS symbols all now have an inventory 
+      mechanism.
+    - Areas that have been reviewed and fixed, refactored or re-written: all 
+      procedural learning code (more than once), semantic memory, context 
+      consistency maintenance system (GDS), EBC explanation system, 
+      visualization code, high-level memory management code for creation, 
+      management and deallocation of working memory, preference memory, 
+      instantiations, reinforcement-learning template code and the Tcl 
+      plug-in.
+    - Removed all attribute impasse code and 2 related callbacks
+    - Preference resolution has been simplified for non-operator slots
+    - When the Tcl plug-in is loaded, the java debugger will no longer crash
+      on exit.
+    
 ===================
 General Information
 ===================
