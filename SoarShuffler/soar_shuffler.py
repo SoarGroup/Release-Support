@@ -148,13 +148,10 @@ def specialize_project(projectName, platformName):
     SPL_New['copyList']=list()
     for a,b in SPL[projectName]["copyList"]:
         print "Platform name is ", platformName, "!!!!"
-        if ((platformName == "windows_64") or (platformName == "windows_32")):
+        if (platformName == "windows_64"):
             a = re.sub("RELEASE_DIR", "win", a)
             a = re.sub("\.LAUNCH_EXTENSION", ".bat", a)
-            if (platformName == "windows_64"):
-                a = re.sub("COMPILE_DIR", "windows64", a)
-            else:
-                a = re.sub("COMPILE_DIR", "windows32", a)
+            a = re.sub("COMPILE_DIR", "windows64", a)
             if (re.search("\.DLL_EXTENSION",a)):
                 a = re.sub("\.DLL_EXTENSION", ".dll", a)
 #                 a = re.sub(r"\lib", r"\", a)
@@ -163,14 +160,11 @@ def specialize_project(projectName, platformName):
                 a = os.path.join(d,f[3:])
 #                a = os.path.join(f)
                 #.replace(r"\lib", "\\")
-        elif ((platformName == "linux_64") or (platformName == "linux_32")):
+        elif (platformName == "linux_64"):
             a = re.sub("\.DLL_EXTENSION", ".so", a)
             a = re.sub("RELEASE_DIR", "linux", a)
             a = re.sub("\.LAUNCH_EXTENSION", ".sh", a)
-            if (platformName == "linux_64"):
-                a = re.sub("COMPILE_DIR", "linux64", a)
-            else:
-                a = re.sub("COMPILE_DIR", "linux32", a)
+            a = re.sub("COMPILE_DIR", "linux64", a)
         elif (platformName == "OSX") :
             a = re.sub("COMPILE_DIR", "mac64", a)
             a = re.sub("RELEASE_DIR", "osx", a)
@@ -196,9 +190,7 @@ def doit(shouldPrune=True):
     SPL_New = dict()
     for p, i in SPL.iteritems():
         if SPL[p]["type"] == "multiplatform-zip":
-            SPL_New[p + "-Windows_32bit"] = specialize_project(p,"windows_32")
             SPL_New[p + "-Windows_64bit"] = specialize_project(p,"windows_64")
-            SPL_New[p + "-Linux_32bit"] = specialize_project(p,"linux_32")
             SPL_New[p + "-Linux_64bit"] = specialize_project(p,"linux_64")
             SPL_New[p + "-OSX"] = specialize_project(p,"OSX")
     for p, i in SPL_New.iteritems():

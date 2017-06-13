@@ -388,10 +388,9 @@ SoarSuite_9.6.0-source
   Release-Support/txt/license.txt=top
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
 RoomsWorld_9.6.0
-  type=multiplatform-zip
-  out=Domains/
-  Release-Support/scripts/RELEASE_DIR/RoomsWorld.LAUNCH_EXTENSION=top
-  Release-Support/Shuffler_Input/COMPILE_DIR/soar_robot_server=top
+  type=zip
+  out=Examples-and-Unsupported/
+  Domains-RoomsWorld=RoomsWorld
 InfiniteMario-9.6.0
   type=zip
   out=Domains/
