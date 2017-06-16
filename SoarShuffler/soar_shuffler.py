@@ -152,7 +152,7 @@ def multiplatformize_project(projectName):
     for a,b in SPL[projectName]["copyList"]:
         a = re.sub("COMPILE_DIR", "mac64", a)
         a = re.sub("RELEASE_DIR", "osx", a)
-        a = re.sub("\.LAUNCH_EXTENSION", ".command", a)
+        a = re.sub("\.LAUNCH_EXTENSION", ".sh", a)
         if (re.search("libJava_sml_ClientInterface",a)):
             a = re.sub("\.DLL_EXTENSION", ".jnilib", a)
         elif (re.search("_Python_sml_ClientInterface",a)):

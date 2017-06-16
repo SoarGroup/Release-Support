@@ -4,8 +4,8 @@ SoarSuite_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out=bin
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
   Agents-Soar_Group/default=Agents/default
-  Release-Support/scripts/RELEASE_DIR/SoarJavaDebugger.LAUNCH_EXTENSION=top
-  Release-Support/scripts/RELEASE_DIR/VisualSoar.LAUNCH_EXTENSION=top
+  Release-Support/scripts/SoarJavaDebugger.LAUNCH_EXTENSION=top
+  Release-Support/scripts/VisualSoar.LAUNCH_EXTENSION=top
   Release-Support/pdf/SoarManual.pdf=Documentation
   SoarSuite/Tcl/TclSoarLib_README.txt=Documentation
   Release-Support/txt/Building_Soar.txt=Documentation
