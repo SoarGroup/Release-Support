@@ -9,6 +9,7 @@ SPL = dict()
 Repository_Dir = "/Users/mazzin/git/Soar/"
 Input_Dir = "/Users/mazzin/git/Soar/Release-Support/Shuffler_Input/"
 Output_Dir = "/Users/mazzin/git/Soar/Release-Support/Shuffler_Output/"
+# Note that there are some hard-coded path info in Soar_Projects_Filelist as well, for example the name of the Agents repo
 
 def clean_output_dir():
     if (os.path.exists(Output_Dir)):
@@ -16,21 +17,6 @@ def clean_output_dir():
         while (os.path.exists(Output_Dir)):
             pass
     os.makedirs(Output_Dir)
-
-def find_latest_date(projectName):
-    latest_date = -1
-    for a,b in SPL[projectName]["copyList"]:
-        source = os.path.join(Repository_Dir, a)
-        for root, dirs, files in os.walk(source):
-            for name in files:
-                this_time = os.path.getmtime(os.path.join(root, name))
-                if (this_time > latest_date):
-                    latest_date = this_time
-            for name in dirs:
-                this_time = os.path.getmtime(os.path.join(root, name))
-                if (this_time > latest_date):
-                    latest_date = this_time
-    return latest_date
 
 def load_project_list():
     with open('Soar_Projects_Filelist.py', 'r') as f_filelist:
@@ -49,23 +35,6 @@ def load_project_list():
                         SPL[current_project]['copyList'].append((split_entry[0],split_entry[1]))
     print "Project list loaded."
 
-def prune_and_pickle(shouldPrune):
-    with open('Soar_Projects_Touchdates.txt', 'r') as f_touchdates:
-        SPL2 = pickle.load(f_touchdates)
-    for p,d in SPL.iteritems():
-        SPL[p]["touchdate"] = find_latest_date(p)
-    with open('Soar_Projects_Touchdates.txt', 'w') as f_touchdates:
-        pickle.dump(SPL,f_touchdates)
-
-    if shouldPrune:
-        # Remove entries from SPL that have not been touched since last time
-        valid_keys1 = SPL.keys()
-        valid_keys2 = SPL2.keys()
-        for p,d in SPL2.iteritems():
-            if (p in valid_keys1 and p in valid_keys2):
-                if (SPL[p]["touchdate"] == SPL2[p]["touchdate"]):
-                    print "Skipping", p, "because it has not been modified."
-                    del SPL[p]
 def ignore_list(src, names):
     import pdb
     pdb.set_trace()
@@ -103,10 +72,8 @@ def zip_project(projectName):
         for a,b in SPL[projectName]["copyList"]:
             source = os.path.join(Repository_Dir, a)
             if b == "top":
-#                 destination = ""
                 destination = os.path.join(projectName)
             else:
-#                 destination = b
                 destination = os.path.join(projectName,b)
             if (os.path.isdir(source)):
                 for root, dirs, files in os.walk(source):
@@ -138,8 +105,6 @@ def zip_project(projectName):
                 zinfo.internal_attr = 0
                 zinfo.create_system = 3
 
-# make these all string replaces like d,f
-
 def specialize_project(projectName, platformName):
     print "Specializing", projectName,"for",platformName
     SPL_New = dict()
@@ -147,19 +112,14 @@ def specialize_project(projectName, platformName):
     SPL_New['out']=SPL[projectName]['out']
     SPL_New['copyList']=list()
     for a,b in SPL[projectName]["copyList"]:
-        print "Platform name is ", platformName, "!!!!"
         if (platformName == "windows_64"):
             a = re.sub("RELEASE_DIR", "win", a)
             a = re.sub("\.LAUNCH_EXTENSION", ".bat", a)
             a = re.sub("COMPILE_DIR", "windows64", a)
             if (re.search("\.DLL_EXTENSION",a)):
                 a = re.sub("\.DLL_EXTENSION", ".dll", a)
-#                 a = re.sub(r"\lib", r"\", a)
-                #pdb.set_trace()
                 d,f = os.path.split(a)
                 a = os.path.join(d,f[3:])
-#                a = os.path.join(f)
-                #.replace(r"\lib", "\\")
         elif (platformName == "linux_64"):
             a = re.sub("\.DLL_EXTENSION", ".so", a)
             a = re.sub("RELEASE_DIR", "linux", a)
@@ -195,11 +155,8 @@ def doit(shouldPrune=True):
             SPL_New[p + "-OSX"] = specialize_project(p,"OSX")
     for p, i in SPL_New.iteritems():
         SPL[p] = i
-    #prune_and_pickle(shouldPrune)
     for p, i in SPL.iteritems():
         if SPL[p]["type"] == "zip":
             zip_project(p)
         elif SPL[p]["type"] == "copy":
             copy_project(p)
-
-# doit(False)
