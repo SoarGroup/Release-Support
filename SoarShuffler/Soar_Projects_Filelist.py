@@ -13,3 +13,7 @@ SoarSuite_9.6.0
   Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
   Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
   Release-Support/txt/license.txt=top
+  Release-Support/Shuffler_Input/jars/swt-linux64.jar=bin/java
+  Release-Support/Shuffler_Input/jars/swt-win64.jar=bin/java
+  Release-Support/Shuffler_Input/jars/swt-mac64.jar=bin/java
+  Release-Support/Shuffler_Input/jars/stdlib-package.jar=bin/java
