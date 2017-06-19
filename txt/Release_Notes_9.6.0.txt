@@ -539,8 +539,8 @@ Other Changes
     - New commands to control Soar's output:
       - output agent-writes [ on | off ]: 
         - Controls whether to print output from agent RHS function (write)
-      - output agent-trace <num> [ on | off ]
-        - Controls whether to print output from agent RHS function (trace),
+      - output agent-logs <num> [ on | off ]
+        - Controls whether to print output from agent RHS function (log),
           which is exactly like (write) except the first argument is a channel
           number.  This allows agent engineers to better control exactly what
           an agent prints on a given run.
@@ -669,7 +669,7 @@ Working memory activation and forgetting                off -a, --wma
       assumed all RHS function calls were unequal.  This became an issue now
       that Soar can learn chunks with RHS functions.  It became easily
       possible to get duplicate versions of the same chunk.
-    - Added new RHS functions min and max. (James Kirk)
+    - Added new RHS utility functions: product, size, min and max. (James Kirk)
     - Debugger will now use system color for background.  (Aaron Mininger)
     - Added wait RHS function. (Bob Marinier)
     - Added XCode project. (Alex Turner)
