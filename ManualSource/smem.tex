@@ -293,6 +293,29 @@ Currently supported condition names are:
 \end{description}
 \end{itemize}
 
+\subsubsection{Activation}
+When an agent issues a cue-based retrieval and multiple LTIs match the cue, the LTI which semantic memory provides to working memory as the result is the LTI which not only matches the cue, but also has the highest activation value. Semantic memory has several activation methods available for this purpose.
+
+The simplest activation methods are recency and frequency activation. Recency activation attaches a time-stamp to each LTI and records the time of last retrieval. Using recency activation, the LTI which matches the cue and was also most-recently retrieved is the one which is returned as the result for a query. Frequency activation attaches a counter to each LTI and records the number of retrievals for that LTI. Using frequency activation, the LTI which matches the cue and also was most frequently used is returned as the result of the query. By default, Soar uses recency activation.
+
+Base-level activation can be thought of as a mixture of both recency and frequency. Soar makes use of the following equation (known as the Petrov approximation\footnote{Petrov, Alexander A. ``Computationally efficient approximation of the base-level learning equation in ACT-R.'' \textit{Proceedings of the seventh international conference on cognitive modeling.} 2006.}) for calculating base-level activation:
+
+$$BLA = \log \left[ \sum\limits_{i=1}^{k} t_i^{-d} + \dfrac{(n-k)(t_n^{1-d} - t_k^{1-d})}{(1-d)(t_n-t_k)} \right]$$
+
+where n is the number of activation boosts, $t_n$ is the time since the first boost, $t_k$ is the time of the $k$th boost, $d$ is the decay factor, and $k$ is the number of recent activation boosts which are stored. (In Soar, $k$ is hard-coded to 10.) To use base-level activation, add the following command as boilerplate when sourcing an agent:\begin{verbatim}
+smem --set activation-mode base-level
+\end{verbatim}
+
+Spreading Activation is new to Soar 9.6.0 and provides a different type of activation than the previous methods. First, spreading activation requires that base-level activation is also being used. They are considered additive. Spreading activation increases the activation of LTIs which are connected to LTIs that are currently-instantiated in Working Memory. This value does not represent recency or frequency of use, but rather context-relatedness. In order to use spreading activation, use the following command:\begin{verbatim}
+smem --set spreading on
+\end{verbatim}
+
+Also, spreading activation can make use of working memory activation for adjusting edge weights and for providing nonuniform initial magnitude of spreading for sources of spread. This functionality is optional. To enable the updating of edge-weights, use the command: \begin{verbatim}smem --set spreading-edge-updating on
+\end{verbatim} and to enable working memory activation to modulate the magnitude of spread from sources, use the command: \begin{verbatim}smem --set spreading-wma-source on
+\end{verbatim}
+
+For most use-cases, base-level activation is sufficient to provide an agent with relevant knowledge in response to a query. However, to provide an agent with more context-relevant results as opposed to results based only on historical usage, one must use spreading activation.
+
 \subsection{Retrieval with Depth}
 For either cue-based or non-cue-based retrieval, it is possible to retrieve a long-term identifier with additional depth. Using the depth parameter allows the agent to retrieve a greater amount of the memory structure than it would have by retrieving not only the long-term identifier's attributes and values, but also by recursively adding to Working Memory the attributes and values of that long-term identifier's children.
 
@@ -323,7 +346,7 @@ In the example above and without using depth, the long-term identifier reference
 \end{verbatim}
 would not also have its attributes and values be retrieved. With a depth of 2 or more, that long-term identifier also has its attributes and values added to Working Memory.
 
-Depth is not yet extensively tested. Also, it can incur a large cost depending on the specified depth and the structures stored in Semantic Memory.
+Depth can incur a large cost depending on the specified depth and the structures stored in Semantic Memory.
 
 \section{Performance}
 \label{SMEM-perf}
