@@ -1,17 +1,18 @@
 =========================================== 
-Soar 9.6.0 Release Notes, February 2017
+Soar 9.6.0 Release Notes, June 2017
 ===========================================
 
-This release of Soar includes five key new features:  (1) the first non-beta
+This release of Soar includes six key new features:  (1) the first official
 release of a new, far more powerful rule learning mechanism, which we call 
 explanation-based chunking, (2) a new instance-based model of semantic memory
 that can be used in a greater variety of ways and integrates with other aspects
 of Soar much more cleanly, (3) a streamlined user interface with far fewer
 top-level commands and improved presentation and feedback, (4) an explanation 
 mechanism that provides interactive exploration of an agent's learning history 
-and (5) a visualizer that creates graphical representations of Soar's memory 
-systems and even some of its processing.  It also includes many important 
-bug fixes and code improvements.
+(5) a visualizer that creates graphical representations of Soar's memory 
+systems and even some of its processing and (6) the first beta release of a
+model of spreading activation in semantic memory.  It also includes many 
+important bug fixes and code improvements.
 
 =================
 New Features
