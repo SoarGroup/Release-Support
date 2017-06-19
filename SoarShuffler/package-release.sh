@@ -1,4 +1,4 @@
 #!/usr/local/bin/python
 
 import soar_shuffler
-soar_shuffler.doit(False)
+soar_shuffler.doit()
