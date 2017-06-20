@@ -35,7 +35,7 @@ operators is illustrated in Figure \ref{fig:select-apply}.
 \end{figure}
 
 Soar has separate memories (and different representations) for
-descriptions of its current situation and its long-term knowledge.  In
+descriptions of its current situation and its long-term procedural knowledge.  In
 Soar, the current situation, including data from sensors, results of
 intermediate inferences, active goals, and active operators is held in
 \emph{working memory}.  Working memory is organized as
@@ -46,10 +46,10 @@ organization. (This need not be a strict hierarchy; for example, there's
 nothing to prevent two objects from being ``substructure'' of each
 other.)
 
-The long-term knowledge, which specifies how to respond to different
+The long-term procedural knowledge, which specifies how to respond to different
 situations in working memory, can be thought of as the program for Soar.
 The Soar architecture cannot solve any problems without the addition of
-long-term knowledge.  (Note the distinction between the ``Soar
+long-term procedural knowledge.  (Note the distinction between the ``Soar
 architecture'' and the ``Soar program'': The former refers to the system
 described in this manual, common to all users, and the latter refers to
 knowledge added to the architecture.)
@@ -64,7 +64,7 @@ recognizing that the goal has been achieved.
 \index{problem solving!functions}
 
 \label{LIST:5functions}
-All of Soar's long-term knowledge is organized around the functions of operator 
+All of Soar's procedural knowledge is organized around the functions of operator 
 selection and operator application, which are organized into  four distinct types of
 knowledge:\vspace{-10pt} 
 \begin{description}
@@ -104,7 +104,7 @@ the selection and application of operators.
 \index{retract|see{production!retraction}}
 
 These problem-solving functions are the primitives for generating behavior
-in Soar.  Four of the functions require retrieving long-term knowledge
+in Soar.  Four of the functions require retrieving procedural knowledge
 that is relevant to the current situation: elaborating the state,
 proposing candidate operators, comparing the candidates, and applying
 the operator by modifying the state. These functions are driven by the
@@ -112,7 +112,7 @@ knowledge encoded in a Soar program.  Soar represents that knowledge as
 \textit{production} rules.  Production rules are similar to ``if-then''
 statements in conventional programming languages. (For example, a
 production might say something like ``if there are two blocks on the
-table, then suggest an operator to move one block ontop of the other
+table, then suggest an operator to move one block on top of the other
 block'').  The ``if'' part of the production is called its
 \textit{conditions} and the ``then'' part of the production is called
 its \textit{actions}. When the conditions are met in the current
@@ -120,7 +120,7 @@ situation as defined by working memory, the production is \emph{matched}
 and it will \emph{fire}, which means that its actions are executed,
 making changes to working memory. 
 
-The other function, selecting the current operator, involves making a
+Selecting the current operator, involves making a
 decision once sufficient knowledge has been retrieved.  This is
 performed by Soar's \emph{decision procedure}, which is a fixed
 procedure that interprets \emph{preferences} that have been created by
@@ -184,7 +184,7 @@ new location; each operator is represented with the following information:
 \end{itemize}
 
 The goal in this task is to stack the blocks so that \soar{C} is on the
-table, with block \soar{B} on block \soar{C}, and block \soar{A} on
+table, with block \soar{B} on top of block \soar{C}, and block \soar{A} on
 top of block \soar{B}.
 
 % ----------------------------------------------------------------------------
@@ -340,7 +340,7 @@ when a block is moved in our task: \vspace{-14pt}
    	``on top'' of the same thing).\vspace{-6pt}
 \item The block that is being moved is now in a new location (it is ``on top''
 	of a new thing).\vspace{-6pt}
-\item The place that the block used to be is now clear.\vspace{-6pt}
+\item The place that the block used to be in is now clear.\vspace{-6pt}
 \item The place that the block is moving to is no longer clear --- unless it
 	is the table, which is always considered ``clear''\footnote{In this
 	blocks-world task, the table always has room for another block, so it
@@ -355,7 +355,7 @@ the updated state description comes from the simulator.
 \subsection{Making inferences about the state}
 
 Making monotonic inferences about the state is the other role that Soar
-long-term knowledge may fulfill. Such elaboration knowledge can simplify
+long-term procedural knowledge may fulfill. Such elaboration knowledge can simplify
 the encoding of operators because entailments of a set of core features
 of a state do not have to be explicitly included in application of the
 operator.  In Soar, these inferences will be automatically retracted
@@ -578,7 +578,7 @@ candidates operators to be compared before they are selected.
 
 \index{production}
 \index{production!firing}
-Soar represents long-term knowledge as \emph{productions} that are stored in
+Soar represents long-term procedural knowledge as \emph{productions} that are stored in
 \emph{production memory}, illustrated in Figure \ref{fig:ab-prodmem}. Each
 production has a set of conditions and a set of actions.  If the
 conditions of a production match working memory, the production
