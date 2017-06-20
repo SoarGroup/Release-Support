@@ -1627,7 +1627,7 @@ are described below, organized by the type of side effect they have.
 \item [\soarb{halt} ---] Terminates Soar's execution and returns to 
 the user prompt.  A \soar{halt} action irreversibly terminates the
 running of a Soar program.
-It should not be used if Soar is to be restarted (see the
+It should not be used if the agent is to be restarted (see the
  \soar{interrupt} RHS action below.)
 \begin{verbatim}
 sp {
@@ -1748,6 +1748,19 @@ sp {
         \nocomment{Does this imply that a CR is not needed? I.e., will the
                 constant be 'accepted' after a space is hit?
                 }
+
+%\index{trace!RHS function}
+%\item [\soarb{trace} --- ] This function changes the level of runtime output trace
+%information printed during agent execution. It takes two arguments. First is an integer
+%corresponding to the new trace setting, second is an optional message to print when the change is made. \\
+%See section \ref{trace} for information about trace settings.
+%\begin{verbatim}
+%sp {
+%	...
+%	-->
+%	(trace 3 |Trace level changed!|) }
+%\end{verbatim}
+	\nocomment{When tested this function prints the message but doesn't seem to change the trace channel.}
 
 
 \end{description}
