@@ -164,7 +164,7 @@ goal is to build a tower with \soar{A} on top, \soar{B} in the middle, and
 \soar{C} on the bottom. The initial state and the goal are illustrated in
 Figure \ref{fig:blocks}.
 
-The Soar code for this task is included in Appendix \ref{BLOCKSCODE}. You do not
+The Soar code for this task is available online at  \url{https://web.eecs.umich.edu/~soar/blocksworld.soar}. You do not
 need to look at the code at this point.
 
 \begin{figure}
@@ -267,7 +267,7 @@ test the proposed operators and the current state, and then create
 candidate operators. For example, a preference may say that operator A
 is a ``better'' choice than operator B at this particular time, or a
 preference may say that operator A is the ``best'' thing to do at this
-particular time.
+particular time. Preferences are discussed in detail in section \ref{PREFERENCES}. 
 
 % ----------------------------------------------------------------------------
 \subsection{Selecting a single operator}
@@ -513,17 +513,21 @@ use them consistently.
 
 The elements in working memory arise from one of four sources:\vspace{-12pt}
 \begin{enumerate}
-\item The actions of productions create most working memory elements. 
+\item \textbf{\textit{Productions:}} The actions on the RHS of productions create most working memory elements.
 \vspace{-8pt}
-\item The decision procedure automatically creates some special 
+\item \textbf{\textit{Architecture:}} \vspace{-8pt}
+\begin{enumerate}
+	\item \textit{State augmentations:} The decision procedure automatically creates some special 
    state augmentations (type, superstate, impasse, ...)
 	whenever a state is created.  States are created during 
-	initialization (the first state) or because of an impasse (a 
-substate).  \vspace{-8pt}
-\item The decision procedure creates the operator augmentation of the state 
+	initialization (the first state) or because of an impasse (a substate).  \vspace{-4pt}
+\item \textit{Operator augmentations:}  The decision procedure creates the operator augmentation of the state 
 based on
 preferences.  This records the selection of the current operator.\vspace{-8pt}
-\item External I/O systems create working memory elements on the input-link
+\end{enumerate}
+\item \textbf{\textit{Memory Systems}} \vspace{-8pt}
+\item \textbf{\textit{SVS}} \vspace{-8pt}
+\item \textbf{\textit{The Environment:}} External I/O systems create working memory elements on the input-link
 for sensory data.
 \end{enumerate}
 
@@ -556,15 +560,10 @@ attributes that the Soar architecture automatically creates are listed in Sectio
 \ref{SYNTAX-impasses}. Productions may create any other attributes for
 states.
 
-Preferences are held in a separate \emph{preference memory} where they cannot be
-tested by productions; however, \soar{acceptable} preferences 
-are held in \emph{both} preference memory and in working memory. By making the
-\soar{acceptable} preferences available in working memory, 
-the acceptable preferences can be tested for in productions allowing the
-candidates operators to be compared before they are selected.
+Preferences are held in a separate \emph{preference memory} where they cannot be tested by productions.  There is one notable exception.  Since a soar program may need to reason about candidate operators, \soar{acceptable} preferences are made available in working memory as well. The acceptable preferences can then be tested by productions, which allows a Soar program to reason about candidates operators to determine which one should be selected.
 
 % ----------------------------------------------------------------------------
-\section{Production Memory: Long-term Knowledge} 
+\section{Production Memory: Long-term Procedural Knowledge} 
 \label{ARCH-pm}
 \index{production memory}
 \index{production}
@@ -619,20 +618,7 @@ that is, they are named specifically. In Soar productions, variables are used
 so that a production can apply to a wider range of situations.
 \index{production!instantiation}
 
-The variables are bound to specific symbols in working memory elements
-by Soar's matching process.  A production along with a specific and
-consistent set of variable bindings is called an \emph{instantiation}. A
-production instantiation is consistent only if every occurrence of a
-variable is bound to the same value.  Since the same production may
-match multiple times, each with different variable bindings, several
-instantiations of the same production may match at the same time and,
-therefore, fire at the same time.  If blocks \soar{A} and \soar{B} are
-clear, the first production (without variables) will suggest one
-operator. However, if a production was created that used variables to
-test the names, this second production will be instantiated twice and
-therefore suggest \textit{two} operators: one operator to move block
-\soar{A} ontop of block \soar{B} and a second operator to move block
-\soar{B} ontop of block \soar{A}.
+ When variables are bound to specific symbols in working memory elements by Soar’s matching process, Soar creates an \emph{instantiation} of the production. This instantiation consists of the matched production along with a specific and consistent set of symbols that matched the variables. A production instantiation is consistent only if every occurrence of a variable is bound to the same value. Multiple instantiations of the same production can be created since the same production may match multiple times, each with different variable bindings. If blocks \soar{A} and \soar{B} are clear, the first production (without variables) will suggest one operator. However, consider a new proposal production that used variables to test the names of the block.  Such a production will be instantiated twice and therefore suggest \textit{two} operators: one operator to move block \soar{A} on top of block \soar{B} and a second operator to move block \soar{B} on top of block \soar{A}.
 \index{instantiation|see{production!instantiation or operator!instantiation}}
 
 Because the identifiers of objects are determined at runtime, literal
@@ -695,18 +681,17 @@ as the state changes, thus the proposal of operators is done with
 i-supported preferences. This way, the operator proposals will be
 retracted when they no longer apply to the current situation.
 
-However, the actions of productions that \emph{apply} an operator, either by
-adding or removing elements from working memory, need to persist even
-after the operator is no longer selected and operator application
-production instantiation no longer matches.  For example, in placing a
+However, the actions of productions that \emph{apply} an operator, either
+by adding or removing elements from working memory, persist regardless of
+whether the operator is still selected or the operator application 
+production instantiation still matches. For example, in placing a
 block on another block, a condition is that the second block be
 clear. However, the action of placing the first block removes the fact
 that the second block is clear, so the condition will no longer be
 satisfied.
 
 Thus, operator application productions do not retract their actions, even
-if they no longer match working memory.  This is called \emph{o-support}
-
+if they no longer match working memory.  This is called \emph{o-support} 
 (for ``operator support''). Working memory elements that participate in
 the application of operators are maintained throughout the existence of
 the state in which the operator is applied, unless explicitly removed (or
@@ -717,7 +702,8 @@ if they become unlinked).  Working memory elements are removed by a
 Whether a working memory element receives o-support or i-support is
 determined by the structure of the production instantiation that creates
 the working memory element.  O-support is given only to working memory
-elements created by operator-application productions.
+elements created by operator-application productions in the state where
+the operator was selected.
 
 An operator-application production tests the current operator of a state
 and modifies the state. Thus, a working memory element receives
@@ -725,15 +711,14 @@ o-support if it is for an augmentation of the current state or
 substructure of the state, and the conditions of the instantiation that
 created it test augmentations of the current operator.  
 
-When productions are matched, all productions that have their conditions
-met fire creating or removing working memory elements.  Also, working
-memory elements and preferences that lose i-support are removed from
-working memory. Thus, several new working memory elements and
-preferences may be created, and several existing working memory elements
-and preferences may be removed at the same time.  (Of
-course, all this doesn't happen literally at the same time, but the
-order of firings and retractions is unimportant, and happens in parallel
-from a functional perspective.)
+During productions matching, all productions that have their conditions
+met fire, creating preferences which may add or remove working memory elements. 
+Also, working memory elements and preferences that lose i-support are removed 
+from working memory. Thus, several new working memory elements and preferences
+may be created, and several existing working memory elements and preferences 
+may be removed at the same time. (Of course, all this doesn’t happen literally 
+at the same time, but the order of firings and retractions is unimportant, 
+and happens in parallel from a functional perspective.)
 
 \subsection{The calculation of o-support}
 \label{SUPPORT}
@@ -952,8 +937,7 @@ Section \ref{ARCH-prefmem-persistence}.
 \index{preference!semantics}
 This section describes the semantics of each type of preference.  More
 details on the preference resolution process are provided in
-Appendix
-\ref{PREFERENCES}.
+section \ref{PREFERENCES}.
 
 \nocomment{preference resolution or preference evaluation? resolution.}
 
