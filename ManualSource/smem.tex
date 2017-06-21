@@ -30,6 +30,8 @@ Production actions should not remove augmentations of the \emph{result} structur
 
 \section{Knowledge Representation}
 \label{SMEM-kr}
+\index{LTI!definition}
+\index{@!LTI label}
 
 The representation of knowledge in semantic memory is similar to that in working memory (see Section \ref{ARCH-wm} on page \pageref{ARCH-wm}) -- both include graph structures that are composed of symbolic elements consisting of an identifier, an attribute, and a value. 
 It is important to note, however, key differences:
@@ -99,7 +101,7 @@ Storage is guaranteed to succeed and a status WME will be created, where the ide
 
 If the identifier used in the store command is not linked to any existing LTIs, a new LTI will be created in smem which will be linked to the stored STI. If the identifier used in the store command is already linked to an LTI, the store will overwrite that long-term memory.
 For example, if LTI \soar{{@}5} had augmentations \soar{\carat A do \carat B re \carat C mi}, and a \soar{store} command used short-term identifier \soar{L35} which was linked to \soar{{@}5} but had only the augmentation \soar{\carat D fa}, the LTI \soar{{@}5} would be changed to only have \soar{\carat D fa}.
-
+\nocomment{Add subsection on store-new command.}
 \subsection{User-Initiated Storage}
 Semantic memory provides agent designers the ability to store semantic knowledge via the \soarb{add} switch of the \soarb{smem} command (see Section \ref{smem} on page \pageref{smem}).  
 The format of the command is nearly identical to the working memory manipulation components of the RHS of a production (i.e. no RHS-functions; see Section \ref{SYNTAX-pm-action} on page \pageref{SYNTAX-pm-action}).  

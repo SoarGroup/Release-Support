@@ -621,43 +621,55 @@ The following table gives examples of legal and illegal variable names.
 
 A test for an identifier, attribute, or value in a condition (whether
 constant or variable) can be modified by a preceding predicate. There
-are six predicates that can be used:
+are six general predicates that can be used:
 \soar{<>, <=>, <, <=, >=, >}.  
 
-\begin{tabular}{| l | l |} \hline
+\begin{tabularx}{\textwidth}{| l | X |} \hline
 \bf{Predicate} &  \bf{Semantics of Predicate} \\ \hline
-\soar{<>}  & Not equal. Matches anything except the value immediately \\
-           &  following it. \\
+\soar{<>}  & Not equal. Matches anything except the value immediately following it. \\
 \soar{<=>} & Same type.  Matches any symbol that is the same type (identifier, 
-\\
-           &  integer, floating-point, non-numeric constant) as the value \\
-           &  immediately following it. \\
+             integer, floating-point, non-numeric constant) as the value 
+             immediately following it. \\
 \soar{<}   & Numerically less than the value immediately following it. \\
-\soar{<=}  & Numerically less than or equal to the value immediately \\
-           &  following it. \\
-\soar{>=}  & Numerically greater than or equal to the value immediately \\ 
-           &  following it. \\
+\soar{<=}  & Numerically less than or equal to the value immediately 
+             following it. \\
+\soar{>=}  & Numerically greater than or equal to the value immediately 
+             following it. \\
 \soar{>}   & Numerically greater than the value immediately following it. \\  
 \hline 
-\end{tabular} \vspace{10pt}
+\end{tabularx} \vspace{10pt}
 \index{numeric comparisons}
 \index{type comparisons}
 \index{not equal test}
-
-\nocomment{
-	TODO: INSERT NEW SMEM CONDITIONS
-	}
+\index{LTI!comparisons}
+\index{@!predicate test}
 
 The following table shows examples of legal and illegal predicates:
 
 \begin{tabular}{| l | l |} \hline
-\bf{Legal predicates} &  \bf{Illegal predicates} \\ \hline
-\soar{> <valuex>} & \soar{> > <valuey>} \\
-\soar{< 1}  & \soar{1 >} \\
-\soar{<=> <y>} & \soar{= 10} \\  \hline
+	\bf{Legal predicates} &  \bf{Illegal predicates} \\ \hline
+	\soar{> <valuex>} & \soar{> > <valuey>} \\
+	\soar{< 1}  & \soar{1 >} \\
+	\soar{<=> <y>} & \soar{= 10} \\  \hline
 \end{tabular} \vspace{10pt}
 
-\subsubsection*{Example Production}
+There are also four special predicates that can be used to test Long-Term Indentifier (LTI) links
+held by working memory identifiers:
+\soar{@, !@, @+, @-}
+
+\begin{tabularx}{\textwidth}{| l | X |} \hline
+	\bf{Predicate} &  \bf{Semantics of Predicate} \\ \hline
+	\soar{@}  & Same LTI. Matches when the two values are working memory identifiers linked to the same LTI. \\
+	\soar{!@} & Different LTI.  Matches when the values are not both identifiers linked to the same LTI. \\
+	\soar{@+} & Matches if the value is an identifier linked to some LTI. \\
+	\soar{@-} & Matches if the value is not an identifier linked to some LTI. \\
+	\hline 
+\end{tabularx} 
+\vspace{10pt}
+
+See Section \ref{SMEM-kr} for more information on long-term semantic memory and LTIs.
+
+\subsubsection*{Example Productions}
 
 \begin{verbatim}
 sp {propose-operator*to-show-example-predicate
@@ -671,6 +683,20 @@ sp {propose-operator*to-show-example-predicate
 In this production, there must be a ``color'' attribute for the working memory
 object that matches \verb+<c>+, and the value of that attribute must not be
 ``rust''. 
+
+\begin{verbatim}
+sp {apply*merge*retrieved*item
+    (state <s> ^existing-item { @+ <orig-sti> }
+               ^smem.result.retrieved { @ <orig-sti> <result-sti> })
+-->
+    ... }
+\end{verbatim}
+
+In this production, \verb|<orig-sti>|, is tested for whether it is linked to some LTI.
+It is also compared against \verb|<result-sti>|, a working memory element retrieved from long-term memory and
+known to be linked to some LTI, to see if the two elements point to the same long-term memory.
+Note the the \verb|@+| in this example is unnecessary, since the \verb|{ @ <orig-sti> <result-sti> }| test will
+fail to match if either value tested is not linked to an LTI.
 
 % ----------------------------------------------------------------------------
 \subsubsection{Disjunctions of values}
@@ -1749,18 +1775,17 @@ sp {
                 constant be 'accepted' after a space is hit?
                 }
 
-%\index{trace!RHS function}
-%\item [\soarb{trace} --- ] This function changes the level of runtime output trace
-%information printed during agent execution. It takes two arguments. First is an integer
-%corresponding to the new trace setting, second is an optional message to print when the change is made. \\
-%See section \ref{trace} for information about trace settings.
-%\begin{verbatim}
-%sp {
-%	...
-%	-->
-%	(trace 3 |Trace level changed!|) }
-%\end{verbatim}
-	\nocomment{When tested this function prints the message but doesn't seem to change the trace channel.}
+\index{log}
+\item [\soarb{log} --- ] This function is equivalent to the \soar{write} function,
+except that it specifies the ``trace channel'' for output. It takes two arguments. First is an integer
+corresponding to the channel level for output, second is the message to print. \\
+See section \ref{trace} for information about trace channel levels.
+\begin{verbatim}
+sp {
+	...
+	-->
+	(log 3 |This only prints when trace is set to 3 or higher!|) }
+\end{verbatim}
 
 
 \end{description}
@@ -2026,7 +2051,7 @@ sp {example
 \end{verbatim}
 
 
-\index{get-lti-from-stm}
+\index{@!RHS Function}
 \item [\soarb{@ (get)} --- ] This function returns the LTI number of the
 given ID. If the given ID is not linked to an LTI, it does nothing.
 For example:
@@ -2042,7 +2067,7 @@ After this rule fires, the \verb|(S1 ^lti-num)| WME will have an integer value s
 
 
 \index{link-stm-to-ltm}
-\item [\soarb{@ (set)} --- ] This function takes two arguments. 
+\item [\soarb{link-stm-to-ltm} --- ] This function takes two arguments. 
 It links the first given symbol to the LTI indicated by the second integer value.
 For example:
 
@@ -2050,7 +2075,7 @@ For example:
 sp {example
     (state <s> ^stm <l1>)
     -->
-    (@ <l1> 42) }
+    (link-stm-to-ltm <l1> 42) }
 \end{verbatim}
 
 After this rule fires, the WME \verb=(S1 ^stm <l1>)= will be linked to \verb=@42=.
