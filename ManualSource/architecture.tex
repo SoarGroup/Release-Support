@@ -59,58 +59,53 @@ task (or set of tasks), including information about how to select and
 apply operators to transform the states of the problem, and a means of
 recognizing that the goal has been achieved.  
 
+\subsection{Types of Procedural Knowledge in Soar}
+\label{LIST:4KnowledgeTypes}
+
+Soar's procedural knowledge can be categorized into  four distinct types of
+knowledge:\vspace{-10pt} 
+\begin{enumerate}
+  \item \textit{Inference Rules} \newline 
+In Soar, we call these state elaborations.  This knowledge provides monotonic inferences
+that can be made about the state in a given situation. The knowledge created by such rules
+are not persistent and exist only as long as the conditions of the rules are met.
+  \item \textit{Operator Proposal Knowledge} \newline
+Knowledge about when a particular operator is appropriate for a situation.
+Note that multiple operators may be appropriate in a given context.
+So, Soar also needs knowledge to determine which of the candidates to choose.  
+  \item	\textit{Operator Selection Knowledge:} \newline
+Knowledge about the desirability of an operator in a particular situation.
+Such knowledge can be either in terms of a single operator (e.g. never choose this 
+operator in this situation) or relational (e.g. prefer this operator over another
+in this situation).
+  \item \textit{Operator Application Rules} \newline
+Knowledge of how a specific selected operator modifies the state.
+This knowledge creates persistent changes to the state that remain even 
+after the rule no longer matches or the operator is no longer selected.
+\end{enumerate}
+
+Note that state elaborations can indirectly affect operator selection
+and application by creating knowledge that the proposal and application
+rules match on.
+
 \subsection{Problem-Solving Functions in Soar}
 \label{ARCH-functions}
 \index{problem solving!functions}
-
-\label{LIST:5functions}
-All of Soar's procedural knowledge is organized around the functions of operator 
-selection and operator application, which are organized into  four distinct types of
-knowledge:\vspace{-10pt} 
-\begin{description}
-\item \textbf{Knowledge to select an operator} \\ \vspace{-20pt}
-  \begin{enumerate}
-  \item \textit{Operator Proposal:} Knowledge that an operator is appropriate for the current situation. 
-  \item \textit{Operator Comparison:} Knowledge to compare candidate operators.
-  \item 	\textit{Operator Selection:} Knowledge to select a single operator, based on the comparisons.
-  \end{enumerate}
-\item \textbf{Knowledge to apply an operator} \\  \vspace{-20pt}
-  \begin{enumerate} \setcounter{enumi}{3}
-  \item \textit{Operator Application:} Knowledge of how a specific operator modifies the state.
-\end{enumerate}
-\end{description}
-In addition, there is a fifth type of knowledge in Soar that is
-indirectly connected to both operator selection and operator application:
-
-\begin{description}
-% a hack to make the next bullet line up with the previous ones
-\makeatletter
-\@newlistfalse
-\makeatother
-% /hack
-\begin{enumerate} \setcounter{enumi}{4}
-\item Knowledge of monotonic inferences that can be made about the state
-(\textit{state elaboration}). 
-\end{enumerate}
-\end{description}
-State elaborations indirectly affect operator selection and application
-by creating new descriptions of the current situation that can cue
-the selection and application of operators.
-
 \index{production}
 \index{production!match}
 \index{match|see{production!match}}
 \index{fire|see{production!firing}}
 \index{retract|see{production!retraction}}
 
-These problem-solving functions are the primitives for generating behavior
-in Soar.  Four of the functions require retrieving procedural knowledge
-that is relevant to the current situation: elaborating the state,
-proposing candidate operators, comparing the candidates, and applying
-the operator by modifying the state. These functions are driven by the
-knowledge encoded in a Soar program.  Soar represents that knowledge as
-\textit{production} rules.  Production rules are similar to ``if-then''
-statements in conventional programming languages. (For example, a
+These problem-solving functions are the primitives for generating 
+behavior that is relevant to the current situation: elaborating the 
+state, proposing candidate operators, comparing the candidates, 
+and applying the operator by modifying the state. 
+These functions are driven by the knowledge encoded in a Soar program.
+
+Soar represents that knowledge as \textit{production} rules.  
+Production rules are similar to ``if-then'' statements in conventional 
+programming languages. (For example, a
 production might say something like ``if there are two blocks on the
 table, then suggest an operator to move one block on top of the other
 block'').  The ``if'' part of the production is called its
@@ -636,20 +631,18 @@ are linked to that state.
 \label{ARCH-pm-roles}
 \index{production!roles}
 
-Soar productions can fulfill four different roles: the three
-knowledge-retrieval problem-solving functions, and the state elaboration function, all described on page \pageref{LIST:5functions}:\vspace{-10pt}
+Soar productions can fulfill the following four roles, by retrieving
+different types of procedural knowledge, all described on page \pageref{LIST:4KnowledgeTypes}:\vspace{-10pt}
 \begin{enumerate}
 \item Operator proposal\vspace{-10pt}
 \item Operator comparison\vspace{-10pt}
-\item \textit{(Operator selection is not an act of knowledge 
-retrieval)}\vspace{-10pt}
 \item Operator application\vspace{-10pt}
 \item State elaboration
 \end{enumerate}
 
 A single production should not fulfill more than one of these roles
 (except for proposing an operator and creating an absolute preference
-for it).  Although productions are not declared to be of one type or the
+for it). Although productions are not declared to be of one type or the
 other, Soar examines the structure of each production and classifies the
 rules automatically based on whether they propose and compare operators,
 apply operators, or elaborate the state. 
@@ -1213,8 +1206,9 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	
 	\item[Exit Point 1]
 	\begin{itemize}
-		\item At this point, if the set of remaining candidates is either empty or has one
-		member, preference semantics terminates and this set is returned.
+		\item At this point, if the set of remaining candidates is empty, a no-change impasse
+		is created with no operators being selected.
+		\item If the set has one member, preference semantics terminates and this set is returned.
 		\item Otherwise, the remaining candidates are passed to the
 		BetterWorseFilter.
 	\end{itemize}
@@ -1251,8 +1245,10 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	
 	\item[Exit Point 3]
 	\begin{itemize}
-		\item At this point, if the set of remaining candidates is either empty or has one
-		member, preference semantics terminates and this set is returned.
+		\item At this point, if the set of remaining candidates is empty,
+		a no-change impasse is created with no operators being selected.
+		\item If  the set has one member, preference semantics terminates 
+		and this set is returned.
 		\item Otherwise, the remaining candidates are passed to the
 		WorstFilter.
 	\end{itemize}
@@ -1266,8 +1262,10 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	
 	\item[Exit Point 4]
 	\begin{itemize}
-		\item At this point, if the set of remaining candidates is either empty or has one
-		member, preference semantics terminates and this set is returned.
+		\item At this point, if the set of remaining candidates is empty,
+		a no-change impasse is created with no operators being selected. 
+		\item If the set has one member, preference semantics terminates 
+		and this set is returned.
 		\item Otherwise, the remaining candidates are passed to the
 		IndifferentFilter.
 	\end{itemize}
@@ -1471,8 +1469,8 @@ tie or conflict impasse and a constraint-failure impasse at the same
 time.  In these cases, Soar detects only the constraint-failure impasse.
 
 The impasse is detected \textit{during} the selection of the operator,
-but happens \textit{because} one of the other four problem-solving
-functions was incomplete.
+but happens \textit{because} one of the four problem-solving
+functions (described in section \ref{ARCH-functions}) was incomplete.
 
 % ----------------------------------------------------------------------------
 \subsection{Creating New States}
