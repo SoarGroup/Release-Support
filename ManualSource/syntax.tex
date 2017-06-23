@@ -2492,31 +2492,40 @@ sp {turn-learning-on
 \index{impasse}
 
 When the preferences in preference memory cannot be resolved unambiguously,
-Soar reaches an impasse, as described in Section \ref{ARCH-impasses}:\vspace{-
-12pt}
+Soar reaches an impasse, as described in Section \ref{ARCH-impasses}:
+\vspace{-12pt}
 \begin{itemize}
 \item When Soar is unable to select a new operator (in the decision cycle), it
-        is said to reach an operator impasse.\vspace{-8pt}
-\end{itemize}
+        is said to reach an operator impasse.
+\end{itemize}\vspace{-8pt}
 
-All impasses appear as states in working memory, where they can be
-tested by productions.  This section describes the structure of state
-objects in working memory.
+All impasses lead to the creation of a new substate in working memory, and appear 
+as objects within that substate. These objects can be tested by productions.
+This section describes the structure of state objects in working memory.
 
 % ----------------------------------------------------------------------------
 \subsection{Impasses in working memory}
 \label{SYNTAX-impasseaug}       %perf-goal-impa}
+\index{decision!procedure}
+\index{impasse}
+\index{impasse!types}
+\index{tie impasse}
+\index{conflict impasse}
+\index{constraint-failure impasse}
+\index{no-change impasse}
+\index{elaboration!phase}
+\index{impasse!resolution}
+\index{goal!termination}
+\index{subgoal!termination}
+\index{subgoal!augmentations}
 
 There are four types of impasses. 
 
-\nocomment{rewrite this section to show templates of what the objects look like
-        in working memory for different types of impasses}
-
-\index{decision!procedure}
-\index{impasse}
 Below is a short description of the four types of impasses. (This was
 described in more detail in Section \ref{ARCH-impasses} on page
-\pageref{ARCH-impasses}.)\vspace{-12pt}
+\pageref{ARCH-impasses}.)
+
+\vspace{-12pt}
 \begin{enumerate}
 \item \emph{tie}: when there is a collection of equally eligible operators
         competing for the value of a particular attribute;\vspace{-8pt}
@@ -2527,79 +2536,64 @@ described in more detail in Section \ref{ARCH-impasses} on page
 \item \emph{no-change}: when the proposal phase runs to quiescence without 
         suggesting a new operator.
 \end{enumerate}
-\index{impasse!types}
-\index{tie impasse}
-\index{conflict impasse}
-\index{constraint-failure impasse}
-\index{no-change impasse}
-\index{elaboration!phase}
-\index{impasse!resolution}
-\index{goal!termination}
-\index{subgoal!termination}
 
-The list
-below gives the seven augmentations that the architecture creates on the
+The list below gives the seven augmentations that the architecture creates on the
 substate generated when an impasse is reached, and the
-values that each augmentation can contain:\vspace{-12pt}
+values that each augmentation can contain:
+
+\vspace{-12pt}
 \begin{description} 
-\item [\soar{\carat type state}] \vspace{-8pt} 
-
-\item [\soar{\carat impasse}] Contains the impasse type: \soar{tie}, 
-    \soar{conflict}, \soar{constraint-failure}, or \soar{no-change}.\vspace{-
-8pt} 
-
-\item [\soar{\carat choices}]Either \soar{multiple} (for tie and conflict
-        impasses), \soar{none} (for constraint-failure or no-change impasses).
-        \vspace{-8pt} 
-
+\item [\soar{\carat type state}] 
+	\index{type (attribute)}
+	\vspace{-8pt} 
+\item [\soar{\carat impasse}] Contains the impasse type: 
+	\soar{tie}, \soar{conflict}, \soar{constraint-failure}, or \soar{no-change}.
+	\index{impasse (attribute)}
+	\vspace{-8pt} 
+\item [\soar{\carat choices}]Either \soar{multiple} (for tie and conflict impasses), 
+	\soar{constraint-failure} (for constraint-failure impasses), or 
+	\soar{none} (for constraint-failure or no-change impasses).
+	\index{choices (attribute)}
+	\vspace{-8pt} 
 \item [\soar{\carat superstate}] Contains the identifier of the state in which 
-        the impasse arose.\vspace{-8pt}
-        \index{superstate}
-
-\item [\soar{\carat attribute}] For multi-choice and constraint-failure 
-impasses,
-        this contains \soar{operator}. For
-        no-change impasses, this contains the attribute of the last 
-        decision with a value (\soar{state} or \soar{operator}).\vspace{-8pt}
-\index{subgoal!augmentations}
-
-\item [\soar{\carat item}] For multi-choice and constraint-failure impasses, 
-this 
-        contains all values involved in the tie, conflict, or
-        constraint-failure. If the set of items that tie or conflict changes
-        during the impasse, the architecture removes or adds the appropriate
-        item augmentations without terminating the existing impasse.\vspace{-
-8pt}
-        \index{item (attribute)}
-
-\item [\soar{\carat item-count}] For multi-choice and constraint-failure impasses, 
-this 
-        contains the number of values listed under the item augmentation above.\vspace{-8pt}
-        \index{item-count (attribute)}
-
+	the impasse arose.
+	\index{superstate (attribute)}
+	\vspace{-8pt}
+\item [\soar{\carat attribute}] For multi-choice and constraint-failure impasses,
+	this contains \soar{operator}. For no-change impasses, this contains 
+	the attribute of the last decision with a value (\soar{state} or \soar{operator}).
+	\index{attribute (attribute)}
+	\vspace{-8pt}
+\item [\soar{\carat item}] For multi-choice and constraint-failure impasses, this 
+	contains all values involved in the tie, conflict, or constraint-failure. 
+	If the set of items that tie or conflict changes during the impasse, the architecture 
+	removes or adds the appropriate item augmentations without terminating the existing impasse.
+	\index{item (attribute)}
+	\vspace{-8pt}
+\item [\soar{\carat item-count}] For multi-choice and constraint-failure impasses, this 
+	contains the number of values listed under the item augmentation above.
+	\index{item-count (attribute)}
+	\vspace{-8pt}
 \item [\soar{\carat non-numeric}] For tie impasses, this contains all operators that
-        do not have numeric indifferent preferences associated with them. If the
-        set of items that tie changes during the impasse, the architecture
-        removes or adds the appropriate non-numeric augmentations without
-        terminating the existing impasse. \vspace{-8pt}
-        \index{item (attribute)}
-
-\item [\soar{\carat non-numeric-count}] For tie impasses, this contains the
-        number of operators listed under the non-numeric augmentation above.\vspace{-8pt}
-        \index{item-count (attribute)}
-
-\item [\soar{\carat quiescence}] States are the only objects with 
-\soar{quiescence
-        t}, which is an explicit statement that quiescence (exhaustion of the
-        elaboration cycle) was reached in the superstate.  If problem solving
-        in the subgoal is contingent on quiescence having been reached, the
-        substate should test this flag.  The side-effect is that no chunk will
-        be built if it depended on that test. See Section
-        \ref{CHUNKING-creation} on page \pageref{CHUNKING-creation} for
-        details. This attribute can be ignored when learning is turned off.
-        \index{quiescence t (augmentation)}
-        \index{exhaustion}
-
+	do not have numeric indifferent preferences associated with them. If the
+	set of items that tie changes during the impasse, the architecture
+	removes or adds the appropriate non-numeric augmentations without
+	terminating the existing impasse.
+	\index{non-numeric (attribute)} 
+	\vspace{-8pt}
+\item [\soar{\carat non-numeric-count}] For tie impasses, this contains the number of 
+	operators listed under the non-numeric augmentation above.
+	\index{non-numeric-count (attribute)}
+	\vspace{-8pt}
+\item [\soar{\carat quiescence}] States are the only objects with \soar{quiescence t}, 
+	which is an explicit statement that quiescence (exhaustion of the elaboration cycle) 
+	was reached in the superstate.  If problem solving in the subgoal is contingent on 
+	quiescence having been reached, the substate should test this flag. The side-effect 
+	is that no chunk will be built if it depended on that test. 
+	See Section \ref{CHUNKING-creation} on page \pageref{CHUNKING-creation} for
+	details. This attribute can be ignored when learning is turned off.
+	\index{quiescence t (augmentation)} 
+	\index{exhaustion}
 \end{description} 
 
 Knowing the names of these architecturally defined attributes and their
@@ -2613,6 +2607,9 @@ productions or merely use them as guides for writing your own set of
 productions to respond to impasses.
 
 \subsubsection*{Examples}
+
+\nocomment{rewrite this section to show templates of what the objects look like
+	in working memory for each different types of impasses}
 
 The following is an example of a substate that is created for a tie among
 three operators:
@@ -2651,7 +2648,7 @@ sp {default*top-goal*halt*operator*failure
     (<s> ^superstate nil)
 -->
     (write (crlf) |No operator can be selected for top goal.| )
-    (write (crlf) |Soar must halt.| )
+    (write (crlf) |Soar will halt now. Goodnight.| )
     (halt)
 }
 \end{verbatim}
@@ -2671,12 +2668,12 @@ Soar receives inputs and sends outputs to an external process is called
 \emph{Soar I/O}.
 
 This section describes how input and output are represented in working memory
-and in productions.  The details of creating and registering the input and 
-output functions for Soar are beyond the scope of this manual, but they are
-described in the \textit{SML Quick Start Guide}.
-This section is provided for the sake of Soar users who will be making
+and in productions.  The details of designing an external process that creates the input and 
+responds to output from Soar are beyond the scope of this manual, but they are
+described \soar{\htmladdnormallink{online}{https://soar.eecs.umich.edu/articles/articles/soar-markup-language-sml}} 
+on the Soar website. This section is provided for the sake of Soar users who will be making
 use of a program that has already been implemented, or for those who would
-simply like to understand how I/O is implemented in Soar.
+simply like to understand how I/O works in Soar.
 % A simple example
 % of Soar I/O using Tcl is provided in Section (Appendix?) \ref{Interface-Tcl_I/O}.
 
@@ -2810,8 +2807,6 @@ ontop of the blue block'' by creating a structure on the output link, such as:
 (B1 ^color red)
 \end{verbatim}  \vspace{12pt}
 
-The '[A]' notation is used to indicate the working memory elements 
-that are created by the architecture and not by productions.
 An output function would look for specific structure in this output link and
 translate this into the format required by the external program that controls
 the robotic arm. Movement by the robotic arm would lead to changes in the 
