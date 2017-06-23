@@ -119,7 +119,7 @@ Selecting the current operator, involves making a
 decision once sufficient knowledge has been retrieved.  This is
 performed by Soar's \emph{decision procedure}, which is a fixed
 procedure that interprets \emph{preferences} that have been created by
-the retrieval functions. The knowledge-retrieval and decision-making
+the knowledge retrieval functions. The knowledge-retrieval and decision-making
 functions combine to form Soar's \emph{decision cycle}.
 
 \index{decision procedure}
@@ -202,10 +202,9 @@ proposed or selected --- is illustrated in Figure \ref{fig:ab-wmem}.
 \label{fig:ab-wmem}
 \end{figure}
 
-A state can have only one operator at a time, and the operator is represented
-as substructure of the state. A state may also have as substructure a number
-of \emph{potential} operators that are in consideration; however, these
-suggested operators should not be confused with the current operator. 
+A state can have only one selected operator at a time
+but it may also have a number of \emph{potential} operators that are in consideration.
+These proposed operators should not be confused with the active, selected operator.
 
 Figure \ref{fig:ab-wmem2} illustrates working memory after the first operator
 has been selected. There are six operators proposed, and only one of
@@ -893,7 +892,7 @@ In such cases, both receive i-support. Soar will print a warning on firing this 
 }
 
 % ----------------------------------------------------------------------------
-\section{Preference memory: Selection Knowledge} 
+\section{Preference Memory: Selection Knowledge} 
 \label{ARCH-prefmem}
 %\label{ch-abst-symb-pref}
 \index{preference}
@@ -924,7 +923,7 @@ preference memory until removed for one of the reasons previously discussed in
 Section \ref{ARCH-prefmem-persistence}.
 
 % ----------------------------------------------------------------------------
-\subsection{Preference semantics}
+\subsection{Preference Semantics}
 \label{ARCH-prefmem-semantics}
 
 \index{preference!semantics}
@@ -968,7 +967,7 @@ as
 \index{preference!worse}
 \index{"<|see{preference!worse}}
 \index{worse preference|see{preference!worse}}
-\item [Better ($>$), Worse ($<$)] A \soar{better} or \soar{worse} preference
+\item [Better ($>$ \emph{value}), Worse ($<$ \emph{value})] A \soar{better} or \soar{worse} preference
         states, for the two values involved, that one value should not be
         selected if the other value is a candidate. \soar{Better} and
         \soar{worse} allow for the creation of a partial ordering between
@@ -1008,11 +1007,14 @@ selected
 \index{"=|see{preference!indifferent}}
 \index{indifferent preference|see{preference!indifferent}}
 \index{indifferent-selection}
-\item [Indifferent (=)] An \soar{indifferent} preference states that there is
-        positive knowledge that it does not matter which value is selected.
-        This may be a binary preference, to say that two values are mutually
-        indifferent, or a unary preference, to say that a single value is as
-        good or as bad a choice as other expected alternatives.
+\index{preference!unary indifferent}
+\item [Unary Indifferent (=)] A \soar{unary indifferent} preference states that
+		there is positive knowledge that a single value is as good or as bad a choice as
+		other expected alternatives.
+\index{preference!binary indifferent}
+\item [Binary Indifferent (= \emph{value})] A \soar{binary indifferent} preference states 
+		that two values are mutually indifferent and it does not matter which of these
+		values are selected.
         
 	When \soar{indifferent} preferences are used to signal that it does
 	not matter which operator is selected, by default, Soar
@@ -1639,9 +1641,7 @@ would for any other production, as described in Section
 application, the result will receive o-support.  Otherwise, the result
 gets i-support from the justification. If such a result loses
 i-support from the justification, it will be retracted if there is no
-other support.  Justification are not added to production memory, but
-are otherwise treated as an instantiated productions that have already
-fired.
+other support.
 
 \index{justification!conditions}
 \index{learning!overgeneral}
@@ -2104,7 +2104,7 @@ that has occurred at higher levels.
 
 
 % ----------------------------------------------------------------------------
-\section{Learning}
+\section{Learning Procedural Knowledge}
 \label{ARCH-learning} 
 \index{learning}
 \index{chunk}
@@ -2113,30 +2113,26 @@ that has occurred at higher levels.
 \index{learning}
 \index{chunking|see{learning}}
 When an operator impasse is resolved, it means that Soar has, through problem 
-solving,
-gained access to knowledge that was not readily available before. Therefore,
+solving, gained access to knowledge that was not readily available before. Therefore,
 when an impasse is resolved, Soar has an opportunity to learn, by summarizing
 and generalizing the processing in the substate.
 
 \index{chunk}
-One of Soar's learning mechanisms is called \textit{chunking}; it attempts to create a
-new production, called a chunk. The conditions of the chunk are the elements
-of the state that (through some chain of production firings) allowed the
-impasse to be resolved; the action of the production is the working
-memory element or preference that
-resolved the impasse (the result of the impasse). The conditions and action
-are variablized so that this new production may match in a similar situation
-in the future and prevent an impasse from arising. 
+One of Soar's learning mechanisms is called \textit{chunking} 
+(See chapter \ref{CHUNKING} for more information); it attempts to
+create a new production, called a chunk. The conditions of 
+the chunk are the elements of the state that (through some chain of 
+production firings) allowed the impasse to be resolved; the action of the 
+production is the working memory element or preference that resolved the impasse
+(the result of the impasse). The conditions and action are variablized so that this
+new production may match in a similar situation in the future and
+prevent an impasse from arising. 
 
 Chunks are very similar to justifications in that they are both
 formed via the backtracing process and both create a result in their
 actions. However, there are some important distinctions:\vspace{-12pt}
 \begin{enumerate}
-\item Chunks are productions and are added to production memory.
-	Justifications do not appear in production memory.\vspace{-8pt}
-\item Justifications disappear as soon as the working memory element or
-         preference they provide support
-	for is removed. \vspace{-8pt}
+\item Justifications disappear as soon as its conditions no longer match. \vspace{-8pt}
 \item Chunks contain variables so that they may match working memory in other
 	situations; justifications are similar to an instantiated chunk.
 \end{enumerate}
