@@ -32,6 +32,9 @@ def get_edit_list(pathname):
     BAD_LABELS = ['\\label{synopsis','\\label{options','\\label{description','\\label{summary-screen',
                   '\\label{parameters','\\label{examples','\\label{example','\\label{default-aliases','\\label{see-also',
                   '\\label{performance-parameters','\\label{watch}','\\label{warnings}','\\label{timers}','\\label{usage}','\\label{statistics}']
+                  
+    INDEX_HEADS = ['soar', 'gp', 'help', 'run', 'sp', 'preferences', 'production', 'print', 'wm', 'echo', 'output','stats', 'trace', 
+                   'visualize', 'chunk', 'explain', 'decide', 'epmem', 'rl', 'smem', 'svs', 'load', 'save', 'alias', 'debug']
     
     index = -1                  # Variable for keeping string.find results
     lnum = 0                    # Current line number
@@ -66,6 +69,19 @@ def get_edit_list(pathname):
                     if index != -1:
                         index2 = line.find('}',index)
                         edit_list[lnum].append( (lnum, line[index:index2+1], '') )
+                # Labels: Make index markers for CLI commands
+                index = line.find("\\label{")
+                if index != -1:
+                    endind = index + line[index:].find("}")
+                    labstr = line[index+7:endind]
+                    oldstr = line[index:endind+1]
+                    newstr = labstr.replace("-", "!", 1)
+                    
+                    endind = newstr.find("!")
+                    if endind == -1:
+                        endind = len(newstr)
+                    if newstr[:endind] in INDEX_HEADS:
+                        edit_list[lnum].append( (lnum, oldstr, oldstr+"\\index{" + newstr + "}") )
                 
                 ### SCANNING FIXES:
                 # Search for tables
