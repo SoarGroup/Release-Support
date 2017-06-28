@@ -284,7 +284,6 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/jars/swt-linux64.jar=bin/java
   Release-Support/Shuffler_Input/jars/swt-win64.jar=bin/java
   Release-Support/Shuffler_Input/jars/swt-mac64.jar=bin/java
-  Release-Support/Shuffler_Input/jars/stdlib-package.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/libSoar.DLL_EXTENSION=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/libJava_sml_ClientInterface.DLL_EXTENSION=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
@@ -361,7 +360,6 @@ SoarSuite_9.6.0
   Release-Support/Shuffler_Input/jars/swt-linux64.jar=bin/java
   Release-Support/Shuffler_Input/jars/swt-win64.jar=bin/java
   Release-Support/Shuffler_Input/jars/swt-mac64.jar=bin/java
-  Release-Support/Shuffler_Input/jars/stdlib-package.jar=bin/java
 SoarSuite_9.6.0-source
   type=zip
   out=SoarSuite/
