@@ -15,12 +15,15 @@ and processes (the decision procedure, learning, and input and output).
 % ----------------------------------------------------------------------------
 \section{An Overview of Soar}
 \label{ARCH-overview}
+\index{state}
+\index{operator}
+\index{goal}
 
 The design of Soar is based on the hypothesis that all deliberate
 \textit{goal}-oriented behavior can be cast as the selection and application
-of \textit{operators} to a \textit{state}. A state is a representation of the
-current problem-solving situation; an operator transforms a state (makes
-changes to the representation); and a goal is a desired outcome of the
+of \textit{operators} to a \textit{state}. A \soarb{state} is a representation of the
+current problem-solving situation; an \soarb{operator} transforms a state (makes
+changes to the representation); and a \soarb{goal} is a desired outcome of the
 problem-solving activity.
 
 As Soar runs, it is continually trying to apply the current operator and
@@ -38,15 +41,20 @@ Soar has separate memories (and different representations) for
 descriptions of its current situation and its long-term procedural knowledge.  In
 Soar, the current situation, including data from sensors, results of
 intermediate inferences, active goals, and active operators is held in
-\emph{working memory}.  Working memory is organized as
+\soarb{working memory}.  Working memory is organized as
 \emph{objects}. Objects are described in terms of their
 \emph{attributes}; the values of the attributes may correspond to
 sub-objects, so the description of the state can have a hierarchical
 organization. (This need not be a strict hierarchy; for example, there's
 nothing to prevent two objects from being ``substructure'' of each
 other.)
+\index{working memory}
+\index{object}
+\index{attribute}
 
-The long-term procedural knowledge, which specifies how to respond to different
+\index{production memory}
+Long-term procedural knowledge is held in \soarb{production memory}.
+Procedural knowledge specifies how to respond to different
 situations in working memory, can be thought of as the program for Soar.
 The Soar architecture cannot solve any problems without the addition of
 long-term procedural knowledge.  (Note the distinction between the ``Soar
@@ -72,7 +80,7 @@ are not persistent and exist only as long as the conditions of the rules are met
   \item \textit{Operator Proposal Knowledge} \newline
 Knowledge about when a particular operator is appropriate for a situation.
 Note that multiple operators may be appropriate in a given context.
-So, Soar also needs knowledge to determine which of the candidates to choose.  
+So, Soar also needs knowledge to determine which of the candidates to choose:  
   \item	\textit{Operator Selection Knowledge:} \newline
 Knowledge about the desirability of an operator in a particular situation.
 Such knowledge can be either in terms of a single operator (e.g. never choose this 
@@ -96,14 +104,16 @@ rules match on.
 \index{match|see{production!match}}
 \index{fire|see{production!firing}}
 \index{retract|see{production!retraction}}
+\index{elaboration}
 
 These problem-solving functions are the primitives for generating 
 behavior that is relevant to the current situation: elaborating the 
 state, proposing candidate operators, comparing the candidates, 
 and applying the operator by modifying the state. 
 These functions are driven by the knowledge encoded in a Soar program.
-
-Soar represents that knowledge as \textit{production} rules.  
+ 
+\index{production}
+Soar represents that knowledge as \soarb{production rules}.  
 Production rules are similar to ``if-then'' statements in conventional 
 programming languages. (For example, a
 production might say something like ``if there are two blocks on the
@@ -113,25 +123,24 @@ block'').  The ``if'' part of the production is called its
 its \textit{actions}. When the conditions are met in the current
 situation as defined by working memory, the production is \emph{matched}
 and it will \emph{fire}, which means that its actions are executed,
-making changes to working memory. 
+making changes to working memory.
 
+\index{decision procedure}
+\index{decision cycle}
 Selecting the current operator, involves making a
-decision once sufficient knowledge has been retrieved.  This is
+\soarb{decision} once sufficient knowledge has been retrieved.  This is
 performed by Soar's \emph{decision procedure}, which is a fixed
 procedure that interprets \emph{preferences} that have been created by
 the knowledge retrieval functions. The knowledge-retrieval and decision-making
 functions combine to form Soar's \emph{decision cycle}.
 
-\index{decision procedure}
-\index{decision cycle}
 \index{impasse}
-
 When the knowledge to perform the problem-solving functions is not
 directly available in productions, Soar is unable to make progress and
-reaches an \textit{impasse}.  There are three types of possible impasses
+reaches an \soarb{impasse}.  There are three types of possible impasses
 in Soar:
 \begin{enumerate}
-\item An operator cannot be selected because none are proposed.\vspace{-4pt}
+\item An operator cannot be selected because no new operators are proposed.\vspace{-4pt}
 \item An operator cannot be selected because multiple operators are
         proposed and the comparisons are insufficient to determine which
         one should be selected.\vspace{-4pt}
@@ -139,13 +148,13 @@ in Soar:
         to apply it.\vspace{-4pt}
 \end{enumerate}
 In response to an impasse, the Soar architecture creates a
-\textit{substate} in which operators can be selected and applied to
+\soarb{substate} in which operators can be selected and applied to
 generate or deliberately retrieve the knowledge that was not directly
 available; the goal in the substate is to resolve the impasse. For
 example, in a substate, a Soar program may do a lookahead search to
 compare candidate operators if comparison knowledge is not directly
-available.  Impasses and substates are described in more detail in
-Section \ref{ARCH-impasses}.
+available.  Impasses and substates are described in more detail in Section \ref{ARCH-impasses}.
+\index{substate|see{subgoal}}
 
 
 % ----------------------------------------------------------------------------
@@ -159,8 +168,9 @@ goal is to build a tower with \soar{A} on top, \soar{B} in the middle, and
 \soar{C} on the bottom. The initial state and the goal are illustrated in
 Figure \ref{fig:blocks}.
 
-The Soar code for this task is available online at  \url{https://web.eecs.umich.edu/~soar/blocksworld.soar}. You do not
-need to look at the code at this point.
+The Soar code for this task is available online at \\
+\url{https://web.eecs.umich.edu/~soar/blocksworld.soar}. \\
+You do not need to look at the code at this point.
 
 \begin{figure}
 \insertfigure{blocks}{2in}
@@ -188,7 +198,7 @@ top of block \soar{B}.
 \index{state!representation}
 \index{operator!representation}
 \index{goal!representation}
-\index{problem space!representation}
+\index{problem space}
 \index{attribute}
 
 The initial state in our blocks-world task --- before any operators have been
@@ -217,7 +227,7 @@ these is actually selected.
 \label{fig:ab-wmem2}
 \end{figure}
 
-Goals are either represented explicitly as substructure of the state
+Goals are either represented explicitly as substructures of the working memory state
 with general rules that recognize when the goal is achieved, or are
 implicitly represented in the Soar program by goal-specific rules that
 test the state for specific features and recognize when the goal is
@@ -226,16 +236,14 @@ available in the state for focusing the problem solving, whereas other
 times it may not.  Although representing a goal explicitly has many advantages,
 some goals are difficult to explicitly represent on the state.
 
-The goal in our blocks-world task is represented implicitly in the Soar
-program. A single production rule monitors the state for completion of the goal and
-halts Soar when the goal is achieved.
+For example, the goal in our blocks-world task is represented implicitly in the provided Soar program. This is because a single production rule monitors the state for completion of the goal and halts Soar when the goal is achieved. (Syntax of Soar programs will be explained in Chapter \ref{SYNTAX}.) If the goal was an explicit working memory structure, a rule could compare the configuration of blocks to that structure instead of having the goal embedded within the rule's programming.
 
 % ----------------------------------------------------------------------------
 \subsection{Proposing candidate operators}
 \index{operator!proposal}
 
 As a first step in selecting an operator, one or more candidate
-operators are proposed.  Operators are proposed by rules that test
+operators are \soarb{proposed}.  Operators are proposed by rules that test
 features of the current state.  When the blocks-world task is run, the
 Soar program will propose six distinct (but similar) operators for the
 initial state as illustrated in Figure \ref{fig:proposal}. These
@@ -252,24 +260,29 @@ given the initial state.
 
 % ----------------------------------------------------------------------------
 \subsection{Comparing candidate operators: Preferences}
-\index{operator!comparison}
+\index{operator!comparison|see{preferences}}
+\index{preference}
+\index{preference memory}
 
 The second step Soar takes in selecting an operator is to evaluate or
 compare the candidate operators. In Soar, this is done via rules that
 test the proposed operators and the current state, and then create
-\emph{preferences}.  Preferences assert the relative or absolute merits of the
+\soarb{preferences} (stored in \emph{preference memory}).  Preferences assert the relative or absolute merits of the
 candidate operators. For example, a preference may say that operator A
 is a ``better'' choice than operator B at this particular time, or a
 preference may say that operator A is the ``best'' thing to do at this
 particular time. Preferences are discussed in detail in section \ref{PREFERENCES}. 
 
 % ----------------------------------------------------------------------------
-\subsection{Selecting a single operator}
+\subsection{Selecting a single operator: Decision}
 \index{operator!selection}
+\index{decision procedure}
+\index{substate|see{subgoal}}
 
-Soar attempts to select a single operator based on the preferences available
+Soar attempts to select a single operator as a \soarb{decision}, based on the preferences available
 for the candidate operators. There are four different situations that may
 arise:\vspace{-14pt}
+
 \begin{enumerate}
 \item The available preferences unambiguously prefer a single operator.\vspace{-
 6pt}
@@ -282,7 +295,7 @@ arise:\vspace{-14pt}
 
 In the first case, the preferred operator is selected.  In the second
 case, one of the subset is selected randomly. In the third and fourth
-cases, Soar has reached an ``impasse'' in problem solving, and a new
+cases, Soar has reached an \emph{impasse} in problem solving, and a new
 substate is created.  Impasses are discussed in Section
 \ref{ARCH-impasses}.
 
@@ -293,7 +306,7 @@ the operators randomly.
 \subsection{Applying the operator}
 \index{operator!application}
 
-An operator applies by making changes to the state; the specific changes
+An operator \soarb{applies} by making changes to the state; the specific changes
 that are appropriate depend on the operator and the current state.
 
 \index{I/O}
@@ -328,8 +341,8 @@ The example blocks-world task described here does not interact with an external
 environment. Therefore, the Soar program directly makes changes to the state
 when operators are applied. There are four changes that may need to be made
 when a block is moved in our task: \vspace{-14pt}
-\label{LIST:blocks-app}
-\begin{enumerate}
+
+\begin{enumerate}\label{LIST:blocks-app}
 \item The block that is being moved is no longer where it was (it is no longer
    	``on top'' of the same thing).\vspace{-6pt}
 \item The block that is being moved is now in a new location (it is ``on top''
@@ -347,9 +360,10 @@ the updated state description comes from the simulator.
 
 % ----------------------------------------------------------------------------
 \subsection{Making inferences about the state}
+\index{elaboration}
 
 Making monotonic inferences about the state is the other role that Soar
-long-term procedural knowledge may fulfill. Such elaboration knowledge can simplify
+long-term procedural knowledge may fulfill. Such \soarb{elaboration} knowledge can simplify
 the encoding of operators because entailments of a set of core features
 of a state do not have to be explicitly included in application of the
 operator.  In Soar, these inferences will be automatically retracted
@@ -365,8 +379,8 @@ corresponding elaboration retracts, and the block is no longer ``clear''.
 % ----------------------------------------------------------------------------
 \subsection{Problem Spaces}
 \label{ARCH-functions-ps}
-
 \index{problem space}
+
 If we were to construct a Soar system that worked on a large number of
 different types of problems, we would need to include large numbers of
 operators in our Soar program. For a specific problem and a
@@ -389,6 +403,7 @@ in working memory), attempting to select an operator that will move it
 to a new state.  It uses whatever knowledge it has about selecting
 operators given the current situation, and if its knowledge is
 sufficient, it will move toward its goal.
+
 \begin{figure}
 \insertfigure{blocks-ps}{4.9in}
 \insertcaption{The problem space in the blocks-world includes all operators
@@ -396,12 +411,13 @@ sufficient, it will move toward its goal.
 	configurations of the three blocks.}
 \label{fig:blocks-ps}
 \end{figure}
+
 The same problem could be recast in Soar as a planning problem, where
 the goal is to develop a plan to solve the problem, instead of just
 solving the problem.  In that case, a state in Soar would consist of a
-plan, which in turn would have representations of Blocks World states
+plan, which in turn would have representations of blocks-world states
 and operators from the original space.  The operators would perform
-editing operations on the plan, such as adding new Blocks World
+editing operations on the plan, such as adding new blocks-world
 operators, simulating those operators, etc.  In both formulations of the
 problem, Soar is still applying operators to generate new states, it is
 just that the states and operators have different content.
@@ -412,8 +428,8 @@ procedure), learning, and how  input and output fit in.
 % ----------------------------------------------------------------------------
 \section{Working memory: The Current Situation} 
 \label{ARCH-wm}
-
 \index{working memory}
+
 Soar represents the current problem-solving situation in its \emph{working
 memory}. Thus, working memory holds the current state and operator and is Soar's
 ``short-term'' knowledge, reflecting the current knowledge of the world and
@@ -431,17 +447,16 @@ Several WMEs collectively may provide more information about the same
 \textit{object}, for example, ``B1 is a block'', ``B1 is named A'', ``B1 is on
 the table'', etc. These WMEs are related because they are all contributing to
 the description of something that is internally known to Soar as ``B1''. B1 is
-called an \textit{identifier}; the group of WMEs that share this identifier
+called an \soarbit{identifier}; the group of WMEs that share this identifier
 are referred to as an \textit{object} in working memory. 
-Each WME describes a different \textit{attribute} of the object, for example,
-its name or type or location; each \textit{attribute} has a \textit{value} associated
+Each WME describes a different \soarbit{attribute} of the object, for example,
+its name or type or location; each \textit{attribute} has a \soarbit{value} associated
 with it, for example, the name is A, the type is block, and the position is on
 the table. Therefore, each WME is an identifier-attribute-value triple, and
 all WMEs with the same identifier are part of the same object.
 
-\index{working memory!object}
-\index{identifier}
-\index{attribute}
+\index{object}
+\index{working memory!object|see{object}}
 \index{value}
 \index{link}
 Objects in working memory are \emph{linked} to other objects: The value of one
@@ -458,20 +473,19 @@ architecture.
 WMEs are also often called \textit{augmentations} because they
 ``augment'' the object, providing more detail about it. While these two
 terms are somewhat redundant, WME is a term that is used more often to
-refer to the contents of working memory, while augmentation is a term
-that is used more often to refer to the description of an object.
+refer to the contents of working memory (as a single \textit{identifier-attribute-value} triple), 
+while augmentation is a term that is used more often to refer to the description of an object.
 Working memory is illustrated at an abstract level in Figure
 \ref{fig:ab-wmem} on page \pageref{fig:ab-wmem}. 
 
-
-The attribute of an augmentation is usually a constant, such as \soar{name} or
-\soar{type}, because in a sense, the attribute is just a label used to
+The attribute of an augmentation is usually a constant, such as ``\soar{name}'' or
+``\soar{type}'', because in a sense, the attribute is just a label used to
 distinguish one link in working memory from another.\footnote{In order to
 allow these links to have some substructure, the attribute name may be an
 identifier, which means that the attribute may itself have attributes and
 values, as specified by additional working memory elements.}
 
-The value of an augmentation may be either a constant, such as \soar{red}, or
+The value of an augmentation may be either a constant, such as ``\soar{red}'', or
 an identifier, such as \soar{06}. When the value is an identifier, it refers
 to an object in working memory that may have additional substructure. In
 semantic net terms, if a value is a constant, then it is a terminal node with
@@ -505,27 +519,31 @@ the things in the blocks world are called ``blocks'' or ``cubes'' or
 ``chandeliers''. It is up to the Soar programmer to pick suitable labels and to
 use them consistently.
 
-The elements in working memory arise from one of four sources:\vspace{-12pt}
+The elements in working memory arise from one of four sources:
+
+\index{Spatial Visual System}
+\vspace{-12pt}
 \begin{enumerate}
-\item \textbf{\textit{Productions:}} The actions on the RHS of productions create most working memory elements.
-\vspace{-8pt}
-\item \textbf{\textit{Architecture:}} \vspace{-8pt}
-\begin{enumerate}
-	\item \textit{State augmentations:} The decision procedure automatically creates some special 
-   state augmentations (type, superstate, impasse, ...)
-	whenever a state is created.  States are created during 
-	initialization (the first state) or because of an impasse (a substate).  \vspace{-4pt}
-\item \textit{Operator augmentations:}  The decision procedure creates the operator augmentation of the state 
-based on
-preferences.  This records the selection of the current operator.\vspace{-8pt}
-\end{enumerate}
-\item \textbf{\textit{Memory Systems}} \vspace{-8pt}
-\item \textbf{\textit{SVS}} \vspace{-8pt}
-\item \textbf{\textit{The Environment:}} External I/O systems create working memory elements on the input-link
-for sensory data.
+	\item \textbf{\textit{Productions:}} The actions on the RHS of productions create most working memory elements. \vspace{-8pt}
+	\item \textbf{\textit{Architecture:}} \vspace{-8pt}
+	\begin{enumerate}
+		\item \textit{State augmentations:} The decision procedure automatically creates some special state augmentations (type, superstate, impasse, ...) whenever a state is created.  States are created during initialization (the first state) or because of an impasse (a substate).  
+		\vspace{-4pt}
+	\item \textit{Operator augmentations:}  The decision procedure creates the operator augmentation of the state 
+	based on preferences. This records the selection of the current operator.
+	\vspace{-8pt}
+	\end{enumerate}
+	\item \textbf{\textit{Memory Systems}} \vspace{-8pt}
+	\item \textbf{\textit{SVS}} \vspace{-8pt}
+	\item \textbf{\textit{The Environment:}} External I/O systems create working memory elements on the input-link for sensory data.
 \end{enumerate}
 
-The elements in working memory are removed in six different ways:\vspace{-12pt}
+The elements in working memory are removed in six different ways:
+\index{reject preference}
+\index{i-support}
+\index{decision procedure}
+\index{I/O}
+\vspace{-12pt}
 \begin{enumerate}
 \item The decision procedure automatically removes all state
 augmentations it creates when the impasse that led to their creation is 
@@ -554,10 +572,10 @@ attributes that the Soar architecture automatically creates are listed in Sectio
 \ref{SYNTAX-impasses}. Productions may create any other attributes for
 states.
 
-Preferences are held in a separate \emph{preference memory} where they cannot be tested by productions.  There is one notable exception.  Since a soar program may need to reason about candidate operators, \soar{acceptable} preferences are made available in working memory as well. The acceptable preferences can then be tested by productions, which allows a Soar program to reason about candidates operators to determine which one should be selected.
+Preferences are held in a separate \emph{preference memory} where they cannot be tested by productions.  There is one notable exception.  Since a soar program may need to reason about candidate operators, \soar{acceptable} preferences are made available in working memory as well. The acceptable preferences can then be tested by productions, which allows a Soar program to reason about candidates operators to determine which one should be selected. Preference memory and the different types of preferences will be discussed in Section \ref{ARCH-prefmem}.
 
 % ----------------------------------------------------------------------------
-\section{Production Memory: Long-term Procedural Knowledge} 
+\section{Production Memory:\\ Long-term Procedural Knowledge} 
 \label{ARCH-pm}
 \index{production memory}
 \index{production}
@@ -569,9 +587,8 @@ Preferences are held in a separate \emph{preference memory} where they cannot be
 \label{fig:ab-prodmem}
 \end{figure}
 
-\index{production}
 \index{production!firing}
-Soar represents long-term procedural knowledge as \emph{productions} that are stored in
+Soar represents long-term procedural knowledge as \soarb{productions} that are stored in
 \emph{production memory}, illustrated in Figure \ref{fig:ab-prodmem}. Each
 production has a set of conditions and a set of actions.  If the
 conditions of a production match working memory, the production
@@ -757,7 +774,8 @@ sp {operator*superstate*application
 
 gives o-support to its RHS action, which remains after the substate bound to \soar{<s>} is destroyed. 
 
-An extension of condition 1 is that operator augmentations should always receive i-support. Soar has been written to recognize augmentations directly off the operator (ie, \soar{(<o> \carat augmentation value)}), and to attempt to give them i-support. However, what should be done about a production that simultaneously tests an operator, doesn't propose an operator, adds an operator augmentation, and adds a non-operator augmentation? For example:
+An extension of condition 1 is that operator augmentations should always receive i-support. Soar has been written to recognize augmentations directly off the operator \\
+(ie, \soar{(<o> \carat augmentation value)}), and to attempt to give them i-support. However, what should be done about a production that simultaneously tests an operator, doesn't propose an operator, adds an operator augmentation, and adds a non-operator augmentation? For example:
 
 \begin{verbatim}
 sp {operator*augmentation*application
@@ -1143,7 +1161,7 @@ one (necessarily the winner) or zero (a no-change impasse).
 \index{decision!procedure}
 
 \begin{figure}
-	\insertfigure{newprefsem}{7in}
+	\insertfigure{newprefsem}{\textwidth}
 	\insertcaption{An illustration of the preference resolution process. There are eight
 		steps; only five of these provide exits from the  resolution process.}
 	\label{fig:prefsem}
@@ -1170,7 +1188,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 		failure impasse is recognized and preference semantics terminates 
 		by returning the set of required candidates.
 		\item Otherwise ---
-		If there exists a required candidate that is also prohibited, a
+		If there is a required candidate that is also prohibited, a
 		constraint-failure impasse with the required/prohibited value is
 		recognized and preference semantics terminates.
 		\item Otherwise ---
@@ -1767,7 +1785,7 @@ created o-supported working memory elements that are directly or
 indirectly linked to the substate.  Thus, whenever such an o-supported
 working memory element is created, Soar records which working memory
 elements that exist in a superstate were tested, directly or indirectly
-in creating that working memory element. \index {dependency-set} Whenever
+in creating that working memory element. \index{dependency-set} Whenever
 any of the working memory elements in the dependency set of a substate
 change, the substate is regenerated.
 

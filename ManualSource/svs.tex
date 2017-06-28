@@ -1,8 +1,7 @@
 \chapter{Spatial Visual System}
 \label{SVS}
 \index{Spatial Visual System}
-\index{SVS}
-\index{svs}
+\index{SVS|see{Spatial Visual System}}
 
 \begin{figure}
 \insertfigure{Figures/svs-setup}{4in}
@@ -514,7 +513,7 @@ where the distance between them and the table along the z axis is a small positi
 (S1 ^svs S3)
   (S3 ^command C3)
     (C3 ^extract E1)
-      (E1 ^type axis_distance_select ^a A1 ^b B1 ^axis z ^min 0.0001 ^max 0.1)
+      (E1 ^type axis_distance_select ^a A1 ^b B1 ^axis z ^min .0001 ^max .1)
         (A1 ^type node ^id table)
         (B1 ^type all_nodes)
 \end{verbatim}
@@ -562,6 +561,7 @@ In other words, this class implements a one-to-one mapping from input combinatio
 To write a new filter of this class, inherit from the \texttt{map\_filter} class, 
 and define the \texttt{compute} function. Below is an example template:
 
+{\footnotesize
 \begin{verbatim}
 class new_map_filter : public map_filter<double> // templated with output type
 {
@@ -584,6 +584,7 @@ class new_map_filter : public map_filter<double> // templated with output type
     }
 };
 \end{verbatim}
+}
 
 \subsubsection{Select filter}
 This is very similar to a map filter, except for each input combination from the 
@@ -593,6 +594,7 @@ a subset of the outputs.
 To write a new filter of this class, inherit from the \texttt{select\_filter} class, 
 and define the \texttt{compute} function. Below is an example template:
 
+{\footnotesize
 \begin{verbatim}
 class new_select_filter : public select_filter<double> // templated with output type
 {
@@ -617,6 +619,7 @@ class new_select_filter : public select_filter<double> // templated with output 
     }
 };
 \end{verbatim}
+}
 
 \subsubsection{Rank filter}
 A filter where a ranking is computed for each combination from the Cartesian
@@ -627,6 +630,7 @@ to select the lowest you can call \texttt{set\_select\_highest(false)} on the fi
 To write a new filter of this class, inherit from the \texttt{rank\_filter} class, 
 and define the \texttt{rank} function. Below is an example template:
 
+{\footnotesize
 \begin{verbatim}
 class new_rank_filter : public rank_filter
 {
@@ -649,12 +653,14 @@ class new_rank_filter : public rank_filter
     }
 };
 \end{verbatim}
+}
 
 \subsection{Generic Node Filters}
 There are also a set of generic filters specialized for computations involving nodes. 
-With these you only need to specify a predicate function involving nodes. 
-Also see \texttt{filters/base\_node\_filters.h}.
-There are three types of these filters. 
+With these you only need to specify a predicate function involving nodes. (Also see \\
+\texttt{filters/base\_node\_filters.h}).
+
+There are three types of these filters:
 
 \subsubsection{Node Test Filters}
 These filters involve a binary test between two nodes (e.g. intersection or larger). 

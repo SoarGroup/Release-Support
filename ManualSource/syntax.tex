@@ -626,10 +626,10 @@ The following table gives examples of legal and illegal variable names.
 \index{>=}
 \index{>}
 \index{<=>}
-\index{@}
-\index{\!@}
-\index{@+}
-\index{@-}
+\index{"@}
+\index{"!"@}
+\index{"@+}
+\index{"@-}
 
 A test for an identifier, attribute, or value in a condition (whether
 constant or variable) can be modified by a preceding predicate. There
@@ -670,10 +670,10 @@ held by working memory identifiers:
 
 \begin{tabularx}{\textwidth}{| l | X |} \hline
 	\bf{Predicate} &  \bf{Semantics of Predicate} \\ \hline
-	\soar{@}  & Same LTI. Matches when the two values are working memory identifiers linked to the same LTI. \\
-	\soar{!@} & Different LTI.  Matches when the values are not both identifiers linked to the same LTI. \\
-	\soar{@+} & Matches if the value is an identifier linked to some LTI. \\
-	\soar{@-} & Matches if the value is not an identifier linked to some LTI. \\
+	\soar{"@}  & Same LTI. Matches when the two values are working memory identifiers linked to the same LTI. \\
+	\soar{"!"@} & Different LTI.  Matches when the values are not both identifiers linked to the same LTI. \\
+	\soar{"@+} & Matches if the value is an identifier linked to some LTI. \\
+	\soar{"@-} & Matches if the value is not an identifier linked to some LTI. \\
 	\hline 
 \end{tabularx} 
 \vspace{10pt}
@@ -1893,7 +1893,7 @@ sp {
 
 \index{abs}\index{atan2}\index{sqrt}\index{sin}\index{cos}
 \item [\soarb{abs, atan2, sqrt, sin, cos} --- ]   
-        These symbols provide prefix notation unary 
+        These provide prefix notation unary 
         mathematical functions (they each take one argument). 
         These symbols work similarly to C functions:
         They will take either integer or real-number arguments. The
@@ -2006,8 +2006,8 @@ side.
 
 
 \index{compute-heading}
-\item [\soarb{compute-heading} --- ] This function takes four real-valued arguments
-of the form ($x_1, y_1, x_2, y_2$), and returns the direction (in degrees) from ($x_1, y_1$)
+\item [\soarb{compute-heading} --- ] This function takes four real-valued arguments of the form \\
+($x_1, y_1, x_2, y_2$), and returns the direction (in degrees) from ($x_1, y_1$)
 to ($x_2, y_2$), rounded to the nearest integer.
 
 For example:
@@ -2024,9 +2024,8 @@ After this rule fires, working memory would look like: \\
 
 
 \index{compute-range}
-\item [\soarb{compute-range} --- ] This function takes four real-valued arguments
-of the form ($x_1, y_1, x_2, y_2$), and returns the distance from ($x_1, y_1$)
-to ($x_2, y_2$), rounded to the nearest integer.
+\item [\soarb{compute-range} --- ] This function takes four real-valued arguments of the form \\
+($x_1, y_1, x_2, y_2$), and returns the distance from ($x_1, y_1$) to ($x_2, y_2$), rounded to the nearest integer.
 
 For example:
 
@@ -2099,7 +2098,7 @@ sp {example
 \end{verbatim}
 
 
-\index{@!RHS Function}
+\index{"@!RHS Function}
 \item [\soarb{@ (get)} --- ] This function returns the LTI number of the
 given ID. If the given ID is not linked to an LTI, it does nothing.
 For example:
@@ -2636,7 +2635,7 @@ This section describes the structure of state objects in working memory.
 % ----------------------------------------------------------------------------
 \subsection{Impasses in working memory}
 \label{SYNTAX-impasseaug}       %perf-goal-impa}
-\index{decision!procedure}
+\index{decision procedure}
 \index{impasse}
 \index{impasse!types}
 \index{tie impasse}
@@ -2681,7 +2680,7 @@ values that each augmentation can contain:
 	\index{impasse (attribute)}
 	\vspace{-8pt} 
 \item [\soar{\carat choices}]Either \soar{multiple} (for tie and conflict impasses), 
-	\soar{constraint-failure} (for constraint-failure impasses), or 
+	\soar{constraint-failure} \\ (for constraint-failure impasses), or 
 	\soar{none} (for constraint-failure or no-change impasses).
 	\index{choices (attribute)}
 	\vspace{-8pt} 

@@ -26,6 +26,9 @@ for file in Soar.wiki/ManualsAndFAQs/CLI/cmd_*.md; do
 
 	pandoc $file -f markdown_github -t latex -o tex/$stripped.tex
     python soarman_format.py tex/$stripped.tex
+	sed -i 's/\[c\]{@{}llll@{}}/{@{\\extracolsep{\\fill}}llll@{}}/g' tex/$stripped.tex
+	sed -i 's/\[c\]{@{}lll@{}}/{@{\\extracolsep{\\fill}}lll@{}}/g' tex/$stripped.tex
+	sed -i 's/\[c\]{@{}ll@{}}/{@{\\extracolsep{\\fill}}ll@{}}/g' tex/$stripped.tex
 	#sed -i 's/@{}llll@{}/@{}p{4cm}p{6cm}p{4cm}p{2cm}@{}/g' tex/$stripped.tex
 	#sed -i 's/@{}lll@{}/@{}p{3cm}p{5cm}p{8cm}@{}/g' tex/$stripped.tex
 	#sed -i 's/@{}ll@{}/@{}p{8cm}p{8cm}@{}/g' tex/$stripped.tex

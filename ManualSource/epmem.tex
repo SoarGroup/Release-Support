@@ -8,7 +8,8 @@ The episodic storage mechanism will automatically record episodes as a Soar agen
 The agent can later deliberately retrieve episodic knowledge to extract information and regularities that may not have been noticed during the original experience and combine them with current knowledge such as to improve performance on future tasks.
 
 This chapter is organized as follows: episodic memory structures in working memory (\ref{EPMEM-wm}); episodic storage (\ref{EPMEM-storage}); retrieving episodes (\ref{EPMEM-retrieval}); and a discussion of performance (\ref{EPMEM-perf}). 
-The detailed behavior of episodic memory is determined by numerous parameters that can be controlled and configured via the \soarb{epmem} command. 
+The detailed behavior of episodic memory is determined by numerous parameters that can be controlled and configured via the \soar{epmem} command. 
+
 Please refer to the documentation for that command in Section \ref{epmem} on page \pageref{epmem}.
 
 \section{Working Memory Structure}
@@ -33,19 +34,19 @@ This information is identical to what is available via the \emph{time} statistic
 \label{EPMEM-storage}
 
 Episodic memory records new episodes without deliberate action/consideration by the agent. 
-The timing and frequency of recording new episodes is controlled by the \soarb{phase} and \soarb{trigger} parameters.  
+The timing and frequency of recording new episodes is controlled by the \soar{phase} and \soar{trigger} parameters.  
 The \soarb{phase} parameter sets the phase in the decision cycle (default: end of each decision cycle) during which episodic memory stores episodes and processes commands.  
 The value of the \soarb{trigger} parameter indicates to the architecture the event that concludes an episode: adding a new augmentation to the output-link (default) or each decision cycle.
 
-For debugging purposes, the \soarb{force} parameter allows the user to manually request that an episode be recorded (or not) during the current decision cycle.  
+For debugging purposes, the \soar{force} parameter allows the user to manually request that an episode be recorded (or not) during the current decision cycle.  
 Behavior is as follows:
 
 \begin{itemize}
 \item 
-The value of the \soarb{force} parameter is initialized to \soarb{off} every decision cycle.
+The value of the \soar{force} parameter is initialized to \soar{off} every decision cycle.
 
 \item 
-During the \soarb{phase} of episodic storage, episodic memory tests the value of the \soarb{force} parameter; if it has a value other than of off, episodic memory follows the \emph{forced} policy irrespective of the value of the \soarb{trigger} parameter.
+During the \soar{phase} of episodic storage, episodic memory tests the value of the \soar{force} parameter; if it has a value other than of off, episodic memory follows the \emph{forced} policy irrespective of the value of the \soar{trigger} parameter.
 
 \end{itemize}
 
@@ -67,15 +68,15 @@ By default, episodic memory excludes the \emph{epmem} and \emph{smem} structures
 
 \subsection{Storage Location}
 Episodic memory uses SQLite to facilitate efficient and standardized storage and querying of episodes.  
-The episodic store can be maintained in memory or on disk (per the \soarb{database} and \soarb{path} parameters).  
+The episodic store can be maintained in memory or on disk (per the \soar{database} and \soar{path} parameters).  
 If the store is located on disk, users can use any standard SQLite programs/components to access/query its contents. 
 See the later discussion on performance (\ref{EPMEM-perf}) for additional parameters dealing with databases on disk.
 
-Note that changes to storage parameters, for example \soarb{database, path} and \soarb{append} will not have an effect until the database is used after an initialization. This happens either shortly after launch (on first use) or after a database initialization command is issued. To switch databases or database storage types while running, set your new parameters and then perform an --init command.
+Note that changes to storage parameters, for example \soar{database, path} and \soar{append} will not have an effect until the database is used after an initialization. This happens either shortly after launch (on first use) or after a database initialization command is issued. To switch databases or database storage types while running, set your new parameters and then perform an \soar{epmem --init} command.
 
-The \soarb{path} parameter specifies the file system path the database is stored in. When \soarb{path} is set to a valid file system path and \soarb{database} mode is set to \emph{file}, then the SQLite database is written to that path.
+The \soarb{path} parameter specifies the file system path the database is stored in. When \soar{path} is set to a valid file system path and \soar{database} mode is set to \emph{file}, then the SQLite database is written to that path.
 
-The \soarb{append} parameter will determine whether all existing facts stored in a database on disk will be erased when episodic memory loads. Note that this affects \soarb{init-soar} also.  In other words, if the \soarb{append} setting is off, all episodes stored will be lost when an init-soar is performed. For episodic memory, \soarb{append} mode is \soarb{off} by default.
+The \soarb{append} parameter will determine whether all existing facts stored in a database on disk will be erased when episodic memory loads. Note that this affects \soar{init-soar} also.  In other words, if the \soar{append} setting is off, all episodes stored will be lost when an init-soar is performed. For episodic memory, \soar{append} mode is \soar{off} by default.
 
 \soarb{Note}: As of version 9.3.3, Soar now uses a new schema for the episodic memory database. This means databases from 9.3.2 and below can no longer be loaded.  A conversion utility will be available in Soar 9.4 to convert from the old schema to the new one.
 
@@ -83,7 +84,7 @@ The \soarb{append} parameter will determine whether all existing facts stored in
 \label{EPMEM-retrieval}
 
 An agent retrieves episodes by creating an appropriate command (we detail the types of commands below) on the \emph{command} link of a state's \emph{epmem} structure. 
-At the end of the \soarb{phase} of each decision, after episodic storage, episodic memory processes each state's \emph{epmem} command structure.  
+At the end of the \soar{phase} of each decision, after episodic storage, episodic memory processes each state's \emph{epmem} command structure.  
 Results, meta-data, and errors are placed on the \emph{result} structure of that state's \emph{epmem} structure.
 
 Only one type of retrieval command (which may include optional modifiers) can be issued per state in a single decision cycle.  
@@ -149,7 +150,7 @@ To compute each candidate episode's match score, these quantities are combined w
 $$(balance)*(cardinality) + (1-balance)*(activation)$$
 
 Performing a graph match on each candidate episode, with respect to the structure of the cue, could be very computationally expensive, so episodic memory implements a two-stage matching process.
-An episode with perfect cardinality is considered a perfect \emph{surface} match and, per the \soarb{graph-match} parameter, is subjected to further \emph{structural} matching.  
+An episode with perfect cardinality is considered a perfect \emph{surface} match and, per the \soar{graph-match} parameter, is subjected to further \emph{structural} matching.  
 Whereas surface matching efficiently determines if all paths to leaf WMEs exist in a candidate episode, graph matching indicates whether or not the cue can be structurally unified with the candidate episode (paying special regard to the structural constraints imposed by shared identifiers).  
 Cue-based matching will return the most recent structural match, or the most recent candidate episode with the greatest match score.
 
@@ -208,7 +209,7 @@ The time of the first episode in an episodic store will have value 1 and each su
 Thus the desired time may be the mathematical result of operations performed on a known episode's time.
 
 The current episodic memory implementation does not implement any episodic store dynamics, such as forgetting.  
-Thus any integer time greater than 0 and less than the current value of the \soarb{time} statistic will be valid.  
+Thus any integer time greater than 0 and less than the current value of the \soar{time} statistic will be valid.  
 However, if forgetting is implemented in future versions, no such guarantee will be made.
 
 \subsection{Relative Non-Cue-Based Retrieval}
@@ -279,12 +280,12 @@ By comparing this value to the \emph{memory-id} value, the agent can gain a sens
 
 \item \soarb{graph-match}
 
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command and the \soarb{graph-match} parameter was \soarb{on}.  
+This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command and the \soar{graph-match} parameter was \soar{on}.  
 The value is an integer with value 1 if graph matching was executed successfully and 0 otherwise.
 
 \item \soarb{mapping <mapping-root>}
 
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command, the \soarb{graph-match} parameter was \soarb{on}, and structural match was successful on the retrieved episode.  
+This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command, the \soar{graph-match} parameter was \soar{on}, and structural match was successful on the retrieved episode.  
 This WME provides a mapping between identifiers in the cue and in the retrieved episode.  
 For each identifier in the cue, there is a \emph{node} WME as an augmentation to the \emph{mapping} identifier.  
 The node has a \emph{cue} augmentation, whose value is an identifier in the cue, and a \emph{retrieved} augmentation, whose value is an identifier in the retrieved episode.  
@@ -324,7 +325,7 @@ However, some documented situations have shown improved performance from decreas
 This is of greater concern when dealing with file-based databases, versus in-memory. 
 The size of each page, however, may be important whether databases are disk- or memory-based. 
 This setting can have far-reaching consequences, such as index B+-tree depth. 
-While this setting can be dependent upon a particular situation, a good heuristic is that short, simple runs should use small values of the page size (\soarb{1k}, \soarb{2k}, \soarb{4k}), whereas longer, more complicated runs will benefit from larger values (\soarb{8k}, \soarb{16k}, \soarb{32k}, \soarb{64k}). 
+While this setting can be dependent upon a particular situation, a good heuristic is that short, simple runs should use small values of the page size (\soar{1k}, \soar{2k}, \soar{4k}), whereas longer, more complicated runs will benefit from larger values (\soar{8k}, \soar{16k}, \soar{32k}, \soar{64k}). 
 One known situation of concern is that as indexed tables accumulate many rows (\tild millions), insertion time of new rows can suffer an infrequent, but linearly increasing burst of computation. 
 In episodic memory, this situation will typically arise with many episodes and/or many working memory changes. 
 Increasing the page size will reduce the intensity of the spikes at the cost of increasing disk I/O and average/total time for episode storage. 
@@ -338,17 +339,16 @@ While only a single use case, the cross-point of these data forms the basis for 
 \label{fig:epmem-cache}
 \end{figure}
 
-The next parameter is \soarb{optimization}.  
-The \soarb{safety} parameter setting will use SQLite default settings.  
+The next parameter is \soarb{optimization}, which can be set to either \soar{safety} or \soar{performance}. 
+The \soar{safety} parameter setting will use SQLite default settings.  
 If data integrity is of importance, this setting is ideal.  
-The performance setting will make use of lesser data consistency guarantees for significantly greater performance.  
+The \soar{performance} setting will make use of lesser data consistency guarantees for significantly greater performance.  
 First, writes are no longer synchronous with the OS (synchronous pragma), thus episodic memory won't wait for writes to complete before continuing execution.  
 Second, transaction journaling is turned off (journal\_mode pragma), thus groups of modifications to the episodic store are not atomic (and thus interruptions due to application/os/hardware failure could lead to inconsistent database state).  
 Finally, upon initialization, episodic memory maintains a continuous exclusive lock to the database (locking\_mode pragma), thus other applications/agents cannot make simultaneous read/write calls to the database (thereby reducing the need for potentially expensive system calls to secure/release file locks).
 
 Finally, maintaining accurate operation timers can be relatively expensive in Soar.  
 Thus, these should be enabled with caution and understanding of their limitations.  
-First, they will affect performance, depending on the level (set via the \soarb{timers} parameter).  
-A level of \soarb{three}, for instance, times every step in the cue-based retrieval candidate episode search.  
+First, they will affect performance, depending on the level (set via the \soar{timers} parameter).  
+A level of \soar{three}, for instance, times every step in the cue-based retrieval candidate episode search.  
 Furthermore, because these iterations are relatively cheap (typically a single step in the linked-list of a b+-tree), timer values are typically unreliable (depending upon the system, resolution is 1 microsecond or more).
-
