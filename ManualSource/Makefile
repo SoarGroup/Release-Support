@@ -17,6 +17,7 @@ trans_wiki ::
 manual.pdf : manual.ind $(SRC)
 	$(LATEX) manual
 	$(LATEX) manual # has to be compiled twice to get references right
+	cp manual.pdf ../pdf/SoarManual.pdf
 
 manual.ind : $(SRC)
 	$(LATEX) manual
