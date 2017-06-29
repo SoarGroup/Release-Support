@@ -962,154 +962,96 @@ and A are both indifferent to all competing values).
 \begin{description}
 \index{preference!acceptable("+)}
 \index{"+|see{preference}}
-\index{acceptable preference|see{preference!acceptable}}
-\item [Acceptable (+)] An \soar{acceptable} preference states that a value is a
-        candidate for selection. All values, except those with \soar{require}
-        preferences, must have an \soar{acceptable} preference in order to be
-        selected. If there is only one value with an \soar{acceptable} preference
-        (and none with a \soar{require} preference), that value will be selected as
-        long as it does not also have a \soar{reject} or a \soar{prohibit} preference.\vspace{-8pt}
+\index{acceptable preference|see{preference}}
+\item [Acceptable (+)] 
+	An \soar{acceptable} preference states that a value is a candidate for selection. All values, except those with \soar{require} preferences, must have an \soar{acceptable} preference in order to be selected. If there is only one value with an \soar{acceptable} preference (and none with a \soar{require} preference), that value will be selected as long as it does not also have a \soar{reject} or a \soar{prohibit} preference.
+\vspace{-8pt}
 
 \index{preference!reject("-)}
 \index{"-|see{preference}}
 \index{reject preference|see{preference}}
-\item [Reject ($-$)] A \soar{reject} preference states that the value is not a
-        candidate for selection.\vspace{-8pt}
+\item [Reject ($-$)] 
+	A \soar{reject} preference states that the value is not a candidate for selection.
+\vspace{-8pt}
 
-\index{preference!better(\textgreater)}
+\index{preference!better(\textgreater \textit{val})}
 \index{">|see{preference}}
-\index{better preference|see{preference!better}}
-\index{preference!worse(\textless)}
+\index{better preference|see{preference}}
+\index{preference!worse(\textless \textit{val})}
 \index{"<|see{preference}}
-\index{worse preference|see{preference!worse}}
-\item [Better ($>$ \emph{value}), Worse ($<$ \emph{value})] A \soar{better} or \soar{worse} preference
-        states, for the two values involved, that one value should not be
-        selected if the other value is a candidate. \soar{Better} and
-        \soar{worse} allow for the creation of a partial ordering between
-        candidate values. \soar{Better} and \soar{worse} are simple inverses
-        of each other, so that \soar{A} better than \soar{B} is equivalent to
-        \soar{B} worse than \soar{A}.\vspace{-8pt}
+\index{worse preference|see{preference}}
+\item [Better ($>$ \emph{value}), Worse ($<$ \emph{value})] 
+	A \soar{better} or \soar{worse} preference states, for the two values involved, that one value should not be selected if the other value is a candidate. \soar{Better} an         \soar{worse} allow for the creation of a partial ordering between candidate values. \soar{Better} and \soar{worse} are simple inverses of each other, so that \soar{A} better than \soar{B} is equivalent to \soar{B} worse than \soar{A}.
+\vspace{-8pt}
 
-\index{preference!best}
-\index{">|see{best preference}}
-\index{best preference|see{best preference}}
-\item [Best ($>$)] A \soar{best} preference states that the value may be
-        better than any competing value (unless there are other competing
-        values that are also ``best''). If a value is \soar{best} (and not
-        \soar{reject}ed, \soar{prohibit}ed, or \soar{worse} than another), it
-        will be selected over any other value that is not also \soar{best} (or
-        \soar{require}d). If two such values are \soar{best}, then any
-        remaining preferences for those candidates (\soar{worst},
-        \soar{indifferent}) will be examined to determine the selection. Note that if a
-        value (that is not \soar{reject}ed or \soar{prohibit}ed) is
-        \soar{better} than a \soar{best} value, the \soar{better} value will
-        be selected.  (This result is counter-intuitive, but allows explicit
-        knowledge about the relative worth of two values to dominate knowledge
-        of only a single value. A \soar{require} preference should be used
-        when a value \emph{must} be selected for the goal to be 
-achieved.)\vspace{-8pt}
+\index{preference!best(\textgreater)}
+\index{">|see{preference}}
+\index{best preference|see{preference}}
+\item [Best ($>$)] 
+	A \soar{best} preference states that the value may be better than any competing value (unless there are other competing values that are also ``best''). If a value is \soar{best} (and not \soar{reject}ed, \soar{prohibit}ed, or \soar{worse} than another), it will be selected over any other value that is not also \soar{best} (or \soar{require}d). If two such values are \soar{best}, then any remaining preferences for those candidates (\soar{worst}, \soar{indifferent}) will be examined to determine the selection. Note that if a value (that is not \soar{reject}ed or \soar{prohibit}ed) is \soar{better} than a \soar{best} value, the \soar{better} value will be selected.  (This result is counter-intuitive, but allows explicit knowledge about the relative worth of two values to dominate knowledge of only a single value. A \soar{require} preference should be used when a value \emph{must} be selected for the goal to be achieved.)
+\vspace{-8pt}
 
-\index{preference!worst}
+\index{preference!worst(\textless)}
 \index{"<|see{preference!worst}}
 \index{worst preference|see{preference!worst}}
-\item [Worst ($<$)] A \soar{worst} preference states that the value should be selected
-        only if there are no alternatives.  It allows for a simple type of
-        default specification. The semantics of the \soar{worst} preference
-        are similar to those for the \soar{best} preference.\vspace{-8pt}
+\item [Worst ($<$)] 
+	A \soar{worst} preference states that the value should be selected only if there are no alternatives.  It allows for a simple type of default specification. The semantics of the \soar{worst} preference are similar to those for the \soar{best} preference.
+\vspace{-8pt}
 
-\index{preference!indifferent}
-\index{"=|see{preference!indifferent}}
-\index{indifferent preference|see{preference!indifferent}}
+\index{preference!indifferent("=)}
+\index{"=|see{preference}}
+\index{indifferent preference|see{preference}}
 \index{indifferent-selection}
 \index{preference!unary indifferent}
-\item [Unary Indifferent (=)] A \soar{unary indifferent} preference states that
-		there is positive knowledge that a single value is as good or as bad a choice as
-		other expected alternatives.
-\index{preference!binary indifferent}
-\item [Binary Indifferent (= \emph{value})] A \soar{binary indifferent} preference states 
-		that two values are mutually indifferent and it does not matter which of these
-		values are selected.
-        
-	When \soar{indifferent} preferences are used to signal that it does
-	not matter which operator is selected, by default, Soar
-	chooses randomly from among the alternatives. (The
-	\soar{indifferent-selection} function can be used to change this
-	behavior as described on
-	page \pageref{decide-indifferent-selection} in Chapter
-	\ref{INTERFACE}.)\vspace{-8pt}
-
-\index{preference!numeric-indifferent}
-\index{numeric-indifferent preference|see{preference!numeric-indifferent}}
-\item [Numeric-Indifferent (= \emph{number})]
-	A \soar{numeric-indifferent} preference is used to bias the random selection
-	from mutually indifferent values. This preference includes a unary
-	indifferent preference, so an operator with a \soar{numeric-indifferent}
-	preference will not force a tie impasse. When a set of operators are
-	determined to be indifferent based on all other asserted preference types
-	and at least one operator has a numeric-indifferent preference, the decision
-	mechanism will choose an operator based on their numeric-indifferent values
-	and the exploration policy. The available exploration policies and how they
-	calculate selection probability are detailed in the documentation for the
-	\soar{indifferent-selection} command on page
-	\pageref{decide-indifferent-selection}. When a single operator is given multiple
-	numeric-indifferent preferences, they are either averaged or summed into a
-	single value based on the setting of the \soar{numeric-indifferent-mode}
-	command (see page \pageref{decide-numeric-indifferent-mode}).
-
-	Numeric-indifferent preferences that are created by RL rules can be adjusted
-	by the reinforcement learning mechanism. In this way, it's possible for an
-	agent to begin a task with only arbitrarily initialized numeric indifferent
-	preferences and with experience learn to make the optimal decisions. See
-	chapter \ref{RL} for more information.
+\item [Unary Indifferent (=)] 
+	A \soar{unary indifferent} preference states that there is positive knowledge that a single value is as good or as bad a choice as other expected alternatives. 
 	
-\index{preference!require}
-\index{"!|see{preference!require}}
-\index{require preference|see{preference!require}}
-\item [Require (!)] A \soar{require} preference states that the value must be
-        selected if the goal is to be achieved.\vspace{-8pt}
+	When two or more competing values both have indifferent preferences, by default, Soar chooses randomly from among the alternatives. (The \soar{decide indifferent-selection} function can be used to change this behavior as described on page \pageref{decide-indifferent-selection} in Chapter \ref{INTERFACE}.)
+\vspace{-8pt}
+
+\index{preference!binary indifferent("= \textless o\textgreater)}
+\item [Binary Indifferent (= \emph{value})] 
+	A \soar{binary indifferent} preference states that two values are mutually indifferent and it does not matter which of these values are selected. It behaves like a \soar{unary indifferent} preference, except that the operator value given this preference is only made indifferent to the operator value given as the argument.
+\vspace{-8pt}
+
+\index{preference!numeric-indifferent("= \textit{num})}
+\index{numeric-indifferent preference|see{preference}}
+\item [Numeric-Indifferent (= \emph{number})]
+	A \soar{numeric-indifferent} preference is used to bias the random selection from mutually indifferent values. This preference includes a \soar{unary indifferent} preference, and behaves in that manner when competing with another value having a unary indifferent preference. 
+	%When a set of operators are determined to be indifferent based on all other asserted preference types and at least one operator has a numeric-indifferent preference, 
+	But when a set of competing operator values have \soar{numeric-indifferent} preferences, the decision mechanism will choose an operator based on their numeric-indifferent values and the exploration policy. The available exploration policies and how they calculate selection probability are detailed in the documentation for the \soar{indifferent-selection} command on page \pageref{decide-indifferent-selection}. When a single operator is given multiple numeric-indifferent preferences, they are either averaged or summed into a single value based on the setting of the \soar{numeric-indifferent-mode} command (see page \pageref{decide-numeric-indifferent-mode}).
+
+	Numeric-indifferent preferences that are created by RL rules can be adjusted by the reinforcement learning mechanism. In this way, it's possible for an agent to begin a task with only arbitrarily initialized numeric indifferent preferences and with experience learn to make the optimal decisions. See chapter \ref{RL} for more information.
+	
+\index{preference!require("!)}
+\index{"!|see{preference}}
+\index{require preference|see{preference}}
+\item [Require (!)] 
+	A \soar{require} preference states that the value \emph{must} be selected if the goal is to be achieved. A \soar{require}d value is preferred over all others. Only a single operator value should be given a \soar{require} preference at a time.
+\vspace{-8pt}
 
 \index{preference!prohibit}
-\index{"~|see{preference!prohibit}}
-\index{prohibit preference|see{preference!prohibit}}
-\item [Prohibit ($\tild$)] A \soar{prohibit} preference states that the value 
-cannot
-        be selected if the goal is to be achieved.  If a value has a
-        \soar{prohibit} preference, it will not be selected for a value of an
-        augmentation, independent of the other preferences.\vspace{-8pt}
+\index{"~|see{preference}}
+\index{prohibit preference|see{preference}}
+\item [Prohibit ($\tild$)] 
+	A \soar{prohibit} preference states that the value cannot be selected if the goal is to be achieved.  If a value has a \soar{prohibit} preference, it will not be selected for a value of an augmentation, independent of the other preferences.
+\vspace{-8pt}
 \end{description}
 
 
-\index{preference!acceptable}
-\index{preference!require}
-If there is an
-\soar{acceptable}\/ preference for a value of an operator, and there are no
-other competing values, that operator will be selected.  If there are
-multiple \soar{acceptable}\/ preferences for the same state but with
-different values, the preferences must be evaluated to determine which
-candidate is selected.
+\index{preference!acceptable("+)}
+\index{preference!require("!)}
+If there is an \soar{acceptable} preference for a value of an operator, and there are no other competing values, that operator will be selected. If there are multiple \soar{acceptable} preferences for the same state but with different values, the preferences must be evaluated to determine which candidate is selected.
 
-If the preferences can be evaluated without conflict, the appropriate
-operator augmentation of the state will be added to working
-memory. This can happen when they all suggest the same operator or when
-one operator is preferable to the others that have been suggested. When
-the preferences conflict, Soar reaches an impasse, as described in
-Section \ref{ARCH-impasses}.
+If the preferences can be evaluated without conflict, the appropriate operator augmentation of the state will be added to working memory. This can happen when they all suggest the same operator or when one operator is preferable to the others that have been suggested. When the preferences conflict, Soar reaches an impasse, as described in Section \ref{ARCH-impasses}.
 
-Preferences can be confusing; for example, there can be two suggested
-values that are both ``best'' (which again will lead to an impasse
-unless additional preferences resolve this conflict); or there may be
-one preference to say that value \soar{A} is better than value \soar{B}
-and a second preference to say that value \soar{B} is better than value
-\soar{A}.
+Preferences can be confusing; for example, there can be two suggested values that are both ``best'' (which again will lead to an impasse unless additional preferences resolve this conflict); or there may be one preference to say that value \soar{A} is better than value \soar{B} and a second preference to say that value \soar{B} is better than value \soar{A}.
 
-\subsection{How operator preferences are evaluated to decide an operator}
+\subsection{How preferences are evaluated to decide an operator}
 \label{PREFERENCES}
-\index{preferences}
+\index{preference}
 % This is a technical discussion of the filtering done to evaluate preferences;
 % it might belong in a different version of the manual, but not 492
-
-\comment{what's not clear in the following discussion is what happens in the
-	usual case, that is, when there's a single acceptable preference.}
 
 During the decision phase, operator preferences are evaluated in a sequence 
 of eight steps, in an effort to select a single operator. 
@@ -1119,13 +1061,13 @@ where all the operator preferences are collected and passed into the procedure. 
 each step, the procedure either exits through a arrow to the right, or passes to 
 the next step through an arrow to the left.)
 
-Input to the procedure are the set of current operator preferences, and the output
+Input to the procedure is the set of current operator preferences, and the output
 consists of:
 \begin{enumerate}
-	\item a subset of the candidate operators, either the empty set, a set consisting of a single, 
+	\item a subset of the candidate operators, which is either the empty set, a set consisting of a single, 
 	winning candidate, or a larger set of candidates that may be conflicting,
 	tied, or indifferent.
-	\item an impasse-type, possibly NONE\_IMPASSE\_TYPE.
+	\item an impasse-type. %, possibly NONE\_IMPASSE\_TYPE
 \end{enumerate}
 The procedure has several potential exit points. Some occur when the procedure
 has detected a particular type of impasse. The others occur when the number of
@@ -1165,10 +1107,11 @@ one (necessarily the winner) or zero (a no-change impasse).
 
 Each step in Figure \ref{fig:prefsem} is described below:
 
-\index{preference!require}
-\index{require preference}
+\index{preference!require("!)}
+\index{require preference|see{preference}}
 \index{"!}
-\index{constraint-failure impasse}
+\index{impasse!constraint-failure}
+\index{impasse!no-change}
 \begin{description}
 	\item[RequireTest (!)]
 	This test checks for required candidates in preference memory and
@@ -1188,7 +1131,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 		constraint-failure impasse with the required/prohibited value is
 		recognized and preference semantics terminates.
 		\item Otherwise ---
-		The candidates are passed to AcceptableCollect.
+		There is no required candidate; candidates are passed to AcceptableCollect.
 	\end{itemize}
 	
 	\item[AcceptableCollect (+) ] This operation builds a list of operators
@@ -1203,24 +1146,20 @@ Each step in Figure \ref{fig:prefsem} is described below:
 			The candidates are passed to the ProhibitFilter.
 		\end{itemize}
 	}
-	\index{preference!acceptable}
-	\index{acceptable preference}
+	\index{preference!acceptable("+)}
 	
 	
 	\item[ProhibitFilter ($\sim$) ] This filter removes the candidates that
 	have prohibit preferences in memory. The rest of the candidates are passed to
 	the RejectFilter.
 	\index{preference!prohibit}
-	\index{prohibit preference}
-	\index{~}
 	
 	\item[RejectFilter ($-$) ] This filter removes the candidates that have
 	reject preferences in memory. 
 	\index{preference!reject}
-	\index{reject preference}
-	\index{-}
+	\index{reject preference(-)}
 	
-	\item[Exit Point 1]
+	\item[Exit Point 1]:
 	\begin{itemize}
 		\item At this point, if the set of remaining candidates is empty, a no-change impasse
 		is created with no operators being selected.
@@ -1232,14 +1171,12 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	
 	\item[BetterWorseFilter ($>$), ($<$) ] This filter removes any candidates that are worse
 	than another candidate.
-	\index{preference!worse}
-	\index{worse preference}
-	\index{preference!better}
-	\index{better preference}
-	\index{<}
-	\index{>}
+	\index{preference!worse(\textless \textit{val})}
+	\index{worse preference|see{preference}}
+	\index{preference!better(\textgreater \textit{val})}
+	\index{better preference|see{preference}}
 	
-	\item[Exit Point 2]
+	\item[Exit Point 2]:
 	\begin{itemize}
 		\item If the set of remaining candidates is empty, a conflict impasse is created
 		returning the set of all candidates passed into this filter, i.e. all of the
@@ -1256,10 +1193,9 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	a best preference. If there are no best preferences for any of the current
 	candidates, the filter has no effect. The remaining candidates are passed
 	to the WorstFilter.
-	\index{preference!best}
-	\index{best preference}
+	\index{preference!best(\textgreater)}
 	
-	\item[Exit Point 3]
+	\item[Exit Point 3]:
 	\begin{itemize}
 		\item At this point, if the set of remaining candidates is empty,
 		a no-change impasse is created with no operators being selected.
@@ -1273,10 +1209,9 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	\item[WorstFilter ($<$) ] This filter removes any candidates that have
 	a worst preference. If all remaining candidates have worst preferences or there
 	are no worst preferences, this filter has no effect.
-	\index{preference!worst}
-	\index{worst preference}
+	\index{preference!worst(\textless)}
 	
-	\item[Exit Point 4]
+	\item[Exit Point 4]:
 	\begin{itemize}
 		\item At this point, if the set of remaining candidates is empty,
 		a no-change impasse is created with no operators being selected. 
@@ -1285,9 +1220,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 		\item Otherwise, the remaining candidates are passed to the
 		IndifferentFilter.
 	\end{itemize}
-	\index{-}
 	
-	\index{=}
 	\item[IndifferentFilter (=) ] This operation traverses the remaining candidates and marks 
 	each candidate for which one of the following is true:
 	\begin{itemize}
@@ -1299,9 +1232,8 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	If one of the candidates fails this test, then the procedure signals a tie impasse
 	and returns the complete set of candidates that were passed into the 
 	IndifferentFilter. Otherwise, the candidates are mutually indifferent, in which case 
-	an operator is chosen according to the method set by the 
-	\textbf{indifferent-selection} command, described on 
-	page \pageref{decide-indifferent-selection}.
+	an operator is chosen according to the method set by the \soar{decide indifferent-selection} 
+	command, described on page \pageref{decide-indifferent-selection}.
 	\index{preference!indifferent}
 	\index{indifferent preference}
 \end{description}
@@ -1313,47 +1245,36 @@ Each step in Figure \ref{fig:prefsem} is described below:
 
 \index{decision cycle}
 \index{quiescence}
-The execution of a Soar program proceeds through a number of
-\emph{cycles}. Each cycle has five phases:
+\index{elaboration cycle}
+
+The execution of a Soar program proceeds through a number of \soarb{decision cycles}. Each cycle has five phases:
+
 \begin{enumerate} 
-\item Input: New sensory data comes into working memory.
-\item Proposal: Productions fire (and retract) to interpret new data (state 
-elaboration), propose operators for the current situation (operator
-proposal), and compare proposed operators (operator comparison).  All of
-the actions of these productions are i-supported.  All matched
-productions fire in parallel (and all retractions occur in parallel),
-and matching and firing continues until there are no more additional
-complete matches or retractions of productions (\emph{quiescence}).
-\item Decision: A new operator is selected, or an impasse is detected
-and a new state is created.
-\item Application: Productions fire to apply the operator (operator
-application).  The actions of these productions will be o-supported.
-Because of changes from operator application productions, other
-productions with i-supported actions may also match or retract. Just as
-during proposal, productions fire and retract in parallel until quiescence.
-\item Output: Output commands are sent to the external environment.
+\item \textbf{Input}: 
+	New sensory data comes into working memory.
+\item \textbf{Proposal}: 
+	Productions fire (and retract) to interpret new data (state elaboration), propose operators for the current situation (operator proposal), and compare proposed operators (operator comparison).  All of the actions of these productions are i-supported.  All matched productions fire in parallel (and all retractions occur in parallel), and matching and firing continues until there are no more additional complete matches or retractions of productions (\emph{quiescence}). 
+\item \textbf{Decision}:
+	A new operator is selected, or an impasse is detected and a new state is created.
+\item \textbf{Application}: 
+	Productions fire to apply the operator (operator application).  The actions of these productions will be o-supported. Because of changes from operator application productions, other productions with i-supported actions may also match or retract. Just as during proposal, productions fire and retract in parallel until quiescence.
+\item \textbf{Output}: 
+	Output commands are sent to the external environment.
 \end{enumerate}
 
-The cycles continue until the halt action is issued from
-the Soar program (as the action of a production) or until Soar is interrupted 
-by the user.
+The cycles continue until the halt action is issued from the Soar program (as the action of a production) or until Soar is interrupted by the user.
 
-During the processing of these phases, it is possible that the
-preferences that resulted in the selection of the current operator could
-change.  Whenever operator preferences change, the preferences are
-re-evaluated and if a different operator selection would be made, then
-the current operator augmentation of the state is immediately removed.
-However, a new operator is not selected until the next decision phase, when
-all knowledge has had a chance to be retrieved.
+An important aspect of productions in Soar to keep in mind is that all productions will always fire whenever their conditions are met, and retract whenever their conditions are no longer met. The exact details of this process are shown in Figure \ref{fig:decisioncycle}. The \emph{Proposal} and \emph{Application} phases described above are both composed of as many \soarb{elaboration cycles} as are necessary to reach quiescence. In each elaboration cycle, all matching productions fire and the working memory changes or operator preferences described through their actions are made. After each elaboration cycle, if the working memory changes just made change the set of matching productions, another cycle ensues. This repeats until the set of matching rules remains unchanged, a situation called \soarb{quiescence}.
+
 
 \begin{figure}
-\insertfigure{decisioncycle}{6.75in}
+\insertfigure{decisioncycle}{\textwidth}
 \insertcaption{A detailed illustration of Soar's decision cycle: out of date}
 \label{fig:decisioncycle}
 \end{figure}
 
 \begin{figure}
-\index{decision cycle!pseudo code}
+\index{decision cycle}
 \begin{verbatim}
 Soar
   while (HALT not true) Cycle;
@@ -1391,6 +1312,10 @@ ApplicationPhase
 \label{fig:pseudocode}
 \end{figure}
 
+After quiescence is reached in the \emph{Proposal} phase, the \emph{Decision} phase ensues, which is the architectural selection of a single operator, if possible. Once an operator is selected, the \emph{Apply} phase ensues, which is practically the same as the \emph{Proposal} phase, except that any productions that apply the chosen operator (they test for the selection of that operator in their conditions) will now match and fire.
+
+During the processing of these phases, it is possible that the preferences that resulted in the selection of the current operator could change.  Whenever operator preferences change, the preferences are re-evaluated and if a different operator selection would be made, then the current operator augmentation of the state is immediately removed. However, a new operator is not selected until the next decision phase, when all knowledge has had a chance to be retrieved. In other words, if, during the \emph{Apply} phase, the production(s) that proposed the selected operator retract, that \emph{Apply} phase will immediately end.
+
 % ----------------------------------------------------------------------------
 \section{Impasses and Substates}
 \label{ARCH-impasses}
@@ -1399,18 +1324,9 @@ ApplicationPhase
 \index{goal!subgoal}
 \index{result}
 
-When the decision procedure is applied to evaluate preferences and determine
-the operator augmentation of the state, it is possible that the preferences are 
-either
-incomplete or inconsistent.
-The preferences can be incomplete in that no \soar{acceptable} operators are 
-suggested, or that there are insufficient preferences to distinguish among
-\soar{acceptable} operators. The preferences can be inconsistent if, for instance, 
-operator
-\soar{A} is preferred to operator \soar{B}, and operator \soar{B} is preferred 
-to operator \soar{A}. Since preferences are generated independently,
-from different production instantiations, there is no guarantee that
-they will be consistent.
+When the decision procedure is applied to evaluate preferences and determine the operator augmentation of the state, it is possible that the preferences are either incomplete or inconsistent. 
+The preferences can be incomplete in that no \soar{acceptable} operators are suggested, or that there are insufficient preferences to distinguish among \soar{acceptable} operators. 
+The preferences can be inconsistent if, for instance, operator \soar{A} is preferred to operator \soar{B}, and operator \soar{B} is preferred to operator \soar{A}. Since preferences are generated independently, from different production instantiations, there is no guarantee that they will be consistent.
 
 % ----------------------------------------------------------------------------
 \subsection{Impasse Types}
@@ -1420,80 +1336,47 @@ they will be consistent.
 \index{impasse!conflict}
 \index{impasse!constraint-failure}
 \index{impasse!no-change}
-\index{tie impasse|see{impasse!tie}}
-\index{conflict impasse|see{impasse!conflict}}
-\index{constraint-failure impasse|see{impasse!constraint-failure}}
-\index{no-change impasse|see{impasse!no-change}}
+\index{tie impasse|see{impasse}}
+\index{conflict impasse|see{impasse}}
+\index{constraint-failure impasse|see{impasse}}
+\index{no-change impasse|see{impasse}}
 
 There are four types of impasses that can arise from the preference scheme.
 \vspace{-12pt}
 
 \begin{description}
 \item[Tie impasse ---] 
-	A \emph{tie} impasse arises if the preferences do not
-        distinguish between two or more operators with \soar{acceptable}
-        preferences. If two operators both have \soar{best} or \soar{worst}
-        preferences, they will tie unless additional preferences distinguish
-        between them.\vspace{-8pt}
-	\index{impasse!tie}
-	\index{tie impasse}
+	A \emph{tie} impasse arises if the preferences do not distinguish between two or more operators that have \soar{acceptable} preferences. If two operators both have \soar{best} or \soar{worst} preferences, they will tie unless additional preferences distinguish between them.
+	\vspace{-8pt}
 \item[Conflict impasse ---]
-	A \emph{conflict} impasse arises if at least two values have conflicting
-        better or worse preferences (such as \soar{A} is better than \soar{B}
-        and \soar{B} is better than \soar{A}) for an operator, and neither
-        one is rejected, prohibited, or \soar{require}d.\vspace{-8pt}
-	\index{impasse!conflict}
-	\index{conflict impasse}
+	A \emph{conflict} impasse arises if at least two values have conflicting better or worse preferences (such as \soar{A} is better than \soar{B} and \soar{B} is better than \soar{A}) for an operator, and neither one is rejected, prohibited, or \soar{require}d.
+	\vspace{-8pt}
 \item[Constraint-failure impasse ---]
-	A \emph{constraint-failure} impasse arises if there is more than one
-        \soar{require}d value for an operator, or if a value has both a
-        \soar{require} and a \soar{prohibit} preference. These preferences
-        represent constraints on the legal selections that can be made for a
-        decision and if they conflict, no progress can be made from the
-        current situation and the impasse cannot be resolved by additional
-        preferences.\vspace{-8pt}
-	\index{constraint-failure impasse}
-	\index{impasse!constraint-failure}
+	A \emph{constraint-failure} impasse arises if there is more than one \soar{require}d value for an operator, or if a value has both a \soar{require} and a \soar{prohibit} preference. These preferences represent constraints on the legal selections that can be made for a decision and if they conflict, no progress can be made from the current situation and the impasse cannot be resolved by additional preferences.
+	\vspace{-8pt}
 \item[No-change impasse ---]
-	A \emph{no-change} impasse arises if a new operator is not selected
-        during the decision procedure. There are two types of no-change
-        impasses: state no-change and operator no-change:\vspace{-8pt} 
-        \begin{description}
-        \item[State no-change impasse ---] 
-		A state no-change impasse occurs when there are no
-		\soar{acceptable} (or \soar{require}) preferences to suggest
-		operators for the current state (or all the \soar{acceptable}
-		values have also been \soar{reject}ed). The decision procedure
-		cannot select a new operator.\vspace{-8pt}
+	A \emph{no-change} impasse arises if a new operator is not selected during the decision procedure. There are two types of no-change impasses: state no-change and operator no-change:
+	\vspace{-8pt} 
+	\begin{description}
+		\item[State no-change impasse ---] 
+			A state no-change impasse occurs when there are no \soar{acceptable} (or \soar{require}) preferences to suggest operators for the current state (or all the \soar{acceptable} values have also been \soar{reject}ed). The decision procedure cannot select a new operator.\vspace{-8pt}
         \item[Operator no-change impasse ---] 
-		An operator no-change impasse occurs when either a new operator 
-                is selected for the current state but no additional productions
-                match during the application phase, or a new
-                operator is not selected during the next decision phase.
-        \end{description}
-	\index{state no-change impasse}
-	\index{operator no-change impasse}
-	\index{no-change impasse}
+	        An operator no-change impasse occurs when either a new operator is selected for the current state but no additional productions match during the application phase, or a new operator is not selected during the next decision phase.
+	\end{description}
+	\index{state!no-change impasse|see{impasse}}
+	\index{operator!no-change impasse|see{impasse}}
 	\index{impasse!state no-change}
 	\index{impasse!operator no-change}
-	\index{impasse!no-change}
 \end{description}
 
-There can be only one type of impasse at a given level of subgoaling at
-a time. Given the semantics of the preferences, it is possible to have a
-tie or conflict impasse and a constraint-failure impasse at the same
-time.  In these cases, Soar detects only the constraint-failure impasse.
+There can be only one type of impasse at a given level of subgoaling at a time. Given the semantics of the preferences, it is possible to have a tie or conflict impasse and a constraint-failure impasse at the same time.  In these cases, Soar detects only the constraint-failure impasse.
 
-The impasse is detected \textit{during} the selection of the operator,
-but happens \textit{because} one of the four problem-solving
-functions (described in section \ref{ARCH-functions}) was incomplete.
+The impasse is detected \textit{during} the selection of the operator, but happens \textit{because} one of the four problem-solving functions (described in section \ref{ARCH-functions}) was incomplete.
 
 % ----------------------------------------------------------------------------
 \subsection{Creating New States}
-%\label{elim-impa}
-\index{goal!subgoal}
-\index{subgoal|see{goal}}
-Soar handles these inconsistencies by creating a new state in which the
+
+Soar handles these inconsistencies by creating a new state, called a \soarb{substate} in which the
 goal of the problem solving is to resolve the impasse.  Thus, in the
 substate, operators will be selected and applied in an attempt either to
 discover which of the tied operators should be selected, or to apply the
@@ -1501,16 +1384,21 @@ selected operator piece by piece.  The substate is often called a
 \emph{subgoal} because it exists to resolve the impasse, but is
 sometimes called a substate because the representation of the subgoal in
 Soar is as a state.
+\index{goal!subgoal|see{subgoal}}
+\index{substate|see{subgoal}}
+\index{subgoal|see{goal}}
+\index{impasse}
 
 The initial state in the subgoal contains a complete description of the
 cause of the impasse, such as the operators that could not be decided
 among (or that there were no operators proposed) and the state that the
 impasse arose in. From the perspective of the new state, the latter is
-called the \emph{superstate}. Thus, the superstate is part of the
+called the \soarb{superstate}. Thus, the superstate is part of the
 substructure of each state, represented by the Soar architecture using
 the \soar{superstate} attribute. (The initial state, created in the 0th
 decision cycle, contains a \soar{superstate} attribute with the value of
 \soar{nil} --- the top-level state has no superstate.)
+\index{superstate}
 
 The knowledge to resolve the impasse may be retrieved by any type of
 problem solving, from searching to discover the implications of different
@@ -1619,8 +1507,11 @@ superstate.
 
 \subsubsection*{Justifications: Determination of support for results}
 
-\index{i-support!of result}
-\index{o-support!of result}
+\nocomment{Define justification as substate result up front.}
+
+\index{result!support}
+\index{i-support}
+\index{o-support}
 Some results receive i-support, while others receive o-support.  The
 type of support received by a result is determined by the function it
 plays in the superstate, and not the function it played in the state in
@@ -1637,16 +1528,13 @@ memory element or preference plays
 (that is, whether the result should be considered an operator application or
 not). To do this, Soar creates a temporary production, called a
 \textit{justification}. The justification summarizes the processing in the
-substate that led to the result:\vspace{-10pt}
+substate that led to the result:
+
+\vspace{-10pt}
 \begin{description}
-\item[The conditions] of a justification are those working memory
-elements that exist in the superstate (and above) that were necessary
-for producing the result.  This is determined by collecting all of the
-working memory elements tested by the productions that fired in the
-subgoal that led to the creation of the result, and then removing those
-conditions that test working memory elements created in the subgoal.
-\vspace{-6pt}
-\item[The action] of the justification is the result of the subgoal.
+	\item[The conditions] of a justification are those working memory elements that exist in the superstate (and above) that were necessary for producing the result.  This is determined by collecting all of the working memory elements tested by the productions that fired in the subgoal that led to the creation of the result, and then removing those conditions that test working memory elements created in the subgoal.
+	\vspace{-6pt}
+	\item[The action] of the justification is the result of the subgoal.
 \end{description} 
 
 Soar determines i-support or o-support for the justification just as it
@@ -1658,7 +1546,6 @@ i-support from the justification, it will be retracted if there is no
 other support.
 
 \index{justification!conditions}
-\index{learning!overgeneral}
 \index{chunk!overgeneral}
 \index{justification!overgeneral}
 Justifications include any negated conditions that were in the original
