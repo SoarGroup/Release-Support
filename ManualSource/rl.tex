@@ -309,14 +309,15 @@ Although all the indifferent selection settings are valid regardless of how the 
 In an effort to maintain backwards compatibility, the default exploration policy is \soarb{softmax}.
 As a result, one should change to \soarb{epsilon-greedy} or \soarb{boltzmann} when the reinforcement learning mechanism is enabled.
 
-\subsection{GQ($\lambda$)}
+\subsection{\texorpdfstring{GQ($\lambda$)}{GQ(lambda)}}
+% If you really want to have the greek letter character in the pdf chapter index list, see https://tex.stackexchange.com/questions/41614/greek-pdf-bookmarks
 
 \emph{Sarsa($\lambda$)} and \emph{Watkin's Q($\lambda$)} help agents to solve the temporal credit assignment problem more quickly.
 However, if you wish to implement something akin to CMACs to generalize from experience, convergence is not guaranteed by these algorithms.
-\emph(GQ($\lambda$)} is a gradient descent algorithm designed to ensure convergence when learning off-policy.
+\emph{GQ($\lambda$)} is a gradient descent algorithm designed to ensure convergence when learning off-policy.
 Soar provides both \soarb{on-policy-gq-lambda} and \soarb{off-policy-gq-lambda} to increase the likelihood of convergence when learning under these conditions.
 If you should choose to use one of these algorithms, we recommend setting \soarb{step-size-parameter} to something small, such as $0.01$
-in order to ensure that the secondary set of weights used by \emph(GQ($\lambda$)} change slowly enough for efficient convergence.
+in order to ensure that the secondary set of weights used by \emph{GQ($\lambda$)} change slowly enough for efficient convergence.
 
 \section{Automatic Generation of RL Rules}
 
