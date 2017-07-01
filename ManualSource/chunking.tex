@@ -3,7 +3,6 @@
 \chapter{Chunking}
 \label{CHUNKING}
 \index{chunking}
-\index{learning}
 \index{result}
 \index{subgoal}
 
@@ -60,7 +59,7 @@ Several factors govern when chunks are built. Soar chunks the results of every
 subgoal, \emph{unless} one of the following conditions is true:
 \index{chunking!when active}
 
-\index{learn}
+\index{chunk}
 \begin{enumerate}
 \item Chunking is \soar{off}. (See Section \ref{chunk} on page \pageref{chunk}
 	for details of \soar{chunk} and how to turn chunking on or off.
@@ -172,7 +171,7 @@ found that test elements that are linked to a superstate.}
 % ----------------------------------------------------------------------------
 \subsection{Determining a chunk's actions}
 \index{result}
-\index{subgoal result}
+\index{subgoal!result}
 \index{chunking!determining actions}
 
 A chunk's actions are built from the results of a subgoal.  A \emph{result} is
@@ -182,8 +181,7 @@ is linked if its identifier is either the value of a superstate
 WME, or the value of an augmentation  for an object that is linked to a
 superstate.
 
-\index{linked!chunk action}
-\index{chunking!actions}
+\index{chunking!linking}
 
 The results produced by a single production firing are the basis for creating
 the actions of a chunk. A new result can lead to other results by linking a
@@ -295,18 +293,17 @@ guarantee the correctness of the problem solving. In contrast, necessity
 preferences (\soar{require} or \soar{prohibit}) were used to enforce the
 correctness of problem solving, and the productions that created these
 preferences were always included in backtracing.
-\index{require preference}
-\index{prohibit preference}
-\index{preference!require}
+\index{preference!require("!)}
 \index{preference!prohibit}
-\index{preference!acceptable}
-\index{preference!reject}
-\index{preference!better}
-\index{preference!worse}
-\index{preference!best}
-\index{preference!worst}
-\index{preference!indifferent}
-\index{preference!numeric-indifferent}
+\index{preference!acceptable(+)}
+\index{preference!reject(-)}
+\index{preference!better(\textgreater \textit{val})}
+\index{preference!worse(\textless \textit{val})}
+\index{preference!best(\textgreater)}
+\index{preference!worst(\textless)}
+\index{preference!unary indifferent(=)}
+\index{preference!binary indifferent(=\textit{val})}
+\index{preference!numeric-indifferent(=\textit{num})}
 
 This is still the default behavior.  Only prohibit and require preference are
 included in the CDPS. In some case, though, this may lead to over-general chunks
@@ -374,7 +371,7 @@ preferences (rejects, betters, worses, bests, worsts and indifferents) are
 included depending on the role they play in the selection of the operator (and
 whether the add-desirability-prefs learn setting is active).
 
-\index{decision!procedure}
+\index{decision procedure}
 How Soar determines which of those preferences to include in the CDPS is determined by the preference semantics it uses to choose an operator.
 During the decision phase, operator preferences are evaluated in a sequence of
 seven steps or filters, in an effort to select a single operator. Each step
@@ -391,79 +388,59 @@ will exit with a finalized CDPS. For simplicity's sake, this explanation assumes
 that there are no impasses and the decision process continues.
 
 \begin{itemize}
-\index{preference!require}
-\index{require preference}
+\index{preference!require("!)}
+\index{require preference|see{preference}}
 \index{"!}
 \item Require Filter: 
-\begin{itemize}
-\item If an operator is selected based on a require preference, that preference
-is added to the CDPS.  The logic behind this step is straightforward, the
-require preference directly resulted in the selection of the operator.
-\end{itemize}
+	\begin{itemize}
+	\item If an operator is selected based on a require preference, that preference is added to the CDPS.  The logic behind this step is straightforward, the require preference directly resulted in the selection of the operator.
+	\end{itemize}
 
 \index{preference!prohibit}
-\index{prohibit preference}
-\index{preference!reject}
-\index{reject preference}
+\index{prohibit preference|see{preference}}
+\index{preference!reject(-)}
+\index{reject preference|see{preference}}
 \item Prohibit/Reject Filters: 
-\begin{itemize}
-\item If there exists at least one prohibit or reject preference, all prohibit
-and reject preferences for the eliminated candidates are added to the CDPS.  The logic
-behind this stage is that the conditions that led to the exclusion of the
-prohibited and rejected candidates is what allowed the final operator to be
-selected from among that particular set of surviving candidates.
-\end{itemize}
+	\begin{itemize}
+	\item If there exists at least one prohibit or reject preference, all prohibit and reject preferences for the eliminated candidates are added to the CDPS.  The logic behind this stage is that the conditions that led to the exclusion of the prohibited and rejected candidates is what allowed the final operator to be selected from among that particular set of surviving candidates.
+	\end{itemize}
 
-\index{preference!worse}
-\index{worse preference}
-\index{preference!better}
-\index{better preference}
+\index{preference!worse(\textless \textit{val})}
+\index{worse preference|see{preference}}
+\index{preference!better(\textgreater \textit{val})}
+\index{better preference|see{preference}}
 \item Better/Worse Filter: 
-\begin{itemize}
-\item For every candidate that is not worse than some other candidate, add all better/worse preferences involving the candidate.
-\end{itemize}
+	\begin{itemize}
+	\item For every candidate that is not worse than some other candidate, add all better/worse preferences involving the candidate.
+	\end{itemize}
 
-\index{preference!best}
-\index{best preference}
+\index{preference!best(\textgreater)}
+\index{best preference|see{preference}}
 \item Best Filter: 
-\begin{itemize}
-\item Add any best preferences for remaining candidates to the CDPS. 
-\end{itemize}
+	\begin{itemize}
+	\item Add any best preferences for remaining candidates to the CDPS. 
+	\end{itemize}
 
-\index{preference!worst}
-\index{worst preference}
+\index{preference!worst(\textless)}
+\index{worst preference|see{preference}}
 \item Worst Filter:
-\begin{itemize}
-\item If any remaining candidate has a worst preference which leads to that
-candidate being removed from consideration, that worst preference is added to
-the CDPS.  Again, the logic is that the conditions that led to
-that candidate not being selected allowed the final operator to be chosen.
-\end{itemize}
+	\begin{itemize}
+	\item If any remaining candidate has a worst preference which leads to that candidate being removed from consideration, that worst preference is added to the CDPS.  Again, the logic is that the conditions that led to that candidate not being selected allowed the final operator to be chosen.
+	\end{itemize}
 
-\index{preference!indifferent}
-\index{indifferent preference}
+\index{preference!unary indifferent(=)}
+\index{preference!binary indifferent(=\textit{val})}
+\index{preference!numeric-indifferent(=\textit{num})}
+\index{indifferent preference|see{preference}}
 \item Indifferent Filter: 
-\begin{itemize}
-\item This is the final stage, so the operator is now selected based on the
-agent's exploration policy.  How indifferent preferences are added to the CDPS
-depends on whether any numeric indifferent preferences exist.
-\begin{enumerate}
-\item If there exists at least one numeric indifferent preference, then every
-numeric preferences for the winning candidate is added to the CDPS.  There can
-be multiple such preferences. Moreover, all binary indifferent preferences
-between that winning candidate and candidates without a numeric preference are
-added.
-\item If all indifferent preferences are non-numeric, then any unary indifferent
-preferences for the winning candidate are added to the CDPS.  Moreover, all
-binary indifferent preferences between that winning candidate and other
-candidates are added.
-\end{enumerate}
-\item The logic behind adding binary indifferent preferences between the
-selected operator and the other final candidates is that those binary
-indifferent preferences prevented a tie impasse and allowed the final
-candidate to be chosen by the exploration policy from among those mutually
-indifferent preferences.
-\end{itemize}
+	\begin{itemize}
+	\item This is the final stage, so the operator is now selected based on the agent's exploration policy.  How indifferent preferences are added to the CDPS depends on whether any numeric indifferent preferences exist.
+		\begin{enumerate}
+		\item If there exists at least one numeric indifferent preference, then every numeric preferences for the winning candidate is added to the CDPS.  There can be multiple such preferences. Moreover, all binary indifferent preferences between that winning candidate and candidates without a numeric preference are added.
+		\item If all indifferent preferences are non-numeric, then any unary indifferent preferences for the winning candidate are added to the CDPS.  Moreover, all binary indifferent preferences between that winning candidate and other candidates are added.
+		\end{enumerate}
+	\item The logic behind adding binary indifferent preferences between the selected operator and the other final candidates is that those binary indifferent preferences prevented a tie impasse and allowed the final candidate to be chosen by the exploration policy from among those mutually indifferent preferences.
+	\end{itemize}
 \end{itemize}
 
 Note that there may be cases where two or more rules create the same type of
@@ -617,9 +594,9 @@ guaranteed to satisfy some of the requirements for success. However, chunks
 created in such a problem space will be overgeneral because the implicit parts
 of the state test do not appear as conditions. 
 
-\index{desirability preference}
+\index{desirability preference|see{preference}}
 \index{preference!desirability}
-\index{necessity preference}
+\index{necessity preference|see{preference}}
 \index{preference!necessity}
 \index{Context-Dependent Preference Set}
 \textbf{Solution:} To avoid this problem, the context-dependent preference set
@@ -636,19 +613,17 @@ any resulting chunks.   The rules that determine which desirability preferences
 are included in the CDPS -- it depends on whether a particular desirability
 preferences played an important role in the selection of an
 operator that ultimately led to the result -- are documented in Section \ref{CDPS} on \pageref{CDPS}.
-\index{necessity preference} 
-\index{require preference}
-\index{prohibit preference}
-\index{preference!require}
+\index{preference!require("!)}
 \index{preference!prohibit}
-\index{preference!acceptable}
-\index{preference!reject}
-\index{preference!better}
-\index{preference!worse}
-\index{preference!best}
-\index{preference!worst}
-\index{preference!indifferent}
-\index{preference!numeric-indifferent}
+\index{preference!acceptable(+)}
+\index{preference!reject(-)}
+\index{preference!better(\textgreater \textit{val})}
+\index{preference!worse(\textless \textit{val})}
+\index{preference!best(\textgreater)}
+\index{preference!worst(\textless)}
+\index{preference!unary indifferent(=)}
+\index{preference!binary indifferent(=\textit{val})}
+\index{preference!numeric-indifferent(=\textit{num})}
 
 \subsection{Testing for local negated conditions}
 

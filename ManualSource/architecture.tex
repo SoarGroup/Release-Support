@@ -98,7 +98,7 @@ rules match on.
 
 \subsection{Problem-Solving Functions in Soar}
 \label{ARCH-functions}
-\index{problem solving!functions}
+\index{problem solving}
 \index{production}
 \index{production!match}
 \index{match|see{production!match}}
@@ -277,7 +277,6 @@ particular time. Preferences are discussed in detail in section \ref{PREFERENCES
 \subsection{Selecting a single operator: Decision}
 \index{operator!selection}
 \index{decision procedure}
-\index{substate|see{subgoal}}
 
 Soar attempts to select a single operator as a \soarb{decision}, based on the preferences available
 for the candidate operators. There are four different situations that may
@@ -310,8 +309,7 @@ An operator \soarb{applies} by making changes to the state; the specific changes
 that are appropriate depend on the operator and the current state.
 
 \index{I/O}
-\index{problem solving!internal}
-\index{problem solving!external}
+\index{problem solving}
 There are two primary approaches to modifying the state: indirect and direct.
 \emph{Indirect} changes are used in Soar programs that interact with
 an external environment: The Soar program sends motor commands to the
@@ -596,8 +594,10 @@ conditions of a production match working memory, the production
 
 \subsection{The structure of a production}
 \label{ARCH-pm-structure}
-\index{conditions}
-\index{actions}
+\index{conditions|see{production}}
+\index{actions|see{production}}
+\index{production!condition side (LHS)}
+\index{production!action side (RHS)}
 
 In the simplest form of a production, conditions and actions refer directly to
 the presence (or absence) of objects in working memory. For example, a
@@ -626,8 +626,7 @@ be, it is likely that the conditions have been reordered by Soar.
 
 \subsubsection{Variables in productions and multiple instantiations}
 \index{variables}
-\index{production!instantiation|see{instantiation}}
-\index{instantiation!production}
+\index{production!instantiation}
 
 In the example production above, the names of the blocks are ``hardcoded'',
 that is, they are named specifically. In Soar productions, variables are used
@@ -640,6 +639,7 @@ identifiers cannot appear in productions. Since identifiers occur in
 every working memory element, variables must be used to test for
 identifiers, and using the same variables across multiple occurrences is what links conditions together.
 
+\index{production!condition side (LHS)}
 Just as the elements of working memory must be linked to a state 
 in working memory, so must the objects referred to in a production's
 conditions. That is, one condition must test a state object 
@@ -668,7 +668,7 @@ apply operators, or elaborate the state.
 
 \subsection{Production Actions and Persistence}
 \index{i-support}
-\index{production!RHS}
+\index{production!action side (RHS)}
 \label{ARCH-prefmem-persistence}
 \index{persistence}
 \index{o-support}
@@ -738,6 +738,7 @@ and happens in parallel from a functional perspective.)
 \index{i-support}
 \index{o-support}
 \index{persistence}
+\index{production!instantiation}
 
 This section provides a more detailed description of when an action is given o-support by an instantiation.\footnote{In the past, Soar had various experimental support mode settings. Since version 9.6, the support mode used is what was previously called \soar{mode 4}.} The content here is somewhat more advanced, and the reader unfamiliar with rule syntax (explained in Chapter \ref{SYNTAX}) may wish to skip this section and return at a later point.
 
@@ -967,7 +968,7 @@ and A are both indifferent to all competing values).
 	An \soar{acceptable} preference states that a value is a candidate for selection. All values, except those with \soar{require} preferences, must have an \soar{acceptable} preference in order to be selected. If there is only one value with an \soar{acceptable} preference (and none with a \soar{require} preference), that value will be selected as long as it does not also have a \soar{reject} or a \soar{prohibit} preference.
 \vspace{-8pt}
 
-\index{preference!reject("-)}
+\index{preference!reject(-)}
 \index{"-|see{preference}}
 \index{reject preference|see{preference}}
 \item [Reject ($-$)] 
@@ -998,18 +999,17 @@ and A are both indifferent to all competing values).
 	A \soar{worst} preference states that the value should be selected only if there are no alternatives.  It allows for a simple type of default specification. The semantics of the \soar{worst} preference are similar to those for the \soar{best} preference.
 \vspace{-8pt}
 
-\index{preference!indifferent("=)}
+\index{preference!unary indifferent(=)}
 \index{"=|see{preference}}
 \index{indifferent preference|see{preference}}
 \index{indifferent-selection}
-\index{preference!unary indifferent}
 \item [Unary Indifferent (=)] 
 	A \soar{unary indifferent} preference states that there is positive knowledge that a single value is as good or as bad a choice as other expected alternatives. 
 	
 	When two or more competing values both have indifferent preferences, by default, Soar chooses randomly from among the alternatives. (The \soar{decide indifferent-selection} function can be used to change this behavior as described on page \pageref{decide-indifferent-selection} in Chapter \ref{INTERFACE}.)
 \vspace{-8pt}
 
-\index{preference!binary indifferent("= \textless o\textgreater)}
+\index{preference!binary indifferent(=\textit{val})}
 \item [Binary Indifferent (= \emph{value})] 
 	A \soar{binary indifferent} preference states that two values are mutually indifferent and it does not matter which of these values are selected. It behaves like a \soar{unary indifferent} preference, except that the operator value given this preference is only made indifferent to the operator value given as the argument.
 \vspace{-8pt}
@@ -1096,7 +1096,7 @@ one (necessarily the winner) or zero (a no-change impasse).
 	\end{enumerate}
 }
 
-\index{decision!procedure}
+\index{decision procedure}
 
 \begin{figure}
 	\insertfigure{newprefsem}{\textwidth}
@@ -1156,7 +1156,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	
 	\item[RejectFilter ($-$) ] This filter removes the candidates that have
 	reject preferences in memory. 
-	\index{preference!reject}
+	\index{preference!reject(-)}
 	\index{reject preference(-)}
 	
 	\item[Exit Point 1]:
@@ -1234,8 +1234,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	IndifferentFilter. Otherwise, the candidates are mutually indifferent, in which case 
 	an operator is chosen according to the method set by the \soar{decide indifferent-selection} 
 	command, described on page \pageref{decide-indifferent-selection}.
-	\index{preference!indifferent}
-	\index{indifferent preference}
+	\index{preference!unary indifferent(=)}
 \end{description}
 
 % ----------------------------------------------------------------------------
@@ -1321,12 +1320,12 @@ During the processing of these phases, it is possible that the preferences that 
 \label{ARCH-impasses}
 \index{decision procedure}
 \index{impasse}
-\index{goal!subgoal}
+\index{goal!subgoal|see{subgoal}}
 \index{result}
 
 When the decision procedure is applied to evaluate preferences and determine the operator augmentation of the state, it is possible that the preferences are either incomplete or inconsistent. 
 The preferences can be incomplete in that no \soar{acceptable} operators are suggested, or that there are insufficient preferences to distinguish among \soar{acceptable} operators. 
-The preferences can be inconsistent if, for instance, operator \soar{A} is preferred to operator \soar{B}, and operator \soar{B} is preferred to operator \soar{A}. Since preferences are generated independently, from different production instantiations, there is no guarantee that they will be consistent.
+The preferences can be inconsistent if, for instance, operator \soar{A} is preferred to operator \soar{B}, and operator \soar{B} is preferred to operator \soar{A}. Since preferences are generated independently across different production instantiations, there is no guarantee that they will be consistent.
 
 % ----------------------------------------------------------------------------
 \subsection{Impasse Types}
@@ -1384,8 +1383,7 @@ selected operator piece by piece.  The substate is often called a
 \emph{subgoal} because it exists to resolve the impasse, but is
 sometimes called a substate because the representation of the subgoal in
 Soar is as a state.
-\index{goal!subgoal|see{subgoal}}
-\index{substate|see{subgoal}}
+\index{subgoal}
 \index{subgoal|see{goal}}
 \index{impasse}
 
@@ -1479,10 +1477,8 @@ described below.
 %\insertcaption{An abstract illustration of a production that creates a
 %	working memory element that indirectly becomes a result. S2 is the
 %	lowest state in the subgoal stack that is tested by the production,
-%	and the working memory element is said to be created in state S2. Some 
-%other
-%	production instantiation creates the working memory element that links X2 
-%to the
+%	and the working memory element is said to be created in state S2. Some other
+%	production instantiation creates the working memory element that links X2 to the
 %	superstate.
 %	}
 %\label{fig:result-indirect}
@@ -1804,6 +1800,7 @@ features remain in memory, and more importantly, what circumstances
 cause the feature to be removed.  The Soar architecture utilizes
 two primary types of persistence: i-support and o-support.
 
+\index{production!instantiation}
 The weakest persistence is instantiation support. An i-supported
 feature exists in memory only as long as the production which lead to
 the feature's creation remains instantiated. Thus, the WME depends
@@ -2007,12 +2004,9 @@ that has occurred at higher levels.
 % ----------------------------------------------------------------------------
 \section{Learning Procedural Knowledge}
 \label{ARCH-learning} 
-\index{learning}
-\index{chunk}
-\index{goal!subgoal}
+\index{chunking}
+\index{subgoal}
 
-\index{learning}
-\index{chunking|see{learning}}
 When an operator impasse is resolved, it means that Soar has, through problem 
 solving, gained access to knowledge that was not readily available before. Therefore,
 when an impasse is resolved, Soar has an opportunity to learn, by summarizing
@@ -2029,13 +2023,16 @@ production is the working memory element or preference that resolved the impasse
 new production may match in a similar situation in the future and
 prevent an impasse from arising. 
 
+\index{justification}
 Chunks are very similar to justifications in that they are both
 formed via the backtracing process and both create a result in their
-actions. However, there are some important distinctions:\vspace{-12pt}
+actions. However, there are some important distinctions:
+\vspace{-12pt}
+
 \begin{enumerate}
-\item Justifications disappear as soon as its conditions no longer match. \vspace{-8pt}
-\item Chunks contain variables so that they may match working memory in other
-	situations; justifications are similar to an instantiated chunk.
+\item Justifications disappear as soon as its conditions no longer match. 
+\vspace{-8pt}
+\item Chunks contain variables so that they may match working memory in other situations; justifications are similar to an instantiated chunk.
 \end{enumerate}
 
 

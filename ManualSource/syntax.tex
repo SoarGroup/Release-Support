@@ -200,7 +200,7 @@ an integer \textit{timetag}.
 \subsection{Acceptable preferences in working memory}
 \label{SYNTAX-wm-preferences}
 \index{working memory!acceptable preference}
-\index{preference!acceptable}
+\index{preference!acceptable(+)}
 \index{preference}
 \index{object}
 
@@ -511,10 +511,7 @@ load file blocks.soar      ;# this is also a comment
 % ----------------------------------------------------------------------------
 \subsection{The condition side of productions (or LHS)}
 \label{SYNTAX-pm-conditions}            %perf-cond
-\index{condition side}
-\index{LHS of production}
-\index{production!LHS}
-\index{production!condition}
+\index{production!condition side (LHS)}
 
 The condition side of a production, also called the left-hand side (or
 LHS) of the production, is a pattern for matching one or more WMEs. When
@@ -531,7 +528,7 @@ preferences for operators, and a few advanced topics.
 % ----------------------------------------------------------------------------
 \subsubsection{Conditions}
 \label{Conditions}
-\index{conditions}
+\index{production!condition side (LHS)}
 
 The condition side of a production consists of a set of conditions.
 Each condition tests for the existence or absence (explained later in
@@ -1008,9 +1005,8 @@ binding for \soar{<p1>} (but not if both are present).
 % ----------------------------------------------------------------------------
 \subsubsection{Acceptable preferences for operators}
 \label{SYNTAX-pm-acceptable}
-\index{condition!acceptable preference }
 \index{preference!acceptable as condition}
-\index{acceptable preference}
+\index{acceptable preference|see{preference}}
 \index{+}
 
 The only preferences that can appear in working memory are acceptable
@@ -1481,10 +1477,8 @@ sp {blocks-world*propose*move-block
 % ----------------------------------------------------------------------------
 \subsection{The action side of productions (or RHS)}
 \label{SYNTAX-pm-action}
-\index{RHS of production}
-\index{production!RHS}
-\index{action side of production}
-
+\index{RHS of production|see{production}}
+\index{production!action side (RHS)}
 
 The action side of a production, also called the right-hand side (or RHS) of
 the production, consists of individual actions that can:
@@ -1501,7 +1495,7 @@ elaboration cycle. Firing the production involves performing the actions
 \emph{using the same variable bindings} that formed the instantiation.
 
 \subsubsection{Variables in Actions}
-\index{variable!action side}
+\index{variables}
 Variables can be used in actions.  A variable that appeared in the
 condition side will be replaced with the value that is was bound to in
 the condition.  A variable that appears only in the action side will be
@@ -1686,6 +1680,7 @@ But \verb|(<s> ^operator <o1> <o2> >, <o3>)| would be interpreted as
 
 % ----------------------------------------------------------------------------
 \subsubsection{Righthand-side Functions}
+\index{RHS Function}
 
 The fourth type of action that can occur in productions is called a 
 \emph{righthand-side function}.  Righthand-side functions allow productions
@@ -1697,7 +1692,7 @@ are described below, organized by the type of side effect they have.
 \label{RHS-stopping}
 
 \begin{description}
-\index{halt}
+\index{RHS Function!halt}
 \item [\soarb{halt} ---] Terminates Soar's execution and returns to 
 the user prompt.  A \soar{halt} action irreversibly terminates the
 running of a Soar program.
@@ -1710,8 +1705,8 @@ sp {
     (halt) }
 \end{verbatim} 
 
+\index{RHS Function!interrupt}
 \item [\soarb{interrupt} --- ]
-\index{interrupt}
         Executing this function causes Soar to stop at the end of the
         current phase, and return to the user prompt. This is similar 
         to \soar{halt}, but does not terminate the run.
@@ -1742,8 +1737,8 @@ sp {production*name
     }
 \end{verbatim}
 
+\index{RHS Function!wait}
 \item [\soarb{wait} --- ]
-\index{wait}
 	Executing this function causes the current Soar thread to sleep for the given integer
 	number of milliseconds.
 \begin{verbatim}
@@ -1759,15 +1754,11 @@ sp {
 % ----------------------------------------------------------------------------
 \subsubsection{Text input and output}
 
-The function \soar{write} is provided as a production
-action to do simple output of text in Soar. Soar applications that
-do extensive input and output of text should use Soar Markup Language (SML). To learn
-about SML, read the "SML Quick Start Guide" which should be located in the "Documentation" 
-folder of your Soar install.
+These functions are provided as production actions to do simple output of text in Soar. Soar applications that do extensive input and output of text should use Soar Markup Language (SML). To learn about SML, read the "SML Quick Start Guide" which should be located in the "Documentation"  folder of your Soar install.
 
  
 \begin{description}
-\index{write}
+\index{RHS Function!write}
 \item [\soarb{write} --- ] This function writes its arguments to the standard
         output. It does not automatically insert blanks, linefeeds, or carriage
         returns.  For example, if \soar{<o>} is bound to 4, then
@@ -1777,14 +1768,14 @@ sp {
     -->
     (write  <o> <o> <o> | x| <o> | | <o>) }
 \end{verbatim}
-        prints
+
+prints
 
 \begin{verbatim}
 444 x4 4
 \end{verbatim}
 
-\index{carriage return, line feed}
-\index{crlf}
+\index{RHS Function!carriage return, line feed (crlf)}
 \item [\soarb{crlf} --- ] Short for ``carriage return, line feed'', this
         function can be called only within \soar{write}. It forces a new line
         at its position in the \soar{write} action. 
@@ -1796,7 +1787,7 @@ sp {
 \end{verbatim}
 
 
-%\index{accept}
+%\index{RHS Function!accept}
 %\item [\soarb{accept} --- ] Suspends Soar's execution and waits for the user
 %        to type a constant, followed by a carriage return. The result of
 %        \soar{accept} is the constant. The accept function does not read 
@@ -1823,11 +1814,12 @@ sp {
                 constant be 'accepted' after a space is hit?
                 }
 
-\index{log}
+\index{RHS Function!log}
 \item [\soarb{log} --- ] This function is equivalent to the \soar{write} function,
 except that it specifies the ``trace channel'' for output. It takes two arguments. First is an integer
 corresponding to the channel level for output, second is the message to print. \\
 See section \ref{trace} for information about trace channel levels.
+
 \begin{verbatim}
 sp {
 	...
@@ -1840,6 +1832,7 @@ sp {
 
 % ----------------------------------------------------------------------------
 \subsubsection{Mathematical functions}
+\index{arithmetic operations}
 
 The expressions described in this section can be nested to any depth. For all
 of the functions in this section, missing or non-numeric arguments result 
@@ -1847,9 +1840,7 @@ in an error.
 
 
 \begin{description}
-\index{compute}
-\index{arithmetic operations}
-\index{floating-point number}
+\index{RHS Function!floating-point calculations}
 \item [\soarb{+, -, *, /} --- ]
         These symbols provide prefix notation mathematical functions.
         These symbols work similarly to C functions.  They will take either 
@@ -1875,7 +1866,8 @@ sp {
 }
 \end{verbatim}
 
-\index{div}\index{mod}
+\index{RHS Function!div}
+\index{RHS Function!mod}
 \item [\soarb{div, mod} --- ]
         These symbols provide prefix notation binary mathematical functions
         (they each take two arguments). These symbols work similarly to C
@@ -1891,7 +1883,11 @@ sp {
          ^remainder (mod <x> <y>)) }
 \end{verbatim}
 
-\index{abs}\index{atan2}\index{sqrt}\index{sin}\index{cos}
+\index{RHS Function!abs}
+\index{RHS Function!atan2}
+\index{RHS Function!sqrt}
+\index{RHS Function!sin}
+\index{RHS Function!cos}
 \item [\soarb{abs, atan2, sqrt, sin, cos} --- ]   
         These provide prefix notation unary 
         mathematical functions (they each take one argument). 
@@ -1911,7 +1907,8 @@ sp {
          ^sqrt (sqrt <x>)) }
 \end{verbatim}
 
-\index{min}\index{max}
+\index{RHS Function!min}
+\index{RHS Function!max}
 \item [\soarb{min, max} --- ]   
 		These symbols provide n-ary mathematical functions (they each take a list of symbols as arguments).
 		These symbols work similarly to C functions.
@@ -1928,7 +1925,7 @@ sp {
 
 
 % ----------------------------------------------------------------------------
-\index{int}
+\index{RHS Function!int}
 \item [\soarb{int} --- ] Converts a single symbol to an integer constant. This
         function expects either an integer constant, symbolic constant, or
         floating point constant. The symbolic constant must be a string which
@@ -1947,7 +1944,7 @@ sp {
 \end{verbatim}
 
 % ----------------------------------------------------------------------------
-\index{float}
+\index{RHS Function!float}
 \item [\soarb{float} --- ] Converts a single symbol to a floating point 
 constant.
         This function expects either an integer constant, symbolic constant,
@@ -1966,7 +1963,7 @@ sp {
 \end{verbatim}
 
 % ----------------------------------------------------------------------------
-\index{ifeq}
+\index{RHS Function!ifeq}
 \item [\soarb{ifeq} --- ] Conditionally return a symbol.
         This function takes four arguments. It returns the third argument if
         the first two are equal and the fourth argument otherwise. Note that
@@ -1992,7 +1989,7 @@ describes other ways of generating and manipulating symbols on the right-hand
 side. 
 
 \begin{description}
-\index{capitalize-symbol}
+\index{RHS Function!capitalize-symbol}
 \item [\soarb{capitalize-symbol} --- ] Given a symbol, this function returns a
 	new symbol with the first character capitalized. This function is
 	provided primarily for text output, for example, to allow the first
@@ -2005,7 +2002,7 @@ side.
 \end{verbatim}
 
 
-\index{compute-heading}
+\index{RHS Function!compute-heading}
 \item [\soarb{compute-heading} --- ] This function takes four real-valued arguments of the form \\
 ($x_1, y_1, x_2, y_2$), and returns the direction (in degrees) from ($x_1, y_1$)
 to ($x_2, y_2$), rounded to the nearest integer.
@@ -2023,7 +2020,7 @@ After this rule fires, working memory would look like: \\
 \verb|(S1 ^heading 48)|.
 
 
-\index{compute-range}
+\index{RHS Function!compute-range}
 \item [\soarb{compute-range} --- ] This function takes four real-valued arguments of the form \\
 ($x_1, y_1, x_2, y_2$), and returns the distance from ($x_1, y_1$) to ($x_2, y_2$), rounded to the nearest integer.
 
@@ -2040,7 +2037,7 @@ After this rule fires, working memory would look like: \\
 \verb|(S1 ^distance 42)|.
 
 
-\index{concat}
+\index{RHS Function!concat}
 \item [\soarb{concat} --- ] Given an arbitrary number of symbols, this function
         concatenates them together into a single constant symbol. 
 
@@ -2056,7 +2053,7 @@ sp {example
        After this rule fires, the WME \verb=(S1 ^name foobar6)= will be added.
 
 
-\index{deep-copy}
+\index{RHS Function!deep-copy}
 \item [\soarb{deep-copy} --- ] This function returns a copy of the given symbol
 along with linked copies of all descendant symbols. In other terms, a full copy is made of
 the working memory subgraph that can be reached when starting from the given symbol.
@@ -2084,7 +2081,7 @@ After this rule fires, the following structure would exist:
 \end{verbatim}
 
 
-\index{dc}
+\index{RHS Function!dc}
 \item [\soarb{dc} --- ] This function takes no arguments, and returns
 the integer number of the current decision cycle. 
 
@@ -2098,7 +2095,7 @@ sp {example
 \end{verbatim}
 
 
-\index{"@!RHS Function}
+\index{RHS Function!"@}
 \item [\soarb{@ (get)} --- ] This function returns the LTI number of the
 given ID. If the given ID is not linked to an LTI, it does nothing.
 For example:
@@ -2113,7 +2110,7 @@ sp {example
 After this rule fires, the \verb|(S1 ^lti-num)| WME will have an integer value such as \soar{42}.
 
 
-\index{link-stm-to-ltm}
+\index{RHS Function!link-stm-to-ltm}
 \item [\soarb{link-stm-to-ltm} --- ] This function takes two arguments. 
 It links the first given symbol to the LTI indicated by the second integer value.
 For example:
@@ -2128,7 +2125,7 @@ sp {example
 After this rule fires, the WME \verb=(S1 ^stm <l1>)= will be linked to \verb=@42=.
 
 
-\index{make-constant-symbol}
+\index{RHS Function!make-constant-symbol}
 \item [\soarb{make-constant-symbol} --- ] This function returns a new constant 
 symbol
 guaranteed to be different from all symbols currently present in the
@@ -2191,7 +2188,7 @@ memory such as:
 \end{verbatim}    
 
 
-\index{rand-float}
+\index{RHS Function!rand-float}
 \item [\soarb{rand-float} --- ] This function takes an optional positive real-valued argument.
 If no argument (or a negative argument) is given, it returns a random real-valued number in the range $[0.0,1.0]$.
 Otherwise, given a value $n$, it returns a number in the range $[0.0, n]$.
@@ -2209,7 +2206,7 @@ After this rule fires, working memory might look like: \\
 \verb|(S1 ^fate 275.481802)|.
 
 
-\index{rand-int}
+\index{RHS Function!rand-int}
 \item [\soarb{rand-int} --- ] This function takes an optional positive integer argument.
 If no argument (or a negative argument) is given, it returns a random integer number in the range $[-2^{31}, 2^{31}]$.
 Otherwise, given a value $n$, it returns a number in the range $[0, n]$.
@@ -2227,7 +2224,7 @@ After this rule fires, working memory might look like: \\
 \verb|(S1 ^fate 13)|.
 
 
-\index{round-off}
+\index{RHS Function!round-off}
 \item [\soarb{round-off} --- ] This function returns the first given 
 value rounded to the nearest multiple of the second given value.
 Values must be integers or real-numbers.
@@ -2245,7 +2242,7 @@ After this rule fires, working memory might look like: \\
 \verb|(S1 ^pi 3.14159 ^pie 3.1)|.
 
 
-\index{round-off-heading}
+\index{RHS Function!round-off-heading}
 \item [\soarb{round-off-heading} --- ] This function is the same as \soar{round-off},
 but additionally shifts the returned value by multiples of 360 such that $-360 \le value \le 360$.
 
@@ -2262,7 +2259,7 @@ After this rule fires, working memory might look like: \\
 \verb|(S1 ^heading 526.432 ^true-heading 166.5)|.
 
 
-\index{size}
+\index{RHS Function!size}
 \item [\soarb{size} --- ] This function returns an integer symbol whose value
 is the count of WME augmentations on a given ID argument. Providing a non-ID
 argument results in an error.
@@ -2282,7 +2279,7 @@ After this rule fires, the value of \verb=S1 ^augs= would be $3$.
 Note that some architecturally-maintained IDs such as \verb=(<s> ^epmem)= and \verb=(<s> ^io)=
 are not counted by the \soar{size} function.
 
-\index{strlen}
+\index{RHS Function!strlen}
 \item [\soarb{strlen} --- ] This function returns an integer symbol whose value
 is the size of the given string symbol.
 
@@ -2297,7 +2294,7 @@ sp {
 \end{verbatim}
 
 
-\index{timestamp}
+\index{RHS Function!timestamp}
 \item [\soarb{timestamp} --- ] This function returns a symbol whose print name 
 is a
 representation of the current date and time. 
@@ -2319,7 +2316,7 @@ soar> run 1 e
 \end{verbatim}
 
 
-\index{trim}
+\index{RHS Function!trim}
 \item [\soarb{trim} --- ] This function takes a single string symbol argument
 and returns the same string with leading and trailing whitespace removed.
 
@@ -2361,7 +2358,7 @@ The \soar{exec} and \soar{cmd} functions are used to call user-defined functions
 commands on the RHS of a production.
 
 \begin{description}
-\index{exec}
+\index{RHS Function!exec}
 \item [\soarb{exec} --- ] Used to call user-defined registered functions. Any arguments are concatenated
 without spaces. For example, if \soar{<o>} is bound to \soar{x}, then
 
@@ -2386,7 +2383,7 @@ sp {
 
 where "\soar{log}" is a registered user-defined function.
 
-\index{cmd}
+\index{RHS Function!cmd}
 \item[\soarb{cmd} --- ] Used to call built-in Soar commands. Spaces are inserted between concatenated 
 arguments. For example, the production
 
@@ -2432,7 +2429,7 @@ chunking must be set to \soar{unflagged} for the \soar{dont-learn} RHS action
 to have any effect.
 
 \begin{description}
-\index{dont-learn}
+\index{RHS Function!dont-learn}
 \item [\soarb{dont-learn} --- ] When chunking is set to \soar{unflagged},
         by default chunks can be formed in all states; the \soar{dont-learn}
         RHS action will cause chunking to be turned off for the specified
@@ -2450,7 +2447,7 @@ sp {turn-learning-off
         \soar{chunk} are used.
 
 
-\index{force-learn}
+\index{RHS Function!force-learn}
 \item [\soarb{force-learn} --- ] When learning is set to \soar{flagged},
         by default chunks are not formed in any state; the \soar{force-learn}
         RHS action will cause chunking to be turned on for the specified
@@ -2506,6 +2503,8 @@ are undefined; as such, this grammar should only be used as a starting point.
 
 %-------------------------------------------------------
 \subsubsection{Grammar of Soar productions}
+\index{production!grammar}
+\index{grammar}
 
 A grammar for Soar productions is:
 \begin{verbatim}
@@ -2518,8 +2517,6 @@ A grammar for Soar productions is:
 % ----------------------------------------------------------------------------
 \paragraph{Grammar for Condition Side:}
 \label{SYNTAX-pm-condgrammar}
-\index{condition-side grammar}
-\index{grammar!condition side}
 
 Below is a grammar for the condition sides of productions:
 \begin{verbatim}
@@ -2547,7 +2544,7 @@ Below is a grammar for the condition sides of productions:
 <constant>         ::= <sym_constant> | <int_constant> | <float_constant>
 \end{verbatim}
 \index{constant}
-\index{variable}
+\index{variables}
 
 \paragraph*{Notes on the Condition Side}\vspace{-12pt}
 \begin{itemize}
@@ -2567,8 +2564,7 @@ Below is a grammar for the condition sides of productions:
 % ----------------------------------------------------------------------------
 \paragraph{Grammar for Action Side:}
 \label{SYNTAX-pm-actgrammar}    %RHS grammar}
-\index{action-side grammar}
-\index{grammar!action side}
+\index{grammar}
 
 \comment{RD: this grammar is out of date}
 
@@ -2638,12 +2634,11 @@ This section describes the structure of state objects in working memory.
 \index{decision procedure}
 \index{impasse}
 \index{impasse!types}
-\index{tie impasse}
-\index{conflict impasse}
-\index{constraint-failure impasse}
-\index{no-change impasse}
-\index{elaboration!phase}
 \index{impasse!resolution}
+\index{impasse!tie}
+\index{impasse!conflict}
+\index{impasse!constraint-failure}
+\index{impasse!no-change}
 \index{goal!termination}
 \index{subgoal!termination}
 \index{subgoal!augmentations}
@@ -2721,7 +2716,8 @@ values that each augmentation can contain:
 	is that no chunk will be built if it depended on that test. 
 	See Section \ref{CHUNKING-creation} on page \pageref{CHUNKING-creation} for
 	details. This attribute can be ignored when learning is turned off.
-	\index{quiescence t (augmentation)} 
+	\index{quiescence t (augmentation)}
+	\index{elaboration cycle}
 	\index{exhaustion}
 \end{description} 
 
