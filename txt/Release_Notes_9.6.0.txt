@@ -700,7 +700,9 @@ Working memory activation and forgetting                off -a, --wma
       with explanation-based chunking.
     - The library of default rules has also been updated to work better with
       EBC and produce cleaner learned rules.
-    
+    - The Soar manual has new entries and many updates to make it current with 
+      the latest version of Soar. (Mazin Assanie, Preeti Ramaraj, Bryan Stearns)
+          
 (8) Many bug fixes
     - All Soar issues listed on github have been either resolved or updated.
       We've gone through the existing list which dates back many years and fixed 
@@ -810,6 +812,8 @@ Working memory activation and forgetting                off -a, --wma
     - Fixed slowdown caused by overly complex naming of chunks and 
       justifications, which required some search of working memory to determine
       impasse type.
+    - Fixed bug where min/max RHS functions would treat floats as integers 
+      (Anthony Deschamps)
           
 (9) Many low-level architectural changes and a lot of code clean-up and 
     refactoring.

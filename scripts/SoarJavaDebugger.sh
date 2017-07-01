@@ -7,18 +7,38 @@ export DYLD_LIBRARY_PATH="$SOAR_HOME"
 
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
-    cp $SOAR_HOME/java/swt-linux64.jar $SOAR_HOME/java/swt.jar
-    cp $SOAR_HOME/tcl/pkgIndex-linux64.tcl $SOAR_HOME/pkgIndex.tcl
+  if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
+    echo 'First time initialization of Soar for Linux...'
+    mv $SOAR_HOME/linux64/swt.jar $SOAR_HOME/java/
+    mv $SOAR_HOME/linux64/* $SOAR_HOME/
+    rm -rf $SOAR_HOME/mac64
+    rm -rf $SOAR_HOME/windows64
+    rm -rf $SOAR_HOME/linux64
+    rm -f $THISDIR/*.bat
+  fi
 elif [[ "$unamestr" == 'Darwin' ]]; then
-    cp $SOAR_HOME/java/swt-mac64.jar $SOAR_HOME/java/swt.jar
-    cp $SOAR_HOME/tcl/pkgIndex-mac64.tcl $SOAR_HOME/pkgIndex.tcl
-    FLAG="-XstartOnFirstThread"
+  if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
+    echo 'First time initialization of Soar for Mac OSX...'
+    mv $SOAR_HOME/mac64/swt.jar $SOAR_HOME/java/
+    mv $SOAR_HOME/mac64/* $SOAR_HOME/
+    rm -rf $SOAR_HOME/mac64
+    rm -rf $SOAR_HOME/linux64
+    rm -rf $SOAR_HOME/win64
+    rm -f $THISDIR/*.bat
+  fi
+  FLAG="-XstartOnFirstThread"
 else
-    echo 'Unsupported OS'
-    cp $SOAR_HOME/java/swt-linux64.jar $SOAR_HOME/java/swt.jar
-    cp $SOAR_HOME/tcl/pkgIndex-linux64.tcl $SOAR_HOME/pkgIndex.tcl
+  if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
+    echo 'First time initialization of Soar for an unsupported OS.  Assuming Linux.'
+    mv $SOAR_HOME/linux64/swt.jar $SOAR_HOME/java/
+    mv $SOAR_HOME/linux64/* $SOAR_HOME/
+    rm -rf $SOAR_HOME/mac64
+    rm -rf $SOAR_HOME/win64
+    rm -rf $SOAR_HOME/linux64
+    rm -f $THISDIR/*.bat
+  fi
 fi
 
-pushd $THISDIR > /dev/null
+pushd $SOAR_HOME > /dev/null
 java $FLAG -Djava.library.path="$SOAR_HOME" -jar "$SOAR_HOME/SoarJavaDebugger.jar" $1 $2 $3 $4 $5 &
 popd > /dev/null

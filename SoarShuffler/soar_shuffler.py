@@ -75,6 +75,16 @@ def zip_project(projectName):
     with zipfile.ZipFile(destination_zip, 'w', compression=zipfile.ZIP_DEFLATED) as dest_zip:
         for a,b in SPL[projectName]["copyList"]:
             source = os.path.join(Repository_Dir, a)
+            platform_suffix = ""
+            if (re.search("SPECIALIZE-win64",b)):
+                b = b.replace("SPECIALIZE-win64", r"")
+                platform_suffix = "-win64"
+            if (re.search("SPECIALIZE-linux64",b)):
+                b = b.replace("SPECIALIZE-linux64", r"")
+                platform_suffix = "-linux64"
+            if (re.search("SPECIALIZE-mac64",b)):
+                b = b.replace("SPECIALIZE-mac64", r"")
+                platform_suffix = "-mac64"
             if b == "top":
                 destination = os.path.join(projectName)
             else:
@@ -85,6 +95,7 @@ def zip_project(projectName):
                         print " - Ignoring version control directory", root
                         continue
                     for f in files:
+                        f = f + platform_suffix
                         fname = os.path.join(root, f)
                         dname = os.path.join(destination, os.path.relpath(fname, source))
                         if (dname in seen_list):
@@ -106,7 +117,7 @@ def zip_project(projectName):
                             dest_zip.writestr(zipInfo, "")
                             seen_list.append(str(dname))
             else:
-                dname = os.path.join(destination, os.path.basename(source))
+                dname = os.path.join(destination, os.path.basename(source) + platform_suffix)
                 if (dname in seen_list):
                     print " - Skipping already added file:", dname
                 else:
@@ -129,38 +140,53 @@ def multiplatformize_project(projectName):
     SPL_New['type']='zip'
     SPL_New['out']=SPL[projectName]['out']
     SPL_New['copyList']=list()
+    
     print " - Specializing files for Windows..."
     for a,b in SPL[projectName]["copyList"]:
         a = re.sub("RELEASE_DIR", "win", a)
         a = re.sub("\.LAUNCH_EXTENSION", ".bat", a)
+        a = re.sub("\.EXECUTABLE", ".exe", a)
         a = re.sub("COMPILE_DIR", "windows64", a)
+        b = b.replace("^", r"")
+        b = b.replace("PLATFORM_DIR", "win64")
         if (re.search("\.DLL_EXTENSION",a)):
-            a = re.sub("\.DLL_EXTENSION", ".dll", a)
-            d,f = os.path.split(a)
-            a = os.path.join(d,f[3:])
+            if (re.search("_Python_sml_ClientInterface",a)):
+                a = re.sub("\.DLL_EXTENSION", ".pyd", a)
+            else:
+                a = re.sub("\.DLL_EXTENSION", ".dll", a)
+                d,f = os.path.split(a)
+                a = os.path.join(d,f[3:])
         SPL_New['copyList'].append((a,b))
         print "   - Adding zip operation:", a, "--> ", b
+    
     print " - Specializing files for Linux..."
     for a,b in SPL[projectName]["copyList"]:
-        a = re.sub("\.DLL_EXTENSION", ".so", a)
-        a = re.sub("RELEASE_DIR", "linux", a)
-        a = re.sub("\.LAUNCH_EXTENSION", ".sh", a)
-        a = re.sub("COMPILE_DIR", "linux64", a)
-        SPL_New['copyList'].append((a,b))
-        print "   - Adding zip operation:", a, "--> ", b
+        if (b.find("^") == -1):
+            a = re.sub("\.DLL_EXTENSION", ".so", a)
+            a = re.sub("\.EXECUTABLE", "", a)
+            a = re.sub("RELEASE_DIR", "linux", a)
+            a = re.sub("\.LAUNCH_EXTENSION", ".sh", a)
+            a = re.sub("COMPILE_DIR", "linux64", a)
+            b = b.replace("PLATFORM_DIR", "linux64")
+            SPL_New['copyList'].append((a,b))
+            print "   - Adding zip operation:", a, "--> ", b
+    
     print " - Specializing files for OSX..."
     for a,b in SPL[projectName]["copyList"]:
-        a = re.sub("COMPILE_DIR", "mac64", a)
-        a = re.sub("RELEASE_DIR", "osx", a)
-        a = re.sub("\.LAUNCH_EXTENSION", ".sh", a)
-        if (re.search("libJava_sml_ClientInterface",a)):
-            a = re.sub("\.DLL_EXTENSION", ".jnilib", a)
-        elif (re.search("_Python_sml_ClientInterface",a)):
-            a = re.sub("\.DLL_EXTENSION", ".so", a)
-        else:
-            a = re.sub("\.DLL_EXTENSION", ".dylib", a)
-        SPL_New['copyList'].append((a,b))
-        print "   - Adding zip operation:", a, "--> ", b
+        if (b.find("^") == -1):
+            a = re.sub("COMPILE_DIR", "mac64", a)
+            a = re.sub("RELEASE_DIR", "osx", a)
+            a = re.sub("\.LAUNCH_EXTENSION", ".sh", a)
+            a = re.sub("\.EXECUTABLE", "", a)
+            if (re.search("libJava_sml_ClientInterface",a)):
+                a = re.sub("\.DLL_EXTENSION", ".jnilib", a)
+            elif (re.search("_Python_sml_ClientInterface",a)):
+                a = re.sub("\.DLL_EXTENSION", ".so", a)
+            else:
+                a = re.sub("\.DLL_EXTENSION", ".dylib", a)
+            b = b.replace("PLATFORM_DIR", "mac64")
+            SPL_New['copyList'].append((a,b))
+            print "   - Adding zip operation:", a, "--> ", b
     return SPL_New
 
 def print_attr(fileName):
