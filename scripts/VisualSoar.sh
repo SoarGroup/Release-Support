@@ -10,24 +10,18 @@ if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
       echo 'First time initialization of Soar for Linux...'
       mv $SOAR_HOME/linux64/swt.jar $SOAR_HOME/java/
       mv $SOAR_HOME/linux64/* $SOAR_HOME/
-      rm -rf $SOAR_HOME/mac64
-      rm -rf $SOAR_HOME/windows64
-      rm -rf $SOAR_HOME/linux64
   elif [[ "$unamestr" == 'Darwin' ]]; then
       echo 'First time initialization of Soar for Mac OSX...'
       mv $SOAR_HOME/mac64/swt.jar $SOAR_HOME/java/
       mv $SOAR_HOME/mac64/* $SOAR_HOME/
-      rm -rf $SOAR_HOME/mac64
-      rm -rf $SOAR_HOME/linux64
-      rm -rf $SOAR_HOME/win64
   else
       echo 'First time initialization of Soar for an unsupported OS.  Assuming Linux.'
       mv $SOAR_HOME/linux64/swt.jar $SOAR_HOME/java/
       mv $SOAR_HOME/linux64/* $SOAR_HOME/
-      rm -rf $SOAR_HOME/mac64
-      rm -rf $SOAR_HOME/win64
-      rm -rf $SOAR_HOME/linux64
   fi
+  rm -rf $SOAR_HOME/mac64
+  rm -rf $SOAR_HOME/win64
+  rm -rf $SOAR_HOME/linux64
   rm -f $THISDIR/*.bat
 fi
 

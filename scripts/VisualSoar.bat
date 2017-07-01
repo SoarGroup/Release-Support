@@ -9,11 +9,7 @@ if not exist  %SOAR_HOME%\pkgIndex.tcl (
     rmdir /S /Q %SOAR_HOME%\mac64
     rmdir /S /Q %SOAR_HOME%\linux64
     rmdir /S /Q %SOAR_HOME%\win64
-    del /F /Q %~dp0SoarCLI.sh
-    del /F /Q %~dp0SoarJavaDebugger.sh
-    del /F /Q %~dp0VisualSoar.sh
-    del /F /Q %~dp0Eaters.sh
-    del /F /Q %~dp0TankSoar.sh
+    del /F /Q %~dp0*.sh
 )
 
 start javaw -Djava.library.path=%SOAR_HOME% -jar bin\VisualSoar.jar
