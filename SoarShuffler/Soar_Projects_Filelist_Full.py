@@ -266,6 +266,26 @@ PDDL
   type=zip
   out=Domains/
   Domains-Planning-Domain-Definition-Language=PDDL/
+SoarSuite_9.6.0-source
+  type=zip
+  out=SoarSuite/
+  SoarSuite/Core=Core
+  SoarSuite/Java=Java
+  SoarSuite/scons=scons
+  SoarSuite/Tcl=Tcl
+  SoarSuite/PerformanceTests=PerformanceTests
+  SoarSuite/SoarCLI=SoarCLI
+  SoarSuite/UnitTests=UnitTests
+  SoarSuite/build_ios.sh=top
+  SoarSuite/build_lsb.sh=top
+  SoarSuite/build.bat=top
+  SoarSuite/SConstruct=top
+  Release-Support/pdf/SoarManual.pdf=Documentation
+  Release-Support/txt/Building_Soar.txt=Documentation
+  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
+  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
+  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
+  Release-Support/txt/license.txt=top
 SoarSuite_9.6.0
   type=multiplatform-zip
   out=SoarSuite/
@@ -289,6 +309,8 @@ SoarSuite_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swtgraphics2d.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/include=bin/include
+  Release-Support/Shuffler_Input/mac64/out/SoarUnitTests=bin/SoarUnitTests
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Release-Support/Shuffler_Input/COMPILE_DIR/out/settings.soar=bin
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
@@ -322,8 +344,6 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin/PLATFORM_DIR
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/PLATFORM_DIR
   Release-Support/Shuffler_Input/COMPILE_DIR/out/soar.EXECUTABLE=bin/PLATFORM_DIR
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/UnitTests.EXECUTABLE=bin/PLATFORM_DIR
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/svs_viewer.EXECUTABLE=bin/PLATFORM_DIR
   Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/jcommon-1.0.10.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/jfreechart-1.0.6-swt.jar=bin/java
@@ -387,10 +407,10 @@ SoarTutorial_9.6.0
   Agents-Soar_Group/water-jug-tie=Agents/water-jug-tie
   Domains-Eaters-TankSoar/agents/eaters=Agents/Eaters
   Domains-Eaters-TankSoar/agents/tanksoar=Agents/TankSoar
-  Domains-Eaters-TankSoar/config/eaters.cnf=config
-  Domains-Eaters-TankSoar/config/maps/eaters=config/maps/eaters
-  Domains-Eaters-TankSoar/config/maps/tanksoar=config/maps/tanksoar
-  Domains-Eaters-TankSoar/config/tanksoar.cnf=config
+  Domains-Eaters-TankSoar/config/eaters.cnf=bin/games
+  Domains-Eaters-TankSoar/config/tanksoar.cnf=bin/games
+  Domains-Eaters-TankSoar/config/maps/eaters=bin/games/maps/eaters
+  Domains-Eaters-TankSoar/config/maps/tanksoar=bin/games/maps/tanksoar
   Release-Support/Shuffler_Input/COMPILE_DIR/out/concrt140.dll=bin/PLATFORM_DIR^
   Release-Support/Shuffler_Input/COMPILE_DIR/out/msvcp140.dll=bin/PLATFORM_DIR^
   Release-Support/Shuffler_Input/COMPILE_DIR/out/Soar.lib=bin/PLATFORM_DIR^
@@ -398,23 +418,3 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/Tcl_sml_ClientInterface.lib=bin/PLATFORM_DIR^
   Release-Support/Shuffler_Input/COMPILE_DIR/out/vccorlib140.dll=bin/PLATFORM_DIR^
   Release-Support/Shuffler_Input/COMPILE_DIR/out/vcruntime140.dll=bin/PLATFORM_DIR^
-SoarSuite_9.6.0-source
-  type=zip
-  out=SoarSuite/
-  SoarSuite/Core=Core
-  SoarSuite/Java=Java
-  SoarSuite/scons=scons
-  SoarSuite/Tcl=Tcl
-  SoarSuite/PerformanceTests=PerformanceTests
-  SoarSuite/SoarCLI=SoarCLI
-  SoarSuite/UnitTests=UnitTests
-  SoarSuite/build_ios.sh=top
-  SoarSuite/build_lsb.sh=top
-  SoarSuite/build.bat=top
-  SoarSuite/SConstruct=top
-  Release-Support/pdf/SoarManual.pdf=Documentation
-  Release-Support/txt/Building_Soar.txt=Documentation
-  Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
-  Release-Support/txt/9.6.0_Command_Line_Options.txt=Documentation
-  Release-Support/txt/9.6.0_UI_Changes.txt=Documentation
-  Release-Support/txt/license.txt=top
