@@ -22,6 +22,7 @@ SoarSuite_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swtgraphics2d.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/settings.soar=bin
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
   Agents-Soar_Group/default=Agents/default
   Release-Support/scripts/SoarCLI.LAUNCH_EXTENSION=top
@@ -69,6 +70,7 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/jars/log4j-1.2.15.jar=bin/java
   Release-Support/Shuffler_Input/jars/stopwatch-0.4-with-deps.jar=bin/java
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/settings.soar=bin
   Release-Support/scripts/SoarCLI.LAUNCH_EXTENSION=top
   Release-Support/scripts/SoarJavaDebugger.LAUNCH_EXTENSION=top
   Release-Support/scripts/VisualSoar.LAUNCH_EXTENSION=top
