@@ -39,6 +39,6 @@ else
   fi
 fi
 
-pushd $SOAR_HOME > /dev/null
-java $FLAG -Djava.library.path="$SOAR_HOME" -jar "$SOAR_HOME/Eaters_TankSoar.jar" config/tanksoar.cnf
+pushd $THISDIR > /dev/null
+java $FLAG -Djava.library.path="$SOAR_HOME" -jar "$SOAR_HOME/Eaters_TankSoar.jar" bin/games/tanksoar.cnf
 popd > /dev/null

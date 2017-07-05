@@ -21,6 +21,8 @@ SoarSuite_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-debugger.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/soar-smljava.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swtgraphics2d.jar=bin/java
+  Release-Support/Shuffler_Input/COMPILE_DIR/out/include=bin/include
+  Release-Support/Shuffler_Input/mac64/out/SoarUnitTests=bin/SoarUnitTests
   Release-Support/Shuffler_Input/COMPILE_DIR/out/tcl=bin/tcl
   Release-Support/Shuffler_Input/COMPILE_DIR/out/settings.soar=bin
   Release-Support/Shuffler_Input/jars/VisualSoar.jar=bin
@@ -54,8 +56,6 @@ SoarTutorial_9.6.0
   Release-Support/Shuffler_Input/COMPILE_DIR/out/pkgIndex.tcl=bin/PLATFORM_DIR
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/swt.jar=bin/PLATFORM_DIR
   Release-Support/Shuffler_Input/COMPILE_DIR/out/soar.EXECUTABLE=bin/PLATFORM_DIR
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/UnitTests.EXECUTABLE=bin/PLATFORM_DIR
-  Release-Support/Shuffler_Input/COMPILE_DIR/out/svs_viewer.EXECUTABLE=bin/PLATFORM_DIR
   Release-Support/Shuffler_Input/COMPILE_DIR/out/SoarJavaDebugger.jar=bin
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/jcommon-1.0.10.jar=bin/java
   Release-Support/Shuffler_Input/COMPILE_DIR/out/java/jfreechart-1.0.6-swt.jar=bin/java
@@ -119,10 +119,10 @@ SoarTutorial_9.6.0
   Agents-Soar_Group/water-jug-tie=Agents/water-jug-tie
   Domains-Eaters-TankSoar/agents/eaters=Agents/Eaters
   Domains-Eaters-TankSoar/agents/tanksoar=Agents/TankSoar
-  Domains-Eaters-TankSoar/config/eaters.cnf=config
-  Domains-Eaters-TankSoar/config/maps/eaters=config/maps/eaters
-  Domains-Eaters-TankSoar/config/maps/tanksoar=config/maps/tanksoar
-  Domains-Eaters-TankSoar/config/tanksoar.cnf=config
+  Domains-Eaters-TankSoar/config/eaters.cnf=bin/games
+  Domains-Eaters-TankSoar/config/tanksoar.cnf=bin/games
+  Domains-Eaters-TankSoar/config/maps/eaters=bin/games/maps/eaters
+  Domains-Eaters-TankSoar/config/maps/tanksoar=bin/games/maps/tanksoar
   Release-Support/Shuffler_Input/COMPILE_DIR/out/concrt140.dll=bin/PLATFORM_DIR^
   Release-Support/Shuffler_Input/COMPILE_DIR/out/msvcp140.dll=bin/PLATFORM_DIR^
   Release-Support/Shuffler_Input/COMPILE_DIR/out/Soar.lib=bin/PLATFORM_DIR^

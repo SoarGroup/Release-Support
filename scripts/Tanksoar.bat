@@ -12,4 +12,4 @@ if not exist  %SOAR_HOME%\pkgIndex.tcl (
     del /F /Q %~dp0*.sh
 )
 
-start javaw -Djava.library.path=%SOAR_HOME% -jar bin\Eaters_TankSoar.jar config\tanksoar.cnf
+start javaw -Djava.library.path=%SOAR_HOME% -jar bin\Eaters_TankSoar.jar bin\games\tanksoar.cnf
