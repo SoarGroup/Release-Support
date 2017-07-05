@@ -667,10 +667,10 @@ held by working memory identifiers:
 
 \begin{tabularx}{\textwidth}{| l | X |} \hline
 	\bf{Predicate} &  \bf{Semantics of Predicate} \\ \hline
-	\soar{"@}  & Same LTI. Matches when the two values are working memory identifiers linked to the same LTI. \\
-	\soar{"!"@} & Different LTI.  Matches when the values are not both identifiers linked to the same LTI. \\
-	\soar{"@+} & Matches if the value is an identifier linked to some LTI. \\
-	\soar{"@-} & Matches if the value is not an identifier linked to some LTI. \\
+	\soar{@}  & Same LTI. Matches when the two values are working memory identifiers linked to the same LTI. \\
+	\soar{!@} & Different LTI.  Matches when the values are not both identifiers linked to the same LTI. \\
+	\soar{@+} & Matches if the value is an identifier linked to some LTI. \\
+	\soar{@-} & Matches if the value is not an identifier linked to some LTI. \\
 	\hline 
 \end{tabularx} 
 \vspace{10pt}
@@ -2792,10 +2792,13 @@ simulated environments, such as a flight simulator. The mechanisms by which
 Soar receives inputs and sends outputs to an external process is called
 \emph{Soar I/O}.
 
+\index{I/O!SML}
 This section describes how input and output are represented in working memory
-and in productions.  The details of designing an external process that creates the input and 
-responds to output from Soar are beyond the scope of this manual, but they are
-described \soar{\htmladdnormallink{online}{https://soar.eecs.umich.edu/articles/articles/soar-markup-language-sml}} 
+and in productions. Interfacing with a Soar agent through input and output can 
+be done using the \textit{Soar Markup Language} (SML). The details of designing 
+an external process that uses SML to create the input and respond to output from 
+Soar are beyond the scope of this manual, but they are described 
+\soar{\htmladdnormallink{online}{https://soar.eecs.umich.edu/articles/articles/soar-markup-language-sml}} 
 on the Soar website. This section is provided for the sake of Soar users who will be making
 use of a program that has already been implemented, or for those who would
 simply like to understand how I/O works in Soar.
@@ -2815,8 +2818,8 @@ viewed as Soar's motor abilities.
 
 \index{I/O!input functions}
 \index{I/O!output functions}
-\index{input functions|see{I/O!input functions}}
-\index{output functions|see{I/O!output functions}}
+\index{input functions|see{I/O}}
+\index{output functions|see{I/O}}
 Soar I/O is accomplished via \emph{input functions} and
 \emph{output functions}. Input functions are called at the 
 \emph{start}
@@ -2830,11 +2833,11 @@ is called only if changes have been made to the output-link structures in
 working memory.
 
 \index{I/O!io attribute}
-\index{io attribute|see{I/O!io attribute}}
+\index{io attribute|see{I/O}}
 \index{I/O!input links}
 \index{I/O!output links}
-\index{input links|see{I/O!input links}}
-\index{output links|see{I/O!output links}}
+\index{input links|see{I/O}}
+\index{output links|see{I/O}}
 The structures for manipulating input and output in Soar are linked
 to a predefined attribute of the
 top-level state, called the \soar{io} attribute.  The \soar{io} attribute has

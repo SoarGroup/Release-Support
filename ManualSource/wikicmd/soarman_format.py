@@ -13,17 +13,20 @@ Specifically, this script makes the following edits:
     1: Change any "\paragraph{blah:}" into "\paragraph{blah}:"
         # Having colons inside the section or paragraph name prints well in GitHub markdown. 
         # But having them outside is a hack in latex to ensure the paragraph title actually appears before ensuing tables.
-    2: Add indexes for CLI commands
+    2: Remove excessive subsection/paragraph labels, which generate latex warnings.
+        # Ex: Any section with a "Description" subsection will get a generated \label{description}.
+        # It is nonsensical for a document to have a single label point to more than one piece of text.
+    3: Add indexes for CLI commands
         # By default there are no "\index"s generated. So this script inserts indexes for each "\label" it finds that
         # begins with a soar command name. Sub commands are recognized as sub indexes (e.g., "soar init" is indexed as "{soar!init}")
         # As Soar commands change, this script will need to be updated, since the Soar commands are hardcoded. (See 'INDEX_HEADS' below)
-    3: Resize table columns for intelligent use of page space
+    4: Resize table columns for intelligent use of page space
         # The pandoc converter by default does not specify column size, and creates very skinny minipage cells for \longtables.
         # The old method was to replace all table specs with globally fixed column widths, resulting in over/underflow.
         # This script still uses this approach when no widths are otherwise provided in a table (see new_col_strs), 
         # to avoid tables that are too wide for a page.
         # However, this script now rescales default minipage table cell widths to fit a page using local text proportions.
-    4: Resize verbatim blocks
+    5: Resize verbatim blocks
         # Code formatted text in the source wiki markdown is pandoc-converted into verbatim blocks.
         # Sometimes these blocks are too wide to fit within a page.
         # This script determines how too-wide they are, and surrounds them with text-scaling code accordingly.
@@ -94,13 +97,13 @@ def get_edit_list(pathname):
                 #   Colons outside headers are a hack for ensuring that headers appear before subsequent tables.
                 index = line.find(":}\\label{")
                 if index != -1:
-                    edit_list[lnum].append( (lnum, line[index:-1], '}:') ) #line[index+1:-1]+':') )
-                else:
-                    # Remove useless reused labels (separate to cheaply avoid conflict with colon removal)
-                    index = str_find_list(line, BAD_LABELS)
-                    if index != -1:
-                        index2 = line.find('}',index)
-                        edit_list[lnum].append( (lnum, line[index:index2+1], '') )
+                    edit_list[lnum].append( (lnum, line[index:index+2], '}:') ) #line[index+1:-1]+':') )
+                
+                # Remove useless reused labels (separate to cheaply avoid conflict with colon removal)
+                index = str_find_list(line, BAD_LABELS)
+                if index != -1:
+                    index2 = line.find('}',index)
+                    edit_list[lnum].append( (lnum, line[index:index2+1], '') )
                         
                 # Labels: Make index markers for CLI commands
                 index = line.find("\\label{")
