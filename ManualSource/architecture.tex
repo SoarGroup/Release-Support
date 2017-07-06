@@ -290,7 +290,6 @@ The attribute of an augmentation is usually a constant, such as ``\soar{name}'' 
 The value of an augmentation may be either a constant, such as ``\soar{red}'', or an identifier, such as \soar{06}. When the value is an identifier, it refers to an object in working memory that may have additional substructure. In semantic net terms, if a value is a constant, then it is a terminal node with no links; if it is an identifier it is a nonterminal node.
 
 \index{multi-valued attribute}
-\index{multi-attribute|see{multi-valued attribute}}
 One key concept of Soar is that working memory is a set, which means that there can never be two elements in working memory at the same time that have the same identifier-attribute-value triple (this is prevented by the architecture). However, it is possible to have multiple working memory elements that have the same identifier and attribute, but that each have different values.  When this happens, we say the attribute is a \emph{multi-valued attribute}, which is often shortened to be \emph{multi-attribute}.
 
 An object is defined by its augmentations and \emph{not} by its identifier. An identifier is simply a label or pointer to the object. On subsequent runs of the same Soar program, there may be an object with exactly the same augmentations, but a different identifier, and the program will still reason about the object appropriately. Identifiers are internal markers for Soar; they can appear in working memory, but they never appear in a production.
@@ -326,7 +325,7 @@ The elements in working memory arise from one of four sources:
 
 The elements in working memory are removed in six different ways:
 
-\index{reject preference}
+\index{preference!reject(-)}
 \index{i-support}
 \index{decision procedure}
 \index{I/O}
@@ -503,8 +502,8 @@ Only a single value can be selected as the current operator, that is, all values
 \vspace{-8pt}
 
 \index{preference!worst(\textless)}
-\index{"<|see{preference!worst}}
-\index{worst preference|see{preference!worst}}
+\index{"<|see{preference}}
+\index{worst preference|see{preference}}
 \item [Worst ($<$)] 
 	A \soar{worst} preference states that the value should be selected only if there are no alternatives.  It allows for a simple type of default specification. The semantics of the \soar{worst} preference are similar to those for the \soar{best} preference.
 \vspace{-8pt}
@@ -648,7 +647,6 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	\item[ProhibitFilter ($\sim$) ] This filter removes the candidates that have prohibit preferences in memory. The rest of the candidates are passed to the RejectFilter.
 	
 	\index{preference!reject(-)}
-	\index{reject preference(-)}
 	\item[RejectFilter ($-$) ] This filter removes the candidates that have reject preferences in memory. 
 	
 	\index{-}
@@ -660,9 +658,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 	\end{itemize}
 	
 	\index{preference!worse(\textless \textit{val})}
-	\index{worse preference|see{preference}}
 	\index{preference!better(\textgreater \textit{val})}
-	\index{better preference|see{preference}}
 	\item[BetterWorseFilter ($>$), ($<$) ] This filter removes any candidates that are worse than another candidate.
 	
 	\index{-}
@@ -1011,7 +1007,7 @@ A production must meet the following two requirements to have o-supported action
 \end{enumerate}
 
 In condition 1, the variable \soar{<s>} must be bound to a state identifier.
-In condition 2, the variable \soar{<s>} must be bound to the lowest state identifier. That is to say, each (positive) condition on the LHS takes the form \soar{(id \^{}attr value)}, some of these id's match state identifiers, and the system looks for the deepest matched state identifier. The tested current operator must be on this state. For example, in this production,
+In condition 2, the variable \soar{<s>} must be bound to the lowest state identifier. That is to say, each (positive) condition on the LHS takes the form \soar{(id \carat attr value)}, some of these id's match state identifiers, and the system looks for the deepest matched state identifier. The tested current operator must be on this state. For example, in this production,
 
 \begin{verbatim}
 sp {elaborate*state*operator*name
@@ -1022,7 +1018,7 @@ sp {elaborate*state*operator*name
     (<s> ^name something)}
 \end{verbatim}
 
-the RHS action gets i-support. Of course, the state bound to \soar{<s>} is destroyed when \soar{(<s1> \^{}operator <o>)} retracts, so o-support would make little difference. On the other hand, this production,
+the RHS action gets i-support. Of course, the state bound to \soar{<s>} is destroyed when \soar{(<s1> \carat operator <o>)} retracts, so o-support would make little difference. On the other hand, this production,
 
 \begin{verbatim}
 sp {operator*superstate*application
@@ -1036,7 +1032,7 @@ sp {operator*superstate*application
 gives o-support to its RHS action, which remains after the substate bound to \soar{<s>} is destroyed. 
 
 An extension of condition 1 is that operator augmentations should always receive i-support (augmentations define the proposed operator). Soar has been written to recognize augmentations directly off the operator \\
-(ie, \soar{(<o> \^{}augmentation value)}), and to attempt to give them i-support. However, what should be done about a production that simultaneously tests an operator, doesn't propose an operator, adds an operator augmentation, and adds a non-operator augmentation? For example:
+(ie, \soar{(<o> \carat augmentation value)}), and to attempt to give them i-support. However, what should be done about a production that simultaneously tests an operator, doesn't propose an operator, adds an operator augmentation, and adds a non-operator augmentation? For example:
 
 \begin{verbatim}
 sp {operator*augmentation*application

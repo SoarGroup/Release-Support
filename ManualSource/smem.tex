@@ -72,7 +72,7 @@ Long-term identifiers themselves never exist in working memory. Rather, instance
 Each time an agent loads an instance of a certain LTI from semantic memory into working memory using queries or retrievals, the instance created will always be a new STI.
 
 \subsubsection{Procedural Memory}
-Soar productions may use various conditions to test whether an STI is associated with an LTI or whether two STIs are linked to the same LTI (see Section \ref{SYNTAX-pm-predicates} on page \pageref{SYNTAX-pm-predicates}).
+Soar productions may use various conditions to test whether an STI is associated with an LTI or whether two STIs are linked to the same LTI (see Section \ref{SYNTAX-pm-lhs-predicates} on page \pageref{SYNTAX-pm-lhs-predicates}).
 LTI names (e.g. {@}6) may \emph{not} appear in the action side of productions.
 
 \subsubsection{Episodic Memory}
@@ -102,17 +102,17 @@ Storage is guaranteed to succeed and a status WME will be created, where the ide
 \end{verbatim}
 
 If the identifier used in the store command is not linked to any existing LTIs, a new LTI will be created in smem and the stored STI will be linked to it. If the identifier used in the store command is already linked to an LTI, the store will overwrite that long-term memory.
-For example, if LTI \soar{{@}5} had augmentations \soar{\carat A do \carat B re \carat C mi}, and a \soar{store} command used short-term identifier \soar{L35} which was linked to \soar{{@}5} but had only the augmentation \soar{\carat D fa}, the LTI \soar{{@}5} would be changed to only have \soar{\carat D fa}.
+For example, if LTI \soar{{@}5} had augmentations \soar{\^{}A do \^{}B re \^{}C mi}, and a \soar{store} command used short-term identifier \soar{L35} which was linked to \soar{{@}5} but had only the augmentation \soar{\^{}D fa}, the LTI \soar{{@}5} would be changed to only have \soar{\^{}D fa}.
 
 \subsection{Store-new command}
 
-The \soar{\carat store-new} command structure is just like the \soar{\carat store} command, except that smem will always store the given memory as an entirely new structure, regardless of whether the given STI was linked to an existing LTI or not. Any STIs that don't already have links will get linked to the newly created LTIs. But if a stored STI was already linked to some LTI, Soar will not re-link it to the newly created LTI. 
+The \soar{\^{}store-new} command structure is just like the \soar{\^{}store} command, except that smem will always store the given memory as an entirely new structure, regardless of whether the given STI was linked to an existing LTI or not. Any STIs that don't already have links will get linked to the newly created LTIs. But if a stored STI was already linked to some LTI, Soar will not re-link it to the newly created LTI. 
 
-If this behavior is not desired, the agent can add a \soar{\carat link-to-new-LTM yes} augmentation to override this behavior. One use for this setting is to allow chunking to backtrace through a stored memory in a manner that will be consistent with a later state of memory when the newly stored LTI is retrieved again.
+If this behavior is not desired, the agent can add a \soar{\^{}link-to-new-LTM yes} augmentation to override this behavior. One use for this setting is to allow chunking to backtrace through a stored memory in a manner that will be consistent with a later state of memory when the newly stored LTI is retrieved again.
 
 \subsection{User-Initiated Storage}
 Semantic memory provides agent designers the ability to store semantic knowledge via the \soarb{add} switch of the \soarb{smem} command (see Section \ref{smem} on page \pageref{smem}).  
-The format of the command is nearly identical to the working memory manipulation components of the RHS of a production (i.e. no RHS-functions; see Section \ref{SYNTAX-pm-action} on page \pageref{SYNTAX-pm-action}).  
+The format of the command is nearly identical to the working memory manipulation components of the RHS of a production (i.e. no RHS-functions; see Section \ref{SYNTAX-pm-rhs} on page \pageref{SYNTAX-pm-rhs}).  
 For instance:
 
 \begin{verbatim}

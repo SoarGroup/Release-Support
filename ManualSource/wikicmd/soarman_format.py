@@ -116,6 +116,7 @@ def get_edit_list(pathname):
                     endind = newstr.find("!")
                     if endind == -1:
                         endind = len(newstr)
+                    newstr = newstr[:endind] + " (command)" + newstr[endind:]
                     if newstr[:endind] in INDEX_HEADS:
                         edit_list[lnum].append( (lnum, oldstr, oldstr+"\\index{" + newstr + "}") )
                 
