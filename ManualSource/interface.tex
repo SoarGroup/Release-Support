@@ -181,7 +181,7 @@ The specific commands described in this section are:
 
 \soar{sp} is of course used in virtually all Soar programming. Of the remaining commands, \soar{production matches} and \soar{production memory-usage} are most often used. \soar{production find} is especially useful when the number of productions loaded is high. \soar{production firing-counts} is used to see if how many times certain rules fire. \soar{production watch} is related to \soar{wm watch}, but applies only to specific, named productions.
 
-\divider
+\subdivider
 \input{wikicmd/tex/sp}
 
 \divider
@@ -220,7 +220,7 @@ Of these commands, \textbf{print} is the most often used (and the most complex).
 \textbf{print --gds} is useful for examining the goal dependency set when subgoals seem to be disappearing unexpectedly.
 \textbf{preferences} is used to examine which candidate operators have been proposed. 
 
-\divider 
+\subdivider 
 \input{wikicmd/tex/print}
 
 \divider 
@@ -248,7 +248,7 @@ The specific commands described in this section are:
 	\end{description}
 \end{quote}
 
-\divider 
+\subdivider 
 \input{wikicmd/tex/chunk}
 
 \divider 
@@ -270,7 +270,7 @@ The specific commands described in this section are:
 	\end{description}
 \end{quote}
 
-\divider 
+\subdivider 
 \input{wikicmd/tex/smem}
 
 \divider 
@@ -314,9 +314,10 @@ The specific commands described in this section are:
 	\end{description}
 \end{quote}
 
-Of these commands, \soar{trace} is the most often used (and the most complex). \soar{output print-depth} is related to the \soar{print} command. \soar{stats} is useful for understanding how much work Soar is doing.
+Of these commands, \soar{trace} is the most often used (and the most complex). \\
+\soar{output print-depth} is related to the \soar{print} command. \soar{stats} is useful for understanding how much work Soar is doing.
 
-\divider 
+\subdivider 
 \input{wikicmd/tex/trace}
 
 \divider 
@@ -374,7 +375,7 @@ This section describes commands which interact in one way or another with operat
 
 The \soar{load file} command, previously known as \soar{source}, is used for nearly every Soar program. The directory functions are important to understand so that users can navigate directories/folders to load/save the files of interest. Saving and loading percept streams are used mainly when Soar needs to interact with an external environment. Soar applications that include a graphical interface or other simulation environment will often require the use of \soar{echo}. Users might take advantage of these commands when debugging agents, but care should be used in adding and removing WMEs this way as they do not fall under Soar's truth maintenance system.
 
-\divider 
+\subdivider 
 \input{wikicmd/tex/file-system}
 
 \divider 
