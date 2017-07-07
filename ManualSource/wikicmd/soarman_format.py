@@ -20,13 +20,15 @@ Specifically, this script makes the following edits:
         # By default there are no "\index"s generated. So this script inserts indexes for each "\label" it finds that
         # begins with a soar command name. Sub commands are recognized as sub indexes (e.g., "soar init" is indexed as "{soar!init}")
         # As Soar commands change, this script will need to be updated, since the Soar commands are hardcoded. (See 'INDEX_HEADS' below)
-    4: Resize table columns for intelligent use of page space
+    4: Replace special unsupported characters with the corresponding latex commands
+        # For example, the unicode character λ is converted to $\lambda$.
+    5: Resize table columns for intelligent use of page space
         # The pandoc converter by default does not specify column size, and creates very skinny minipage cells for \longtables.
         # The old method was to replace all table specs with globally fixed column widths, resulting in over/underflow.
         # This script still uses this approach when no widths are otherwise provided in a table (see new_col_strs), 
         # to avoid tables that are too wide for a page.
         # However, this script now rescales default minipage table cell widths to fit a page using local text proportions.
-    5: Resize verbatim blocks
+    6: Resize verbatim blocks
         # Code formatted text in the source wiki markdown is pandoc-converted into verbatim blocks.
         # Sometimes these blocks are too wide to fit within a page.
         # This script determines how too-wide they are, and surrounds them with text-scaling code accordingly.
@@ -65,6 +67,12 @@ def get_edit_list(pathname):
     # These are the prefixes of section labels to recognize for creating index markers.
     INDEX_HEADS = ['soar', 'gp', 'help', 'run', 'sp', 'preferences', 'production', 'print', 'wm', 'echo', 'output','stats', 'trace', 
                    'visualize', 'chunk', 'explain', 'decide', 'epmem', 'rl', 'smem', 'svs', 'load', 'save', 'alias', 'debug']
+    
+    # These are special characters that latex doesn't support by defult (unless we upgrade to unicode?) and need replacement.
+    # NOTE: The λ replacement assumes that the replaced text is not already in a math environment.
+    #       This shouldn't ever be an issue, since the source GitHub markdown format doesn't support math environments anyway, 
+    #       and thus won't have any in the converted .tex files, but it should be noted in markdown ever changes that.
+    CHAR_REPLACEMENTS = {'λ':'$\lambda$'}
     
     # The old pandoc-generated table specs. More 'l's denote more columns
     OLD_COL_STRS = ['@{}ll@{}', '@{}lll@{}', '@{}llll@{}']
@@ -119,6 +127,12 @@ def get_edit_list(pathname):
                     newstr = newstr[:endind] + " (command)" + newstr[endind:]
                     if newstr[:endind] in INDEX_HEADS:
                         edit_list[lnum].append( (lnum, oldstr, oldstr+"\\index{" + newstr + "}") )
+                
+                # Single-character replacements
+                for key, value in CHAR_REPLACEMENTS.iteritems():
+                    index = line.find(key)
+                    if index != -1:
+                        edit_list[lnum].append( (lnum, key, value) )
                 
                 ### SCANNING FIXES:
                 
@@ -228,7 +242,7 @@ def apply_edits(pathname, edit_list):
         
         # Apply any current edits
         for edit in active_edits:
-            line = line.replace(edit[1], edit[2], 1)
+            line = line.replace(edit[1], edit[2])
             
         # Remove completed edits
         active_edits = set(filter(lambda x:x[0] > lnum, active_edits))
