@@ -368,6 +368,7 @@ In order to use spreading activation, use the following command:
 smem --set spreading on
 \end{verbatim}
 
+\index{working memory activation}
 Also, spreading activation can make use of working memory activation for adjusting edge weights and for providing nonuniform initial magnitude of spreading for sources of spread. This functionality is optional. To enable the updating of edge-weights, use the command: 
 
 \begin{verbatim}
@@ -419,6 +420,7 @@ Depth can incur a large cost depending on the specified depth and the structures
 
 \section{Performance}
 \label{SMEM-perf}
+\index{smem!performance}
 
 Initial empirical results with toy agents show that semantic memory queries carry up to a 40\% overhead as compared to comparable rete matching.  
 However, the retrieval mechanism implements some basic query optimization: statistics are maintained about all stored knowledge.  
