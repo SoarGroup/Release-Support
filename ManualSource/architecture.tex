@@ -15,7 +15,7 @@ This chapter gives an abstract description of Soar.  It starts by giving an over
 \index{operator}
 \index{goal}
 
-The design of Soar is based on the hypothesis that all deliberate \textit{goal}-oriented behavior can be cast as the selection and application of \textit{operators} to a \textit{state}. A \soarb{state} is a representation of the current problem-solving situation; an \soarb{operator} transforms a state (makes changes to the representation); and a \soarb{goal} is a desired outcome of the problem-solving activity.
+The design of Soar is based on the hypothesis that all deliberate \textit{goal}-oriented behavior can be cast as the selection and application of \textit{operators} to a \textit{state}. A \textbf{state} is a representation of the current problem-solving situation; an \textbf{operator} transforms a state (makes changes to the representation); and a \textbf{goal} is a desired outcome of the problem-solving activity.
 
 As Soar runs, it is continually trying to apply the current operator and select the next operator (a state can have only one operator at a time), until the goal has been achieved. The selection and application of operators is illustrated in Figure \ref{fig:select-apply}. 
 
@@ -25,13 +25,13 @@ As Soar runs, it is continually trying to apply the current operator and select 
 	\label{fig:select-apply}
 \end{figure}
 
-Soar has separate memories (and different representations) for descriptions of its current situation and its long-term procedural knowledge. In Soar, the current situation, including data from sensors, results of intermediate inferences, active goals, and active operators is held in \soarb{working memory}.  Working memory is organized as \emph{objects}. Objects are described in terms of their \emph{attributes}; the values of the attributes may correspond to sub-objects, so the description of the state can have a hierarchical organization. (This need not be a strict hierarchy; for example, there's nothing to prevent two objects from being ``substructure'' of each other.)
+Soar has separate memories (and different representations) for descriptions of its current situation and its long-term procedural knowledge. In Soar, the current situation, including data from sensors, results of intermediate inferences, active goals, and active operators is held in \textbf{working memory}.  Working memory is organized as \emph{objects}. Objects are described in terms of their \emph{attributes}; the values of the attributes may correspond to sub-objects, so the description of the state can have a hierarchical organization. (This need not be a strict hierarchy; for example, there's nothing to prevent two objects from being ``substructure'' of each other.)
 \index{working memory}
 \index{object}
 \index{attribute}
 
 \index{production memory}
-Long-term procedural knowledge is held in \soarb{production memory}. Procedural knowledge specifies how to respond to different
+Long-term procedural knowledge is held in \textbf{production memory}. Procedural knowledge specifies how to respond to different
 situations in working memory, can be thought of as the program for Soar. The Soar architecture cannot solve any problems without the addition of long-term procedural knowledge.  (Note the distinction between the ``Soar architecture'' and the ``Soar program'': The former refers to the system described in this manual, common to all users, and the latter refers to knowledge added to the architecture.)
 
 A Soar program contains the knowledge to be used for solving a specific task (or set of tasks), including information about how to select and apply operators to transform the states of the problem, and a means of recognizing that the goal has been achieved.  
@@ -72,14 +72,14 @@ Note that state elaborations can indirectly affect operator selection and applic
 These problem-solving functions are the primitives for generating behavior that is relevant to the current situation: elaborating the state, proposing candidate operators, comparing the candidates, and applying the operator by modifying the state. These functions are driven by the knowledge encoded in a Soar program.
  
 \index{production}
-Soar represents that knowledge as \soarb{production rules}. Production rules are similar to ``if-then'' statements in conventional programming languages. (For example, a production might say something like ``if there are two blocks on the table, then suggest an operator to move one block on top of the other block''). The ``if'' part of the production is called its \textit{conditions} and the ``then'' part of the production is called its \textit{actions}. When the conditions are met in the current situation as defined by working memory, the production is \emph{matched} and it will \emph{fire}, which means that its actions are executed, making changes to working memory.
+Soar represents that knowledge as \textbf{production rules}. Production rules are similar to ``if-then'' statements in conventional programming languages. (For example, a production might say something like ``if there are two blocks on the table, then suggest an operator to move one block on top of the other block''). The ``if'' part of the production is called its \textit{conditions} and the ``then'' part of the production is called its \textit{actions}. When the conditions are met in the current situation as defined by working memory, the production is \emph{matched} and it will \emph{fire}, which means that its actions are executed, making changes to working memory.
 
 \index{decision procedure}
 \index{decision cycle}
-Selecting the current operator, involves making a \soarb{decision} once sufficient knowledge has been retrieved. This is performed by Soar's \emph{decision procedure}, which is a fixed procedure that interprets \emph{preferences} that have been created by the knowledge retrieval functions. The knowledge-retrieval and decision-making functions combine to form Soar's \emph{decision cycle}.
+Selecting the current operator, involves making a \textbf{decision} once sufficient knowledge has been retrieved. This is performed by Soar's \emph{decision procedure}, which is a fixed procedure that interprets \emph{preferences} that have been created by the knowledge retrieval functions. The knowledge-retrieval and decision-making functions combine to form Soar's \emph{decision cycle}.
 
 \index{impasse}
-When the knowledge to perform the problem-solving functions is not directly available in productions, Soar is unable to make progress and reaches an \soarb{impasse}.  There are three types of possible impasses in Soar:
+When the knowledge to perform the problem-solving functions is not directly available in productions, Soar is unable to make progress and reaches an \textbf{impasse}.  There are three types of possible impasses in Soar:
 
 \vspace{-8pt}
 \begin{enumerate}
@@ -91,7 +91,7 @@ When the knowledge to perform the problem-solving functions is not directly avai
 	\vspace{-6pt}
 \end{enumerate}
 
-In response to an impasse, the Soar architecture creates a \soarb{substate} in which operators can be selected and applied to generate or deliberately retrieve the knowledge that was not directly available; the goal in the substate is to resolve the impasse. For example, in a substate, a Soar program may do a lookahead search to compare candidate operators if comparison knowledge is not directly available.  Impasses and substates are described in more detail in Section \ref{ARCH-impasses}.
+In response to an impasse, the Soar architecture creates a \textbf{substate} in which operators can be selected and applied to generate or deliberately retrieve the knowledge that was not directly available; the goal in the substate is to resolve the impasse. For example, in a substate, a Soar program may do a lookahead search to compare candidate operators if comparison knowledge is not directly available.  Impasses and substates are described in more detail in Section \ref{ARCH-impasses}.
 \index{substate|see{subgoal}}
 
 
@@ -159,7 +159,7 @@ For example, the goal in our blocks-world task is represented implicitly in the 
 \subsection{Proposing candidate operators}
 \index{operator!proposal}
 
-As a first step in selecting an operator, one or more candidate operators are \soarb{proposed}.  Operators are proposed by rules that test features of the current state.  When the blocks-world task is run, the Soar program will propose six distinct (but similar) operators for the initial state as illustrated in Figure \ref{fig:proposal}. These operators correspond to the six different actions that are possible given the initial state.
+As a first step in selecting an operator, one or more candidate operators are \textbf{proposed}.  Operators are proposed by rules that test features of the current state.  When the blocks-world task is run, the Soar program will propose six distinct (but similar) operators for the initial state as illustrated in Figure \ref{fig:proposal}. These operators correspond to the six different actions that are possible given the initial state.
 
 \begin{figure}
 	\insertfigure{blocks-proposal}{2.5in}
@@ -174,14 +174,14 @@ As a first step in selecting an operator, one or more candidate operators are \s
 \index{preference}
 \index{preference memory}
 
-The second step Soar takes in selecting an operator is to evaluate or compare the candidate operators. In Soar, this is done via rules that test the proposed operators and the current state, and then create \soarb{preferences} (stored in \emph{preference memory}).  Preferences assert the relative or absolute merits of the candidate operators. For example, a preference may say that operator A is a ``better'' choice than operator B at this particular time, or a preference may say that operator A is the ``best'' thing to do at this particular time. Preferences are discussed in detail in section \ref{PREFERENCES}. 
+The second step Soar takes in selecting an operator is to evaluate or compare the candidate operators. In Soar, this is done via rules that test the proposed operators and the current state, and then create \textbf{preferences} (stored in \emph{preference memory}).  Preferences assert the relative or absolute merits of the candidate operators. For example, a preference may say that operator A is a ``better'' choice than operator B at this particular time, or a preference may say that operator A is the ``best'' thing to do at this particular time. Preferences are discussed in detail in section \ref{PREFERENCES}. 
 
 % ----------------------------------------------------------------------------
 \subsection{Selecting a single operator: Decision}
 \index{operator!selection}
 \index{decision procedure}
 
-Soar attempts to select a single operator as a \soarb{decision}, based on the preferences available for the candidate operators. There are four different situations that may arise:
+Soar attempts to select a single operator as a decision, based on the preferences available for the candidate operators. There are four different situations that may arise:
 
 \vspace{-8pt}
 \begin{enumerate}
@@ -202,7 +202,7 @@ In our blocks-world example, the second case holds, and Soar can select one of t
 \subsection{Applying the operator}
 \index{operator!application}
 
-An operator \soarb{applies} by making changes to the state; the specific changes that are appropriate depend on the operator and the current state.
+An operator \textbf{applies} by making changes to the state; the specific changes that are appropriate depend on the operator and the current state.
 
 \index{I/O}
 \index{problem solving}
@@ -234,7 +234,7 @@ The blocks-world task could also be implemented using an external simulator. In 
 \subsection{Making inferences about the state}
 \index{elaboration}
 
-Making monotonic inferences about the state is the other role that Soar long-term procedural knowledge may fulfill. Such \soarb{elaboration} knowledge can simplify the encoding of operators because entailments of a set of core features of a state do not have to be explicitly included in application of the operator.  In Soar, these inferences will be automatically retracted when the situation changes such that the inference no longer holds.
+Making monotonic inferences about the state is the other role that Soar long-term procedural knowledge may fulfill. Such \textbf{elaboration} knowledge can simplify the encoding of operators because entailments of a set of core features of a state do not have to be explicitly included in application of the operator.  In Soar, these inferences will be automatically retracted when the situation changes such that the inference no longer holds.
 
 For instance, our example blocks-world task uses an elaboration to keep track of whether or not a block is ``clear''. The elaboration tests for the absence of a block that is ``on top'' of a particular block; if there is no such ``on top'', the block is ``clear''. When an operator application creates a new ``on top'', the corresponding elaboration retracts, and the block is no longer ``clear''.
 
@@ -272,7 +272,7 @@ Soar represents the current problem-solving situation in its \emph{working memor
 \index{identifier}
 \index{attribute}
 \index{value}
-Working memory contains elements called working memory elements, or WMEs for short. Each WME contains a very specific piece of information; for example, a WME might say that ``B1 is a block''.  Several WMEs collectively may provide more information about the same \textit{object}, for example, ``B1 is a block'', ``B1 is named A'', ``B1 is on the table'', etc. These WMEs are related because they are all contributing to the description of something that is internally known to Soar as ``B1''. B1 is called an \soarbit{identifier}; the group of WMEs that share this identifier are referred to as an \textit{object} in working memory.  Each WME describes a different \soarbit{attribute} of the object, for example, its name or type or location; each \textit{attribute} has a \soarbit{value} associated with it, for example, the name is A, the type is block, and the position is on the table. Therefore, each WME is an identifier-attribute-value triple, and all WMEs with the same identifier are part of the same object. 
+Working memory contains elements called working memory elements, or WMEs for short. Each WME contains a very specific piece of information; for example, a WME might say that ``B1 is a block''.  Several WMEs collectively may provide more information about the same \textit{object}, for example, ``B1 is a block'', ``B1 is named A'', ``B1 is on the table'', etc. These WMEs are related because they are all contributing to the description of something that is internally known to Soar as ``B1''. B1 is called an \textbf{\textit{identifier}}; the group of WMEs that share this identifier are referred to as an \textit{object} in working memory.  Each WME describes a different \textbf{\textit{attribute}} of the object, for example, its name or type or location; each \textit{attribute} has a \textbf{\textit{value}} associated with it, for example, the name is A, the type is block, and the position is on the table. Therefore, each WME is an identifier-attribute-value triple, and all WMEs with the same identifier are part of the same object. 
 
 \index{object}
 \index{working memory!object|see{object}}
@@ -364,7 +364,7 @@ Preferences are held in a separate \emph{preference memory} where they cannot be
 \end{figure}
 
 \index{production!firing}
-Soar represents long-term procedural knowledge as \soarb{productions} that are stored in \emph{production memory}, illustrated in Figure \ref{fig:ab-prodmem}. Each production has a set of conditions and a set of actions.  If the conditions of a production match working memory, the production \emph{fires}, and the actions are performed.
+Soar represents long-term procedural knowledge as \textbf{productions} that are stored in \emph{production memory}, illustrated in Figure \ref{fig:ab-prodmem}. Each production has a set of conditions and a set of actions.  If the conditions of a production match working memory, the production \emph{fires}, and the actions are performed.
 
 \subsection{The structure of a production}
 \label{ARCH-pm-structure}
@@ -449,7 +449,7 @@ During productions matching, all productions that have their conditions met fire
 \index{preference}
 \index{preference memory}
 
-The selection of the current operator is determined by the \soarb{preferences} in \emph{preference memory}. Preferences are suggestions or imperatives about the current operator, or information about how suggested operators compare to other operators.  Preferences refer to operators by using the identifier of a working memory element that stands for the operator. After preferences have been created for a state, the decision procedure evaluates them to select the current operator for that state.
+The selection of the current operator is determined by the \textbf{preferences} in \emph{preference memory}. Preferences are suggestions or imperatives about the current operator, or information about how suggested operators compare to other operators.  Preferences refer to operators by using the identifier of a working memory element that stands for the operator. After preferences have been created for a state, the decision procedure evaluates them to select the current operator for that state.
 
 For an operator to be selected, there will be at least one preference for it, specifically, a preference to say that the value is a candidate for the operator attribute of a state (this is done with either an ``\soar{acceptable}'' or ``\soar{require}'' preference). There may also be others, for example to say that the value is ``best''.
 
@@ -491,7 +491,7 @@ Only a single value can be selected as the current operator, that is, all values
 \index{"<|see{preference}}
 \index{worse preference|see{preference}}
 \item [Better ($>$ \emph{value}), Worse ($<$ \emph{value})] 
-	A \soar{better} or \soar{worse} preference states, for the two values involved, that one value should not be selected if the other value is a candidate. \soar{Better} an         \soar{worse} allow for the creation of a partial ordering between candidate values. \soar{Better} and \soar{worse} are simple inverses of each other, so that \soar{A} better than \soar{B} is equivalent to \soar{B} worse than \soar{A}.
+	A \soar{better} or \soar{worse} preference states, for the two values involved, that one value should not be selected if the other value is a candidate. \soar{Better} and \soar{worse} allow for the creation of a partial ordering between candidate values. \soar{Better} and \soar{worse} are simple inverses of each other, so that \soar{A} better than \soar{B} is equivalent to \soar{B} worse than \soar{A}.
 \vspace{-8pt}
 
 \index{preference!best(\textgreater)}
@@ -708,7 +708,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 \index{quiescence}
 \index{elaboration cycle}
 
-The execution of a Soar program proceeds through a number of \soarb{decision cycles}. Each cycle has five phases:
+The execution of a Soar program proceeds through a number of \textbf{decision cycles}. Each cycle has five phases:
 
 \begin{enumerate} 
 	\item \textbf{Input}: 
@@ -725,7 +725,7 @@ The execution of a Soar program proceeds through a number of \soarb{decision cyc
 
 The cycles continue until the halt action is issued from the Soar program (as the action of a production) or until Soar is interrupted by the user.
 
-An important aspect of productions in Soar to keep in mind is that all productions will always fire whenever their conditions are met, and retract whenever their conditions are no longer met. The exact details of this process are shown in Figure \ref{fig:decisioncycle}. The \emph{Proposal} and \emph{Application} phases described above are both composed of as many \soarb{elaboration cycles} as are necessary to reach quiescence. In each elaboration cycle, all matching productions fire and the working memory changes or operator preferences described through their actions are made. After each elaboration cycle, if the working memory changes just made change the set of matching productions, another cycle ensues. This repeats until the set of matching rules remains unchanged, a situation called \soarb{quiescence}.
+An important aspect of productions in Soar to keep in mind is that all productions will always fire whenever their conditions are met, and retract whenever their conditions are no longer met. The exact details of this process are shown in Figure \ref{fig:decisioncycle}. The \emph{Proposal} and \emph{Application} phases described above are both composed of as many \textbf{elaboration cycles} as are necessary to reach quiescence. In each elaboration cycle, all matching productions fire and the working memory changes or operator preferences described through their actions are made. After each elaboration cycle, if the working memory changes just made change the set of matching productions, another cycle ensues. This repeats until the set of matching rules remains unchanged, a situation called \textbf{quiescence}.
 
 
 \begin{figure}
@@ -860,12 +860,12 @@ The impasse is detected \textit{during} the selection of the operator, but happe
 % ----------------------------------------------------------------------------
 \subsection{Creating New States}
 
-Soar handles these inconsistencies by creating a new state, called a \soarb{substate} in which the goal of the problem solving is to resolve the impasse.  Thus, in the substate, operators will be selected and applied in an attempt either to discover which of the tied operators should be selected, or to apply the selected operator piece by piece.  The substate is often called a \emph{subgoal} because it exists to resolve the impasse, but is sometimes called a substate because the representation of the subgoal in Soar is as a state.
+Soar handles these inconsistencies by creating a new state, called a \textbf{substate} in which the goal of the problem solving is to resolve the impasse.  Thus, in the substate, operators will be selected and applied in an attempt either to discover which of the tied operators should be selected, or to apply the selected operator piece by piece.  The substate is often called a \emph{subgoal} because it exists to resolve the impasse, but is sometimes called a substate because the representation of the subgoal in Soar is as a state.
 \index{subgoal}
 \index{subgoal|see{goal}}
 \index{impasse}
 
-The initial state in the subgoal contains a complete description of the cause of the impasse, such as the operators that could not be decided among (or that there were no operators proposed) and the state that the impasse arose in. From the perspective of the new state, the latter is called the \soarb{superstate}. Thus, the superstate is part of the substructure of each state, represented by the Soar architecture using the \soar{superstate} attribute. (The initial state, created in the 0th decision cycle, contains a \soar{superstate} attribute with the value of \soar{nil} --- the top-level state has no superstate.)
+The initial state in the subgoal contains a complete description of the cause of the impasse, such as the operators that could not be decided among (or that there were no operators proposed) and the state that the impasse arose in. From the perspective of the new state, the latter is called the \textbf{superstate}. Thus, the superstate is part of the substructure of each state, represented by the Soar architecture using the \soar{superstate} attribute. (The initial state, created in the 0th decision cycle, contains a \soar{superstate} attribute with the value of \soar{nil} --- the top-level state has no superstate.)
 \index{superstate|see{goal}}
 \index{superstate}
 
@@ -892,7 +892,7 @@ Soar continually attempts to retrieve knowledge relevant to all goals in the sub
 \index{goal!result|see{result}}
 \index{result}
 
-In order to resolve impasses, subgoals must generate results that allow the problem solving at higher levels to proceed.  The \soarb{results} of a subgoal are the working memory elements and preferences that were created in the substate, and that are also linked directly or indirectly to a superstate (\emph{any} superstate in the stack). A preference or working memory element is said to be created in a state if the production that created it tested that state and this is the most recent state that the production tested. Thus, if a production tests multiple states, the preferences and working memory elements in its actions are considered to be created in the most recent of those states (the lowest-level state) and is not considered to have been created in the other states. The architecture automatically detects if a preference or working memory element created in a substate is also linked to a superstate.
+In order to resolve impasses, subgoals must generate results that allow the problem solving at higher levels to proceed.  The \textbf{results} of a subgoal are the working memory elements and preferences that were created in the substate, and that are also linked directly or indirectly to a superstate (\emph{any} superstate in the stack). A preference or working memory element is said to be created in a state if the production that created it tested that state and this is the most recent state that the production tested. Thus, if a production tests multiple states, the preferences and working memory elements in its actions are considered to be created in the most recent of those states (the lowest-level state) and is not considered to have been created in the other states. The architecture automatically detects if a preference or working memory element created in a substate is also linked to a superstate.
 
 These working memory elements and preferences will not be removed when the impasse is resolved because they are still linked to a superstate, and therefore, they are called the \textit{results of the subgoal}.  A result has either i-support or o-support; the determination of support is described below.
 
@@ -939,7 +939,7 @@ whereas WMEs with \textit{o-support} (created through applying an operator) pers
 
 Some results receive i-support, while others receive o-support.  The type of support received by a result is determined by the function it plays in the superstate, and not the function it played in the state in which it was created. For example, a result might be created through operator application in the state that created it; however, it might only be a state elaboration in the superstate. The first function would lead to o-support, but the second would lead to i-support.
 
-In order for the architecture to determine whether a result receives i-support or o-support, Soar must first determine the function that the working memory element or preference plays (that is, whether the result should be considered an operator application or not). To do this, Soar creates a temporary production, called a \soarb{justification}. The justification summarizes the processing in the substate that led to the result:
+In order for the architecture to determine whether a result receives i-support or o-support, Soar must first determine the function that the working memory element or preference plays (that is, whether the result should be considered an operator application or not). To do this, Soar creates a temporary production, called a \textbf{justification}. The justification summarizes the processing in the substate that led to the result:
 
 \vspace{-10pt}
 \begin{description}
@@ -969,7 +969,7 @@ Justifications include any negated conditions that were in the original producti
 When an operator impasse is resolved, it means that Soar has, through problem solving, gained access to knowledge that was not readily available before. Therefore, when an impasse is resolved, Soar has an opportunity to learn, by summarizing and generalizing the processing in the substate. 
 
 \index{chunk}
-One of Soar's learning mechanisms is called \soarb{chunking} (See chapter \ref{CHUNKING} for more information); it attempts to create a new production, called a \soarb{chunk}. The conditions of the chunk are the elements of the state that (through some chain of production firings) allowed the impasse to be resolved; the action of the production is the working memory element or preference that resolved the impasse (the result of the impasse). The conditions and action are variablized so that this new production may match in a similar situation in the future and prevent an impasse from arising. 
+One of Soar's learning mechanisms is called \textbf{chunking} (See chapter \ref{CHUNKING} for more information); it attempts to create a new production, called a \textbf{chunk}. The conditions of the chunk are the elements of the state that (through some chain of production firings) allowed the impasse to be resolved; the action of the production is the working memory element or preference that resolved the impasse (the result of the impasse). The conditions and action are variablized so that this new production may match in a similar situation in the future and prevent an impasse from arising. 
 
 \index{justification}
 Chunks and justifications are very similar in that they both summarize substate results. They are, in fact, generated by the architecture using the same result dependency trace mechanisms. However, there are some important distinctions:
