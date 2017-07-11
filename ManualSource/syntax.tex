@@ -211,11 +211,10 @@ Links are transitive so that \soar{O53} is linked to \soar{X44} (because \soar{O
 \index{working memory activation}
 \index{forgetting}
 
-Working memory elements (attribute and value pairs) have a form of base level activation associated with them that is not accessible to the agent, but that is used by the architecture. This subsymbolic metadata (activation) associated with a given element represents the usage of that element. (Being used refers to having been matched in a rule that fired.) This metadata is only recorded and maintained when working memory activation is set to on.
+WMEs have a form of base level activation associated with them that is not accessible to the agent, but that is used by the architecture. \textbf{Working Memory Activation} (WMA) is subsymbolic metadata associated with a given element and represents its usage. A WME has been \textit{used} if it has been matched in a rule that fired. WMA is not recorded or maintained when disabled, which is the default. See Section \ref{wm} for working memory settings and options for enabling WMA.
 
-Just setting working memory activation on has no impact on any agent's behavior outside of a small additional computational cost. However, working memory activation is used for other features. It has a role in determining spreading activation values, discussed in section \ref{SMEM-retrieve}. Primarily, it is necessary for allowing the forgetting of memory elements from working memory. When working memory forgetting is on, those working memory elements with activation below a given threshold are removed from working memory. This allows agents to maintain a bounded working memory size without explicit memory size management.
+Simply enabling WMA has no impact on any agent's behavior outside of a small additional computational cost. However, working memory activation is used for other features. Primarily, it is necessary for allowing the forgetting of memory elements from working memory. When working memory forgetting is turned on, those working memory elements with activation below a given threshold are removed from working memory. This allows agents to maintain a bounded working memory size without explicit memory size management. It also has a role in determining spreading activation values, discussed in section \ref{SMEM-retrieve-activation}.
 
-See Section \ref{wm} on page \pageref{wm} for user interface commands related to WMA and forgetting.
 
 % ----------------------------------------------------------------------------
 % ----------------------------------------------------------------------------
@@ -260,7 +259,7 @@ Syntactically, each production consists of the symbol \soar{sp}, followed by: an
 
 \begin{verbatim}
 sp {production-name
-    Documentation string
+    "Documentation string"
     :type
     CONDITIONS
     -->
