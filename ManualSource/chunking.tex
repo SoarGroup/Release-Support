@@ -115,8 +115,8 @@ subgoal, \emph{unless} one of the following conditions is true:
       
 \item Chunking has been temporarily turned off via a call to the
 	\soar{dont-learn} production action (described on page
-	\pageref{SYNTAX-pm-actions-learning} in Section 
-	\ref{SYNTAX-pm-actions-learning}).
+	\pageref{SYNTAX-pm-rhs-learning} in Section 
+	\ref{SYNTAX-pm-rhs-learning}).
 
 	This capability is provided for debugging and system development, and
 	it is not part of the theory of Soar.
@@ -389,7 +389,6 @@ that there are no impasses and the decision process continues.
 
 \begin{itemize}
 \index{preference!require("!)}
-\index{require preference|see{preference}}
 \index{"!}
 \item Require Filter: 
 	\begin{itemize}
@@ -397,32 +396,26 @@ that there are no impasses and the decision process continues.
 	\end{itemize}
 
 \index{preference!prohibit}
-\index{prohibit preference|see{preference}}
 \index{preference!reject(-)}
-\index{reject preference|see{preference}}
 \item Prohibit/Reject Filters: 
 	\begin{itemize}
 	\item If there exists at least one prohibit or reject preference, all prohibit and reject preferences for the eliminated candidates are added to the CDPS.  The logic behind this stage is that the conditions that led to the exclusion of the prohibited and rejected candidates is what allowed the final operator to be selected from among that particular set of surviving candidates.
 	\end{itemize}
 
 \index{preference!worse(\textless \textit{val})}
-\index{worse preference|see{preference}}
 \index{preference!better(\textgreater \textit{val})}
-\index{better preference|see{preference}}
 \item Better/Worse Filter: 
 	\begin{itemize}
 	\item For every candidate that is not worse than some other candidate, add all better/worse preferences involving the candidate.
 	\end{itemize}
 
 \index{preference!best(\textgreater)}
-\index{best preference|see{preference}}
 \item Best Filter: 
 	\begin{itemize}
 	\item Add any best preferences for remaining candidates to the CDPS. 
 	\end{itemize}
 
 \index{preference!worst(\textless)}
-\index{worst preference|see{preference}}
 \item Worst Filter:
 	\begin{itemize}
 	\item If any remaining candidate has a worst preference which leads to that candidate being removed from consideration, that worst preference is added to the CDPS.  Again, the logic is that the conditions that led to that candidate not being selected allowed the final operator to be chosen.
@@ -431,7 +424,6 @@ that there are no impasses and the decision process continues.
 \index{preference!unary indifferent(=)}
 \index{preference!binary indifferent(=\textit{val})}
 \index{preference!numeric-indifferent(=\textit{num})}
-\index{indifferent preference|see{preference}}
 \item Indifferent Filter: 
 	\begin{itemize}
 	\item This is the final stage, so the operator is now selected based on the agent's exploration policy.  How indifferent preferences are added to the CDPS depends on whether any numeric indifferent preferences exist.
@@ -456,7 +448,7 @@ default.  The setting must be turned on via the learn command's
 information.  Necessity preferences will always be added to the CDPS regardless
 of setting.
 
-\index{justification!conditions}
+\index{justification}
 Note that the CDPS also affects the conditions of justifications, so the
 add-desirability-prefs setting does have an effect on the agent even if learning
 is turned off.

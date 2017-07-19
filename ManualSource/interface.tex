@@ -16,120 +16,119 @@
 	included). 
 	}
 
-\nocomment{\begin{figure}[h]
-\psfig{figure=dilbert-living.ps,height=2.2in} \vspace{12pt}
-\end{figure}
+\nocomment{
+	\begin{figure}[h]
+		\psfig{figure=dilbert-living.ps,height=2.2in} 
+		\vspace{12pt}
+	\end{figure}
 }
 % ----------------------------------------------------------------------------
 
 
-This chapter describes the set of user interface commands for Soar. All commands and examples are presented as 
-if they are being entered at the Soar command prompt.
+This chapter describes the set of user interface commands for Soar. All commands and examples are presented as if they are being entered at the Soar command prompt.
 
 This chapter is organized into 7 sections:
+
+\vspace{-12pt}
 \begin{enumerate}
-\item Basic Commands for Running Soar
-\item Examining Memory
-\item Configuring Trace Information and Debugging
-\item Configuring Soar's Run-Time Parameters
-\item File System I/O Commands
-\item Soar I/O commands
-\item Miscellaneous Commands
+	\item Basic Commands for Running Soar
+	\vspace{-6pt}
+	\item Examining Memory
+	\vspace{-6pt}
+	\item Configuring Trace Information and Debugging
+	\vspace{-6pt}
+	\item Configuring Soar's Run-Time Parameters
+	\vspace{-6pt}
+	\item File System I/O Commands
+	\vspace{-6pt}
+	\item Soar I/O commands
+	\vspace{-6pt}
+	\item Miscellaneous Commands
+	\vspace{-6pt}
 \end{enumerate}
 
-Each section begins with a summary description of the commands covered
-in that section, including the role of the command and its importance
-to the user.  Command syntax and usage are then described fully, in
-alphabetical order.
+Each section begins with a summary description of the commands covered in that section, including the role of the command and its importance to the user.  Command syntax and usage are then described fully, in alphabetical order.
 
-The following pages were automatically generated from the git repository
-at
+The following pages were automatically generated from the git repository at
 
 \hspace{2em}\soar{\htmladdnormallink{https://github.com/SoarGroup/Soar/wiki}{https://github.com/SoarGroup/Soar/wiki}}
 
-on the date listed on the title page of this manual.  Please consult
-the repository directly for the most accurate and up-to-date information.
+on the date listed on the title page of this manual.  Please consult the repository directly for the most accurate and up-to-date information.
 
-For a concise overview of the Soar interface functions, see the Function
-Summary and Index on page \pageref{func-sum}. This index is intended to be a
-quick reference into the commands described in this chapter.
+For a concise overview of the Soar interface functions, see the Function Summary and Index on page \pageref{func-sum}. This index is intended to be a quick reference into the commands described in this chapter.
 
 \subsubsection*{Notation}
 
 \nocomment{check for all commands that I've got the notation current}
 
-The notation used to denote the syntax for each user-interface command follows
-some general conventions:\vspace{-12pt}
+The notation used to denote the syntax for each user-interface command follows some general conventions:
+
+\vspace{-12pt}
 \begin{itemize}
-\item The command name itself is given in a \soarb{bold} font.\vspace{-8pt}
-\item Optional command arguments are enclosed within square brackets,
-	\soar{[} and \soar{]}.\vspace{-8pt}
-\item A vertical bar, \soar{|}, separates alternatives.\vspace{-8pt}
-\item Curly braces, \soar{\{\}}, are used to group arguments when at least
-one argument from the set is required.
-\item The commandline prompt that is printed by Soar, is normally
-the agent name, followed by '\soar{>}'.  In the examples in this manual, 
-we use ``\soar{soar>}''.
-\item Comments in the examples are preceded by
-a '\soar{\#}', and in-line comments are preceded by '\soar{;\#}'.
+	\item The command name itself is given in a \soarb{bold} font.
+	\vspace{-8pt}
+	\item Optional command arguments are enclosed within square brackets, \soar{[} and \soar{]}.
+	\vspace{-8pt}
+	\item A vertical bar, \soar{|}, separates alternatives.
+	\vspace{-8pt}
+	\item Curly braces, \soar{\{\}}, are used to group arguments when at least one argument from the set is required.
+	\vspace{-8pt}
+	\item The commandline prompt that is printed by Soar, is normally the agent name, followed by '\soar{>}'.  In the examples in this manual, we use ``\soar{soar>}''.
+	\vspace{-8pt}
+	\item Comments in the examples are preceded by a '\soar{\#}', and in-line comments are preceded by '\soar{;\#}'.
+	\vspace{-8pt}
 \end{itemize}
 
-For many commands, there is some flexibility in the order in which the
-arguments may be given. (See the online help for each command for more
-information.)  We have not incorporated this flexible ordering into the syntax
-specified for each command because doing so complicates the specification of
-the command.  When the order of arguments will affect the output
-produced by a command, the reader will be alerted.
+For many commands, there is some flexibility in the order in which the arguments may be given. (See the online help for each command for more information.)  We have not incorporated this flexible ordering into the syntax specified for each command because doing so complicates the specification of the command.  When the order of arguments will affect the output produced by a command, the reader will be alerted.
 
-Note that the command list was revamped and simplified in Soar 9.6.0.  While 
-we encourage people to learn the new syntax, aliases and some special mechanism 
-have been added to maintain backwards compatibility with old Soar commands.  As a 
-result, many of the sub-commands of the newer commands may use different styles of 
-arguments.
+Note that the command list was revamped and simplified in Soar 9.6.0.  While we encourage people to learn the new syntax, aliases and some special mechanism have been added to maintain backwards compatibility with old Soar commands.  As a result, many of the sub-commands of the newer commands may use different styles of arguments.
 
 % ----------------------------------------------------------------------------
 \section{Basic Commands for Running Soar}
-\label{BASIC}
+\label{INTERFACE-basic}
 
-This section describes the commands used to start, run and stop a Soar 
-program; to invoke on-line help information; and to create and 
-delete Soar productions.  The specific commands described in this
-section are:
+This section describes the commands used to start, run and stop a Soar program; to invoke on-line help information; and to create and delete Soar productions. It also describes how to configure some general settings for Soar.
 
-\paragraph{Summary}
+The specific commands described in this section are:
+
 \begin{quote}
-\begin{description}
-\item[soar] - Commands and settings related to running Soar.  Use \textbf{soar ?} for a summary of sub-commands listed below.
-\item[soar init] - Reinitialize Soar so a program can be rerun from scratch.
-\item[soar stop] - Interrupt a running Soar program.
-\item[soar max-chunks] - Limit the number of chunks created during a decision cycle.
-\item[soar max-dc-time] - Set a wall-clock time limit such that the agent will be interrupted when a single decision cycle exceeds this limit.
-\item[soar max-elaborations] - Limit the maximum number of elaboration cycles in a given phase.
-\item[soar max-goal-depth] - Limit the sub-state stack depth.
-\item[soar max-memory-usage] - Set the number of bytes that when exceeded by an agent, will trigger the memory usage exceeded event. 
-\item[soar max-nil-output-cycles] - Limit the maximum number of decision cycles executed without producing output. 
-\item[soar max-gp] - Set the upper-limit to the number of productions generated by the gp command.
-\item[soar stop-phase] -  Controls the phase where agents stop when running by decision.
-\item[soar tcl] -  Controls whether Soar Tcl mode is enabled.
-\item[soar timers] - Toggle on or off the internal timers used to profile Soar.
-\item[soar version] - Returns version number of Soar kernel.
-\item[soar waitsnc] - Generate a wait state rather than a state-no-change impasse.
-\item[gp] - Define a pattern used to generate and source a set of Soar productions.
-\item[run] - Begin Soar's execution cycle.
-\item[sp] - Create a production and add it to production memory.
-\item[help] - Provide formatted, on-line information about Soar commands.
-\end{description}
+	\begin{description}
+		\item[soar] - Commands and settings related to running Soar. Use \textbf{soar ?} for a summary of sub-commands listed below.
+		\begin{description}
+			\item[soar init] - Reinitialize Soar so a program can be rerun from scratch.
+			\item[soar stop] - Interrupt a running Soar program.
+			\item[soar max-chunks] - Limit the number of chunks created during a decision cycle.
+			\item[soar max-dc-time] - Set a wall-clock time limit such that the agent will be interrupted when a single decision cycle exceeds this limit.
+			\item[soar max-elaborations] - Limit the maximum number of elaboration cycles in a given phase.
+			\item[soar max-goal-depth] - Limit the sub-state stack depth.
+			\item[soar max-memory-usage] - Set the number of bytes that when exceeded by an agent, will trigger the memory usage exceeded event. 
+			\item[soar max-nil-output-cycles] - Limit the maximum number of decision cycles executed without producing output. 
+			\item[soar max-gp] - Set the upper-limit to the number of productions generated by the gp command.
+			\item[soar stop-phase] -  Controls the phase where agents stop when running by decision.
+			\item[soar tcl] -  Controls whether Soar Tcl mode is enabled.
+			\item[soar timers] - Toggle on or off the internal timers used to profile Soar.
+			\item[soar version] - Returns version number of Soar kernel.
+			\item[soar waitsnc] - Generate a wait state rather than a state-no-change impasse.
+		\end{description}
+		\item[run] - Begin Soar's execution cycle.
+		\item[exit] - Shut down the Soar environment.
+		\item[help] - Provide formatted, on-line information about Soar commands.
+		\item[decide ] - Commands and settings related to the selection of operators during the Soar decision process
+		\begin{description}
+			\item[decide indifferent-selection] -  Controls indifferent preference arbitration.
+			\item[decide numeric-indifferent-mode] - Select method for combining numeric preferences.
+			\item[decide predict] - Predict the next selected operator 
+			\item[decide select] - Force the next selected operator 
+			\item[decide set-random-seed] - Seed the random number generator.
+		\end{description}
+		\item[alias] - Define a new alias, or command, using existing commands and arguments.
+	\end{description}
 \end{quote}
+
 These commands are all frequently used anytime Soar is run.
 
 \divider 
 \input{wikicmd/tex/soar} 
-
-\divider
-\input{wikicmd/tex/gp} 
-
-\divider
-\input{wikicmd/tex/help}
 
 \divider 
 \input{wikicmd/tex/run}
@@ -141,174 +140,94 @@ Terminates Soar and exits the kernel.
 \verb|stop          exit|
 
 \divider
-\input{wikicmd/tex/sp}
+\input{wikicmd/tex/help}
+
+\divider 
+\input{wikicmd/tex/decide}
+
+\divider 
+\input{wikicmd/tex/alias}
 
 \divider 
 
 
-\section{Examining Memory Systems}
-\label{MEMORY}
+% ----------------------------------------------------------------------------
+\section{Procedural Memory Commands}
+\label{INTERFACE-procedural-memory}
 
-This section describes the commands used to inspect production memory,
-working memory, and preference memory; to see what productions will 
-match and fire in the next Propose or Apply phase;  and to examine the 
-goal dependency set.  These commands are particularly useful when
-running or debugging Soar, as they let users see what Soar is ``thinking.''
+This section describes the commands used to create and delete Soar productions, to see what productions will match and fire in the next Propose or Apply phase, to watch when specific productions fire and retract, and to configure options for selecting between mutually indifferent operators, along with various other methods for examining the contents and statistics of procedural memory. 
+
+%This section describes the commands used to inspect production memory, working memory, and preference memory; to see what productions will match and fire in the next Propose or Apply phase;  and to examine the goal dependency set.  These commands are particularly useful when running or debugging Soar, as they let users see what Soar is ``thinking.'' The specific commands described in this section are:
+
 The specific commands described in this section are:
 
-\paragraph{Summary}
 \begin{quote}
-\begin{description}
-\item[preferences] - Examine items in preference memory.
-\item[production] - Commands to manipulate Soar rules and analyze their usage
-\item[production break] - Set interrupt flag on specific productions.
-\item[production excise] - This command removes productions from Soar's memory.
-\item[production find] - Find productions that contain a given pattern.
-\item[production firing-counts] - Print the number of times productions have fired.
-\item[production matches] - Print information about the match set and partial matches.
-\item[production memory-usage] - Print memory usage for production matches.
-\item[production optimize-attribute] - Declare an attribute as multi-attributes so as to increase Rete production matching efficiency.
-\item[production watch] - Trace firings and retractions of specific productions.
-\item[print] - Print items in working, semantic and production memory.  Can also print the print the WMEs in the goal dependency set for each goal.
-\item[wm] - Commands and settings related to working memory and working memory activation.
-\item[wm activation] - Get/Set working memory activation parameters
-\item[wm add] - Manually add an element to working memory.
-\item[wm remove] - Manually remove an element from working memory.
-\item[wm watch] - Print information about wmes that match a certain pattern as they are added and removed
-
-\end{description}
+	\begin{description}
+		\item[sp] - Create a production and add it to production memory.
+		\item[gp] - Define a pattern used to generate and source a set of Soar productions.
+		\item[production] - Commands to manipulate Soar rules and analyze their usage
+		\begin{description}
+			\item[production break] - Set interrupt flag on specific productions.
+			\item[production excise] - This command removes productions from Soar's memory.
+			\item[production find] - Find productions that contain a given pattern.
+			\item[production firing-counts] - Print the number of times productions have fired.
+			\item[production matches] - Print information about the match set and partial matches.
+			\item[production memory-usage] - Print memory usage for production matches.
+			\item[production optimize-attribute] - Declare an attribute as multi-attributes so as to increase Rete production matching efficiency.
+			\item[production watch] - Trace firings and retractions of specific productions.
+		\end{description}
+	\end{description}
 \end{quote}
 
-Of these commands, \textbf{print} is the most often used (and the most
-complex) followed by \textbf{soar matches} and \textbf{soar memory-usage}. \textbf{print gds}
-is useful for examining the goal dependecy set when subgoals seem to
-be disappearing unexpectedly. \textbf{preferences}
-is used to examine which candidate operators have been proposed.
-\textbf{production find} is especially useful when the number of
-productions loaded is high.  \soar{production watch} is related to \soar{watch}, but applies only 
-to specific, named productions. \soar{production firing-counts} is used to see if how many times
-certain rules fire.  
+\soar{sp} is of course used in virtually all Soar programming. Of the remaining commands, \soar{production matches} and \soar{production memory-usage} are most often used. \soar{production find} is especially useful when the number of productions loaded is high. \soar{production firing-counts} is used to see if how many times certain rules fire. \soar{production watch} is related to \soar{wm watch}, but applies only to specific, named productions.
 
-\divider 
-\input{wikicmd/tex/preferences}
+\subdivider
+\input{wikicmd/tex/sp}
+
+\divider
+\input{wikicmd/tex/gp} 
 
 \divider 
 \input{wikicmd/tex/production}
 
 \divider 
+
+
+% ----------------------------------------------------------------------------
+\section{Short-term Memory Commands}
+\label{INTERFACE-short-term-memory}
+
+This section describes the commands for interacting with working memory and preference memory, seeing what productions will match and fire in the next Propose or Apply phase, and examining the goal dependency set. These commands are particularly useful when running or debugging Soar, as they let users see what Soar is ``thinking.'' Also included in this section is information about using Soar's Spatial Visual System (SVS), which filters perceptual input into a form usable in symbolic working memory.
+
+The specific commands described in this section are:
+
+\begin{quote}
+	\begin{description}
+		\item[print] - Print items in working, semantic and production memory.  Can also print the print the WMEs in the goal dependency set for each goal.
+		\item[wm] Commands and settings related to working memory and working memory activation.
+		\begin{description}
+			\item[wm activation] - Get/Set working memory activation parameters.
+			\item[wm add] - Manually add an element to working memory.
+			\item[wm remove] - Manually remove an element from working memory.
+			\item[wm watch] - Print information about wmes that match a certain pattern as they are added and removed.
+		\end{description}
+		\item[preferences] - Examine items in preference memory.
+		\item[svs] - Perform spatial visual system commands.
+	\end{description}
+\end{quote}
+
+Of these commands, \textbf{print} is the most often used (and the most complex).
+\textbf{print --gds} is useful for examining the goal dependency set when subgoals seem to be disappearing unexpectedly.
+\textbf{preferences} is used to examine which candidate operators have been proposed. 
+
+\subdivider 
 \input{wikicmd/tex/print}
 
 \divider 
 \input{wikicmd/tex/wm}
 
 \divider 
-
-% ****************************************************************************
-% ----------------------------------------------------------------------------
-\section{Configuring Trace Information and Output}
-\label{DEBUG}
-
-This section describes the commands used primarily for debugging or
-to configure the trace output printed by Soar as it runs.  Users may:
-specify the content of the runtime trace output; ask that
-they be alerted when specific productions fire and retract; 
-or request details on Soar's performance.
-
-The specific commands described in this section are:
-
-
-\paragraph{Summary}
-\begin{quote}
-\begin{description}
-\item[echo] - Prints a string to the current output device.
-\item[output] - Controls sub-commands and settings related to Soar's output.
-\item[output enabled] - Toggles printing at the lowest level.
-\item[output console] - Redirects printing to the the terminal.  Most users will not change this.
-\item[output callbacks] - Toggles standard Soar agent callback-based printing.
-\item[output log] - Record all user-interface input and output to a file. 
-\item[output command-to-file] - Dump the printed output and results of a command to a file.
-\item[output print-depth] - Set how many generations of an identifier's children that Soar will print
-\item[output warnings] - Toggle whether or not warnings are printed.
-\item[output verbose] - Control detailed information printed as Soar runs.
-\item[output echo-commands] - Set whether or not commands are echoed to other connected debuggers. 
-\item[stats] - Print information on Soar's runtime statistics.
-\item[trace] - Control the information printed as Soar runs. \emph{(was \soar{watch})}
-\item[visualize] - Creates graph visualizations of Soar's memory systems or processing.
-\end{description}
-\end{quote}
-
-Of these commands, \soar{trace} is the most often used (and the most 
-complex).  \textbf{output print-depth} is related to the \textbf{print} command. \soar{stats} 
-is useful for understanding how much work Soar is doing. Soar applications that include a graphical interface or other
-simulation environment will often require the use of \textbf{echo} 
-
-\divider 
-\input{wikicmd/tex/echo}
-
-\divider 
-\input{wikicmd/tex/output}
-
-\divider 
-\input{wikicmd/tex/stats}
-
-\divider 
-\input{wikicmd/tex/trace}
-
-\divider 
-\input{wikicmd/tex/visualize}
-
-\divider 
-
-% ----------------------------------------------------------------------------
-\section{Configuring Soar's Runtime Parameters}
-\label{RUNTIME}
-
-This section describes the commands that control Soar's Runtime Parameters.
-Many of these commands provide options that simplify or restrict 
-runtime behavior to enable easier and more localized debugging.
-Others allow users to select alternative algorithms or methodologies.
-Users can configure Soar's learning mechanism; examine the
-backtracing information that supports chunks and justifications;
-and configure options for selecting between mutually indifferent operators.
-
-The specific commands described in this section are:
-
-\paragraph{Summary}
-\begin{quote}
-\begin{description}
-\item[chunk] - Set the parameters for explanation-based chunking, Soar's learning mechanism.
-\item[explain] - Provides interactive exploration of why a rule was learned.
-\item[decide ] - Commands and settings related to the selection of operators during the Soar decision process
-\item[decide indifferent-selection] -  Controls indifferent preference arbitration.
-\item[decide numeric-indifferent-mode] - Select method for combining numeric preferences.
-\item[decide predict] - Predict the next selected operator 
-\item[decide select] - Force the next selected operator 
-\item[decide set-random-seed] - Seed the random number generator.
-\item[epmem] - Get/Set episodic memory parameters and statistics
-\item[rl] - Get/Set RL parameters and statistics 
-\item[smem] - Get/Set semantic memory parameters and statistics
-\item[svs] - Perform spatial visual system commands
-\end{description}
-\end{quote}
-
-% ----------------------------------------------------------------------------
-\divider 
-\input{wikicmd/tex/chunk}
-
-\divider 
-\input{wikicmd/tex/explain}
-
-\divider 
-\input{wikicmd/tex/decide}
-
-\divider 
-\input{wikicmd/tex/epmem}
-
-\divider 
-\input{wikicmd/tex/rl}
-
-\divider 
-\input{wikicmd/tex/smem}
+\input{wikicmd/tex/preferences}
 
 \divider 
 \input{wikicmd/tex/svs}
@@ -316,49 +235,147 @@ The specific commands described in this section are:
 \divider 
 
 % ----------------------------------------------------------------------------
+\section{Learning}
+\label{INTERFACE-learning}
 
-\section{File System I/O Commands}
-\label{FILE-IO}
-
-This section describes commands which interact in one way or another
-with operating system input and output, or file I/O.  Users can
-save/retrieve information to/from files, redirect the information
-printed by Soar as it runs, and save and load the binary representation
-of productions.
+This section describes the commands for enabling and configuring Soar's mechanisms of chunking and reinforcement learning.
 The specific commands described in this section are:
 
-\paragraph{Summary}
 \begin{quote}
-\begin{description}
-\item[cd] - Change directory.
-\item[dirs] - List the directory stack.
-\item[load] - Loads soar files, rete networks, saved percept streams and external libraries.
-\item[load file] - Sources a file containing soar commands and productions.  May also contain Tcl code if Tcl mode is enabled.
-\item[load library] - Loads an external library that extends functionality of Soar.
-\item[load rete-network] - Loads a rete network that represents rules loaded in production memory.
-\item[load library] - Loads soar files, rete networks, saved percept streams and external libraries.
-\item[ls] - List the contents of the current working directory.
-\item[popd] - Pop the current working directory off the stack and change to the next directory on the stack.
-\item[pushd] - Push a directory onto the directory stack, changing to it.
-\item[pwd] - Print the current working directory.
-\item[save] - Saves chunks, rete networks and percept streams.
-\item[save chunks] - Saves chunks into a file.
-\item[save percepts] - Saves future input link structures into a file.
-\item[save rete-network] - Saves the current rete networks that represents rules loaded in production memory.
-\end{description}
+	\begin{description}
+		\item[chunk] - Set the parameters for explanation-based chunking, Soar's learning mechanism.
+		\item[rl] - Get/Set RL parameters and statistics.
+	\end{description}
 \end{quote}
 
-(See also the \href{output}{output} command.)
-
-The \textbf{load file} command, previously known as \textbf{source} is used for nearly every Soar program.  The
-directory functions are important to understand so that users can
-navigate directories/folders to load/save the files of interest.  
-Saving and loading percept streams are used mainly  when Soar needs to interact with an
-external environment.  Users might take advantage of these commands when
-debugging agents, but care should be used in adding and removing wmes this
-way as they do not fall under Soar's truth maintenance system.
+\subdivider 
+\input{wikicmd/tex/chunk}
 
 \divider 
+\input{wikicmd/tex/rl}
+
+\divider 
+
+% ----------------------------------------------------------------------------
+\section{Long-term Declarative Memory}
+\label{INTERFACE-declarative-memory}
+
+This section describes the commands for enabling and configuring Soar's long-term semantic memory and episodic memory systems.
+The specific commands described in this section are:
+
+\begin{quote}
+	\begin{description}
+		\item[smem] - Get/Set semantic memory parameters and statistics.
+		\item[epmem] - Get/Set episodic memory parameters and statistics.
+	\end{description}
+\end{quote}
+
+\subdivider 
+\input{wikicmd/tex/smem}
+
+\divider 
+\input{wikicmd/tex/epmem}
+
+\divider 
+
+% ----------------------------------------------------------------------------
+\section{Other Debugging Commands}
+\label{INTERFACE-debug}
+
+This section describes the commands used primarily for debugging or to configure the trace output printed by Soar as it runs.  Many of these commands provide options that simplify or restrict runtime behavior to enable easier and more localized debugging. Users may specify the content of the runtime trace output, examine the backtracing information that supports generated justifications and chunks, or request details on Soar's performance.
+
+The specific commands described in this section are:
+
+\begin{quote}
+	\begin{description}
+	\item[trace] - Control the information printed as Soar runs. \emph{(was \soar{watch})}
+	\item[output] - Controls sub-commands and settings related to Soar's output.
+	\begin{description}
+		\item[output enabled] - Toggles printing at the lowest level.
+		\item[output console] - Redirects printing to the the terminal.  Most users will not change this.
+		\item[output callbacks] - Toggles standard Soar agent callback-based printing.
+		\item[output log] - Record all user-interface input and output to a file. 
+		\item[output command-to-file] - Dump the printed output and results of a command to a file.
+		\item[output print-depth] - Set how many generations of an identifier's children that Soar will print
+		\item[output warnings] - Toggle whether or not warnings are printed.
+		\item[output verbose] - Control detailed information printed as Soar runs.
+		\item[output echo-commands] - Set whether or not commands are echoed to other connected debuggers. 
+	\end{description}
+	\item[explain] - Provides interactive exploration of why a rule was learned.
+	\item[visualize] - Creates graph visualizations of Soar's memory systems or processing.
+	\item[stats] - Print information on Soar's runtime statistics.
+	\item[debug] - Contains commands that provide access to Soar's internals. Most users will not need to access these commands
+	\begin{description}
+		\item[debug allocate] - Allocate additional 32 kilobyte blocks of memory for a specified memory pool without running Soar.
+		\item[debug port] - Returns the port the kernel instance is listening on.
+		\item[debug time] - Uses a default system clock timer to record the wall time required while executing a command.
+		\item[debug internal-symbols] - Print information about the Soar symbol table.
+	\end{description}
+	\end{description}
+\end{quote}
+
+Of these commands, \soar{trace} is the most often used (and the most complex). \\
+\soar{output print-depth} is related to the \soar{print} command. \soar{stats} is useful for understanding how much work Soar is doing.
+
+\subdivider 
+\input{wikicmd/tex/trace}
+
+\divider 
+\input{wikicmd/tex/output}
+
+\divider 
+\input{wikicmd/tex/explain}
+
+\divider 
+\input{wikicmd/tex/visualize}
+
+\divider 
+\input{wikicmd/tex/stats}
+
+\divider 
+\input{wikicmd/tex/debug}
+
+\divider 
+
+
+% ----------------------------------------------------------------------------
+
+\section{File System I/O Commands}
+\label{INTERFACE-file-io}
+
+This section describes commands which interact in one way or another with operating system input and output, or file I/O.  Users can save/retrieve information to/from files, redirect the information printed by Soar as it runs, and save and load the binary representation of productions. The specific commands described in this section are:
+
+\begin{quote}
+	\begin{description}
+		\item[cd] - Change directory.
+		\item[dirs] - List the directory stack.
+		\item[load] - Loads soar files, rete networks, saved percept streams and external libraries.
+		\begin{description}
+			\item[load file] - Sources a file containing soar commands and productions.  May also contain Tcl code if Tcl mode is enabled.
+			\item[load library] - Loads an external library that extends functionality of Soar.
+			\item[load rete-network] - Loads a rete network that represents rules loaded in production memory.
+			\item[load library] - Loads soar files, rete networks, saved percept streams and external libraries.
+		\end{description}
+		\item[ls] - List the contents of the current working directory.
+		\item[popd] - Pop the current working directory off the stack and change to the next directory on the stack.
+		\item[pushd] - Push a directory onto the directory stack, changing to it.
+		\item[pwd] - Print the current working directory.
+		\item[save] - Saves chunks, rete networks and percept streams.
+		\begin{description}
+			\item[save agent] - Saves the agent's procedural and semantic memories and settings to a single file.
+			\item[save chunks] - Saves chunks into a file.
+			\item[save percepts] - Saves future input link structures into a file.
+			\item[save rete-network] - Saves the current rete networks that represents rules loaded in production memory.
+		\end{description}
+		\item[echo] - Prints a string to the current output device.
+	\end{description}
+\end{quote}
+
+(See also the output command in Section \ref{output} on page \pageref{output}.)
+
+The \soar{load file} command, previously known as \soar{source}, is used for nearly every Soar program. The directory functions are important to understand so that users can navigate directories/folders to load/save the files of interest. Saving and loading percept streams are used mainly when Soar needs to interact with an external environment. Soar applications that include a graphical interface or other simulation environment will often require the use of \soar{echo}. Users might take advantage of these commands when debugging agents, but care should be used in adding and removing WMEs this way as they do not fall under Soar's truth maintenance system.
+
+\subdivider 
 \input{wikicmd/tex/file-system}
 
 \divider 
@@ -368,37 +385,6 @@ way as they do not fall under Soar's truth maintenance system.
 \input{wikicmd/tex/save}
 
 \divider 
-
-% ***************************************************************************
-% ----------------------------------------------------------------------------
-\section{Miscellaneous}
-\label{MISC}
-
-
-\comment{this section still needs to be rewritten...}
-
-\nocomment{This section describes the commands used to inspect production memory,
-working memory, and preference memory; to see what productions will 
-match and fire in the next Propose or Apply phase;  and to examine the 
-goal dependency set.  These commands are particularly useful when
-running or debugging Soar, as they let users see what Soar is ``thinking.''}
-The specific commands described in this section are:
-
-
-\paragraph{Summary}
-\begin{quote}
-\begin{description}
-\item[alias] - Define a new alias, or command, using existing commands and arguments.
-\item[debug] - Contains commands that provide access to Soar's internals. Most users will not need to access these commands
-\item[debug allocate] - Allocate additional 32 kilobyte blocks of memory for a specified memory pool without running Soar.
-\item[debug port] - Returns the port the kernel instance is listening on.
-\item[debug time] - Uses a default system clock timer to record the wall time required while executing a command.
-\item[debug internal-symbols] - Print information about the Soar symbol table.
-\end{description}
-\end{quote}
+\input{wikicmd/tex/echo}
 
 \divider 
-\input{wikicmd/tex/alias}
-
-\divider 
-\input{wikicmd/tex/debug}

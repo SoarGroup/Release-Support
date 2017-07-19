@@ -8,7 +8,7 @@ The episodic storage mechanism will automatically record episodes as a Soar agen
 The agent can later deliberately retrieve episodic knowledge to extract information and regularities that may not have been noticed during the original experience and combine them with current knowledge such as to improve performance on future tasks.
 
 This chapter is organized as follows: episodic memory structures in working memory (\ref{EPMEM-wm}); episodic storage (\ref{EPMEM-storage}); retrieving episodes (\ref{EPMEM-retrieval}); and a discussion of performance (\ref{EPMEM-perf}). 
-The detailed behavior of episodic memory is determined by numerous parameters that can be controlled and configured via the \soar{epmem} command. 
+The detailed behavior of episodic memory is determined by numerous parameters that can be controlled and configured via the \soarb{epmem} command. 
 
 Please refer to the documentation for that command in Section \ref{epmem} on page \pageref{epmem}.
 
@@ -24,10 +24,10 @@ Upon creation of a new state in working memory (see Section \ref{ARCH-impasses-t
   (<e> ^present-id #)
 \end{verbatim}
 
-As rules augment the \emph{command} structure in order to retrieve episodes (\ref{EPMEM-retrieval}), episodic memory augments the \emph{result} structure in response.
-Production actions should not remove augmentations of the \emph{result} structure directly, as episodic memory will maintain these WMEs.
+As rules augment the \soar{command} structure in order to retrieve episodes (\ref{EPMEM-retrieval}), episodic memory augments the \soar{result} structure in response.
+Production actions should not remove augmentations of the \soar{result} structure directly, as episodic memory will maintain these WMEs.
 
-The value of the \emph{present-id} augmentation is an integer and will update to expose to the agent the current episode number.
+The value of the \soar{present-id} augmentation is an integer and will update to expose to the agent the current episode number.
 This information is identical to what is available via the \emph{time} statistic (see Section \ref{epmem} on page \pageref{epmem}) and the \emph{present-id} retrieval meta-data (\ref{EPMEM-meta}).
 
 \section{Episodic Storage}
@@ -38,19 +38,21 @@ The timing and frequency of recording new episodes is controlled by the \soar{ph
 The \soarb{phase} parameter sets the phase in the decision cycle (default: end of each decision cycle) during which episodic memory stores episodes and processes commands.  
 The value of the \soarb{trigger} parameter indicates to the architecture the event that concludes an episode: adding a new augmentation to the output-link (default) or each decision cycle.
 
-For debugging purposes, the \soar{force} parameter allows the user to manually request that an episode be recorded (or not) during the current decision cycle.  
+For debugging purposes, the \soarb{force} parameter allows the user to manually request that an episode be recorded (or not) during the current decision cycle.  
 Behavior is as follows:
 
+\vspace{-8pt}
 \begin{itemize}
 \item 
-The value of the \soar{force} parameter is initialized to \soar{off} every decision cycle.
-
+	The value of the \soar{force} parameter is initialized to \soar{off} every decision cycle.
+	\vspace{-6pt}
 \item 
-During the \soar{phase} of episodic storage, episodic memory tests the value of the \soar{force} parameter; if it has a value other than of off, episodic memory follows the \emph{forced} policy irrespective of the value of the \soar{trigger} parameter.
-
+	During the \soar{phase} of episodic storage, episodic memory tests the value of the \soar{force} parameter; if it has a value other than of off, episodic memory follows the \emph{forced} policy irrespective of the value of the \soar{trigger} parameter.
+	\vspace{-6pt}
 \end{itemize}
 
 \subsection{Episode Contents}
+
 When episodic memory stores a new episode, it captures the entire top-state of working memory. 
 There are currently two exceptions to this policy:
 
@@ -62,11 +64,13 @@ Behavior is currently undefined when attempting to store a WME that has an attri
 \item 
 The \soarb{exclusions} parameter allows the user to specify a set of attributes for which Soar will not store WMEs. 
 The storage process currently walks the top-state of working memory in a breadth-first manner, and any WME that is not reachable other than via an excluded WME will not be stored. 
-By default, episodic memory excludes the \emph{epmem} and \emph{smem} structures, to prevent encoding of potentially large and/or frequently changing memory retrievals.
+By default, episodic memory excludes the \soar{epmem} and \soar{smem} structures, to prevent encoding of potentially large and/or frequently changing memory retrievals.
 
 \end{itemize}
 
 \subsection{Storage Location}
+\index{epmem!storage}
+
 Episodic memory uses SQLite to facilitate efficient and standardized storage and querying of episodes.  
 The episodic store can be maintained in memory or on disk (per the \soar{database} and \soar{path} parameters).  
 If the store is located on disk, users can use any standard SQLite programs/components to access/query its contents. 
@@ -78,14 +82,15 @@ The \soarb{path} parameter specifies the file system path the database is stored
 
 The \soarb{append} parameter will determine whether all existing facts stored in a database on disk will be erased when episodic memory loads. Note that this affects \soar{init-soar} also.  In other words, if the \soar{append} setting is off, all episodes stored will be lost when an init-soar is performed. For episodic memory, \soar{append} mode is \soar{off} by default.
 
-\soarb{Note}: As of version 9.3.3, Soar now uses a new schema for the episodic memory database. This means databases from 9.3.2 and below can no longer be loaded.  A conversion utility will be available in Soar 9.4 to convert from the old schema to the new one.
+\soarit{Note}: As of version 9.3.3, Soar now uses a new schema for the episodic memory database. This means databases from 9.3.2 and below can no longer be loaded.  A conversion utility will be available in Soar 9.4 to convert from the old schema to the new one.
 
 \section{Retrieving Episodes}
 \label{EPMEM-retrieval}
+\index{epmem!retrieve}
 
-An agent retrieves episodes by creating an appropriate command (we detail the types of commands below) on the \emph{command} link of a state's \emph{epmem} structure. 
+An agent retrieves episodes by creating an appropriate command (we detail the types of commands below) on the \soar{command} link of a state's \soar{epmem} structure. 
 At the end of the \soar{phase} of each decision, after episodic storage, episodic memory processes each state's \emph{epmem} command structure.  
-Results, meta-data, and errors are placed on the \emph{result} structure of that state's \emph{epmem} structure.
+Results, meta-data, and errors are placed on the \soar{result} structure of that state's \soar{epmem} structure.
 
 Only one type of retrieval command (which may include optional modifiers) can be issued per state in a single decision cycle.  
 Malformed commands (including attempts at multiple retrieval types) will result in an error:
@@ -115,15 +120,15 @@ A retrieval of the episode would become:
 \subsection{Cue-Based Retrievals}
 Cue-based retrieval commands are used to search for an episode in the store that best matches an agent-supplied cue, while adhering to optional modifiers.  
 A cue is composed of WMEs that partially describe a top-state of working memory in the retrieved episode.  
-All cue-based retrieval requests must contain a single \emph{query} cue and, optionally, a single \emph{neg-query} cue.  
+All cue-based retrieval requests must contain a single \soarb{\carat query} cue and, optionally, a single \soarb{\carat neg-query} cue.  
 
 \begin{verbatim}
 <s> ^epmem.command.query <required-cue>
 <s> ^epmem.command.neg-query <optional-negative-cue>
 \end{verbatim}
 
-A \emph{query} cue describes structures desired in the retrieved episode, whereas a \emph{neg-query} cue describes non-desired structures.  
-For example, the following Soar production creates a \emph{query} cue consisting of a particular state name and a copy of a current value on the \emph{input-link} structure:
+A \soar{\carat query} cue describes structures desired in the retrieved episode, whereas a \soar{\carat neg-query} cue describes non-desired structures.  
+For example, the following Soar production creates a \soar{\carat query} cue consisting of a particular state name and a copy of a current value on the \soar{input-link} structure:
 
 \begin{verbatim}
 sp {epmem*sample*query
@@ -136,6 +141,7 @@ sp {epmem*sample*query
 }
 \end{verbatim}
 
+\index{working memory activation}
 As detailed below, multiple prior episodes may equally match the structure and contents of an agent's cue. 
 Nuxoll has produced initial evidence that in some tasks, retrieval quality improves when using \emph{activation} of cue WMEs as a form of feature weighting.  
 Thus, episodic memory supports integration with working memory activation (see Section \ref{wm-activation} on page \pageref{wm-activation}).  
@@ -150,7 +156,7 @@ To compute each candidate episode's match score, these quantities are combined w
 $$(balance)*(cardinality) + (1-balance)*(activation)$$
 
 Performing a graph match on each candidate episode, with respect to the structure of the cue, could be very computationally expensive, so episodic memory implements a two-stage matching process.
-An episode with perfect cardinality is considered a perfect \emph{surface} match and, per the \soar{graph-match} parameter, is subjected to further \emph{structural} matching.  
+An episode with perfect cardinality is considered a perfect \emph{surface} match and, per the \soarb{graph-match} parameter, is subjected to further \emph{structural} matching.  
 Whereas surface matching efficiently determines if all paths to leaf WMEs exist in a candidate episode, graph matching indicates whether or not the cue can be structurally unified with the candidate episode (paying special regard to the structural constraints imposed by shared identifiers).  
 Cue-based matching will return the most recent structural match, or the most recent candidate episode with the greatest match score.
 
@@ -162,28 +168,33 @@ Thus, when analyzing the cue, episodic memory will not consider long-term identi
 
 The case-based retrieval process can be further controlled using optional modifiers:
 
+\vspace{-8pt}
 \begin{itemize}
-
 \item 
-The \emph{before} command requires that the retrieved episode come relatively before a supplied time:
-\begin{verbatim}
-<s> ^epmem.command.before time
-\end{verbatim}
-
+	The \soarb{before} command requires that the retrieved episode come relatively before a supplied time:
+	\vspace{-6pt}
+	\begin{verbatim}
+	<s> ^epmem.command.before time
+	\end{verbatim}
+	\vspace{-6pt}
 \item 
-The \emph{after} command requires that the retrieved episode come relatively after a supplied time:
-\begin{verbatim}
-<s> ^epmem.command.after time
-\end{verbatim}
-
+	The \soarb{after} command requires that the retrieved episode come relatively after a supplied time:
+	\vspace{-6pt}
+	\begin{verbatim}
+	<s> ^epmem.command.after time
+	\end{verbatim}
+	\vspace{-6pt}
 \item 
-The \emph{prohibit} command requires that the time of the retrieved episode is not equal to a supplied time:
-\begin{verbatim}
-<s> ^epmem.command.prohibit time
-\end{verbatim}
-Multiple prohibit command WMEs may be issued as modifiers to a single CB retrieval.
-
+	The \soarb{prohibit} command requires that the time of the retrieved episode is not equal to a supplied time:
+	\vspace{-6pt}
+	\begin{verbatim}
+	<s> ^epmem.command.prohibit time
+	\end{verbatim}
+	\vspace{-6pt}
+	Multiple prohibit command WMEs may be issued as modifiers to a single CB retrieval.
+	\vspace{-6pt}
 \end{itemize}
+\vspace{-12pt}
 
 If no episode satisfies the cue(s) and optional modifiers an error is returned:
 
@@ -197,13 +208,13 @@ If an episode is returned, there is additional meta-data supplied (\ref{EPMEM-me
 At time of storage, each episode is attributed a unique \emph{time}.  
 This is the current value of \soarb{time} statistic and is provided as the \emph{memory-id} meta-data item of retrieved episodes (\ref{EPMEM-meta}).  
 An absolute non-cue-based retrieval is one that requests an episode by time.  
-An agent issues an absolute non-cue-based retrieval by creating a WME on the \emph{command} structure with attribute \emph{retrieve} and value equal to the desired time:
+An agent issues an absolute non-cue-based retrieval by creating a WME on the \soar{command} structure with attribute \emph{retrieve} and value equal to the desired time:
 
 \begin{verbatim}
 <s> ^epmem.command.retrieve time
 \end{verbatim}
 
-Supplying an invalid value for the \emph{retrieve} command will result in an error.
+Supplying an invalid value for the \soar{retrieve} command will result in an error.
 
 The time of the first episode in an episodic store will have value 1 and each subsequent episode's time will increase by 1.  
 Thus the desired time may be the mathematical result of operations performed on a known episode's time.
@@ -216,9 +227,9 @@ However, if forgetting is implemented in future versions, no such guarantee will
 Episodic memory supports the ability for an agent to ``play forward" episodes using relative non-cue-based retrievals. 
 
 Episodic memory stores the time of the last successful retrieval (non-cue-based or cue-based).  
-Agents can indirectly make use of this information by issuing \emph{next} or \emph{previous} commands.  
+Agents can indirectly make use of this information by issuing \soarb{next} or \soarb{previous} commands.  
 Episodic memory executes these commands by attempting to retrieve the episode immediately proceeding/preceding the last successful retrieval (respectively).  
-To issue one of these commands, the agent must create a new WME on the \emph{command} link with the appropriate attribute (\emph{next} or \emph{previous}) and value of an arbitrary identifier:
+To issue one of these commands, the agent must create a new WME on the \soar{command} link with the appropriate attribute (\soar{next} or \soar{previous}) and value of an arbitrary identifier:
 
 \begin{verbatim}
 <s> ^epmem.command.next <n>
@@ -232,69 +243,37 @@ However, if an episodic store dynamic like forgetting is implemented, these rela
 
 \subsection{Retrieval Meta-Data}
 \label{EPMEM-meta}
-The following list details the WMEs that episodic memory creates in the \emph{result} link of the \emph{epmem} structure wherein a command was issued:
+\index{epmem!structures}
+
+The following list details the WMEs that episodic memory creates in the \soar{result} link of the \soar{epmem} structure wherein a command was issued:
 
 \begin{itemize}
 
 \item \soarb{retrieved <retrieval-root>}
-
-If episodic memory retrieves an episode, that memory is placed here. 
-This WME is an identifier that is treated as the root of the state that was used to create the episodic memory. 
-If the \emph{retrieve} command was issued with an invalid time, the value of this WME will be \emph{no-memory}.
-
+	If episodic memory retrieves an episode, that memory is placed here. This WME is an identifier that is treated as the root of the state that was used to create the episodic memory. If the \soar{retrieve} command was issued with an invalid time, the value of this WME will be \emph{no-memory}.
 \item \soarb{success <query> <optional-neg-query>}
-
-If the cue-based retrieval was successful, the WME will have the status as the attribute and the value of the identifier of the query (and neg-query, if applicable).
-
+	If the cue-based retrieval was successful, the WME will have the status as the attribute and the value of the identifier of the query (and neg-query, if applicable).
 \item \soarb{match-score}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command. 
-The WME value is a decimal indicating the raw match score for that episode with respect to the cue(s).
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command. The WME value is a decimal indicating the raw match score for that episode with respect to the cue(s).
 \item \soarb{cue-size}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command.  
-The WME value is an integer indicating the number of leaf WMEs in the cue(s).
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command. The WME value is an integer indicating the number of leaf WMEs in the cue(s).
 \item \soarb{normalized-match-score}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command.  
-The WME value is the decimal result of dividing the raw match score by the cue size.  
-It can hypothetically be used as a measure of episodic memory's relative confidence in the retrieval.
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command. The WME value is the decimal result of dividing the raw match score by the cue size. It can hypothetically be used as a measure of episodic memory's relative confidence in the retrieval.
 \item \soarb{match-cardinality}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command.  
-The WME value is an integer indicating the number of leaf WMEs matched in the \emph{query} cue minus those matched in the \emph{neg-query} cue.
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command. The WME value is an integer indicating the number of leaf WMEs matched in the \soar{\carat query} cue minus those matched in the \soar{\carat neg-query} cue.
 \item \soarb{memory-id}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command.  
-The WME value is an integer indicating the time of the retrieved episode.
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command. The WME value is an integer indicating the time of the retrieved episode.
 \item \soarb{present-id}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command.  
-The WME value is an integer indicating the current time, such as to provide a sense of ``now" in episodic memory terms.  
-By comparing this value to the \emph{memory-id} value, the agent can gain a sense of the relative time that has passed since the retrieved episode was recorded.
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command. The WME value is an integer indicating the current time, such as to provide a sense of ``now" in episodic memory terms. By comparing this value to the \soar{memory-id} value, the agent can gain a sense of the relative time that has passed since the retrieved episode was recorded.
 \item \soarb{graph-match}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command and the \soar{graph-match} parameter was \soar{on}.  
-The value is an integer with value 1 if graph matching was executed successfully and 0 otherwise.
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command and the \soar{graph-match} parameter was \soar{on}. The value is an integer with value 1 if graph matching was executed successfully and 0 otherwise.
 \item \soarb{mapping <mapping-root>}
-
-This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command, the \soar{graph-match} parameter was \soar{on}, and structural match was successful on the retrieved episode.  
-This WME provides a mapping between identifiers in the cue and in the retrieved episode.  
-For each identifier in the cue, there is a \emph{node} WME as an augmentation to the \emph{mapping} identifier.  
-The node has a \emph{cue} augmentation, whose value is an identifier in the cue, and a \emph{retrieved} augmentation, whose value is an identifier in the retrieved episode.  
-In a graph match it is possible to have multiple identifier mappings -- this map represents the ``first" unified mapping (with respect to episodic memory algorithms).
-
+	This WME is created whenever an episode is successfully retrieved from a cue-based retrieval command, the \soar{graph-match} parameter was \soar{on}, and structural match was successful on the retrieved episode. This WME provides a mapping between identifiers in the cue and in the retrieved episode. For each identifier in the cue, there is a \soar{node} WME as an augmentation to the \soar{mapping} identifier. The node has a \soar{cue} augmentation, whose value is an identifier in the cue, and a \soar{retrieved} augmentation, whose value is an identifier in the retrieved episode. In a graph match it is possible to have multiple identifier mappings -- this map represents the ``first" unified mapping (with respect to episodic memory algorithms).
 \end{itemize}
 
 \section{Performance}
 \label{EPMEM-perf}
+\index{epmem!performance}
 
 There are currently two sources of ``unbounded" computation: graph matching and cue-based queries.  
 Graph matching is combinatorial in the worst case.  
