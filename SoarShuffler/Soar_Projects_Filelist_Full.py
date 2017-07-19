@@ -282,7 +282,7 @@ SoarSuite_9.6.0-source
   SoarSuite/SConstruct=top
   Release-Support/txt/Building_Soar.txt=Documentation
   Release-Support/txt/Release_Notes_9.6.0.txt=Documentation
-  Release-Support/txt/README.txt=Documentation
+  Release-Support/txt/README=Documentation
   Release-Support/txt/license.txt=top
 SoarSuite_9.6.0
   type=multiplatform-zip

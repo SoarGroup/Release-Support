@@ -1,5 +1,5 @@
 =========================================== 
-Soar 9.6.0 Release Notes, June 2017
+Soar 9.6.0 Release Notes, July 2017
 ===========================================
 
 This release of Soar includes six key new features:  (1) the first official
