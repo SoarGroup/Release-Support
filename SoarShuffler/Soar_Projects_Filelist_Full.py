@@ -137,15 +137,14 @@ SoarManual
 SoarTutorial
   type=copy
   out=Documentation/
-  Release-Support/pdf/Soar Tutorial Part 1.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 2.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 3.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 4.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 5.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 6.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 7 - RL.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 8 - SMem.pdf=SoarTutorial
-  Release-Support/pdf/Soar Tutorial Part 9 - EpMem.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 2 - Interacting with an Environment.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 3 - Subgoals.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 4 - Simple Problem-Solving.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 5 - Planning and Learning.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 6 - Reinforcement Learning.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 7 - SMem.pdf=SoarTutorial
+  Release-Support/pdf/Soar Tutorial Part 8 - EpMem.pdf=SoarTutorial
 Episodic_Memory_Sizer
     type=zip
     out=AgentDevelopmentTools/
@@ -362,15 +361,14 @@ SoarTutorial_9.6.0
   Release-Support/txt/README=top
   Release-Support/txt/license.txt=top
   Release-Support/txt/Agents_readme.txt=Agents/
-  Release-Support/pdf/Soar Tutorial Part 1.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 2.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 3.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 4.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 5.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 6.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 7 - RL.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 8 - SMem.pdf=Tutorial
-  Release-Support/pdf/Soar Tutorial Part 9 - EpMem.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 2 - Interacting with an Environment.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 3 - Subgoals.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 4 - Simple Problem-Solving.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 5 - Planning and Learning.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 6 - Reinforcement Learning.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 7 - SMem.pdf=Tutorial
+  Release-Support/pdf/Soar Tutorial Part 8 - EpMem.pdf=Tutorial
   Agents-Soar_Group/arithmetic=Agents/arithmetic
   Agents-Soar_Group/BW-RL=Agents/BW-RL
   Agents-Soar_Group/BW-Hierarchical-LA=Agents/BW-Hierarchical-LA
