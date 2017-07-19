@@ -1,13 +1,11 @@
-# Soar 9.6.0 README
-# July 2017
+=========================
+=    Soar 9.6.0 README  =
+=      July  2017       =
+=========================
 
-======================
-Welcome to Soar 9.6.0!
-======================
-
-Soar 9.6.0 is the current, stable version of Soar. It is the first major release
-in a few years and includes six key new features and hundreds of important bug
-fixes and code improvements:
+Welcome to Soar!  Soar 9.6.0 is the current, stable version of Soar. It is the 
+first major release in a few years and includes six key new features and 
+hundreds of important bug fixes and code improvements:
 
 - Explanation-Based Chunking: ​ The first official release of a new, far more
 powerful rule learning algorithm that replaces chunking, Soar's original general
@@ -28,7 +26,7 @@ Soar's memory systems and even some of its processing
 - Spreading activation: The first beta release of a model of spreading activation
 in semantic memory
 
-The full release notes can be found in the documentation folder.
+The full release notes can be found in its own file.
 
 ====================
 Official Soar Manual
