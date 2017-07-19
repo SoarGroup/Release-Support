@@ -1,11 +1,14 @@
-The following shows the new command structure for Soar 9.6.0 and how the commands from previous versions of Soar map to it.
+The following shows the new command structure for Soar 9.6.0 and how the 
+commands from previous versions of Soar map to it. All of the new commands
+and their sub-commands will guess the command based on partial input.
 
-Note:  Soar 9.6.0 is 99.9% backwards compatible with 9.5.1, so this shouldn't actually be painful.  All of the new commands
-       and their sub-commands will guess the command based on partial input.
+Note:  Soar 9.6.0 translates old commands in a way that it maintains 99.9% 
+       backwards compatibility with 9.5.1, so this transition should not be 
+       painful.
 
-------------------
-9.6.0 Command List
-------------------
+===========================
+9.6.0 Complete Command List
+===========================
 alias
 chunk*
 debug*
@@ -34,6 +37,61 @@ visualize*
 wm*
 
 * new command
+
+==========================================
+9.6.0 Commands that Subsume 9.5.0 Commands
+==========================================
+alias
+- unalias
+chunk
+- chunk-name-format, learn, max-chunks
+debug
+- allocate, internal-symbols, port, time
+decide
+- numeric-indifferent-mode, indifferent-selection, predict, select, srand
+load
+- load-library, source, replay-input, rete-net
+output
+- clog, command-to-file, default-wme-depth, verbose, warnings
+print
+- gds-print, smem --print
+production
+- excise, firing-counts, matches, memories, multi-attributes, pbreak, production-find, pwatch
+save
+- capture-input, rete-net
+soar
+- cli, gp-max, init-soar, max-dc-time, max-elaborations, max-goal-depth, max-memory-usage, max-nil-output-cycles, set-stop-phase, stop-soar, timers, version, wait-snc
+trace
+- verbose, watch
+visualize
+- smem --vis, epmem --vis
+wm
+- add-wme, remove-wme, watch-wme
+
+==================
+Unchanged Commands
+==================
+echo
+epmem
+pwd
+ls
+cd
+dirs
+pushd
+popd
+gp
+help
+preferences
+rl
+run
+smem
+sp
+stats
+svs
+
+=========================================
+9.5.0 Commands and their 9.6.0 Equivalent
+=========================================
 
 ------------------                  ---------------------
 Soar 9.5.0 Command                  Soar 9.6.0 Equivalent
@@ -115,45 +173,3 @@ warnings                            output warnings
 watch                               trace
 watch-wmes                          wm watch
 wma                                 wm activation
-
--------------------------------
-Finding 9.5.0 commands in 9.6.0
--------------------------------
-alias
-chunk
-- chunk-name-format, learn, max-chunks
-debug
-- allocate, internal-symbols, port, time
-decide
-- numeric-indifferent-mode, indifferent-selection, predict, select, srand
-echo
-epmem
-explain
-file-system
-- pwd, ls, cd, dirs, pushd, popd
-gp
-help
-load
-- load-library, source, replay-input, rete-net, 
-output
-- clog, command-to-file, default-wme-depth, verbose, warnings
-preferences
-print
-- gds-print
-production
-- excise, firing-counts, matches, memories, multi-attributes, pbreak, production-find, pwatch
-rl
-run
-save
-- capture-input, rete-net
-smem
-soar
-- cli, gp-max, init-soar, max-dc-time, max-elaborations, max-goal-depth, max-memory-usage, max-nil-output-cycles, set-stop-phase, stop-soar, timers, version, wait-snc
-sp
-stats
-svs
-trace
-- watch
-visualize
-wm
-- add-wme, remove-wme, watch

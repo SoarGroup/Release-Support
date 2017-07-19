@@ -1,6 +1,5 @@
-# Soar 9 demos/README
-# John Laird
-# April 2016
+# Soar 9.6.0 Demo Agents
+# April 2017
 # 
 # Classic AI problems implemented for Soar 9
 #
