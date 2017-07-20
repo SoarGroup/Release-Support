@@ -31,6 +31,15 @@
 	\end{figure}
 	}
 
+\subsubsection*{IMPORTANT NOTE:}
+
+This chapter is out of date and does not describe Soar 9.6.0's powerful new 
+explanation-based chunking algorithm, or the new tools to explain and/or 
+visualize what was learned. A new chapter has already been written which 
+we're currently editing and translating to Latex. We expect the manual to be 
+updated in early August of 2017.
+
+\section{Introduction}
 Chunking is Soar's mechanism to learn new procedural knowledge.
 Chunking creates productions, called \emph{chunks}, that summarize the
 processing required to produce the results of subgoals. When a chunk is built,
@@ -39,16 +48,6 @@ situations, avoiding the need for the subgoal. Chunks are created only when
 results are formed in subgoals; since most Soar programs are continuously
 subgoaling and returning results to higher-level states, chunks are typically
 created continuously as Soar runs.
-
-This chapter begins with a discussion of when chunks are built (Section
-\ref{CHUNKING-creation} below), followed by a detailed discussion of
-how Soar determines a chunk's conditions and actions (Section
-\ref{CHUNKING-determining}). Sections \ref{CHUNKING-variablizing} through
-\ref{CHUNKING-ordering} examine the construction of chunks in further
-detail. Section \ref{CHUNKING-inhibition} explains how and why chunks are
-prevented from matching with the WME's that led to their creation. Section
-\ref{CHUNKING-problems} reviews the problem of overgeneral chunks.
-
 
 % ----------------------------------------------------------------------------
 \section{Chunk Creation}
