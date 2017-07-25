@@ -24,11 +24,10 @@ Chunks are created whenever one subgoal creates a result; since most Soar progra
 
 Explanation-based chunking improves on previous versions of chunking by learning rules that are qualitatively more general and more expressive.  In fact, they now can generalize any element of the rule and have the full expressive power of hand-written rules. Here is an example of a chunk EBC learned from the arithmetic demo agent and how it differs from chunks learned in previous versions of Soar.
 
-\begin{figure}
-	\centering
-	{\small
-	\subfigure{
-	\begin{verbatim}
+\begin{table}
+	\captionsetup{type=figure}
+	\begin{multicols}{2}
+	\begin{Verbatim}[fontsize=\tiny]
 		sp {chunk-94*process-column*apply*write-result
 		    (state <s1> ^operator <o1>
 		                ^arithmetic-problem <a1>
@@ -67,10 +66,10 @@ Explanation-based chunking improves on previous versions of chunking by learning
 		    -->
 		    (<c1> ^result 3)
 		}
-	\end{verbatim}
 	}
-	\subfigure{
-	\begin{verbatim}
+	\end{Verbatim}
+	\columnbreak
+	\begin{Verbatim}[fontsize=\tiny]
 		sp {chunk-94*process-column*apply*write-result
 		    (state <s1> ^operator <o1>
 		                ^arithmetic-problem <a1>
@@ -108,16 +107,22 @@ Explanation-based chunking improves on previous versions of chunking by learning
 		          ^result <r1>)
 		    -->
 		    (<c1> ^result <r1>)
-		}
-	\end{verbatim}
 	}
-	}
+	\end{Verbatim}
+\end{multicols}
 	\caption{Comparing a traditional chunk (left) with an explanation-based chunk (right) in the arithmetic demo agent.  In Soar 9.4, the arithmetic agent would learn 1263 rules like the one on the left.  In Soar 9.6, the same agent learns under 10 rules like the one on the right.}
-\end{figure}
-
+\end{table}
 To achieve this, chunking needs information about why rules matched and what the relationships are between those rules.  It needs to know what is generalizable and what limits are there on those generalizations. Prior versions of chunking analyzed a literal history of the rule instances that matched in the substate, which we call a working memory trace, so most of that information was not readily available.
 
 Since this working memory trace provides limited information, chunking produced very specific rules in which only Soar identifiers were variablized and all other elements tested the exact values that matched.  To improve on this and produce more general chunks, EBC instead does an analysis of the underlying network of hand-written rules that matched in the substate and led to the results.  We call this network the explanation trace:
+
+\vspace{12pt}
+\begin{center}
+	\captionsetup{type=figure}
+	\centering\frame{\includegraphics[width=\textwidth]{chunking-wm-vs-exp-trace.png}}
+	\caption{A close-up of a trace showing differences between a working memory trace (left) vs an explanation trace (right).  The working memory trace only contains the literal values of the WMEs that matched.  The explanation trace, on the other hand, contains variables and various constraints on the values those variables can hold.}
+	\label{fig:chunking-wm-vs-exp}
+\end{center}
 
 \index{chunking!instantiation}
 Note that this trace is generated dynamically as rules match.  Whenever a rule matches during agent execution, Soar creates an internal record of the rule that fired, called an \textbf{instantiation}.  (Each box in the explanation traces below represents an instantiation that was created during task execution within a particular substate.) The instantiation contains both instance information about what matched (the working memory elements) and explanatory information about why they matched (the rules and actions in the original rules that contains variables, constraint tests, RHS actions, etc.).  
@@ -127,17 +132,13 @@ Even architectural WMEs have special instantiations that explain why they were c
 \index{chunking!backtracing}
 All of the instantiations that were created in a substate form the instantiation graph of that substate.  As chunking \textbf{backtraces} through the instantiation graph, it determines the subset of instantiations that contributed to a result, which constitutes the explanation trace for a learning episode.  (So, the explanation trace is a subgraph of the instantiation graph.)
 
-\begin{figure}
-	\insertfigure{chunking-wm-vs-exp-trace.png}{\textwidth}
-	\insertcaption{A close-up of a trace showing differences between a working memory trace (left) vs an explanation trace (right).  The working memory trace only contains the literal values of the WMEs that matched.  The explanation trace, on the other hand, contains variables and various constraints on the values those variables can hold.}
-	\label{fig:chunking-wm-vs-exp}
-\end{figure}
-
-\begin{figure}
-	\insertfigure{chunking-trace.png}{\textwidth}
+\vspace{12pt}
+\begin{center}
+	\captionsetup{type=figure}
+	\centering\frame{\includegraphics[width=\textwidth]{chunking-trace.png}}
 	\caption{A visualization of the explanation trace of a chunk learned by the arithmetic agent.  Each box represents a rule that fired in the substate.  Arrows show dependencies between rules that create working memory elements and conditions that test those working memory elements.}
 	\label{fig:chunking-trace}
-\end{figure}
+\end{center}
 
 EBC uses the explanation trace to determine (1) how variables were used during a problem-solving episode and (2) what constraints on those variables had to be met in order for the substate rules to match.  EBC then uses the results of this analysis to create more expressive and general rules, which can contain the full gamut of tests that hand-written rules can and can have any element variablized.
 
@@ -153,15 +154,15 @@ EBC uses the explanation trace to determine (1) how variables were used during a
 
 Before we can discuss the algorithm, we must first define one of its central concepts: \soarb{identity}.  As previously mentioned, EBC traverses an explanation trace of the problem-solving that occurred in the substate to determine which variables in different rule instances refer to the same underlying object.  
 
-Basic concepts:
+\textbf{Basic concepts:}
 
 \begin{itemize}
 	\item Rule actions and rule conditions each have three \textit{elements}:
 	\vspace{-6pt}
 	\begin{itemize}
-		\item For actions, the three elements refer to the identifier, attribute and value of the WME being created.
-		\vspace{-6pt}
 		\item For conditions, the three elements refer to the symbol in the positive equality test for the identifier, attribute and value of the condition.  For example, the last condition of rule 2 in Figure \ref{fig:chunking-trace2} has \soar{<s>} as the identifier element, number as the attribute element, and \soar{<y>} as the value element.
+		\vspace{-6pt}
+		\item For actions, the three elements refer to the identifier, attribute and value of the WME being created.
 	\end{itemize}
 	\vspace{-6pt}
 	\item An element is either a variable or a literal constant.
@@ -197,13 +198,15 @@ There are two ways that an explanation trace can show a shared identity:
 	\vspace{-6pt}
 \end{enumerate}
 
-To get a better picture of what a shared identity is, consider the following two simple rules and an explanation trace of how they matched in a substate:
+To get a better picture of what a shared identity is, consider the two simple rules and the explanation trace of how they matched in a substate: 
 
-\begin{figure}
-	\insertfigure{chunking-trace2.png}{\textwidth}
-	\caption{Explanation trace of two simple rules that match in a substate}
+\vspace{12pt}
+\begin{center}
+	\captionsetup{type=figure}
+	\centering\frame{\includegraphics[width=\textwidth]{chunking-trace2.png}}
+	\caption{Explanation trace of two simple rules that matched in a substate}
 	\label{fig:chunking-trace2}
-\end{figure}
+\end{center}
 
 In Figure \ref{fig:chunking-trace2}, the connection between rule 2 and rule 1 will \textit{unify} the identities of \soar{<s>}, \soar{<x>} and \soar{<y>} in rule 1 with the identities of \soar{<s>}, \soar{<x>} and \soar{<y2>} in rule 2.  So, the \soar{<x>} in rule 2 shares the same identity as the \soar{<x>} in rule 1.  Similarly, the \soar{<y2>} in rule 2 shares the same identity as \soar{<y>} in rule 1.  In contrast, the \soar{<y>} in rule 2 does NOT share the same identity as the \soar{<y>} in rule 1. 
 
@@ -212,7 +215,7 @@ It doesn't matter that the \soar{<y>} in rule 1 uses the same variable name as t
 All literal values, for example all of the attribute in Figure \ref{fig-chunking-trace} (\soar{superstate}, \soar{number}, \soar{intermediate1}, etc.) are considered members of the \textit{NULL identity}.
 
 \index{chunking!literalization}
-Variable identities can also be mapped to the NULL identity, which we call \textbf{literalization}.  There are two ways that an explanation trace can show an identity literalization:
+Variable identities can also be mapped to the NULL identity, which means that any elements in the final rule that share that identity will not be variablized. When this happens, we say that the identity has been \textit{literalized}.  There are two ways that a rule interaction can effect an identity literalization:
 
 \begin{enumerate}
 	\item If a RHS action of one rule creates a WME element using a constant, literal value in an element and a LHS condition tests that element, then the identity of the condition's variables is literalized and mapped to the NULL identity. 
@@ -227,36 +230,43 @@ Variable identities can also be mapped to the NULL identity, which we call \text
 
 Identities are the basis of nearly every mechanism in explanation-based chunking.  EBC's identity analysis algorithm, which is a fairly complicated process, determines all shared identities in an explanation trace.  Figure \ref{fig:chunking-trace-identity} shows an explanation trace after identity analysis has been performed.  Elements that share an identity in the figure are colored the same.
 
-\begin{figure}
-	\insertfigure{chunking-trace-identity.png}{\textwidth}
-	\caption{}
-	\label{fig:chunking-trace-identity}
-\end{figure}
-
 While it's not readable in this figure, note that each identity is assigned a numeric ID.  Both the explainer and the visualizer annotate elements of an explanation with the identity ID in square brackets.  These numbers are simply syntactic sugar to ease debugging and make traces easier to understand.  Underneath the hood, every test in a condition has a pointer to more complicated identity data structure that will be discussed in more detail in Section \ref{CHUNKING-prior-identities} on the identity graph. 
 
-\begin{figure}
-	\insertfigure{chunking-ebc-components.png}{\textwidth}
-	\caption{Five components of EBC and when they occur}
+\vspace{12pt}
+\begin{center}
+	\captionsetup{type=figure}
+	\centering\frame{\includegraphics[width=\textwidth]{chunking-trace-identity.png}}
+	\caption{}
+	\label{fig:chunking-trace-identity}
+\end{center}
+
+\subsection{The Five Main Components of Explanation-Based Chunking}
+\index{chunking!ebc-components}
+
+\vspace{12pt}
+\begin{center}
+	\captionsetup{type=figure}
+	\centering\frame{\includegraphics[width=\textwidth]{chunking-ebc-components.png}}
+	\caption{Note that the two rows on the bottom indicate when each component occurs during Soar's processing.}
 	\label{fig:chunking-ebc-components}
-\end{figure}
+\end{center}
 
 \begin{enumerate}
-	\item \textbf{Operationality analysis} \hfill
+	\item \textbf{Operationality analysis} \newline
 	This component determines which conditions in an explanation trace tested working memory elements in a superstate.  The rule formation component will use these conditions as a basis for the left-hand side of the chunk.  While it does have a few key new differences, this is the one step that is similar to previous versions of chunking.
 
-	\item \textbf{Identity analysis} \hfill
+	\item \textbf{Identity analysis}  \newline
 	This component determines which variables in an explanation trace share the same identity.  It also determines which identities are ineligible for variablization because they were tested against literal values in some rules.  
 
 	Note that this component has two distinct mechanisms that occur at very different times.  The first mechanism, identity propagation, occurs constantly while problem-solving in the substate.  The second mechanism, identity graph manipulation, occurs during the learning episode
 
-	\item \textbf{Relevant operator selection knowledge tracking]} \hfill
+	\item \textbf{Relevant operator selection knowledge tracking]} \newline
 	This component also does most of its work before the learning episode.  Whenever an operator is selected, it analyzes what operator selection knowledge was relevant and caches that relevant knowledge in all rule instances that tests that operator. 
 
-	\item \textbf{Constraint tracking} \hfill
+	\item \textbf{Constraint tracking} \newline
 	This component keeps track of every value or relational constraint (e.g. \soar{<> <x>}, \soar{>= 3.14}, \soar{<< disjunction of constants >>}) placed on the various variables that share an identity.  It is used by the rule formation step to make sure all constraints required are enforced by the learned rule.
 
-	\item \textbf{Rule Formation} \hfill
+	\item \textbf{Rule Formation} \newline
 	The above four components performed the analysis that EBC needs to form a general but correct rule.  This final component uses the results of that analysis to actually build the new rule.  This is a complex component that has seven different stages.  If a valid rule is created, Soar immediately adds the rule to production memory.
 \end{enumerate}
 
@@ -371,13 +381,13 @@ A chunk's actions are built from the results of a subgoal. A \textbf{result} is 
 
 The results produced by a single production firing are the basis for creating the actions of a chunk. A new result can lead to other results by linking a superstate to a WME in the substate. This WME may in turn link other WMEs in the substate to the superstate, making them results. Therefore, the creation of a single WME that is linked to a superstate can lead to the creation of a large number of results. All of the newly created results become the basis of the chunk's actions.
 
-\subsection{Backtracing: Operationality, Identity, and Constraint Analysis}
+\subsection{Backtracing and the Three Types of Analysis Performed}
 \label{CHUNKING-during-backtracing}
 \index{chunking!backtracing}
 
 When learning a new rule, EBC performs a dependency analysis of the productions that fired in a substate -- a process called backtracing. Backtracing works as follows.  For each instantiated production that creates a subgoal result, backtracing examines the explanation trace to determine which working memory elements matched each condition. If the working memory element is local to the substate, then backtracing recursively examines the instantiation that created that condition's matched working memory element. Thus, backtracing traces backwards through all rules that fired and created working memory elements that were used to produce a result.
 
-If an instantiation being backtraced through tested a selected operator, EBC will backtrace through each instantiation that created a preference in that operator's relevant operator selection knowledge set.  This behavior is off by default and can be enabled with \soar{chunk add-osk on} (See Section \ref{chunk-add-osk}.
+If an instantiation being backtraced through tested a selected operator, EBC will backtrace through each instantiation that created a preference in that operator's relevant operator selection knowledge set.  This behavior is off by default and can be enabled with \soar{chunk add-osk on} (See Section \ref{chunk-add-osk}.)
 
 Multiple components of EBC perform their work during backtracing:  operationality analysis, identity analysis and constraint tracking.  The following sections will discuss what aspects of the agent's problem-solving are analyzed during backtracing.
 
@@ -405,12 +415,12 @@ The first phase of identity analysis, forward identity propagation, occurred as 
 The identity graph initially contains a node for each identity used in the explanation trace.  Each node can have multiple edges that point to children identities and a single directed \textit{join edge} that initially points back to itself.  As the agent backtraces through the explanation trace, EBC will manipulate the identity graph based on the condition-action pairs it encounters.
 
 \begin{enumerate}
-	\item \textbf{Joining identities} \hfill
+	\item \textbf{Joining identities} \newline
 	If a condition matches an action with a conflicting identity, EBC performs a join operation between the two identities. This chooses one identity as the \textit{joined identity} and points the join edges of the other identity and any previously joined identities to the new \textit{joined identity}.
 
 	Note that any time EBC uses an element's identity, it is actually using the \textit{joined identity}.
 	
-	\item \textbf{Literalizing identities} \hfill
+	\item \textbf{Literalizing identities} \newline
 	If a condition/action with a variable element matches an action/condition with a literal element, EBC marks the variable's identity as literalized.  This means that any conditions in the final chunk that have elements with that identity will be considered to have the NULL identity, just like constants, and not be variablized.  Instead, the matched value will be used for that element.
 	\index{chunking!NULL identity}
 \end{enumerate}
@@ -421,9 +431,9 @@ The identity graph initially contains a node for each identity used in the expla
 \index{chunking!correctness}
 \index{chunk!overgeneral}
 
-Our definition of operationality is very clear and allows us to almost trivially determine operationality during task execution, but it does have one shortcoming: non-operational conditions, i.e. ones that don't test the superstate, can transitively place constraints on the values of variables in operational conditions that will appear in a chunk.  If our learning algorithm does not include these constraints, the learned rule will be missing knowledge and be over-general.
+Our definition of operationality is very clear and allows us to almost trivially determine which conditions we should include in a learned rule, but it does have one shortcoming: non-operational conditions, which are ones that don't test working memory elements in the superstate, can transitively place constraints on the values of variables in operational conditions that \textit{will} appear in a chunk.  If our learning algorithm does not include these constraints, the learned rule can apply to situations where the previous sub-state reasoning could not have occurred, which means that the learned rule is over-general.
 
-To handle this limitation, \textbf{\textit{EBC keeps track of all constraints found in non-operational conditions that it encounters while backtracing.}}
+To handle this limitation, \textbf{\textit{EBC keeps track of all constraints found in non-operational conditions that it encounters while backtracing}} in the following manner:
 
 \begin{itemize}
 	\item It stores constraints on the value a single identity, for example \soar{>= 0}, \soar{< 23}.
@@ -435,37 +445,27 @@ To handle this limitation, \textbf{\textit{EBC keeps track of all constraints fo
 \subsection{Rule Formation}
 \label{CHUNKING-during-formation}
 
-This component of EBC has 7 distinct stages:
+\begin{wrapfigure}{r}{\the\thirdwidth}
+	\insertfigure{chunking-rule-formation.png}{\the\thirdwidth}
+	\caption{}
+	\label{fig:chunking-rule-formation}
+\end{wrapfigure}
 
-\begin{description}
-	\item [Conditions and Action Creation]
-	\vspace{-6pt}
-	\item [Constraint Enforcement]
-	\vspace{-6pt}
-	\item [Identity-based Generalization]
-	\vspace{-6pt}
-	\item [Condition Merging]
-	\vspace{-6pt}
-	\item [Condition Polishing]
-	\vspace{-6pt}
-	\item [Rule Repair and Validation]
-	\vspace{-6pt}
-	\item [Condition Re-ordering]
-	\vspace{-6pt}
-\end{description}
+There are seven distinct, sequential stages to rule formation.  The following sections will give a brief overview of each one.
 
+\FloatBarrier
 \subsubsection{Condition and Action Creation}
 
-This stage creates the basis for the left-hand and right-hand side of the rule.  To create the conditions of the chunk, it copies all conditions in the explanation trace that were flagged as operational during backtracing.  To form the actions of the chunk, it creates copies of the actions that produced all result WMEs and all children of those results that came along for the ride.
+This stage creates the basis for the left-hand and right-hand side of the rule.  
+To create the initial conditions of the chunk, it copies all conditions in the explanation trace that were flagged as operational during backtracing.  These initial conditions contain literal values for each element.
+To form the actions of the chunk, it creates copies of the actions that produced each of the result and all children of those results that came along for the ride.
 
 \subsubsection{Enforcement of Constraints}
 
-This stage adds all constraints on non-operational conditions that were collected during backtracing.  As previously described, each constraint is indexed in terms of the identity it constrains.  So, \textit{if the identity being constrained exists in one of the conditions of the learned rule}, the constraint is added to that condition.
+This stage adds all constraints on non-operational conditions that were collected during backtracing.  As previously described, each constraint is indexed in terms of the identity it constrains.  So, \textit{if the identity being constrained exists in one of the conditions of the learned rule}, EBC will enforce the constraint by adding a new test to that condition.
 
-\subsubsection*{Inversion of Constraints}
 \index{chunking!literalization}
-
-There is one case where attaching a constraint can be tricky.  It happens when the constrained identity has been literalized but the constraint itself refers to an identity that has not been literalized, for example \soar{\{ > <x> 3 \}}.  While that constraint references a condition element that can only match a value of \soar{3}, the relationship between \soar{3} and the identity of \soar{<x>} must still hold (assuming \soar{<x>} appears in a different element somewhere else in the rule.)  Since these constraints still need to be enforced to ensure a correct rule, EBC will invert the constraint and attach it to a variable in another condition.  In this example, it would add a \soar{< 3} to some other condition with an element that had \soar{<x>}'s identity.
+One situation in which attaching a constraint can be tricky occurs \textit{when the constrained identity has been literalized but the constraint itself refers to an identity that has not been literalized}, for example \soar{\{ > <x> 3 \}}.  While that constraint references a condition element that can only match a value of \soar{3}, the relationship between \soar{3} and the identity of \soar{<x>} must still hold (assuming \soar{<x>} appears in a different element somewhere else in the rule.)  Since these constraints still need to be enforced to ensure a correct rule, EBC will invert the constraint and attach it to a variable in another condition.  In this example, it would add a \soar{< 3} to some other condition with an element that had \soar{<x>}'s identity.
 
 \subsubsection{Identity-Based Variablization}
 
@@ -473,11 +473,11 @@ To achieve any useful generality in chunks, identifiers of actual objects must b
 
 Note that elements with identities that have been \textit{literalized} are considered members of the null identity and will not be variablized.
 
-\subsubsection{Merge Redundant Conditions}
+\subsubsection{Merging Redundant Conditions}
 
 Any two conditions in the learned rule that share the same identities in all three elements can be combined.  In such cases, it is logically impossible for those two conditions to match two different WMEs and cause the same rules to match in the substate.  (If the two conditions were to match two different WMEs, at least one of the other rules in the explanation trace that had unified the two conditions would not have matched.)  As a result, EBC can safely merge those two conditions without losing generality.  
 
-\subsubsection{Polish Conditions}
+\subsubsection{Polishing Conditions}
 
 EBC polishes the conditions of the learned rule by pruning unnecessary constraints and combining disjunctions.
 
@@ -492,8 +492,8 @@ EBC polishes the conditions of the learned rule by pruning unnecessary constrain
 	If an element in a condition has been literalized but also has a literal constraint on its value, then the constraint is unnecessary and will be thrown out.  \soar{\{ >2 3\}} becomes \soar{3}.
 \end{enumerate}
 
-\subsubsection{Validate Rule and Repair Unconnected Conditions}
-
+\subsubsection{Validating Rule and Repairing Unconnected Conditions}
+\index{chunking!repair}
 At this point, the rule is essentially formed.  Chunking must now make sure that the learned rule is fully operational and can be legally added to production memory.  A fully operational rule does not have any conditions or actions that are not linked to a goal state specified in the rule. 
 
 If an unconnected action or condition is found, EBC will attempt to repair the rule by adding new conditions that provide a link from a state that is already tested somewhere else in the rule to the unconnected condition or action.
@@ -502,7 +502,7 @@ To repair the rule, EBC performs a search through working memory to find the sho
 
 Note that there may be multiple paths from a state to the unconnected identifier.  EBC does a breadth-first search, so it will find the shortest one.  
 
-\subsubsection{Re-order Conditions}
+\subsubsection{Re-ordering Conditions}
 
 Since the efficiency of the Rete matcher depends heavily upon the order of a production's conditions, the chunking mechanism attempts to write the chunk's conditions in the most favorable order. At each stage, the condition-ordering algorithm tries to determine which eligible condition, if placed next, will lead to the fewest number of partial instantiations when the chunk is matched. A condition that matches an object with a multi-valued attribute will lead to multiple partial instantiations, so it is generally more efficient to place these conditions later in the ordering.  This is the same process that internally reorders the conditions in user-defined productions, as mentioned briefly in Section \ref{ARCH-pm-structure}.
 
@@ -533,7 +533,7 @@ The main limitation of traditional chunking was that it would often produce rule
 
 \subsubsection{Rule Repair}
 
-There is one situation in which an agent may still learn an over-specialized rule.  It occurs when EBC repairs a rule that has unconnected conditions, which are conditions that have an identifier that is not linked to one of the states referenced in the rule.  Such rules are illegal and cannot be added to Soar's production memory. As described in Section \ref{CHUNKING-during-formation-validate}, EBC's repair process provides a connection by adding new conditions to the rule that provide a link from a state that is tested somewhere else in the rule to the unconnected condition or action. 
+There is one situation in which an agent may still learn an over-specialized rule.  It occurs when EBC repairs a rule that has unconnected conditions, which are conditions that have an identifier that is not linked to one of the states referenced in the rule.  Such rules are illegal and cannot be added to Soar's production memory. As described in Section \ref{CHUNKING-repair}, EBC's repair process provides a connection by adding new conditions to the rule that provide a link from a state that is tested somewhere else in the rule to the unconnected condition or action. 
 
 The only known situation in which repair can still occur is when an agent tests or augments a previous result.  A previous result is a working memory element that was originally created locally in the substate but then later became a result when a rule fired and connected it to the superstate.  If another substate rules later matches or augments such a previous result WME \emph{using a path relative to the local substate}, then EBC will have problems.  It will know that the WME is in the superstate -- so conditions that test the WME are considered operational and augmentations on that identifier are considered results -- but it won't know where in the superstate that working memory is located is and how it should be referenced in the learned rule. 
 
@@ -606,10 +606,10 @@ If this type of reasoning is needed, agents can move the conflating WME to the s
 Generalizing problem-solving based on knowledge recalled from an external memory system can be problematic for four main reasons.
 
 \begin{enumerate}
-	\item \textbf{Justification for a memory recall is opaque to agent} \hfill
+	\item \textbf{Justification for a memory recall is opaque to agent} \newline
 	EBC does not have access to the reasoning behind why a piece of knowledge was recalled from a memory system.  For example, consider the case of a semantic memory that is recalled because it has the highest level of activation at a particular time.  In a future situation, the same semantic memory may not be the most active, in which case something else would be recalled and different problem-solving could occur.  Because of that possibility, the original rule is not guaranteed to produce the same result and hence could be incorrect.  (Note that this can also occur with episodic memory queries.)
 
-	\item \textbf{Knowledge that changes after the learning episode} \hfill
+	\item \textbf{Knowledge that changes after the learning episode} \newline
 	Semantic knowledge can be modified by the agent.  Different semantic knowledge can affect different problem-solving, in which case a rule based on the original problem-solving would be incorrect.  (Different recalled knowledge could affect which rules would match in the substate, or it could change which memory is now the best match to be recalled.)
 
 	\item If the knowledge from semantic or episodic memory is retrieved directly within the substate, EBC will not directly incorporate that knowledge into the learned rule at all.
@@ -619,7 +619,6 @@ Generalizing problem-solving based on knowledge recalled from an external memory
 
 	To avoid this situation, an agent can retrieve the knowledge in a higher-level state rather than the substate in which the rule is learned.
 
-	\item %TODO
 \end{enumerate}
 
 
@@ -696,6 +695,7 @@ In real world agents, there may be certain problem spaces in which you don't wan
 	\begin{itemize}
 		\item Use \soar{chunk except} setting.
 		\item Design an agent rule that executes the RHS action \soar{dont-learn}, which only matches in states in which you don't want to learn rules.
+	\end{itemize}
 \end{itemize}
 
 Depending on your agent design, you may want to consider enabling the \soar{add-osk} option.  As of Soar 9.6.0, EBC does not incorporate operator selection knowledge into learned rules by default, since there is a performance cost and not all agents designs require its inclusion.  You may want to enable this option if your agent has rules that test knowledge in the superstate to create operator preferences in the substate.
@@ -788,7 +788,7 @@ When mixing justifications and chunks, users may want to set EBC to record expla
 
 If a newly learned chunk was immediately added to production memory, it would immediately match with the same working memory elements that participated in its creation.  This can be problematic if the production's actions include preferences for new working memory elements.  Consider the case where a substate proposes a new operator, which causes a chunk to be learned that also proposes a new operator. The chunk would immediately fire and create a preference for another new operator, which duplicates the operator preference that was the original result of the subgoal. 
 
-To prevent this, \texbf{inhibition} is used. This means that each production that is built during chunking is considered to have already fired with the instantiation of the exact set of working memory elements used to create it. Note that this does not prevent a newly learned chunk from immediately matching other working memory elements that are present.
+To prevent this, \textbf{inhibition} is used. This means that each production that is built during chunking is considered to have already fired with the instantiation of the exact set of working memory elements used to create it. Note that this does not prevent a newly learned chunk from immediately matching other working memory elements that are present.
 
 % ----------------------------------------------------------------------------
 \subsection{Determining Which OSK Preferences are Relevant}
@@ -845,18 +845,18 @@ Our solution:  Literalize identities in any intermediate opaque function .
 Soar learns a chunk every time a subgoal produces a result, unless one of the following conditions is true:
 
 \begin{enumerate}
-	\item \textbf{Chunking is off} \hfill
+	\item \textbf{Chunking is off} \newline
 	This corresponds to the command \soar{chunk never}.  See Section \ref{chunk} on page \pageref{chunk} for details of \soar{chunk} and how to turn chunking on or off.
 
 	\index{chunking!RHS functions}
 	\index{RHS Function!dont-learn}
 	\index{RHS Function!force-learn}
-	\item \textbf{Chunking was only enabled for some states, and the subgoal in question is not one of them} \hfill
+	\item \textbf{Chunking was only enabled for some states, and the subgoal in question is not one of them} \newline
 	When chunking is enabled via the \soar{only} or \soar{except} command, the agent must specify which states learning either occurs in or doesn't occur in, respectively.  For the \soar{except} setting, Soar will learn rules in all states in which a \soar{dont-learn} RHS production action was not executed.  Similarly, for the \soar{only} setting, Soar will learn rules in all states where a \soar{force-learn} RHS production action was executed.  See Section \ref{SYNTAX-pm-rhs-learning} on page \pageref{SYNTAX-pm-rhs-learning} for more information.
 
 	This capability is provided for debugging and practical system development, but it is not part of the theory of Soar.
 
-	\item \textbf{The chunk learned is a duplicate of another production or chunk already in production memory} \hfill
+	\item \textbf{The chunk learned is a duplicate of another production or chunk already in production memory} \newline
 
 	In some rare cases, a duplicate production will not be detected because the order of the conditions or actions is not the same as an existing production.
 
@@ -882,3 +882,4 @@ Soar learns a chunk every time a subgoal produces a result, unless one of the fo
 	\item \textbf{The problem-solving in the substate did not test any knowledge in the superstate}
 
 	In these cases, the chunk learned does not have any conditions and is not a legal production.  \emph{Note that this creates an unusual persistence issue for any results that came out of the substate.}  Since a justification or chunk was not learned, there is no rule in the superstate that can provide either i-support or o-support for the result that came out of the substate.   Consequently, those result WMEs will be completely dependent on the rules that fired within the substate.  So, when the substate is removed, those results will also be removed.
+\end{enumerate}

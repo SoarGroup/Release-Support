@@ -108,7 +108,6 @@
 \usepackage[figure,figure*]{hypcap}   % to correct anchor placement for figures
 %\usepackage{amstext}
 %\usepackage{verbatim}
-%\usepackage{subfigure}
 %\usepackage{rotating}
 %\usepackage{epic}
 %\usepackage{lscape}
@@ -116,6 +115,15 @@
 \usepackage{longtable}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{float}
+
+% Added by Mazin for procedural learning chapter
+\usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage{placeins}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{fancyvrb}
 
 \providecommand{\tightlist}{%
    \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -130,6 +138,12 @@
 \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 \setlength{\textwidth}{6.5in}
+\newlength{\halfwidth}
+\newlength{\thirdwidth}
+\newlength{\quarterwidth}
+\setlength{\halfwidth}{\dimexpr(\textwidth)/2\relax}
+\setlength{\thirdwidth}{\dimexpr(\textwidth)/3\relax}
+\setlength{\quarterwidth}{\dimexpr(\textwidth)/4\relax}
 \setlength{\textheight}{9.2in}		% Gives 1 inch on top and bottom.
 
 \setlength{\parskip}{8pt}
