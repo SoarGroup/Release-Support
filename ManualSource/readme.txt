@@ -1,21 +1,20 @@
-Instructions on compiling the Soar Manual
+Instructions on compiling the Soar Manual:
 
-Joseph Xu
-June 5, 2009
+Prerequisites:
+- Perl modules:
+    - HTML::TreeBuilder
+    - HTML::Latex
+    - These are obtainable from CPAN (Comprehensive Perl Archive Network). If 
+      you have the cpan command line program, you can just run:
+      
+      cpan -i HTML::TreeBuilder HTML::Latex
+- pdflatex
+- Other possible prerequisites:
+    - pandoc
+    - html2text
 
-You'll need these perl
-modules to run it successfully:
+- 'make':  Will download CLI help, convert stuff and make the final pdf.
+- 'make fast': Same as make but does not download and convert CLI help, which may not be actively changing
+- 'make clean': Deletes all intermediate files
 
-HTML::TreeBuilder
-HTML::Latex
-
-These are all obtainable from CPAN (Comprehensive Perl Archive
-Network). If you have the cpan command line program, you can just run
-
-cpan -i HTML::TreeBuilder HTML::Latex
-
-You should be able to just run "make" in this directory to make the final pdf.
-
-Note that because most of the figures included in the manual are
-stored as pdf's, you'll need to have pdflatex installed to compile
-things successfully.
+Note that the script will copy the compiled manual into the Release-Support/pdf directory.
