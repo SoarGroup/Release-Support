@@ -11,18 +11,19 @@
 % ----------------------------------------------------------------------------
 \section{Chunking}
 
-\textbf{Chunking} is Soar's experience-based mechanism to learn new procedural knowledge.  Chunking utilizes Soar's impasse-driven model of problem decomposition into subgoals to create new productions dynamically during task execution.  These new productions, called \textbf{chunks}, summarize the problem-solving that was required to produce the results of each subgoal. When a chunk is built, it is added to production memory.  In future similar situations, the agent will not create a similar subgoal, thus avoiding the potentially expensive problem-solving that would have occurred.  Instead, the chunk will fire and create the same result in a single step.  
+\textit{Chunking} is Soar's experience-based mechanism for learning new procedural knowledge.  Chunking utilizes Soar's impasse-driven model of problem decomposition into sub-goals to create new productions dynamically during task execution.  These new productions, called \textbf{chunks}, summarize any problem-solving that occurs in a substate that led to new knowledge in a superstate.  Whenever such new knowledge, which are called \textbf{results}, is created by a rule firing, Soar learns a new rule and immediately adds it to production memory.  In future similar situations, the agent will not spawn a similar subgoal, thus avoiding the potentially expensive problem-solving that would have occurred.  The chunk will fire and create the same results in a single step.  In other words, rather than contemplating and figuring out what to do, the agent immediately knows what to do.  
 
 Chunking can effect both speed-up and transfer learning.  Chunks can effect speed-up learning because they compress all of the problem-solving needed to produce a result into a single step.  For some real-world agents, hundreds of rule firings are compressed into a single rule firing.  Chunks can effect transfer learning because they generalize the problem-solving in such a way that they can apply to other situations that are similar but have not yet been experienced.
 
 Chunks are created whenever one subgoal creates a result; since most Soar programs are continuously subgoaling and returning results to higher-level states, chunks are typically created continuously as Soar runs.  Note that Soar builds the chunk as soon as the result is created, rather than waiting until the impasse is resolved.
 
+While chunking is a core capability of Soar, procedural learning is disabled by default.  See section /ref{CHUNKING-usage} for more information about enabling and using chunking.
 
 % ----------------------------------------------------------------------------
 % ----------------------------------------------------------------------------
 \section{Explanation-based Chunking}
 
-Explanation-based chunking improves on previous versions of chunking by learning rules that are qualitatively more general and more expressive.  In fact, they now can generalize any element of the rule and have the full expressive power of hand-written rules. Here is an example of a chunk EBC learned from the arithmetic demo agent and how it differs from chunks learned in previous versions of Soar.
+Explanation-based chunking improves on previous versions of chunking by learning rules that are qualitatively more general and expressive.  In fact, any element of a learned rule can now be variablized, and learned rules now have the full expressive power of hand-written rules. Figure \ref{fig:chunk-comparison} compares a chunk EBC learned with a chunks learned in previous versions of Soar.
 
 \begin{table}
 	\captionsetup{type=figure}
@@ -111,10 +112,11 @@ Explanation-based chunking improves on previous versions of chunking by learning
 	\end{Verbatim}
 \end{multicols}
 	\caption{Comparing a traditional chunk (left) with an explanation-based chunk (right) in the arithmetic demo agent.  In Soar 9.4, the arithmetic agent would learn 1263 rules like the one on the left.  In Soar 9.6, the same agent learns under 10 rules like the one on the right.}
+	\label{fig:chunk-comparison}
 \end{table}
-To achieve this, chunking needs information about why rules matched and what the relationships are between those rules.  It needs to know what is generalizable and what limits are there on those generalizations. Prior versions of chunking analyzed a literal history of the rule instances that matched in the substate, which we call a working memory trace, so most of that information was not readily available.
+To achieve this, chunking needs information about why rules matched and what the relationships are between those rules.  It needs to know what is generalizable and what limits are there on those generalizations. Unfortunately, this information was not readily available to prior versions of chunking.  Previously, Soar would analyze a trace of all WMEs that were tested in a substate, which we call a \textit[working memory trace].  With the limited explanatory information avaliable in the working memory trace, chunking produced very specific rules in which only Soar identifiers were variablized and all other elements tested the exact values of the matched WMES.  
 
-Since this working memory trace provides limited information, chunking produced very specific rules in which only Soar identifiers were variablized and all other elements tested the exact values that matched.  To improve on this and produce more general chunks, EBC instead does an analysis of the underlying network of hand-written rules that matched in the substate and led to the results.  We call this network the explanation trace:
+To remedy this limitation and produce more general chunks, EBC instead analyzes two traces simultaneously:  the working memory trace and a corresponding trace of the hand-written rules that matched in the substate.  This new network of rule matches is called the explanation trace:
 
 \vspace{12pt}
 \begin{center}
@@ -125,9 +127,9 @@ Since this working memory trace provides limited information, chunking produced 
 \end{center}
 
 \index{chunking!instantiation}
-Note that this trace is generated dynamically as rules match.  Whenever a rule matches during agent execution, Soar creates an internal record of the rule that fired, called an \textbf{instantiation}.  (Each box in the explanation traces below represents an instantiation that was created during task execution within a particular substate.) The instantiation contains both instance information about what matched (the working memory elements) and explanatory information about why they matched (the rules and actions in the original rules that contains variables, constraint tests, RHS actions, etc.).  
+Note that this trace is generated dynamically as rules match.  Whenever a rule matches during agent execution, Soar creates an internal record of the rule that fired, called an \textbf{instantiation}.  (Each box in the explanation traces of this chapter represents an instantiation that was created during task execution within a particular substate.) The instantiation contains both instance information about what matched (the working memory elements) and explanatory information about why they matched (the rules and actions in the original rules that contains variables, constraint tests, RHS actions, etc.).  
 
-Even architectural WMEs have special instantiations that explain why they were created.  For example, an architectural instantiation is created for each \soar{\carat item} attribute automatically made for operator tie impasse substates; the explanation causes the \soar{\carat item} augmentation to be dependent on the operator in the superstate that led to it.  Similarly, structures created by semantic and episodic memory in the substate have architectural instantiations that explain their genesis.
+Even architectural WMEs have special instantiations that explain why they were created.  For example, an architectural instantiation is created for each \soar{\carat item} attribute, which is automatically made for operator tie impasse substates; the explanation causes the \soar{\carat item} augmentation to be dependent on the operator in the superstate that led to it, which means that chunks learned which tested that \soar{\carat item} augmentation will cause the chunk to also be dependent on the operator in the superstate.  Similarly, architectural instantiations are created for structures recalled by semantic and episodic memory in the substate. 
 
 \index{chunking!backtracing}
 All of the instantiations that were created in a substate form the instantiation graph of that substate.  As chunking \textbf{backtraces} through the instantiation graph, it determines the subset of instantiations that contributed to a result, which constitutes the explanation trace for a learning episode.  (So, the explanation trace is a subgraph of the instantiation graph.)
@@ -212,7 +214,7 @@ In Figure \ref{fig:chunking-trace2}, the connection between rule 2 and rule 1 wi
 
 It doesn't matter that the \soar{<y>} in rule 1 uses the same variable name as the \soar{<y>} in rule 2.  It also doesn't matter that both conditions with \soar{<y>} happen to match the same working memory element, \soar{(S1 \carat number 3)}.  In terms of sharing an identity, the only thing that matters is how the rules interact, namely whether there's a connection between elements in the condition of one rule and elements in the actions of another rule.
 
-All literal values, for example all of the attribute in Figure \ref{fig-chunking-trace} (\soar{superstate}, \soar{number}, \soar{intermediate1}, etc.) are considered members of the \textit{NULL identity}.
+All literal values, for example all of the attribute in Figure \ref{fig-chunking-trace2} (\soar{superstate}, \soar{number}, \soar{intermediate1}, etc.) are considered members of the \textit{NULL identity}.
 
 \index{chunking!literalization}
 Variable identities can also be mapped to the NULL identity, which means that any elements in the final rule that share that identity will not be variablized. When this happens, we say that the identity has been \textit{literalized}.  There are two ways that a rule interaction can effect an identity literalization:
@@ -469,9 +471,7 @@ One situation in which attaching a constraint can be tricky occurs \textit{when 
 
 \subsubsection{Identity-Based Variablization}
 
-To achieve any useful generality in chunks, identifiers of actual objects must be replaced by variables when the chunk is created; otherwise chunks will only ever fire when the exact same objects are matched.  At this point in the algorithm, all of the real work needed to determine the most general but correct variablization has already been performed by the identity analysis component.  So, this step simply needs to replace any element that has a non-NULL identity with a variable, making sure that elements with the same identity get the same variable.
-
-Note that elements with identities that have been \textit{literalized} are considered members of the null identity and will not be variablized.
+To achieve any useful generality in chunks, identifiers of actual objects must be replaced by variables when the chunk is created; otherwise chunks will only ever fire when the exact same objects are matched.  At this point in the algorithm, all of the real work needed to determine the most general but correct variablization has already been performed by the identity analysis component.  So, this step simply needs to replace any element that has a non-NULL identity with a variable, making sure that elements with the same joined identity get the same variable.  Moreover, elements with identities that have been \textit{literalized} are considered members of the NULL identity and are not variablized.
 
 \subsubsection{Merging Redundant Conditions}
 
@@ -479,7 +479,7 @@ Any two conditions in the learned rule that share the same identities in all thr
 
 \subsubsection{Polishing Conditions}
 
-EBC polishes the conditions of the learned rule by pruning unnecessary constraints and combining disjunctions.
+EBC polishes the conditions of the learned rule by pruning unnecessary constraints on literalized elements and combining multiple disjunction constraints into a single disjunction.
 
 \begin{enumerate}
 	\item \textbf{Merging conditions:}
@@ -500,7 +500,7 @@ If an unconnected action or condition is found, EBC will attempt to repair the r
 
 To repair the rule, EBC performs a search through working memory to find the shortest path of working memory elements that lead from a state identifier in the rule to a WME with the identifier in the unconnected condition or action.  A new condition is then added for every WME in that found path, which is then variablized.
 
-Note that there may be multiple paths from a state to the unconnected identifier.  EBC does a breadth-first search, so it will find the shortest one.  
+Note that there may be multiple paths from a state to the unconnected identifier.  EBC does a breadth-first search, so it will find one with the shortest distance.  
 
 \subsubsection{Re-ordering Conditions}
 
@@ -537,13 +537,13 @@ There is one situation in which an agent may still learn an over-specialized rul
 
 The only known situation in which repair can still occur is when an agent tests or augments a previous result.  A previous result is a working memory element that was originally created locally in the substate but then later became a result when a rule fired and connected it to the superstate.  If another substate rules later matches or augments such a previous result WME \emph{using a path relative to the local substate}, then EBC will have problems.  It will know that the WME is in the superstate -- so conditions that test the WME are considered operational and augmentations on that identifier are considered results -- but it won't know where in the superstate that working memory is located is and how it should be referenced in the learned rule. 
 
-To repair the rule, EBC creates new grounding conditions to connect the unconnected identifier.  It performs a search through working memory to find the shortest path from a state to the identifier behind the unconnected element.   This adds specificity to the learned rule because these new conditions are based purely on what happened to be in working memory at that point.  So, adding them to the chunk constrains it to only match future situations where the previous result can be found on that same path. 
+To repair the rule, EBC creates new grounding conditions to connect the unconnected identifier.  It performs a search through working memory to find the shortest path from a state to the identifier behind the unconnected element.   This adds specificity to the learned rule because these new conditions are based purely on what happened to be in working memory at that point.  So, adding them to the chunk constrains it to only match future situations where the previous result can be found on that same path. (But if an agent designer expects that the path should always exist, a repaired rule should match just as generally as an unrepaired rule.)
 
-Since, nothing in the explanation dictated that particular path, the learned rules may be over-specialized. (But if an agent designer expects that the path should always exist, a repaired rule should match just as generally as a unrepaired rule.) Fortunately, new chunks can be learned to ameliorate this.  If a similar situation is encountered in the future but with a different path to the unconnected element, the chunk won't fire (the added grounding conditions won't match), which should cause the agent to subgoal and learn a similar chunk with a different set of grounding conditions.
+Since, nothing in the explanation dictated that particular path, the learned rules may be over-specialized.  Fortunately, new chunks can be learned to ameliorate this.  If a similar situation is encountered in the future, but with a different path to the unconnected element, the chunk won't fire, because the added grounding conditions won't match, which should cause the agent to subgoal and learn a similar chunk with a different set of grounding conditions.
 
 To avoid this situation, an agent designer can isolate rules that form chunks by testing or augmenting the substructure of a previous result.  \emph{If those rules are modified so that they match the previous result WMEs through the superstate and not through the local state, EBC will be able create a valid rule without any repair.} 
 
-To detect when this is happening, use the \soar{chunk stats} command. (See Section \ref{debugging-explanation-based-chunking} It will tell you if any of an agent's learned rules required repair.
+To detect when this is happening, use the \soar{chunk stats} command. (See Section \ref{debugging-explanation-based-chunking} It will tell you if any of an agent's learned rules required repair.  If you instruct the explainer to record the chunk, you can also see whether that specific chunk was repaired and look at the chunk's individual stats
 
 \subsubsection{Over-generalization}
 \index{chunking!correctness}
@@ -574,11 +574,11 @@ Future versions of chunking will provide an option to prevent rules from forming
 
 \emph{Over-general chunks can be created when conditions in the explanation trace test for the absence of a working memory elements in the substate.} Since there is no clear way for chunking to generate a set of conditions that describe when a given working memory element would not exist in a substate, chunking can't represent that aspect of the problem-solving. 
 
-Chunking can include negated tests if they test for the absence of superstate working memory elements.  So, the agent engineer can avoid using negated conditions for local data by either (1) designing the problem-solving so that the data that is being tested in the negation is already in the superstate or (2) make the data a result by attaching it to the superstate. This increases the number of chunks learned, but a negated condition of knowledge in the superstate can be incorporated correctly into learned rules.
+Chunking can include negated tests if they test for \textit{the absence of working memory elements in the superstate, though}.  So, the agent engineer can avoid using negated conditions for local substate data by either (1) designing the problem-solving so that the data that is being tested in the negation is already in the superstate or (2) making the data a result by attaching it to the superstate. This increases the number of chunks learned, but a negated condition of knowledge in the superstate can be incorporated correctly into learned rules.
 
-Alternatively, turning off chunking's correctness filter \soar{allow-local-negations} will force Soar to reject chunks whose problem-solving involved a local negation. Note that there are many cases where local negations are perfectly safe to ignore, so Soar allows local negations by default.  In some agents, they are common enough that turning the filter on prevents most rules from being learned.
+Note that there are agent design patterns where local negations are perfectly safe to ignore, so Soar allows local negations by default.  In some agents, they are common enough that turning the filter on prevents any rules from being learned.  
 
-If you suspect that a rule may be over-general because of locally negated condition, you can verify whether such a condition was encountered during backtracing by using the \soar{chunk stats} command and \soar{explain stats} command.  See Sections \ref{debugging-explanation-based-chunking} and \ref{explain-stats} for more information.
+If you suspect that a rule may be over-general because of locally negated condition, you can verify whether such a condition was encountered during backtracing by using the \soar{chunk stats} command and \soar{explain stats} command.  See Sections \ref{debugging-explanation-based-chunking} and \ref{explain-stats} for more information.  If such chunks are problematic, turning off chunking's correctness filter \soar{allow-local-negations} will force Soar to reject chunks whose problem-solving involved a local negation. 
 
 \subsubsection{Not Testing Any Superstate Structures}
 \label{CHUNKING-correctness-issues-exhaustion}
@@ -595,7 +595,7 @@ The current solution to this problem is a bit of a hack.  Soar allows an agent t
 
 One source of incorrect rules occurs when multiple rules fire in a substate that test different structures in the superstate \emph{but create the same WME in the substate}. For example, there may be a rule that can match the superstate in several different ways, each time elaborating the local state with a WME indicating that at least one of these qualifying superstate WMEs existed. In such a situation, the rule would fire multiple times, but the result of the rule firings will be collapsed into creating a single WME in the substate. 
 
-If this WME is then tested to create a result on the superstate, the chunk that is subsequently created can produce different behavior than the substate would have. In the original subgoal processing, all of the matches produced one substate WME.  That one substate WME created a single result in the superstate.  The chunk on the other hand will match each of the items that previously created the substate WME.  And the, each one of those chunk matches will create its own distinct result in the superstate.   Since this is different behavior than the original substate, this rule would be considered incorrect. 
+If this WME is then tested to create a result on the superstate, the chunk that is subsequently created can produce different behavior than the substate would have. In the original subgoal processing, multiple matches produced one substate WME, but that one substate WME only created a single result in the superstate.  The chunk on the other hand will match multiple times for each of the items that previously created the substate WME.  And then, each one of those matches will create its own distinct result in the superstate.   Since this is different behavior than the original substate, this rule would be considered incorrect. 
 
 If it were possible, EBC should learn a \textit{disjunctive conjunctive condition}, with each disjunction being the superstate conditions tested by each substate rule that had previously created the substate WME that was repeatedly asserted.  This is why this potential source of incorrect rules is called \textit{disjunctive context conflation}.
 
@@ -603,21 +603,24 @@ If this type of reasoning is needed, agents can move the conflating WME to the s
 
 \subsubsection{Generalizing knowledge retrieved from semantic or episodic memory}
 
-Generalizing problem-solving based on knowledge recalled from an external memory system can be problematic for four main reasons.
+Generalizing problem-solving based on knowledge recalled from an external memory system can be problematic for three main reasons.
 
 \begin{enumerate}
-	\item \textbf{Justification for a memory recall is opaque to agent} \newline
-	EBC does not have access to the reasoning behind why a piece of knowledge was recalled from a memory system.  For example, consider the case of a semantic memory that is recalled because it has the highest level of activation at a particular time.  In a future situation, the same semantic memory may not be the most active, in which case something else would be recalled and different problem-solving could occur.  Because of that possibility, the original rule is not guaranteed to produce the same result and hence could be incorrect.  (Note that this can also occur with episodic memory queries.)
-
 	\item \textbf{Knowledge that changes after the learning episode} \newline
-	Semantic knowledge can be modified by the agent.  Different semantic knowledge can affect different problem-solving, in which case a rule based on the original problem-solving would be incorrect.  (Different recalled knowledge could affect which rules would match in the substate, or it could change which memory is now the best match to be recalled.)
+	Semantic knowledge can be modified by the agent.  Different semantic knowledge can affect different problem-solving, in which case a rule based on the original problem-solving would be incorrect. 
 
-	\item If the knowledge from semantic or episodic memory is retrieved directly within the substate, EBC will not directly incorporate that knowledge into the learned rule at all.
+	\item \textbf{Justification for a memory recall is opaque to agent} \newline
+	EBC does not have access to the reasoning behind why a piece of knowledge was recalled from a memory system.  For example, consider the case of a semantic memory that is recalled because it has the highest level of activation at a particular time.  In a future situation, the same semantic memory may not be the most active, in which case something else would be recalled and different problem-solving could occur.  Because of that possibility, the original rule is not guaranteed to produce the same result and hence would be considered incorrect.  (Note that this can also occur with episodic memory queries.)
+
+	\item Knowledge from semantic or episodic memory recalled directely into the sub-state is considered local
 	
 	\index{chunk!overgeneral}
-	As described in Section \ref{CHUNKING-during-backtracing-operationality}, a chunk's conditions are based on the conditions in the explanation trace that tested knowledge linked to a superstate.  If semantic or episodic memory is recalled directly into the substate, then any conditions that test that recalled knowledge is not considered operational.  Since the learned rule may not be incorporating some of the reasoning and constraints that involved the recalled knowledge, the rule may be over-general.
+	To understand why this is a problem, remember that a chunk's conditions are based on the conditions in the explanation trace that tested knowledge linked to a superstate.  (See section \ref{CHUNKING-during-backtracing-operationality} for more information.) If semantic or episodic memory is recalled directly into the substate, then any conditions that test that recalled knowledge is considered local to the substate and will not be included as a condition in the chunk.  So, even though the sub-state reasoning required some piece of semantic knowledge to exist, the chunk will not require it.  And, since the learned rule \textit{is not} incorporating some of the reasoning and constraints that involved the recalled knowledge, the rule may be over-general.
 
 	To avoid this situation, an agent can retrieve the knowledge in a higher-level state rather than the substate in which the rule is learned.
+
+	Note that in some agent designs, this situation may be desired, for example in an agent that learns by instruction.   For such agents, a rule that is directly dependent on the instructions being in working memory would be useless.  The agent would need to get the instruction every time it wanted to perform the task again, defeating the purpose of learning by instruction.  One technique that can be used to produce a more general rule which is not directly dependent on the instruction being in working memory is to first store the instructions in semantic or episodic memory.  When the agent is in a substate that it wants to learn a rule based on the instructions, it recalls the instructions from semantic or episodic memory directly into the substate.  Because that knowledge is not linked to the superstate, any rules learned in that substate will not be directly dependent on the existence of the instructions.  Since conditions that test the recalled knowledge are not incorporated into the learned rule, it is very easy to learn over-general chunks.  To avoid this, the substate rules that test recalled knowledge must be careful to also test superstate structures that correspond to the recalled knowledge.  Doing so removes the need for the instructions to exist while avoiding over-generality by ensuring that structures in the superstate corresponding to those instructions are still being tested.  Those conditions that test superstate WMEs will be generalized and included in the chunk, but the undesired portion of the reason that they matched will not be, namely the fact that the superstate knowledge corresponded to recalled instructions.
+
 
 \end{enumerate}
 
@@ -713,7 +716,7 @@ See Section \ref{chunk} on page \pageref{chunk} for more information about the c
 
 It is theoretically possible to detect nearly all of the sources of correctness issues as they happen during execution.  Chunking includes options to prevent rules from forming when these situations are detected.  In Soar 9.6.0, only one filter is available, \soar{allow-local-negations}.  Future versions of Soar will include more correctness filters.
 
-Note that it is still possible to detect that your agent may have encountered the known sources of correctness issues by looking at the output of the \soar{chunk stats} command.  It has specific statistics for some of the sources, while others can be gleaned indirectly.  For example, if the stats show that some rules required repair, you know that your agent was augmenting a previous result
+Note that it is still possible to detect that your agent may have encountered the known sources of correctness issues by looking at the output of the \soar{chunk stats} command.  It has specific statistics for some of the sources, while others can be gleaned indirectly.  For example, if the stats show that some rules required repair, you know that your agent was augmenting a previous result.
 
 \subsubsection{Using singletons to simplify a rule's conditions}
 \label{CHUNKING-usage-tuning-conditions}
@@ -733,18 +736,436 @@ See Section \ref{chunk} for more information about the chunk singleton command.
 \subsubsection{Printing and Traces}
 \index{chunking!backtracing}
 
-To observe the backtracing process:
+\textbf{Printing Rules:}
+\begin{itemize}
+	\item To print all chunks learned: \newline  \soar{print --chunks} or \soar{print -c}
+	\item To print all justifications learned (and still matching):  \newline \soar{print --justifications} or \soar{print -j}
+	\item To print a rule or justification: \newline  \soar{print <rule-name>}
+\end{itemize}
 
-The watch command: \soar{trace backtracing -on} (See Section \ref{trace} on page \pageref{trace}). This prints out a trace of the conditions as they are collected.
+For more information on print, see section \ref{print} on page \pageref{print}.
+
+\textbf{Trace Messages:}
+\begin{itemize}
+	\item To print when new rules are learned (just the name): \newline \soar{trace --learning 1} or  \soar{trace -l 1} 
+	\item To print when new rules are learned (the full rule): \newline \soar{trace --learning 2} or  \soar{trace -l 2} 
+	\item To print a trace of the conditions as they are collected during backtracing: \newline \soar{trace --backtracing} or  \soar{trace -b} 
+	\item To print warnings about chunking issues detected while learning:  \newline \soar{trace --chunk-warnings} or \soar{trace -C}
+	\item To print when learned chunks match and fire: \newline  \soar{trace --backtracing} or  \soar{trace -b} 
+\end{itemize}
+For more information on trace, see section \ref{trace} on page \pageref{trace}.
+
+Note that the most detailed information about why a particular rule was learned can be acquired using the explain mechanism as described in section \ref{explain} on page \pageref{explain}.  That is highly recommended over printing the backtracing trace messages.
 
 \subsubsection{Chunking Statistics}
 
+Chunking automatically compiles various statistics about the procedural rule learning that an agent performs.  To access these stats, use the command \soar{chunk stats} or \soar{stats -l}
+
+\begin{center}
+\begin{Verbatim}[fontsize=\small]
+===========================================================================
+                  Explanation-Based Chunking Statistics
+===========================================================================
+Sub-states analyzed                                                    0
+Rules learned                                                          0
+Justifications learned                                                 0
+
+---------------------------------------------------------------------------
+                               Work Performed
+---------------------------------------------------------------------------
+Number of rules fired                                                  0
+Number of rule firings analyzed during backtracing                     0
+Number of OSK rule firings analyzed during backtracing                 0
+Number of rule firings re-visited during backtracing                   0
+
+Conditions merged                                                      0
+Disjunction tests merged                                               0
+- Redundant values                                                     0
+- Impossible values eliminated                                         0
+
+Operational constraints                                                0
+Non-operational constraints detected                                   0
+Non-operational constraints enforced                                   0
+
+---------------------------------------------------------------------------
+                           Identity Analysis
+---------------------------------------------------------------------------
+Identities created                                                     0
+Distinct identities in learned rules                                   0
+Identity propagations                                                  0
+Identity propagations blocked                                          0
+Identity propagations from local singleton                             0
+Identities joined                                                      0
+- To unify two identities propagated into same variable                0
+- To unify two conditions that tested a superstate singleton           0
+- To connect an child result (result in rule had children WMEs)        0
+Identities literalized                                                 0
+- Condition with variable matched a literal RHS element                0
+- Condition with variable matched a RHS function                       0
+- Condition with literal value matched a RHS variable                  0
+- Variable used in a RHS function                                      0
+
+---------------------------------------------------------------------------
+                  Potential Generality Issues Detected
+---------------------------------------------------------------------------
+Rules repaired that had unconnected conditions or actions              0
+Extra conditions added during repair                                   0
+
+---------------------------------------------------------------------------
+                  Potential Correctness Issues Detected
+---------------------------------------------------------------------------
+Chunk used negated reasoning about sub-state                           0
+Chunk tested knowledge retrieved from long-term memory                 0
+Justification used negated reasoning about sub-state                   0
+Justification tested knowledge retrieved from long-term memory         0
+
+---------------------------------------------------------------------------
+                      Learning Skipped or Unsuccessful
+---------------------------------------------------------------------------
+Ignored duplicate of existing rule                                     0
+Skipped because problem-solving tested ^quiescence true                0
+Skipped because no super-state knowledge tested                        0
+Skipped because MAX-CHUNKS exceeded in a decision cycle                0
+Skipped because MAX-DUPES exceeded for rule this decision cycle        0}
+\end{Verbatim}
+\end{center}
+
+Note that detailed statistics for a specific learned rule can be acquired using the explain mechanism as described in section \ref{explain} on page \pageref{explain}.
+
 \subsubsection{Interrupting Execution To Examine Learning}
 
+\begin{itemize}
+	\item To stop Soar after each successful learning episode: \newline \soar{chunk interrupt on} 
+	\item To stop Soar after detecting any learning issue: \newline \soar{chunk warning-interrupt on} 
+	\item To stop Soar after learning a rule that the explainer recorded: \newline \soar{chunk explain-interrupt on} 
+
+For more information about how to record when a specific rule is leared, see section \ref{explain} on page \pageref{explain} that describes the explain mechanism.
+
+\end{itemize}
 \subsubsection{Explaining Learning Episodes (The Explainer)}
+
+While explanation-based chunking makes it easier for people to now incorporate learning into their agents, the complexity of the analysis it performs makes it far more difficult to understand how the learned rules were formed. The explainer is a new module that has been developed to help ameliorate this problem. The explainer allows you to interactively explore how rules were learned.
+ 
+When requested, the explainer will make a very detailed record of everything that happened during a learning episode. Once a user specifies a recorded chunk to "discuss", they can browse all of the rule firings that contributed to the learned rule, one at a time. The explainer will present each of these rules with detailed information about the identity of the variables, whether it tested knowledge relevant to the the superstate, and how it is connected to other rule firings in the substate. Rule firings are assigned IDs so that user can quickly choose a new rule to examine.
+
+The explainer can also present several different screens that show more verbose analyses of how the chunk was created. Specifically, the user can ask for a description of (1) the chunk's initial formation, (2) the identities of variables and how they map to identity sets, (3) the constraints that the problem-solving placed on values that a particular identity can have, and (4) specific statistics about that chunk, such as whether correctness issues were detected or whether it required repair to make it fully operational.
+
+Finally, the explainer will also create the data necessary to visualize all of the processing described in an image using the new 'visualize' command. These visualization are the easiest way to quickly understand how a rule was formed.
+ 
+Note that, despite recording so much information, a lot of effort has been put into minimizing the cost of the explainer. When debugging, we often let it record all chunks and justifications formed because it is efficient enough to do so.
+
+Use the \soar{explain} command without any arguments to display a summary of which rule firings the explainer is watching. It also shows which chunk or justification the user has specified is the current focus of its output, i.e.~the chunk being discussed.
+
+Tip: This is a good way to get a chunk id so that you don't have to type or paste in a chunk name.
+
+{\footnotesize
+\begin{verbatim}
+=======================================================
+                   Explainer Summary
+=======================================================
+Watch all chunk formations                            Yes
+Explain justifications                                No
+Number of specific rules watched                      0
+
+Chunks available for discussion:                      chunkx2*apply2 (c 14)
+                                                      chunk*apply*o (c 13)
+                                                      chunkx2*apply2 (c 12)
+                                                      chunk*apply*d (c 11)
+                                                      chunkx2*apply2 (c 6)
+                                                      chunk*apply* (c 15)
+                                                      chunkx2*apply (c 8)
+                                                      chunk*apply*c (c 5)
+                                                      chunkx2*apply (c 10)
+                                                      chunk*apply (c 1)
+
+* Note:  Printed the first 10 chunks. 'explain list' to see other 6 chunks.
+
+Current chunk being discussed:                        chunk*apply*down-gripper(c 3)
+
+\end{verbatim}
+}
+
+\textbf{\soar{explain chunk [ <chunk id> | <chunk name> ]}}
+
+This command starts the explanation process by specifying which chunk's eplanation trace you want to explore.
+
+Tip: Use the alias \soar{c} to quickly start discussing a chunk, for example:
+
+{\tiny
+\begin{verbatim}
+soar % c 3
+Now explaining chunk*apply*move-gripper-above*pass*top-state*OpNoChange*t6-1.
+- Note that future explain commands are now relative
+  to the problem-solving that led to that chunk.
+
+Explanation Trace                                     Using variable identity IDs                  Shortest Path to Result Instantiation
+
+sp {chunk*apply*move-gripper-above*pass*top-state*OpNoChange*t6-1
+1:    (<s1> ^top-state <s2>)                          ([140] ^top-state [162])
+     -{
+2:    (<s1> ^operator <o*1>)                          ([140] ^operator [141])
+3:    (<o*1> ^name evaluate-operator)                 ([141] ^name evaluate-operator)
+     }
+4:    (<s2> ^gripper <g1>)                            ([162] ^gripper [156])                       i 30 -> i 31
+5:    (<g1> ^position up)                             ([156] ^position up)                         i 30 -> i 31
+6:    (<g1> ^holding nothing)                         ([156] ^holding nothing)                     i 30 -> i 31
+7:    (<g1> ^above <t1>)                              ([156] ^above [157])                         i 30 -> i 31
+8:    (<s2> ^io <i2>)                                 ([162] ^io [163])                            i 31
+9:    (<i2> ^output-link <i1>)                        ([163] ^output-link [164])                   i 31
+10:   (<i1> ^gripper <g2>)                            ([164] ^gripper [165])                       i 31
+11:   (<s2> ^clear { <> <t1> <b1> })                  ([162] ^clear { <>[161]  [161] })            i 30 -> i 31
+12:   (<s1> ^operator <o1>)                           ([140] ^operator [149])
+13:   (<o1> ^moving-block <b1>)                       ([149] ^moving-block [161])
+14:   (<o1> ^name pick-up)                            ([149] ^name pick-up)
+      -->
+1:    (<g2> ^command move-gripper-above +)            ([165] ^command move-gripper-above +)
+2:    (<g2> ^destination <c1> +)                      ([165] ^destination [161] +)
+}
+\end{verbatim}
+}
+
+\textbf{\soar{explain formation}}
+
+Once you specify a rule to explain, this will be one of the first commands you issue.  \texttt{explain\ formation} provides an explanation of the initial rule that fired which created a result. This is what is called the `base
+instantiation' and is what led to the chunk being learned. Other rules may also be base instantiations if they previously created children of the base instantiation's results. They also will be listed in the initial formation output.
+
+{\tiny
+\begin{verbatim}
+soar % explain formation
+------------------------------------------------------------------------------------
+The formation of chunk 'chunk*apply*move-gripper-above*pass*top-state*OpNoChange*t6-1' (c 1)
+------------------------------------------------------------------------------------
+
+Initial base instantiation (i 31) that fired when apply*move-gripper-above*pass*top-state matched at level 3 at time 6:
+
+Explanation trace of instantiation # 31            (match of rule apply*move-gripper-above*pass*top-state at level 3)
+ (produced chunk result)
+                                                   Identities instead of variables       Operational    Creator
+
+1:    (<s> ^operator <op>)                         ([159] ^operator [160])                   No         i 30 (pick-up*propose*move-gripper-above)
+2:    (<op> ^name move-gripper-above)              ([160] ^name move-gripper-above)          No         i 30 (pick-up*propose*move-gripper-above)
+3:    (<op> ^destination <des>)                    ([160] ^destination [161])                No         i 30 (pick-up*propose*move-gripper-above)
+4:    (<s> ^top-state <t*1>)                       ([159] ^top-state [162])                  No         i 27 (elaborate*state*top-state)
+5:    (<t*1> ^io <i*1>)                            ([162] ^io [163])                         Yes        Higher-level Problem Space
+6:    (<i*1> ^output-link <o*1>)                   ([163] ^output-link [164])                Yes        Higher-level Problem Space
+7:    (<o*1> ^gripper <gripper>)                   ([164] ^gripper [165])                    Yes        Higher-level Problem Space
+   -->
+1:    (<gripper> ^command move-gripper-above +)    ([165] ^command move-gripper-above +)
+2:    (<gripper> ^destination <des> +)             ([165] ^destination [161] +)
+------
+\end{verbatim}
+}
+
+This chunk summarizes the problem-solving involved in the following 5
+rule firings:
+
+\begin{verbatim}
+   i 27 (elaborate*state*top-state)
+   i 28 (elaborate*state*operator*name)
+   i 29 (pick-up*elaborate*desired)
+   i 30 (pick-up*propose*move-gripper-above)
+   i 31 (apply*move-gripper-above*pass*top-state)
+\end{verbatim}
+
+\textbf{\soar{explain instantiation <instantiation id>}}
+
+This command prints a specific instantiation in the explanation trace.  This is probably one of the most common things you will do while using the explainer. You are essentially browsing the instantiation graph one rule at a time.
+
+Tip: Use the alias \soar{i <instantiation id>} to quickly view an instantiation, for example:
+
+{\tiny
+\begin{verbatim}
+soar % i 30
+Explanation trace of instantiation # 30            (match of rule pick-up*propose*move-gripper-above at level 3)
+- Shortest path to a result: i 30 -> i 31
+                                                   Identities instead of variables       Operational    Creator
+
+1:    (<s> ^name pick-up)                          ([152] ^name pick-up)                     No         i 28 (elaborate*state*operator*name)
+2:    (<s> ^desired <d*1>)                         ([152] ^desired [153])                    No         i 29 (pick-up*elaborate*desired)
+3:    (<d*1> ^moving-block <mblock>)               ([153] ^moving-block [154])               No         i 29 (pick-up*elaborate*desired)
+4:    (<s> ^top-state <ts>)                        ([152] ^top-state [155])                  No         i 27 (elaborate*state*top-state)
+5:    (<ts> ^clear <mblock>)                       ([155] ^clear [154])                      Yes        Higher-level Problem Space
+6:    (<ts> ^gripper <g>)                          ([155] ^gripper [156])                    Yes        Higher-level Problem Space
+7:    (<g> ^position up)                           ([156] ^position up)                      Yes        Higher-level Problem Space
+8:    (<g> ^holding nothing)                       ([156] ^holding nothing)                  Yes        Higher-level Problem Space
+9:    (<g> ^above { <> <mblock> <a*1> })           ([156] ^above { <>[154]  [157] })         Yes        Higher-level Problem Space
+   -->
+1:    (<s> ^operator <op1> +)                      ([152] ^operator [158] +)
+2:    (<op1> ^name move-gripper-above +)           ([158] ^name move-gripper-above +)
+3:    (<op1> ^destination <mblock> +)              ([158] ^destination [154] +)
+\end{verbatim}
+}
+
+\textbf{\soar{explain [explanation-trace | wm-trace]}}
+
+In most cases, users spend most of their time browsing the explanation
+trace. This is where chunking learns most of the subtle relationships
+that you are likely to be debugging. But users will also need to examine
+the working memory trace to see the specific values matched.
+
+To switch between traces, you can use the \texttt{explain\ e} and the
+\texttt{explain\ w} commands.
+
+Tip: Use the aliases \soar{et} and \soar{wt} to quickly switch between traces.
+
+{\scriptsize
+\begin{verbatim}
+soar % explain w
+Working memory trace of instantiation # 30     (match of rule pick-up*propose*move-gripper-above at level 3)
+1:    (S9 ^name pick-up)                               No         i 28 (elaborate*state*operator*name)
+2:    (S9 ^desired D6)                                 No         i 29 (pick-up*elaborate*desired)
+3:    (D6 ^moving-block B3)                            No         i 29 (pick-up*elaborate*desired)
+4:    (S9 ^top-state S1)                               No         i 27 (elaborate*state*top-state)
+5:    (S1 ^clear B3)                                   Yes        Higher-level Problem Space
+6:    (S1 ^gripper G2)                                 Yes        Higher-level Problem Space
+7:    (G2 ^position up)                                Yes        Higher-level Problem Space
+8:    (G2 ^holding nothing)                            Yes        Higher-level Problem Space
+9:    (G2 ^above { <> B3 T1 })                         Yes        Higher-level Problem Space
+   -->
+1:    (S9 ^operator O9) +
+2:    (O9 ^name move-gripper-above) +
+3:    (O9 ^destination B3) +
+\end{verbatim}
+}
+
+\textbf{\soar{explain constraints}}
+
+This feature explains any constraints on the value of variables in the
+chunk that were required by the problem-solving that occurred in the
+substate. If these constraints were not met, the problem-solving would
+not have occurred.
+
+Explanation-based chunking tracks constraints as they apply to identity
+sets rather than how they apply to specific variables or identifiers.
+This means that sometimes constraints that appear in a chunk may have
+been a result of conditions that tested sub-state working memory
+element. Such conditions don't result in actual conditions in the chunk,
+but they can provide constraints. \texttt{explain\ constraints} allows
+users to see where such constraints came from.
+
+This feature is not yet implemented. You can use \texttt{explain\ stats}
+to see if any transitive constraints were added to a particular chunk.
+
+\textbf{\soar{explain identity}}
+
+\texttt{explain\ identity} will show the mappings from variable
+identities to identity sets. If available, the variable in a chunk that
+an identity set maps to will also be displayed. (Requires a debug build
+because of efficiency cost.)
+
+Variable identities are the ID values that are displayed when explaining
+an individual chunk or instantiation. An identity set is a set of
+variable identities that were unified to a particular variable mapping.
+The null identity set indicates identities that should not be
+generalized, i.e.~they retain their matched literal value even if the
+explanation trace indicates that the original rule had a variable in
+that element.
+
+By default, only identity sets that appear in the chunk will be
+displayed in the identity analysis. To see the identity set mappings for
+other sets, change the \texttt{only-chunk-identities} setting to
+\texttt{off}.
+
+\begin{verbatim}
+soar % explain identity
+=========================================================================
+-             Variablization Identity to Identity Set Mappings          -
+=========================================================================
+
+-== NULL Identity Set ==-
+
+The following variable identities map to the null identity set and will
+not be generalized: 282 301 138 291 355 336 227 309 328 318 128 218 345
+
+-== How variable identities map to identity sets ==-
+
+Variablization IDs      Identity     CVar    Mapping Type
+
+Instantiation 36:
+  125 -> 482          | IdSet 12  | <s>       | New identity set
+  126 -> 493          | IdSet 11  | <o>       | New identity set
+Instantiation 38:
+Instantiation 41:
+  146 -> 482          | IdSet 12  | <s>       | New identity set
+  147 -> 493          | IdSet 11  | <o>       | New identity set
+Instantiation 42:
+  151 -> 180          | IdSet 1   | <ss>      | New identity set
+  149 -> 482          | IdSet 12  | <s>       | New identity set
+  150 -> 493          | IdSet 11  | <o>       | New identity set
+  307 -> 180          | IdSet 1   | <ss>      | Added to identity set
+  187 -> 180          | IdSet 1   | <ss>      | Added to identity set
+  334 -> 180          | IdSet 1   | <ss>      | Added to identity set
+  173 -> 180          | IdSet 1   | <ss>      | Added to identity set
+  280 -> 180          | IdSet 1   | <ss>      | Added to identity set
+Instantiation 53:
+  219 -> 489          | IdSet 15  | <b>       | New identity set
+Instantiation 61:
+Instantiation 65:
+  319 -> 492          | IdSet 20  | <t>       | New identity set
+\end{verbatim}
+
+\textbf{\soar{explain stats}}
+
+Explain's \soar{stat} command prints statistics about the specific chunk being discussed.  This is a good way to see whether any generality or correctness issues were detected while learning that rule.
+
+{\scriptsize
+\begin{verbatim}
+===========================================================
+Statistics for 'chunk*apply*move-gripper-above*pass*top-state*OpNoChange*t6-1' (c 1):
+===========================================================
+Number of conditions                                       14
+Number of actions                                          2
+Base instantiation                                         i 31 (apply*move-gripper-above*pass*top-state)
+
+===========================================================
+                 Generality and Correctness
+===========================================================
+
+Tested negation in local substate                          No
+LHS required repair                                        No
+RHS required repair                                        No
+Was unrepairable chunk                                     No
+
+===========================================================
+                      Work Performed
+===========================================================
+Instantiations backtraced through                          5
+Instantiations skipped                                     6
+Constraints collected                                      1
+Constraints attached                                       0
+Duplicates chunks later created                            0
+Conditions merged                                          2
+\end{verbatim}
+}
+
+\paragraph{After-Action Reports}
+
+The explainer has an option to create text files that contain statistics
+about the rules learned by an agent during a particular run. When
+enabled, the explainer will write out a file with the statistics when
+either Soar exits or a \texttt{soar\ init} is executed. This option is
+still considered experimental and in beta.
 
 \subsubsection{Visualizing Learning Episodes (The Visualizer)}
 
+The \soar{visualize} command can generate one of two graphical representations of the analysis that chunking performed to learn a rule. While the explainer provides more date, these images are the easiest and most
+effective ways to quickly understand how a chunk was formed, especially for particularly complex chunks.  The visualizer can create two types of chunking-related images:
+
+(1) An image that shows the entire instantiation graph at once and how it contributed to the learned rule. The graph includes arrows that show the dependencies between actions in one rule and conditions in others. 
+
+(2) The visualizer can also create an image that shows how identities were joined during identity analysis. This can be useful in determining why two elements were assigned the same variable.
+
+Note that Soar will automatically attempt to launch a viewer to see the image generated. If you have an editor that can open graphviz files, you can have Soar launch that automatically as well. (Such editors allow you to move things around and lay out the components of the image exactly as you want them.) Your operating system chooses which program to launch based on the file type. 
+
+
+\textbf{For the visualizer to work, you must have Graphviz and DOT installed}, which are free third-party tools, and must be available on your path.  To date, the visualizer has only been tested on Mac and Linux and has not been tested Windows.  It is possible that certain systems may not allow Soar to launch an external program.
+
+\texttt{visualize\ {[}\ identity\_graph\ \textbar{}\ ebc\_analysis{]}}
+
+
+\texttt{visualize\ ebc\_analysis} is a very informative command that will create a visualization of the chunk that was learned and all rules that fired in a substate that contributed to a rule being learned. In addition to all of the dependencies between rules that fired, this visualization also shows which conditions in the instantiations tested knowledge in the superstate and hence contributed to a conditions in the final learned rule.
+
+\texttt{visualize\ identity\_graph} will create a visualization of how the final identities used in a learned rule were determined. This shows all identities involved and how the identity analysis joined them based on the problem-solving that occurred.
 
 % ----------------------------------------------------------------------------
 % ----------------------------------------------------------------------------
@@ -755,6 +1176,8 @@ The watch command: \soar{trace backtracing -on} (See Section \ref{trace} on page
 
 % ----------------------------------------------------------------------------
 \subsection{Chunks Based on Chunks}
+
+When a problem has been decomposed into more than one sub-state, a single result can produce multiple chunks.  This process is called bottom-up chunking.  The first chunk is produced in the sub-state where the problem-solving that produced the result occurred.  The next chunk is based on the implicit match of the first chunk in one of the higher level problem-spaces.  If the lowest sub-state that the chunk's conditions match is lower than the state that result is being returned to, Soar will backtrace through the chunk and learn a second chunk relative to the sub-state that the chunk matched in.  This process continues until it learns a chunk that only creates working memory elements in the same state it matches in.
 
 % ----------------------------------------------------------------------------
 \subsection{Chunks vs Justifications}
