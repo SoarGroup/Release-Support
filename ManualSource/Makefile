@@ -5,11 +5,12 @@
 
 LATEX = pdflatex -halt-on-error # need to use pdf latex to insert some of the pdf figures correctly
 
-SRC = a-blockscode.tex a-gds.tex a-grammars.tex a-preferences.tex a-support.tex a-tcl-io.tex a-tclexp.tex architecture.tex chunking.tex functions.tex interface.tex intro.tex manual.tex syntax.tex funclist.tex rl.tex smem.tex epmem.tex svs.tex
+SRC = architecture.tex chunking.tex functions.tex interface.tex intro.tex manual.tex syntax.tex funclist.tex rl.tex smem.tex epmem.tex svs.tex
 
 .PHONY : trans_wiki
 
 all : trans_wiki manual.pdf
+fast : manual.pdf
 
 trans_wiki ::
 	cd wikicmd && bash gen_tex.sh

@@ -11,29 +11,30 @@
 % ----------------------------------------------------------------------------
 \section{Chunking}
 
-\textit{Chunking} is Soar's experience-based mechanism for learning new procedural knowledge.  Chunking utilizes Soar's impasse-driven model of problem decomposition into sub-goals to create new productions dynamically during task execution.  These new productions, called \textbf{chunks}, summarize any problem-solving that occurs in a substate that led to new knowledge in a superstate.  Whenever such new knowledge, which are called \textbf{results}, is created by a rule firing, Soar learns a new rule and immediately adds it to production memory.  In future similar situations, the agent will not spawn a similar subgoal, thus avoiding the potentially expensive problem-solving that would have occurred.  The chunk will fire and create the same results in a single step.  In other words, rather than contemplating and figuring out what to do, the agent immediately knows what to do.  
+\textit{Chunking} is Soar's experience-based mechanism for learning new procedural knowledge.  Chunking utilizes Soar's impasse-driven model of problem decomposition into sub-goals to create new productions dynamically during task execution.  These new productions, called \textbf{chunks}, summarize the sub-state problem-solving that occurred which led to new knowledge in a superstate.  Whenever a rule fires and creates such new super-state knowledge, which are called \textbf{results}, Soar learns a new rule and immediately adds it to production memory.  In future similar situations, the new chunk will fire and create the appropriate results in a single step, which eliminates the need to spawn another subgoal to perform similar problem-solving.  In other words, rather than contemplating and figuring out what to do, the agent immediately knows what to do.  
 
-Chunking can effect both speed-up and transfer learning.  Chunks can effect speed-up learning because they compress all of the problem-solving needed to produce a result into a single step.  For some real-world agents, hundreds of rule firings are compressed into a single rule firing.  Chunks can effect transfer learning because they generalize the problem-solving in such a way that they can apply to other situations that are similar but have not yet been experienced.
+Chunking can effect both speed-up and transfer learning.  A chunk can effect speed-up learning because it compresses all of the problem-solving needed to produce a result into a single step.  For some real-world agents, hundreds of rule firings can be compressed into a single rule firing.  A chunk can effect transfer learning because it generalizes the problem-solving in such a way that it can apply to other situations that are similar but have not yet been experienced by the agent.
 
-Chunks are created whenever one subgoal creates a result; since most Soar programs are continuously subgoaling and returning results to higher-level states, chunks are typically created continuously as Soar runs.  Note that Soar builds the chunk as soon as the result is created, rather than waiting until the impasse is resolved.
+Chunks are created whenever one subgoal creates a result in a super-state; since most Soar programs are continuously sub-goaling and returning results to higher-level states, chunks are typically created continuously as Soar runs.  Note that Soar builds the chunk as soon as the result is created, rather than waiting until the impasse is resolved.
 
-While chunking is a core capability of Soar, procedural learning is disabled by default.  See section /ref{CHUNKING-usage} for more information about enabling and using chunking.
+While chunking is a core capability of Soar, procedural learning is disabled by default.  See section \ref{CHUNKING-usage} for more information about enabling and using chunking.
 
 % ----------------------------------------------------------------------------
 % ----------------------------------------------------------------------------
 \section{Explanation-based Chunking}
 
-Explanation-based chunking improves on previous versions of chunking by learning rules that are qualitatively more general and expressive.  In fact, any element of a learned rule can now be variablized, and learned rules now have the full expressive power of hand-written rules. Figure \ref{fig:chunk-comparison} compares a chunk EBC learned with a chunks learned in previous versions of Soar.
+Explanation-based chunking improves on previous versions of chunking by learning rules that are qualitatively more general and expressive.  In fact, any element of a learned rule can now be variablized, and learned rules now have the full expressive power of hand-written rules. 
 
-\begin{table}
+Figure \ref{fig:chunk-comparison} shows an example of an explanation-based chunk and how it differs from a chunk learned from the original algorithm.  It is interesting to note that in Soar 9.4, the arithmetic agent learns 1263 rules like the one on the left-side of the figure.  In Soar 9.6, the same agent only learns 8 rules like the one on the right because they are so much more general.
+
+\begin{center}
 	\captionsetup{type=figure}
 	\begin{multicols}{2}
 	\begin{Verbatim}[fontsize=\tiny]
-		sp {chunk-94*process-column*apply*write-result
+		sp {chunk-94*process-column*apply
 		    (state <s1> ^operator <o1>
 		                ^arithmetic-problem <a1>
 		                ^one-fact 1
-		
 		                ^top-state <s1>
 		                ^arithmetic <a2>
 		                ^arithmetic <a3>)
@@ -41,29 +42,19 @@ Explanation-based chunking improves on previous versions of chunking by learning
 		    (<a1> ^operation subtraction
 		          ^current-column <c1>)
 		    (<c1> -^new-digit1 <n1>
-		          ^digit1 0
-		          ^digit2 7
+		          ^digit1 0 ^digit2 7
 		          ^next-column <n2>)
-		    (<n2> ^digit1 0
-		          ^new-digit1 9
+		    (<n2> ^digit1 0 ^new-digit1 9
 		          ^next-column <n3>)
-		    (<n3> ^digit1 5
-		          ^new-digit1 4)
-		    (<a3> ^add10-facts <a4>)
-			
-		    (<a4> ^digit1 0
-		          ^digit-10 10)
-		    
-		    
+		    (<n3> ^digit1 5  ^new-digit1 4)
 		    (<a2> ^subtraction-facts <s2>
 		          ^subtractions-facts <s3>
 		          ^subtraction-facts <s4>)
-		    (<s2> ^digit1 10  ^digit2 1
-		          ^result 9)
-		    (<s3> ^digit1 5   ^digit2 1
-		          ^result 4)
-		    (<s4> ^digit1 10  ^digit2 7
-		          ^result 3)
+		    (<a3> ^add10-facts <a4>)
+		    (<a4> ^digit1 0 ^digit-10 10)
+		    (<s2> ^digit1 10  ^digit2 1 ^result 9)
+		    (<s3> ^digit1 5   ^digit2 1 ^result 4)
+		    (<s4> ^digit1 10  ^digit2 7 ^result 3)
 		    -->
 		    (<c1> ^result 3)
 		}
@@ -71,7 +62,7 @@ Explanation-based chunking improves on previous versions of chunking by learning
 	\end{Verbatim}
 	\columnbreak
 	\begin{Verbatim}[fontsize=\tiny]
-		sp {chunk-94*process-column*apply*write-result
+		sp {chunk-96*process-column*apply
 		    (state <s1> ^operator <o1>
 		                ^arithmetic-problem <a1>
 		                ^one-fact <o2>
@@ -83,38 +74,30 @@ Explanation-based chunking improves on previous versions of chunking by learning
 		    (<a1> ^operation subtraction
 		          ^current-column <c1>)
 		    (<c1> -^new-digit1 <n1>
-		          ^digit1 { <d2> < <d1> }
-		          ^digit2 <d1>
+		          ^digit1 { <d2> < <d1> } ^digit2 <d1>
 		          ^next-column <n2>)
-		    (<n2> ^digit1 { <d3> < <o3> }
-		          ^new-digit1 <n3>
+		    (<n2> ^digit1 { <d3> < <o3> } ^new-digit1 <n3>
 		          ^next-column <n4>)
-		    (<n4> ^digit1 { <d4> >= <o2> }
-		          ^new-digit1 <n5>)
-		    (<a3> ^add10-facts <a4>
-			      ^add10-facts <a5>)
-		    (<a4> ^digit1 <d2>
-		          ^digit-10 { <d5> >= <d1> })
-		    (<a5> ^digit1 <d3>
-		          ^digit-10 { <d6> >= <o3> })
+		    (<n4> ^digit1 { <d4> >= <o2> } ^new-digit1 <n5>)
 		    (<a2> ^subtraction-facts <s2>
 		          ^subtractions-facts <s3>
 		          ^subtraction-facts <s4>)
-		    (<s2> ^digit1 <d6>  ^digit2 <o3>
-		          ^result <n3>)
-		    (<s3> ^digit1 <d4>  ^digit2 <o2>
-		          ^result <n5>)
-		    (<s4> ^digit1 <d5>  ^digit2 <d1>
-		          ^result <r1>)
+		    (<a3> ^add10-facts <a4>
+			      ^add10-facts <a5>)
+		    (<a4> ^digit1 <d2> ^digit-10 { <d5> >= <d1> })
+		    (<a5> ^digit1 <d3> ^digit-10 { <d6> >= <o3> })
+		    (<s2> ^digit1 <d6>  ^digit2 <o3> ^result <n3>)
+		    (<s3> ^digit1 <d4>  ^digit2 <o2> ^result <n5>)
+		    (<s4> ^digit1 <d5>  ^digit2 <d1> ^result <r1>)
 		    -->
 		    (<c1> ^result <r1>)
 	}
 	\end{Verbatim}
 \end{multicols}
-	\caption{Comparing a traditional chunk (left) with an explanation-based chunk (right) in the arithmetic demo agent.  In Soar 9.4, the arithmetic agent would learn 1263 rules like the one on the left.  In Soar 9.6, the same agent learns under 10 rules like the one on the right.}
+	\caption{Comparing a Soar 9.4.0 chunk (left) with an explanation-based chunk (right) in the arithmetic demo agent}
 	\label{fig:chunk-comparison}
-\end{table}
-To achieve this, chunking needs information about why rules matched and what the relationships are between those rules.  It needs to know what is generalizable and what limits are there on those generalizations. Unfortunately, this information was not readily available to prior versions of chunking.  Previously, Soar would analyze a trace of all WMEs that were tested in a substate, which we call a \textit[working memory trace].  With the limited explanatory information avaliable in the working memory trace, chunking produced very specific rules in which only Soar identifiers were variablized and all other elements tested the exact values of the matched WMES.  
+\end{center}
+To achieve this generality, chunking needs information about why rules matched in a substate and how those rules interacted.  This allows it to determine what is generalizable and what limits there are on those generalizations. Unfortunately, this information necessary to determine that information was not readily available in prior versions of Soar which only provided a trace of all WMEs that were tested in the substate, which we call the \textit[working memory trace].  With the limited explanatory information avaliable in the working memory trace, chunking produced very specific rules in which only Soar identifiers were variablized and all other elements tested the exact values of the matched WMES.  
 
 To remedy this limitation and produce more general chunks, EBC instead analyzes two traces simultaneously:  the working memory trace and a corresponding trace of the hand-written rules that matched in the substate.  This new network of rule matches is called the explanation trace:
 
