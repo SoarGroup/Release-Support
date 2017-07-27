@@ -489,8 +489,21 @@ New Features
 Other Changes
 =================
 
-(7) Minor new features
+(7) Other new features
     
+    - Updated Soar 9.6.0 manual: A review of the Soar manual has been 
+      conducted resulting in significant updates that reflect the many changes 
+      to Soar in the last few years.  This update includes some re-organization 
+      of the manual and an entirely new chapter on procedural knowledge 
+      learning.
+      
+      Note: We are no longer distributing the manual with the binary releases
+            and will instead maintain a single online version that we can 
+            continually add to and keep up to date.  The latest manual can
+            be found at:
+            
+            https://soar.eecs.umich.edu/downloads/SoarManual.pdf
+            
     - New command:  smem --export <filename> [lti-id]
     
       This command allows agents to export their semantic knowledge into a text
