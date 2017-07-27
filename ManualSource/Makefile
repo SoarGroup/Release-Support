@@ -1,7 +1,8 @@
-# Makefile to generate the Soar manual. Hopefully, all you have to do is type
-# "make" (after the tex files for the commands are generated, see below)
+# Makefile to generate the Soar manual
 #
-# Joseph Xu Aug 2008
+# use 'make pull' if you want to first pull the latest CLI help entry from the wiki
+# use 'make' to just do the manual recompilation
+#
 
 LATEX = pdflatex -halt-on-error # need to use pdf latex to insert some of the pdf figures correctly
 
@@ -9,8 +10,8 @@ SRC = architecture.tex chunking.tex functions.tex interface.tex intro.tex manual
 
 .PHONY : trans_wiki
 
-all : trans_wiki manual.pdf
-fast : manual.pdf
+all : manual.pdf
+pull : trans_wiki manual.pdf
 
 trans_wiki ::
 	cd wikicmd && bash gen_tex.sh
