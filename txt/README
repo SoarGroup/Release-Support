@@ -54,16 +54,6 @@ Launching
 
 Launch options for the CLI and the java debugger are listed at the bottom of this document.
 
-=========
-Problems?
-=========
-
-If you have any issues, send a message to the soar-help mailing list, which is 
-read by many helpful members of the community.
-
-- First join the mailing list at https://lists.sourceforge.net/lists/listinfo/soar-help
-- Then send your question to soar-help@lists.sourceforge.net
-
 =============================
 Soar-CLI Command Line Options
 =============================
@@ -118,93 +108,6 @@ and their sub-commands will guess the command based on partial input.
 Note:  Soar 9.6.0 translates old commands in a way that it maintains 99.9% 
        backwards compatibility with 9.5.1, so this transition should not be 
        painful.
-       
-===========================
-9.6.0 Complete Command List
-===========================
-alias
-chunk*
-debug*
-decide*
-echo
-epmem
-explain*
-file-system (help for dirs ls cd pwd pushd popd)
-gp
-help
-load*
-output*
-preferences
-print
-production*
-rl
-run
-save*
-smem
-soar*
-sp
-stats
-svs
-trace*
-visualize*
-wm*
-
-* new command
-
-==========================================
-9.6.0 Commands that Subsume 9.5.0 Commands
-==========================================
-alias
-- unalias
-chunk
-- chunk-name-format, learn, max-chunks
-debug
-- allocate, internal-symbols, port, time
-decide
-- numeric-indifferent-mode, indifferent-selection, predict, select, srand
-load
-- load-library, source, replay-input, rete-net
-output
-- clog, command-to-file, default-wme-depth, verbose, warnings
-print
-- gds-print, smem --print
-production
-- excise, firing-counts, matches, memories, multi-attributes, pbreak, production-find, pwatch
-save
-- capture-input, rete-net
-soar
-- cli, gp-max, init-soar, max-dc-time, max-elaborations, max-goal-depth, max-memory-usage, max-nil-output-cycles, set-stop-phase, stop-soar, timers, version, wait-snc
-trace
-- verbose, watch
-visualize
-- smem --vis, epmem --vis
-wm
-- add-wme, remove-wme, watch-wme
-
-==================
-Unchanged Commands
-==================
-echo
-epmem
-pwd
-ls
-cd
-dirs
-pushd
-popd
-gp
-help
-preferences
-rl
-run
-smem
-sp
-stats
-svs
-
-=========================================
-9.5.0 Commands and their 9.6.0 Equivalent
-=========================================
 
 ------------------                  ---------------------
 Soar 9.5.0 Command                  Soar 9.6.0 Equivalent
@@ -286,3 +189,14 @@ warnings                            output warnings
 watch                               trace
 watch-wmes                          wm watch
 wma                                 wm activation
+
+
+=========
+Problems?
+=========
+
+If you have any issues, send a message to the soar-help mailing list, which is 
+read by many helpful members of the community.
+
+- First join the mailing list at https://lists.sourceforge.net/lists/listinfo/soar-help
+- Then send your question to soar-help@lists.sourceforge.net
