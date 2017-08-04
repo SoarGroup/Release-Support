@@ -217,8 +217,9 @@
                               \ \psfig{figure=#1.ps,height=#4} \psfig{figure=#2.ps,height=#4}  \psfig{figure=#3.ps,height=#4}
                               \end{center}}
 
-\newcommand{\insertcaption}[1]{\singl\caption{\small#1}
-                                        \protect\rule[0.0in]{6in}{.01in}   }
+\newcommand{\captfirst}{}
+\newcommand{\insertcaption}[1]{\renewcommand{\captfirst}{#1}\insertcaptioni}
+\newcommand{\insertcaptioni}[1][\captfirst]{\singl\caption[#1]{\small\captfirst}\protect\rule[0.0in]{6in}{.01in}   }
 
 % to include in-text comments (for drafts)
 %\newcommand{\comment}[1]{\begin{quote}{\small {\em comment:} \ #1} \end{quote}}
@@ -549,7 +550,7 @@ and Ocean Surveillance Center, RDT\&E division.
 
 \addcontentsline{toc}{chapter}{Contents}
 
-\listoffigures            	
+\listoffigures
 \cleardoublepage
 \setlength{\parskip}{8pt}
 
