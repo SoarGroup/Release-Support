@@ -1,0 +1,70 @@
+=========================================== 
+Soar 9.6.1 Release Notes,  2017
+===========================================
+
+This release of Soar includes six key new features:  It also includes many 
+important bug fixes and code improvements.
+
+=================
+New Features
+=================
+    
+=================
+Other Changes
+=================
+      
+(7) Minor enhancements
+
+    - The Soar manual has new entries and many updates to make it current with 
+      the latest version of Soar. (Mazin Assanie, Preeti Ramaraj, Bryan Stearns)
+          
+(8) Bug fixes
+    - Added work-around for TCL backwards-compatibility issue.  When Tcl mode was 
+      enabled in Soar 9.6.0, Soar would not perform alias replacement in sourced 
+      files.  As a result, Soar was not performing the backwards compatibility
+      replacements and would return an error if the the sourced files contained 
+      any commands that no longer existed in 9.6.0.
+          
+(9) Low-level architectural changes, code clean-up and refactoring
+
+    
+===================
+General Information
+===================
+
+Soar can be downloaded by following the download link on the Soar home
+page at:
+
+     http://soar.eecs.umich.edu/articles/downloads/soar-suite
+
+Soar releases include source code, demo programs, and a number of
+applications that serve as examples of how to interface Soar to an
+external environment.  There is support for integrating Soar with C++,
+Java, Tcl and Python applications.  Many tools that aid in development
+of Soar programs are also available.  The download section of the web site
+allows you to browse and download all of the different distributions, 
+tools and agents.
+
+[Help and Contact information]
+
+You can find many helpful resources on the Soar home page at:
+
+     https://soar.eecs.umich.edu
+
+To contact the Soar group, you may join and post to one of our mailing
+lists:
+
+For general Soar-related announcements:
+        
+        soar-group@lists.sourceforge.net
+
+For help:
+         
+        soar-help@lists.sourceforge.net
+
+Also, please do not hesitate to file bugs or feature requests on our issue 
+tracker at github:
+
+     https://github.com/SoarGroup/Soar/issues
+
+To avoid redundant entries, please search for duplicate issues first.
