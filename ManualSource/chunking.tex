@@ -199,9 +199,8 @@ EBC traverses an explanation trace of the problem-solving that occurred in the s
 	The interaction between the two rules indicates a shared identity between their corresponding variables.
 \end{enumerate}
 
-To get a better picture of what a shared identity is, consider the following two simple rules and the explanation trace of how they matched in a substate: 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chunking-trace2.png}
 	\insertcaption{Explanation trace of two simple rules that matched in a substate}
@@ -209,7 +208,7 @@ To get a better picture of what a shared identity is, consider the following two
 \end{figure}
 \vspace{6pt}
 
-In Figure \ref{fig:chunking-trace2}, the connection between rule 2 and rule 1 will \textit{unify} the identities of \soar{<s>}, \soar{<x>} and \soar{<y>} in rule 1 with the identities of \soar{<s>}, \soar{<x>} and \soar{<y2>} in rule 2.  So, the \soar{<x>} in rule 2 shares the same identity as the \soar{<x>} in rule 1.  Similarly, the \soar{<y2>} in rule 2 shares the same identity as \soar{<y>} in rule 1.  In contrast, the \soar{<y>} in rule 2 does NOT share the same identity as the \soar{<y>} in rule 1. 
+To get a better picture of what a shared identity is, consider the two simple rules and the explanation trace of how they matched in a substate as shown in Figure \ref{fig:chunking-trace2}. The connection between rule 2 and rule 1 will \textit{unify} the identities of \soar{<s>}, \soar{<x>} and \soar{<y>} in rule 1 with the identities of \soar{<s>}, \soar{<x>} and \soar{<y2>} in rule 2.  So, the \soar{<x>} in rule 2 shares the same identity as the \soar{<x>} in rule 1.  Similarly, the \soar{<y2>} in rule 2 shares the same identity as \soar{<y>} in rule 1.  In contrast, the \soar{<y>} in rule 2 does NOT share the same identity as the \soar{<y>} in rule 1. 
 
 It doesn't matter that the \soar{<y>} in rule 1 uses the same variable name as the \soar{<y>} in rule 2.  It also doesn't matter that both conditions with \soar{<y>} happen to match the same working memory element, \soar{(S1 \carat number 3)}.  In terms of sharing an identity, the only thing that matters is how the rules interact, namely whether there's a connection between elements in the condition of one rule and elements in the actions of another rule.
 
@@ -360,7 +359,7 @@ Specifically, this component does two things:
 
 	All necessity preferences, i.e. prohibit and require preferences, are always included in the ROSK since they inherently encode the correctness of whether an operator is applicable in a problem space. In contrast, some desirability preferences (rejects, betters, worses, bests, worsts and indifferents) are included in the ROSK depending on the role they play in the selection of the operator. 
 
-	How Soar determines which of those preferences to include in the ROSK is determined by the preference semantics it uses to choose an operator. During the decision phase, operator preferences are evaluated in a sequence of seven steps or filters, in an effort to select a single operator, as described in Section \ref{PREFERENCES}.  Each step, or filter, handles a specific type of preference.  As the preference semantics are applied at each step to incrementally filter the candidate operators to a potential selected operator, EBC incrementally adds operator preferences to the ROSK based on the preferences that were instrumental in applying each filter.  A more detailed explanation of the logic used at each step can be found in Section \ref{CHUNKING-subtleties-osk}.
+	How Soar determines which of those preferences to include in the ROSK is determined by the preference semantics it uses to choose an operator. During the decision phase, operator preferences are evaluated in a sequence of seven steps or filters, in an effort to select a single operator, as described in Section \ref{PREFERENCES}.  Each step, or filter, handles a specific type of preference.  As the preference semantics are applied at each step to incrementally filter the candidate operators to a potential selected operator, EBC incrementally adds operator preferences to the ROSK based on the preferences that were instrumental in applying each filter.  A more detailed explanation of the logic used at each step can be found in Section \ref{CHUNKING-subtleties-relevant-osk}. 
 
 	\item When a rule matches which tests the currently selected operator, EBC caches the operator's ROSK in the instantiation of that rule.  
 
@@ -409,7 +408,7 @@ As EBC is backtracing through rules that fired in a substate, it collects all of
 \textbf{Note:} Soar 9.6.0's explanation-based approach has led to one key change to Soar's operationality analysis.  In previous versions of chunking, chunking would never add two conditions to a chunk that matched the same superstate working memory element.  This made sense because chunking was based on a generalization of the working memory trace.  More than one condition that tested the same WME would be redundant.  Explanation-based chunking, though, learns based on the reasoning within the original hand-written rules.  Since the reasoning behind each of the two conditions may be different even if they matched the same WME, EBC must always add both conditions.  (Note that there are some exceptions. See Section \ref{CHUNKING-usage-tuning-conditions} on superstate singletons and user singletons.)
 
 \index{chunking!negated conditions}
-Negated conditions are included in a trace in the following way: when a production fires, its negated conditions are fully instantiated with its variables' appropriate values. This instantiation is based on the working memory elements that matched the production's positive conditions. If the variable is not used in any positive conditions, such as in a conjunctive negation, a dummy variable is used that will later become a variable in a chunk.  If the identifier used to instantiate a negated condition's identifier field is linked to the super- state, then the instantiated negated condition is added to the trace as a negated condition. In all other cases, the negated condition is ignored because the system cannot determine why a working memory element was not produced in the subgoal and thus allowed the production to fire. 
+Negated conditions are included in a trace in the following way: when a production fires, its negated conditions are fully instantiated with its variables' appropriate values. This instantiation is based on the working memory elements that matched the production's positive conditions. If the variable is not used in any positive conditions, such as in a conjunctive negation, a dummy variable is used that will later become a variable in a chunk.  If the identifier used to instantiate a negated condition's identifier field is linked to the super-state, then the instantiated negated condition is added to the trace as a negated condition. In all other cases, the negated condition is ignored because the system cannot determine why a working memory element was not produced in the subgoal and thus allowed the production to fire. 
 
 \subsubsection{Identity Analysis}
 \index{chunking!identity}
@@ -536,6 +535,7 @@ Justifications use all the components described in the following sections and ar
 
 % ----------------------------------------------------------------------------
 \subsection{Chunk Inhibition}
+\label{CHUNKING-subtleties-inhibition}
 \index{chunking!inhibition}
 
 If a newly learned chunk was immediately added to production memory, it would immediately match with the same working memory elements that participated in its creation.  This can be problematic if the production's actions create new working memory elements.  Consider the case where a substate proposes a new operator, which causes a chunk to be learned that also proposes a new operator. The chunk would immediately fire and create a preference for another new operator, which duplicates the operator preference that was the original result of the subgoal. 
@@ -546,11 +546,13 @@ Note that inhibition does not prevent a newly learned chunk from immediately mat
 
 % ----------------------------------------------------------------------------
 \subsection{Chunks Based on Chunks}
+\label{CHUNKING-subtleties-chunkchunks}
 
 When a problem has been decomposed into more than one sub-state, a single result can produce multiple chunks.  This process is called \textit{bottom-up chunking}.  The first chunk is produced in the sub-state where the problem-solving that produced the result occurred.  The next chunk is based on the implicit match of the first chunk in one of the higher level problem-spaces.  If that match is lower than the state that the result is being returned to, Soar will backtrace through the chunk match and learn a second chunk (relative to the sub-state that the chunk matched in).  This process continues until it learns a chunk that only creates working memory elements in the same state that it matched in.
 
 % ----------------------------------------------------------------------------
 \subsection{Mixing Chunks and Justifications}
+\label{CHUNKING-subtleties-justifications}
  
 If an agent is using the \soar{only} or \soar{except} setting, then justifications will be built in states where learning is disabled and chunks will be built in states where learning is enabled.  In these situations, justifications also serve another purpose:  they provide an explanation of the results for future learning episodes in states that do have learning on.  EBC does this by retaining all of the extra information that chunks have but justifications do not, namely those extra tests and how things would have been variablized.  This allows EBC to learn chunks from justifications as readily as it can from hand-written rules and other chunks.
 
@@ -558,7 +560,7 @@ When mixing justifications and chunks, users may want to set the explainer to re
 
 % ----------------------------------------------------------------------------
 \subsection{Generality and Correctness of Learned Rules}
-\label{CHUNKING-correctness}
+\label{CHUNKING-subtleties-correctness}
 \index{chunking!correctness}
 \index{chunking!over-general}
 
@@ -572,7 +574,7 @@ Note that an over-general rule is an incorrect rule, but not all incorrect rules
 
 % ----------------------------------------------------------------------------
 \subsection{Over-specialization and Over-generalization}
-\label{CHUNKING-overspecialization}
+\label{CHUNKING-subtleties-overspecialization}
 \index{chunking!over-specialization}
 \index{chunking!correctness}
 \index{chunking!over-general}
@@ -580,13 +582,13 @@ Note that an over-general rule is an incorrect rule, but not all incorrect rules
 
 Explanation-based chunking was pursued to address the main limitation of traditional chunking:  \textit{over-specialized rules} that were very specific and could not be applied to many other situations. Specifically, EBC's identity-based variablization and constraint tracking/enforcement has eliminated the core source of this issue.
 
-The nature of EBC's algorithm does add two new situations in which rules may become over-specialized.  Section \ref{CHUNKING-rhs-functions} discusses how variables used in certain RHS functions need to be literalized to maintain correctness, which can cause overspecialization. Section \ref{CHUNKING-rule-repair} discusses how testing or augmenting a previous result creates non-operational rules that require repair, a process which may sometimes over-specialize a rule.  Note that this situation can easily be avoided and, even when it does occur, may not add much unnecessary specificity to learned rules. 
+The nature of EBC's algorithm does add two new situations in which rules may become over-specialized.  Section \ref{CHUNKING-subtleties-rhs-functions} discusses how variables used in certain RHS functions need to be literalized to maintain correctness, which can cause overspecialization. Section \ref{CHUNKING-subtleties-repair} discusses how testing or augmenting a previous result creates non-operational rules that require repair, a process which may sometimes over-specialize a rule.  Note that this situation can easily be avoided and, even when it does occur, may not add much unnecessary specificity to learned rules. 
 
 While over-specialization may no longer be a common problem, it is still possible to get over-general rules.  Several of the sources of correctness issues listed in the next section can produce over-general rules in certain situations.
 
 % ----------------------------------------------------------------------------
 \subsection{Previous Results and Rule Repair}
-\label{CHUNKING-rule-repair}
+\label{CHUNKING-subtleties-repair}
 
 An agent may learn a slightly over-specialized rule when EBC repairs a rule that has unconnected conditions, which are conditions that have an identifier that is not linked to one of the states referenced in the rule.  Such rules are illegal and cannot be added to Soar's production memory. 
 
@@ -605,6 +607,7 @@ To detect when this is happening, use the \soar{chunk stats} command. (See secti
 
 % ----------------------------------------------------------------------------
 \subsection{Missing Operator Selection Knowledge}
+\label{CHUNKING-subtleties-missing-osk}
 
 If an agent uses rules that create operator preferences to choose amongst multiple operators in the substate, it is possible that the reasoning behind those rules needs to be incorporated in any rule learned.  This topic is discussed in greater detail in Section \ref{CHUNKING-prior-osk}.  
 
@@ -619,6 +622,7 @@ Future versions of chunking will provide an option to prevent rules from forming
 
 % ----------------------------------------------------------------------------
 \subsection{Collapsed Negative Reasoning}
+\label{CHUNKING-subtleties-overgeneralization}
 \index{chunking!negated conditions}
 \index{chunking!over-general}
 
@@ -635,7 +639,7 @@ If such chunks are problematic, turning off chunking's correctness filter \\
 
 % ----------------------------------------------------------------------------
 \subsection{Problem-Solving That Doesn't Test The Superstate}
-\label{CHUNKING-correctness-issues-exhaustion}
+\label{CHUNKING-subtleties-exhaustion}
 \index{chunking!over-general}
 
 Over-general chunks can be created if a result of a subgoal is dependent on the creation of an impasse within the substate. For example, processing in a subgoal may consist of exhaustively applying all the operators in the problem space. If so, then a convenient way to recognize that all operators have applied and processing is complete is to wait for a state no-change impasse to occur. When the impasse occurs, a production can test for the resulting substate and create a result for the original subgoal. This form of state test builds over-general chunks because no pre-existing structure is relevant to the result that terminates the subgoal. The result is dependent only on the existence of the substate within a substate.
@@ -647,6 +651,7 @@ The current solution to this problem is a bit of a hack.  Soar allows an agent t
 
 % ----------------------------------------------------------------------------
 \subsection{Disjunctive Context Conflation}
+\label{CHUNKING-subtleties-disjunctive}
 \index{chunking!disjunctive context conflation}
 
 An incorrect rule can be learned when multiple rules fire in a substate that test different structures in the superstate \emph{but create the same WME in the substate}. For example, there may be a rule that can match the superstate in several different ways, each time elaborating the local state with a WME indicating that at least one of these qualifying superstate WMEs existed. In such a situation, the rule would fire multiple times, but the result of the rule firings will be collapsed into creating a single WME in the substate. 
@@ -658,7 +663,7 @@ If it were possible, EBC should learn a \textit{disjunctive conjunctive conditio
 If this type of reasoning is needed, agents can move the conflating WME to the superstate.  The rule learned would then produce only one result regardless of the number of rules that repeatedly created that WME. 
 
 % ----------------------------------------------------------------------------
-\subsection{Generalizing knowledge retrieved from \\ semantic or episodic memory}
+\subsection{\texorpdfstring{Generalizing knowledge retrieved from \\ semantic or episodic memory}{Generalizing retrieved knowledge}}
 
 Generalizing problem-solving based on knowledge recalled from an external memory system can be problematic for three main reasons.
 
@@ -681,17 +686,18 @@ Generalizing problem-solving based on knowledge recalled from an external memory
 
 % ----------------------------------------------------------------------------
 \subsection{Learning from Instruction}
+\label{CHUNKING-subtleties-instruction}
 \index{chunking!learning from instruction}
 
-	Note that some agent designs, for example an agent that learns by instruction, can take advantage of the fact that knowledge recalled from semantic or episodic memory directly into the sub-state is considered local.   For such agents, a rule that is directly dependent on the instructions being in working memory would be useless.  The agent would need to get the instruction every time it wanted to perform the task again, defeating the purpose of learning by instruction.  
+Note that some agent designs, for example an agent that learns by instruction, can take advantage of the fact that knowledge recalled from semantic or episodic memory directly into the sub-state is considered local.   For such agents, a rule that is directly dependent on the instructions being in working memory would be useless.  The agent would need to get the instruction every time it wanted to perform the task again, defeating the purpose of learning by instruction.  
 	
-	One technique that can be used to produce a more general rule which is not directly dependent on the instruction being in working memory is to first store the instructions in semantic or episodic memory.  When the agent is in a substate that it wants to learn a rule based on the instructions, it recalls the instructions from semantic or episodic memory directly into the substate.  Because that knowledge is not linked to the superstate, any rules learned in that substate will not be directly dependent on the existence of the instructions.  
+One technique that can be used to produce a more general rule which is not directly dependent on the instruction being in working memory is to first store the instructions in semantic or episodic memory.  When the agent is in a substate that it wants to learn a rule based on the instructions, it recalls the instructions from semantic or episodic memory directly into the substate.  Because that knowledge is not linked to the superstate, any rules learned in that substate will not be directly dependent on the existence of the instructions.  
 	
-	Since conditions that test the recalled knowledge are not incorporated into the learned rule, it is very easy to learn over-general chunks.  To avoid this, any substate rules which test recalled knowledge must also test superstate structures that correspond to the recalled knowledge.  Doing so removes the need for the instructions to exist while avoiding over-generality by ensuring that structures in the superstate corresponding to those instructions are still being tested.  Those conditions that test superstate WMEs will be generalized and included in the chunk, but the undesired portion of the reason that they matched will not be, namely the fact that the superstate knowledge corresponded to recalled instructions.
+Since conditions that test the recalled knowledge are not incorporated into the learned rule, it is very easy to learn over-general chunks.  To avoid this, any substate rules which test recalled knowledge must also test superstate structures that correspond to the recalled knowledge.  Doing so removes the need for the instructions to exist while avoiding over-generality by ensuring that structures in the superstate corresponding to those instructions are still being tested.  Those conditions that test superstate WMEs will be generalized and included in the chunk, but the undesired portion of the reason that they matched will not be, namely the fact that the superstate knowledge corresponded to recalled instructions.
 
 % ----------------------------------------------------------------------------
 \subsection{Determining Which OSK Preferences are Relevant}
-\label{CHUNKING-subtleties-osk}
+\label{CHUNKING-subtleties-relevant-osk}
 \index{chunking!backtracing}
 
 The following outline describes the logic that happens at each step. For a more detailed description of the various filters (but not the ROSK) see Section \ref{PREFERENCES} on page \pageref{PREFERENCES}. Note that depending on the set of preferences being processed, impasses may occur at some of these stages, in which case, no operator is selected and the ROSK is emptied. Moreover, if the candidate set is reduced to zero or one, the decision process will exit with a finalized ROSK. For simplicity's sake, this explanation assumes that there are no impasses and the decision process continues.
@@ -723,13 +729,13 @@ Note also that operator selection knowledge is not tracked and incorporated into
 The ROSK also affects the conditions of justifications, so the \soar{add-desirability-prefs} setting does have an effect on the agent even if learning is turned off.
 
 % ----------------------------------------------------------------------------
-\subsection{Generalizing Knowledge From Math \\ and Other Right-Hand Side Functions}
-\label{CHUNKING-rhs-functions}
+\subsection{\texorpdfstring{Generalizing Knowledge From Math \\ and Other Right-Hand Side Functions}{Generalizing From RHS Functions}}
+\label{CHUNKING-subtleties-rhs-functions}
 \index{chunking!literalization}
 
 Explanation-based chunking introduces the ability to learn more expressive rules whose actions perform arbitrary right-hand side functions with variablized arguments.  
 
-It is important to note that this ability is limited.  EBC can only learn rules with generalized RHS functions in its actions when the rule that created the result contained a RHS function.  In many cases, RHS functions will be used in the intermediate rule firings in the explanation trace.  Not only will these intermediate RHS function not appear in the chunk, but any chunk learned based on their output will become more specific.  This is one of the sources of over-specialization referenced in section \ref{CHUNKING-overspecialization} on over-specialization.
+It is important to note that this ability is limited.  EBC can only learn rules with generalized RHS functions in its actions when the rule that created the result contained a RHS function.  In many cases, RHS functions will be used in the intermediate rule firings in the explanation trace.  Not only will these intermediate RHS function not appear in the chunk, but any chunk learned based on their output will become more specific.  This is one of the sources of over-specialization referenced in section \ref{CHUNKING-subtleties-overspecialization} on over-specialization.
  
 RHS function calls in intermediate rule firings are a challenge for EBC to deal with because the problem-solving may have placed constraints on the intermediate results that cannot be represented in a single Soar rule.  
 
@@ -777,7 +783,7 @@ Soar learns a chunk every time a subgoal produces a result, unless one of the fo
 	\index{quiescence}
 	\item \textbf{The problem-solving that led to the result contained a condition that tested the architecturally-created \soar{<state> \carat quiescence t} augmentation}
 
-	This mechanism is motivated by the \textit{chunking from exhaustion} problem, where the results of a subgoal are dependent on the exhaustion of alternatives (see Section \ref{CHUNKING-correctness-issues-exhaustion} on page \pageref{CHUNKING-correctness-issues-exhaustion}). If this substate augmentation is encountered when determining the conditions of a chunk, then no chunk will be built for the currently considered action. This is recursive, so that if an un-chunked result is relevant to a second result, no chunk will be built for the second result. This does not prevent the creation of a chunk that would include \soar{\carat quiescence t} as a condition.
+	This mechanism is motivated by the \textit{chunking from exhaustion} problem, where the results of a subgoal are dependent on the exhaustion of alternatives (see Section \ref{CHUNKING-subtleties-exhaustion} on page \pageref{CHUNKING-subtleties-exhaustion}). If this substate augmentation is encountered when determining the conditions of a chunk, then no chunk will be built for the currently considered action. This is recursive, so that if an un-chunked result is relevant to a second result, no chunk will be built for the second result. This does not prevent the creation of a chunk that would include \soar{\carat quiescence t} as a condition.
 
 	\item \textbf{The problem-solving in the substate did not test any knowledge in the superstate}
 
@@ -1309,11 +1315,7 @@ either Soar exits or a \texttt{soar\ init} is executed. This option is
 still considered experimental and in beta.
 
 
-% ----------------------------------------------------------------------------
-% ----------------------------------------------------------------------------
-\section{Visualizing the Explanation}
-
-\begin{figure}[!h]
+\begin{figure}[!ht]
 	\centering
 	%\frame{
 	\includegraphics[width=\textwidth]{chunking-trace-identity.png}
@@ -1322,16 +1324,22 @@ still considered experimental and in beta.
 	\label{fig:chunking-viz-identity}
 \end{figure}
 
+% ----------------------------------------------------------------------------
+% ----------------------------------------------------------------------------
+\section{Visualizing the Explanation}
+
 The \soar{visualize} command can generate two graphical representations of the analysis that chunking performed to learn a rule. While the explainer provides more date, these images are the easiest and most effective ways to quickly understand how a chunk was formed, especially for particularly complex chunks.  The visualizer can create two types of chunking-related images:
 
 %\vspace{-12pt}
 \begin{enumerate}
-	\item An image that shows the entire instantiation graph at once and how it contributed to the learned rule
+	\item An image that shows the entire instantiation graph at once and how it contributed to the learned rule.
 	
 	Use the command \soar{visualize ebc analysis} to create a very informative graph that shows all rules that fired in a substate with arrows that indicate dependencies between actions in one rule and conditions in others. In addition to all of the dependencies between the rules that fired, this visualization also shows which conditions in the instantiations tested knowledge in the superstate and hence became the basis for a condition in the final learned rule.  Finally, the individual elements in the explanation are color-coded to show which variables share the same identity.
 
 
-	\item Use the \soar{visualize identity graph} to create a graph that shows how identities were used to determine the variablization of a learned rule. This shows all identities found in the chunk and how the identity analysis joined them based on the problem-solving that occurred. This can be useful in determining why two elements were assigned the same variable.
+	\item An image that shows the graph of how variable identities were combined.
+	
+	Use the \soar{visualize identity graph} to create a graph that shows how identities were used to determine the variablization of a learned rule. This shows all identities found in the chunk and how the identity analysis joined them based on the problem-solving that occurred. This can be useful in determining why two elements were assigned the same variable.
 \end{enumerate}
 
 Note that Soar will automatically attempt to launch a viewer to see the image generated. If you have an editor that can open graphviz files, you can have Soar launch that automatically as well. (Such editors allow you to move things around and lay out the components of the image exactly as you want them.) Your operating system chooses which program to launch based on the file type. 

@@ -2270,7 +2270,7 @@ The list below gives the seven augmentations that the architecture creates on th
 	\index{non-numeric-count (attribute)}
 	\vspace{-8pt}
 \item [\soar{\carat quiescence}] 
-	States are the only objects with \soar{quiescence t}, which is an explicit statement that quiescence (exhaustion of the elaboration cycle) was reached in the superstate.  If problem solving in the subgoal is contingent on quiescence having been reached, the substate should test this flag. The side-effect is that no chunk will be built if it depended on that test. See Section \ref{CHUNKING-creation} on page \pageref{CHUNKING-creation} for details. This attribute can be ignored when learning is turned off.
+	States are the only objects with \soar{quiescence t}, which is an explicit statement that quiescence (exhaustion of the elaboration cycle) was reached in the superstate.  If problem solving in the subgoal is contingent on quiescence having been reached, the substate should test this flag. The side-effect is that no chunk will be built if it depended on that test. See Section \ref{CHUNKING-subtleties-exhaustion} on page \pageref{CHUNKING-subtleties-exhaustion} for details. This attribute can be ignored when learning is turned off.
 	\index{quiescence t (augmentation)}
 	\index{elaboration cycle}
 	\index{exhaustion}
