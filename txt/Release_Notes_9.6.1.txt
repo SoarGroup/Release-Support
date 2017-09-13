@@ -14,12 +14,7 @@ New Features
 Other Changes
 =================
       
-(7) Minor enhancements
-
-    - The Soar manual has new entries and many updates to make it current with 
-      the latest version of Soar. (Mazin Assanie, Preeti Ramaraj, Bryan Stearns)
-          
-(8) Bug fixes
+() Bug fixes
     - Added work-around for TCL backwards-compatibility issue.  When Tcl mode was 
       enabled in Soar 9.6.0, Soar would not perform alias replacement in sourced 
       files.  As a result, Soar was not performing the backwards compatibility
@@ -31,7 +26,7 @@ Other Changes
       Some special purpose code kicks in when there are that many augmentations
       to a single LTI.)
           
-(9) Low-level architectural changes, code clean-up and refactoring
+() Low-level architectural changes, code clean-up and refactoring
 
     
 ===================
