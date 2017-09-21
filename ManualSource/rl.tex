@@ -23,6 +23,8 @@ RL rules are identified by syntax.
 A production is a RL rule if and only if its left hand side tests for a proposed operator, its right hand side creates a single numeric-indifferent preference, and it is not a template rule (see Section \ref{RL-templates} for template rules).
 These constraints ease the technical requirements of identifying/updating RL rules and makes it easy for the agent programmer to add/maintain RL capabilities within an agent.
 We define an \soarb{RL operator} as an operator with numeric-indifferent preferences created by RL rules.
+\index{RL!rule}
+\index{RL!operator}
 
 The following is an RL rule:
 
@@ -33,7 +35,7 @@ sp {rl*3*12*left
               ^y 12
               ^operator <o> +)
    (<o> ^name move
-	    ^direction left)
+        ^direction left)
 -->
    (<s> ^operator <o> = 1.5)
 }
@@ -57,10 +59,19 @@ sp {variable*binding
 -->
     (<s> ^operator <o> = <v>)
 }
+
+sp {invalid*actions
+    (state <s> ^operator <o> +)
+-->
+    (<s> ^operator <o> = 5)
+    (write (crlf) |This is not an RL rule.|)
+}
 \end{verbatim}
 
 The first rule proposes multiple preferences for the proposed operator and thus does not comply with the rule format.
 The second rule does not comply because it does not provide a \emph{constant} for the numeric-indifferent preference value.
+The third rule does not comply because it includes a \textit{RHS function} action in addition to the numeric-indifferent preference action.
+\index{RHS Function}
 
 In the typical RL use case, the user intends for the agent to learn the best operator in each possible state of the environment.
 The most straightforward way to achieve this is to give the agent a set of RL rules, each matching exactly one possible state-operator pair.
@@ -81,6 +92,7 @@ This interpretation allows RL rules to simulate a number of popular function app
 \section{Reward Representation}
 \label{RL-reward}
 \index{reward-link}
+\index{RL!reward-link}
 
 RL updates are driven by reward signals.
 In Soar, these reward signals are given to the RL mechanism through a working memory link called the \soarb{reward-link}.
@@ -161,6 +173,7 @@ This means that reward WMEs that exist for multiple decision cycles will be coll
 \section{Updating RL Rule Values}
 \label{RL-algo}
 \index{RL!learning-policy}
+\index{rl (command)!learning-policy}
 
 Soar's RL mechanism is integrated naturally with the decision cycle and performs online updates of RL rules.
 Whenever an RL operator is selected, the values of the corresponding RL rules will be updated.
@@ -175,8 +188,8 @@ where
 	\item $r_{t+1}$ is the total reward collected in the next decision cycle.
 	\item $\alpha$ and $\gamma$ are the settings of the \soarb{learning-rate} and \soarb{discount-rate} parameters of the \soar{rl} command, respectively.
 \end{itemize}
-\index{RL!learning-rate}
-\index{RL!discount-rate}
+\index{rl (command)!learning-rate}
+\index{rl (command)!discount-rate}
 
 Note that since $\delta_t$ depends on $Q(s_{t+1}, a_{t+1})$, the update for the operator selected in decision cycle $t$ is not applied until the next RL operator is chosen.
 For Q-Learning, we have
@@ -218,6 +231,7 @@ An example walkthrough of a Sarsa update with $\alpha = 0.3$ and $\gamma = 0.9$ 
 
 \subsection{Gaps in Rule Coverage}
 \label{RL-gaps}
+\index{RL!temporal gaps}
 
 %Call an operator with numeric-indifferent preferences an RL operator.
 The previous description had assumed that RL operators were selected in both decision cycles $t$ and $t+1$.
@@ -235,7 +249,7 @@ $$\delta_t = \alpha \left[ \sum_{i=t}^{t+n}{\gamma^{i-t} r_i} + \gamma^{n+1} \un
 
 Note that rewards will still be collected during the gap, but they are discounted based on the number of decisions they are removed from the initial RL operator.
 
-\index{RL!temporal-extension}
+\index{rl (command)!temporal-extension}
 Gap propagation can be disabled by setting the \soarb{temporal-extension} parameter of the \soar{rl} command to \soar{off}.
 When gap propagation is disabled, the RL rules preceding a gap are updated using $Q(s_{t+1}, a_{t+1}) = 0$.
 The \soar{rl} setting of the \soar{watch} command (see Section \ref{trace} on page \pageref{trace}) is useful in identifying gaps.
@@ -270,7 +284,7 @@ Consider the operator trace in Figure \ref{fig:rl-optrace}.
 	\label{fig:rl-optrace}
 \end{figure}
 
-\index{RL!hrl-discount}
+\index{rl (command)!hrl-discount}
 In this scenario, only the RL update for $Q(s_1, \textbf{O1})$ will be different from the ordinary case.
 Its value depends on the setting of the \soarb{hrl-discount} parameter of the \soar{rl} command.
 When this parameter is set to the default value \soar{on}, the rewards on \textbf{S1} and the Q-value of \textbf{O5} are discounted by the number of decision cycles they are removed from the selection of \textbf{O1}.
@@ -307,6 +321,8 @@ Soar's automatic subgoaling and RL mechanisms can be combined to naturally imple
 \subsection{Eligibility Traces}
 \label{RL-et}
 \index{RL!eligibility trace settings}
+\index{rl (command)!eligibility-trace-decay-rate}
+\index{rl (command)!eligibility-trace-tolerance}
 
 The RL mechanism supports eligibility traces, which can improve the speed of learning by 
 updating RL rules across multiple sequential steps. \\
@@ -319,7 +335,7 @@ For Q-Learning, the eligibility trace implementation is \emph{Watkin's Q($\lambd
 \subsubsection{Exploration}
 \index{decide (command)!indifferent-selection}
 
-The \soar{indifferent-selection} command (page \pageref{decide-indifferent-selection}) determines how operators are selected based on their numeric-indifferent preferences.
+The \soar{decide indifferent-selection} command (page \pageref{decide-indifferent-selection}) determines how operators are selected based on their numeric-indifferent preferences.
 Although all the indifferent selection settings are valid regardless of how the numeric-indifferent preferences were arrived at, the \soar{epsilon-greedy} and \soar{boltzmann} settings are specifically designed for use with RL and correspond to the two most common exploration strategies.
 In an effort to maintain backwards compatibility, the default exploration policy is \soar{softmax}.
 As a result, one should change to \soar{epsilon-greedy} or \soar{boltzmann} when the reinforcement learning mechanism is enabled.
@@ -332,8 +348,10 @@ However, if you wish to implement something akin to CMACs to generalize from exp
 \emph{GQ($\lambda$)} is a gradient descent algorithm designed to ensure convergence when learning off-policy.
 Soar's \soar{learning-policy} can be set to \soarb{on-policy-gq-lambda} or \soarb{off-policy-gq-lambda} to increase the likelihood of convergence when learning under these conditions.
 If you should choose to use one of these algorithms, we recommend setting the \soar{rl} \soarb{step-size-parameter} to something small, such as $0.01$ in order to ensure that the secondary set of weights used by \emph{GQ($\lambda$)} change slowly enough for efficient convergence.
+\index{rl (command)!learning-policy}
 
 \section{Automatic Generation of RL Rules}
+\index{RL!rule generation}
 \index{gp (command)}
 
 The number of RL rules required for an agent to accurately approximate operator Q-values is usually unfeasibly large to write by hand, even for small domains.
@@ -419,5 +437,6 @@ It should be noted that the current process of identifying unique template match
 Therefore, it is recommended to generate all necessary RL rules using the \soar{gp} command or via custom scripting when possible.
 
 \subsection{Chunking}
+\index{RL!chunking}
 Since RL rules are regular productions, they can be learned by chunking just like any other production.
 This method is more general than using the \soar{gp} command or rule templates, and is useful if the environment state consists of arbitrarily complex relational structures that cannot be enumerated.
