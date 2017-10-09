@@ -1473,16 +1473,28 @@ These functions are provided as production actions to do simple output of text i
     \nocomment{Does this imply that a CR is not needed? I.e., will the constant be 'accepted' after a space is hit?
     	}
 
+%\index{RHS Function!trace}
+%\item [\soarb{trace} --- ] 
+%This function is equivalent to the \soar{write} function, except that it specifies the ``trace channel'' for output. It takes %two arguments. First is an integer corresponding to the channel level for output, second is the message to print. \\
+%See section \ref{trace} for information about trace channel levels.
+
+%	\begin{verbatim}
+%	sp {
+%	    ...
+%	    -->
+%	    (trace 3 |This only prints when trace is set to 3 or higher.|) }
+%	\end{verbatim}
+
 \index{RHS Function!log}
 \item [\soarb{log} --- ] 
-	This function is equivalent to the \soar{write} function, except that it specifies the ``trace channel'' for output. It takes two arguments. First is an integer corresponding to the channel level for output, second is the message to print. \\
-	See section \ref{trace} for information about trace channel levels.
+	This function is equivalent to the \soar{write} function, except that it specifies a ``log channel'' for output. The output will only show if that channel is active. The function takes two arguments. First is an integer corresponding to the channel level for output, second is the message to print. \\
+	See section \ref{output-agent-logs} for information about agent log channels.
 
 	\begin{verbatim}
 	sp {
 		...
 		-->
-		(log 3 |This only prints when trace is set to 3 or higher!|) }
+		(log 3 |This only prints when agent-logs channel 3 is enabled.|) }
 	\end{verbatim}
 
 \end{description}
