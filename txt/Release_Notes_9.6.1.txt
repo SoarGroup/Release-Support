@@ -9,6 +9,17 @@ It also includes many important bug fixes and code improvements.
 =================
 New Features
 =================
+() New (tcl) RHS function
+    When Tcl mode is enabled, rules may call the (tcl) RHS function, which 
+    evaluates a string in tcl and returns a string. The return can be cast to a 
+    number with other existing RHS functions if desired.
+    
+() Ported the (from-st-xml) RHS function from jsoar
+    The (from-st-xml) RHS function takes an XML string and returns an equivalent
+    WME structure, which is placed in working memory wherever the calling rule
+    dictates. This is unlikely to work properly in substates, and possibly
+    substate code that tests a top-state structure created this way. Use with
+    caution.
     
 =================
 Other Changes
@@ -20,12 +31,43 @@ Other Changes
       files.  As a result, Soar was not performing the backwards compatibility
       replacements and would return an error if the the sourced files contained 
       any commands that no longer existed in 9.6.0.
+    - Fixed a shutdown bug when Tcl mode was enabled.
     - Fixed bug that could occur when retrieving long-term semantic memories
       with over 100 augmentations.  In those cases, the most highly activated
       memory may not have been returned.  (Cases < 100, should have been fine.
       Some special purpose code kicks in when there are that many augmentations
       to a single LTI.)
           
+() The (timestamp) RHS function now includes milliseconds
+
+() Unrecognized RHS functions are automatically converted to (exec) calls
+    The motivation for this is increased compatibility with jsoar. The most
+    significant effect is that unrecognized RHS functions will no longer cause
+    a production to fail to load. Instead, an error message will be produced at
+    runtime, as has always been the case for (exec). As a side effect, it is no
+    longer necessary to explicitly call (exec), which makes it easier to port
+    agents from jsoar, where calling (exec) has never been required.
+    
+() Changed the signature of user-defined RHS functions
+    User-defined functions registered through SML previously returned a
+    std::string. This was the only place in the entire SML interface that did
+    not use a C interface, which caused problems when integrating Soar with code
+    compiled on a different compiler or with different settings. Now, it returns
+    a const char* instead of a std::string, and takes two additional arguments,
+    a char* buffer and an int* size. A RHS function implementation should check
+    if the buffer specified is too small. If it is, it should return (via the
+    size input pointer) what size the buffer needs to be, and null for the
+    actual return, and then SML will call it again with the correct size (i.e., 
+    the user doesn't have to worry about triggering a second call). For the
+    internally registered callbacks in SML (e.g., the language-specific ones for
+    SWIG), the result is cached from the first call, so the second time it just 
+    returns the result in the buffer (this is to avoid issues with possible side 
+    effects, where you wouldn’t want the code to actually be run a second time).
+    For user-defined RHS functions in C++, the user may have to do this caching
+    themselves if they are concerned about side effects or the performance hit 
+    from multiple calls. However, we expect most users won't have to worry about 
+    this.
+
 () Low-level architectural changes, code clean-up and refactoring
 
     
