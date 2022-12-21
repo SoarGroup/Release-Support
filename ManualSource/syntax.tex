@@ -1946,20 +1946,67 @@ A new symbol (an identifier) is generated on the right-hand side of a production
 %\label{SYNTAX-pm-otheractions-tcl}
 \index{SML}
 
-Any function which has a certain function signature may be registered with the Kernel (e.g. using SML) and called as a RHS function.  The function must have the following signature:
+Any function with a certain signature may be registered with the Kernel (e.g. using SML) and called as an RHS function.
+RHS functions receive a single string argument and return a single string which is assigned to a symbol in Soar.
+
+RHS functions are most complex in C/C\texttt{++} due to the requirements of memory management.
+An RHS function must adhere to the signature of \soar{RHSEventHandler}:
 
 \begin{verbatim}
-std::string MyFunction(smlRhsEventId id, void* pUserData, Agent* pAgent,
-                  char const* pFunctionName, char const* pArgument);
+	char const *(smlRhsEventId id, void* pUserData, Agent* pAgent,
+				 char const* pFunctionName, char const* pArgument,
+				 int *buffSize, char *buff)
 \end{verbatim}
 
-The Tcl and Java interfaces have similar function signatures. Any arguments passed to the function on the RHS of a production are concatenated and passed to the function in the pArgument argument.
+The function must fill \soar{*buff} with the string to be returned and then return \soar{*buff}, but only
+if \soar{*buffSize} indicates there is enough room to hold the string. If \soar{*buffSize} is not large enough,
+the function must return \soar{NULL} and set \soar{*buffSize} to the required size. Soar will then allocate a
+buffer of the required size and call the function again. If calling the function twice would have an undesirable
+effect, the following code can be used to cache the result in between calls by Soar:
+
+\begin{verbatim}
+// at beginning of function:
+static std::string prevResult;
+if ( !prevResult.empty() )
+{
+    strncpy( buf, prevResult.c_str(), *bufSize );
+    prevResult = "";
+    return buf;
+}
+
+// ...
+
+// at end of function:
+if ( resultString.length() + 1 > *bufSize )
+{
+    *bufSize = resultString.length() + 1;
+    prevResult = resultString;
+    return NULL;
+}
+strcpy( buf, resultString.c_str() );
+return buf;
+\end{verbatim}
+
+RHS function interfaces in other languages are much simpler. For example, in Java the signature is:
+
+\begin{verbatim}
+String rhsFunctionHandler(int eventID, Object data, String agentName,
+						  String functionName, String argument)
+}
+\end{verbatim}
+
+Any arguments passed to the function on the RHS of a production are concatenated (without spaces) and passed to the function in the pArgument argument.
 
 Such a function can be registered with the kernel via the client interface by calling:
 
 \begin{verbatim}
-Kernel::AddRhsFunction(char const* pRhsFunctionName, RhsEventHandler 
+// C/C++
+Kernel::AddRhsFunction(char const* pRhsFunctionName, RhsEventHandler
                    handler, void* pUserData);
+
+// Java
+Kernel.AddRhsFunction(String functionName,
+					  RhsFunctionInterface handlerObject, Object callbackData);
 \end{verbatim}
 
 The \soar{exec} and \soar{cmd} functions are used to call user-defined functions and interface commands on the RHS of a production.
