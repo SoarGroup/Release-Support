@@ -4,11 +4,13 @@ wikicmd/tex/
 funclist.tex
 
 # LaTeX
-*.log
 *.aux
-*.toc
-*.out
-*.pdf
-*.lof
 *.glo
 *.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.out
+*.pdf
+*.toc

@@ -247,7 +247,7 @@ def apply_edits(pathname, edit_list):
         # Remove completed edits
         active_edits = set(filter(lambda x:x[0] > lnum, active_edits))
 
-        print(line)
+        print(line, end='')
     return
 
 
