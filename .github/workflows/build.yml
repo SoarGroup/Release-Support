@@ -1,0 +1,23 @@
+name: Build/Test
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  "build-all":
+    name: build-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      # TODO: install on other platforms, too
+      - name: Setup LaTeX
+        run: sudo apt-get update && sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+
+      - name: build
+        working-directory: ManualSource
+        run: make all
+
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: manual.pdf
+          path: ManualSource/manual.pdf
