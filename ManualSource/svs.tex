@@ -89,14 +89,14 @@ This is useful for performing look-ahead search, as it allows the agent to destr
 % ----------------------------------------------------------------------------
 \subsection{svs\_viewer}
 
-A viewer has been provided to show the scene graph visually. 
-Run the program \soar{svs\_viewer -s PORT} from the soar/out folder 
-to launch the viewer listening on the given port. Once the viewer is running, 
-from within soar use the command \soar{svs connect\_viewer PORT} to connect 
+A viewer has been provided to show the scene graph visually.
+Run the program \soar{svs\_viewer -s PORT} from the soar/out folder
+to launch the viewer listening on the given port. Once the viewer is running,
+from within soar use the command \soar{svs connect\_viewer PORT} to connect
 to the viewer and begin drawing the scene graph. Any changes to the scene graph
-will be reflected in the viewer. The viewer by default draws the topstate scene graph, 
-to draw that on a substate first stop drawing the topstate with 
-\soar{svs S1.scene.draw off} and then \soar{svs S7.scene.draw on}. 
+will be reflected in the viewer. The viewer by default draws the topstate scene graph,
+to draw that on a substate first stop drawing the topstate with
+\soar{svs S1.scene.draw off} and then \soar{svs S7.scene.draw on}.
 
 \section{Scene Graph Edit Language}
 \index{scene graph!Scene Graph Edit Language}
@@ -106,7 +106,7 @@ The \soarb{Scene Graph Edit Language} (SGEL) is a simple, plain text, line orien
 Typically, the scene graph is used to represent the state of the external environment, and the programmer sends SGEL commands reflecting changes in the environment to SVS via the \soar{Agent::SendSVSInput} function in the SML API.
 These commands are buffered by the agent and processed at the beginning of each input phase.
 Therefore, it is common to send scene changes through SendSVSInput \emph{before} the input phase.
-If you send SGEL commands at the end of the input phase, 
+If you send SGEL commands at the end of the input phase,
 the results won't be processed until the following decision cycle.
 
 Each SGEL command begins with a single word command type and ends with a newline.
@@ -116,15 +116,15 @@ The four command types are
 \begin{description}
 	\item[\soar{add ID PARENT\_ID [GEOMETRY] [TRANSFORM]}] \hfill \\
 		Add a node to the scene graph with the given \soar{ID}, as a child of \soar{PARENT\_ID}, and with type \soar{TYPE} (usually object).The \soar{GEOMETRY} and \soar{TRANSFORM} arguments are optional and described below.
-	
+
 	\item[\soar{change ID [GEOMETRY] [TRANSFORM]}] \hfill \\
 		Change the transform and/or geometry of the node with the given \soar{ID}.
-	
+
 	\item[\soar{delete ID}] \hfill \\
 		Delete the node with the given \soar{ID}.
-	
+
 	\item[\soar{tag [add|change|delete] ID TAG\_NAME TAG\_VALUE}] \hfill \\
-	  Adds, changes, or deletes a tag from an object. A tag consists of a \soar{TAG\_NAME} and \soar{TAG\_VALUE} pair and is added to the node with the given \soar{ID}. Both \soar{TAG\_NAME} and \soar{TAG\_VALUE} must be strings. Tags can differentiate nodes (e.g. as a type field) and can be used in conjunction with the \soar{tag\_select} filter to choose a subset of the nodes. 
+	  Adds, changes, or deletes a tag from an object. A tag consists of a \soar{TAG\_NAME} and \soar{TAG\_VALUE} pair and is added to the node with the given \soar{ID}. Both \soar{TAG\_NAME} and \soar{TAG\_VALUE} must be strings. Tags can differentiate nodes (e.g. as a type field) and can be used in conjunction with the \soar{tag\_select} filter to choose a subset of the nodes.
 \end{description}
 \vspace{-6pt}
 
@@ -155,7 +155,7 @@ Creating a snowman shape of 3 spheres stacked on each other and located at (2, 2
 \soar{add snowman world p 2 2 0} \\
 \soar{add bottomball snowman b 3 p 0 0 3} \\
 \soar{add middleball snowman b 2 p 0 0 8} \\
-\soar{add topball snowman b 1 p 0 0 11} 
+\soar{add topball snowman b 1 p 0 0 11}
 
 Set the rotation transform on box11 to 180 degrees around the z axis. \\
 \soar{change box11 r 0 0 3.14159}
@@ -166,11 +166,11 @@ Changing the color tag on box7 to green. \\
 
 \section{Commands}
 
-The Soar agent initiates commands in SVS via the \soarb{\carat command} link, 
-similar to semantic and episodic memory. These commands allow the agent to 
-modify the scene graph and extract filters. 
-Commands are processed during the output phase and the results are added to 
-working memory during the input phase. 
+The Soar agent initiates commands in SVS via the \soarb{\carat command} link,
+similar to semantic and episodic memory. These commands allow the agent to
+modify the scene graph and extract filters.
+Commands are processed during the output phase and the results are added to
+working memory during the input phase.
 SVS supports the following commands:
 
 \begin{description}
@@ -196,19 +196,19 @@ SVS supports the following commands:
 % ----------------------------------------------------------------------------
 \subsection{add\_node}
 
-This commands adds a new node to the scene graph. 
+This commands adds a new node to the scene graph.
 
 \begin{description}
 	\item{\soarb{\carat id [string]}} The id of the node to create
 	\item{\soarb{\carat parent [string]}} The id of the node to attach the new node to (default is world)
-	\item{\soarb{\carat geometry << group point ball box >> }} The geometry the node should have 
+	\item{\soarb{\carat geometry << group point ball box >> }} The geometry the node should have
 	\item{\soarb{\carat position.\{\carat x \carat y \carat z\} }} Position of the node (optional)
 	\item{\soarb{\carat rotation.\{\carat x \carat y \carat z\} }} Rotation of the node (optional)
 	\item{\soarb{\carat scale.\{\carat x \carat y \carat z\} }} Scale of the node (optional)
 \end{description}
 
-The following example creates a node called \soar{box5} and adds it to the world. 
-The node has a box shape of side length 0.1 and is placed at position (1, 1, 0). 
+The following example creates a node called \soar{box5} and adds it to the world.
+The node has a box shape of side length 0.1 and is placed at position (1, 1, 0).
 
 \begin{verbatim}
 (S1 ^svs S3)
@@ -223,10 +223,10 @@ The node has a box shape of side length 0.1 and is placed at position (1, 1, 0).
 % ----------------------------------------------------------------------------
 \subsection{copy\_node}
 
-This command creates a copy of an existing node and adds it to the scene graph. 
-This copy is not recursive, it only copies the node itself, not its children. 
+This command creates a copy of an existing node and adds it to the scene graph.
+This copy is not recursive, it only copies the node itself, not its children.
 The position, rotation, and scale transforms are also copied from the source node
-but they can be changed if desired. 
+but they can be changed if desired.
 
 \begin{description}
 	\item{\soarb{\carat id [string]}} The id of the node to create
@@ -252,7 +252,7 @@ and moves it to position (2, 0, 2).
 % ----------------------------------------------------------------------------
 \subsection{delete\_node}
 
-This command deletes a node from the scene graph. Any children will also be deleted. 
+This command deletes a node from the scene graph. Any children will also be deleted.
 
 \begin{description}
 	\item{\soarb{\carat id [string]}} The id of the node to delete
@@ -271,8 +271,8 @@ The following example deletes a node called \soar{box5}
 % ----------------------------------------------------------------------------
 \subsection{set\_transform}
 
-This command allows you to change the position, rotation, and/or scale of an 
-exisiting node. You can specify any combination of the three transforms. 
+This command allows you to change the position, rotation, and/or scale of an
+exisiting node. You can specify any combination of the three transforms.
 
 \begin{description}
 	\item{\soarb{\carat id [string]}} The id of the node to change
@@ -297,7 +297,7 @@ The following example moves and rotates a node called \soar{box5}.
 \subsection{set\_tag}
 
 This command allows you to add or change a tag on a node.
-If a tag with the same id already exists, 
+If a tag with the same id already exists,
 the existing value will be replaced with the new value.
 
 \begin{description}
@@ -342,19 +342,19 @@ The following example deletes the shape tag from the node \soar{box5}.
 This command is commonly used to compute spatial relationships in the scene graph.
 More generally, it puts the \soarb{result} of a filter pipeline (described in section \ref{sec:svs-filters}) in working memory.
 Its syntax is the same as filter pipeline syntax.
-During the input phase, SVS will evaluate the filter and 
+During the input phase, SVS will evaluate the filter and
 put a \soar{\carat result} attribute on the command's identifier.
 Under the \soar{\carat result} attribute is a multi-valued \soar{\carat record} attribute.
 Each record corresponds to an output value from the head of the filter pipeline, along with the parameters that produced the value.
 With the regular \soar{extract} command, these records will be updated as the scene graph
 changes. With the \soar{extract\_once} command, the records will be created once
-and will not change. 
-Note that you should not change the structure of a filter once it is created 
-(SVS only processes a command once). 
-Instead to extract something different you must create a new command. 
-The following is an example of an extract command which tests whether the 
-car and pole objects are intersecting. The \soar{\carat status} and \soar{\carat result} WMEs are 
-added by SVS when the command is finished. 
+and will not change.
+Note that you should not change the structure of a filter once it is created
+(SVS only processes a command once).
+Instead to extract something different you must create a new command.
+The following is an example of an extract command which tests whether the
+car and pole objects are intersecting. The \soar{\carat status} and \soar{\carat result} WMEs are
+added by SVS when the command is finished.
 
 \begin{verbatim}
 (S1 ^svs S3)
@@ -447,15 +447,15 @@ Not only is this approach more convenient than creating a separate command for e
 % ----------------------------------------------------------------------------
 \subsection{Filter List}
 
-The following is a list of all filters that are included in SVS. 
-You can also get this list by using the cli command \soar{svs filters} and 
+The following is a list of all filters that are included in SVS.
+You can also get this list by using the cli command \soar{svs filters} and
 get information about a specific filter using the command \soar{svs filters.FILTER\_NAME}.
 Many filters have a \soar{\_select} version. The select version returns a subset
 of the input nodes which pass a test. For example, the \soar{intersect} filter returns
 boolean values for each input (a, b) pair, while the \soar{intersect\_select} filter
 returns the nodes in set b which intersect the input node a. This is useful for passing
 the results of one filter into another (e.g. take the nodes that intersect node a and find
-the largest of them). 
+the largest of them).
 
 \begin{description}
 	\item{\soarb{node}} \\
@@ -465,7 +465,7 @@ the largest of them).
 	\item{\soarb{combine\_nodes}} \\
 		Given multiple node inputs as \soarb{\carat a}, concates them into a single output set.
 	\item{\soarb{remove\_node}} \\
-		Removes node \soarb{\carat id} from the input set \soarb{\carat a} and outputs the rest. 
+		Removes node \soarb{\carat id} from the input set \soarb{\carat a} and outputs the rest.
 	\item{\soarb{node\_position}} \\
 		Outputs the position of each node in input \soarb{\carat a}.
 	\item{\soarb{node\_rotation}} \\
@@ -479,28 +479,28 @@ the largest of them).
 	\item{\soarb{closest} and \soarb{farthest}} \\
 		Outputs the node in set \soarb{\carat b} closest to or farthest from \soarb{\carat a} (also uses \soarb{distance\_type}).
 	\item{\soarb{axis\_distance} and \soarb{axis\_distance\_select}} \\
-		Outputs the distance from input node \soarb{\carat a} to \soarb{\carat b} along a particular axis (\soarb{\carat axis << x y z >>}). This distance is based on bounding boxes. A value of 0 indicates the nodes overlap on the given axis, otherwise the result is a signed value indicating whether node b is greater or less than node a on the given axis. The \soar{axis\_distance\_select} filter also uses \soarb{\carat min} and \soarb{\carat max} to select nodes in set b. 
+		Outputs the distance from input node \soarb{\carat a} to \soarb{\carat b} along a particular axis (\soarb{\carat axis << x y z >>}). This distance is based on bounding boxes. A value of 0 indicates the nodes overlap on the given axis, otherwise the result is a signed value indicating whether node b is greater or less than node a on the given axis. The \soar{axis\_distance\_select} filter also uses \soarb{\carat min} and \soarb{\carat max} to select nodes in set b.
 	\item{\soarb{volume} and \soarb{volume\_select}} \\
 		Outputs the bounding box volume of each node in set \soarb{\carat a}. For \soar{volume\_select}, it outputs a subset of the nodes whose volumes fall within the range \soarb{\carat min} and \soarb{\carat max}.
 	\item{\soarb{largest} and \soarb{smallest}} \\
 		Outputs the node in set \soarb{\carat a} with the largest or smallest volume.
 	\item{\soarb{larger} and \soarb{larger\_select}}\\
-		Outputs whether input node \soarb{\carat a} is larger than each input node \soarb{\carat b}, or selects all nodes in b for which a is larger. 
+		Outputs whether input node \soarb{\carat a} is larger than each input node \soarb{\carat b}, or selects all nodes in b for which a is larger.
 	\item{\soarb{smaller} and \soarb{smaller\_select}}\\
-		Outputs whether input node \soarb{\carat a} is smaller than each input node \soarb{\carat b}, or selects all nodes in b for which a is smaller. 
+		Outputs whether input node \soarb{\carat a} is smaller than each input node \soarb{\carat b}, or selects all nodes in b for which a is smaller.
 	\item{\soarb{contain} and \soarb{contain\_select}} \\
-		Outputs whether the bounding box of each input node \soarb{\carat a} contains the bounding box of each input node \soarb{\carat b}, or selects those nodes in b which are contained by node a. 
+		Outputs whether the bounding box of each input node \soarb{\carat a} contains the bounding box of each input node \soarb{\carat b}, or selects those nodes in b which are contained by node a.
 	\item{\soarb{intersect} and \soarb{intersect\_select}} \\
-		Outputs whether each input node \soarb{\carat a} intersects each input node \soarb{\carat b}, or selects those nodes in b which intersect node a. Intersection is specified by \soarb{\carat intersect\_type << hull box >>}; either the convex hull of the node or the axis-aligned bounding box. 
+		Outputs whether each input node \soarb{\carat a} intersects each input node \soarb{\carat b}, or selects those nodes in b which intersect node a. Intersection is specified by \soarb{\carat intersect\_type << hull box >>}; either the convex hull of the node or the axis-aligned bounding box.
 	\item{\soarb{tag\_select}} \\
-		Outputs all the nodes in input set \soarb{\carat a} which have the tag specified by \soarb{\carat tag\_name} and \soarb{\carat tag\_value}. 
+		Outputs all the nodes in input set \soarb{\carat a} which have the tag specified by \soarb{\carat tag\_name} and \soarb{\carat tag\_value}.
 \end{description}
 
 
 % ----------------------------------------------------------------------------
 \subsection{Examples}
 
-Select all the objects with a volume between 1 and 2. 
+Select all the objects with a volume between 1 and 2.
 
 \begin{verbatim}
 (S1 ^svs S3)
@@ -508,9 +508,9 @@ Select all the objects with a volume between 1 and 2.
     (C3 ^extract E1)
       (E1 ^type volume_select ^a A1 ^min 1 ^max 2)
         (A1 ^type all_nodes)
-\end{verbatim} 
+\end{verbatim}
 
-Find the distance between the centroid of ball3 and all other objects. 
+Find the distance between the centroid of ball3 and all other objects.
 
 \begin{verbatim}
 (S1 ^svs S3)
@@ -519,9 +519,9 @@ Find the distance between the centroid of ball3 and all other objects.
       (E1 ^type distance ^a A1 ^b B1 ^distance_type centroid)
         (A1 ^type node ^id ball3)
         (B1 ^type all_nodes)
-\end{verbatim} 
+\end{verbatim}
 
-Test where ball2 intersects any red objects. 
+Test where ball2 intersects any red objects.
 
 \begin{verbatim}
 (S1 ^svs S3)
@@ -533,8 +533,8 @@ Test where ball2 intersects any red objects.
           (A2 ^type all_nodes)
 \end{verbatim}
 
-Find all the objects on the table. This is done by selecting nodes 
-where the distance between them and the table along the z axis is a small positive number. 
+Find all the objects on the table. This is done by selecting nodes
+where the distance between them and the table along the z axis is a small positive number.
 
 \begin{verbatim}
 (S1 ^svs S3)
@@ -545,7 +545,7 @@ where the distance between them and the table along the z axis is a small positi
         (B1 ^type all_nodes)
 \end{verbatim}
 
-Find the smallest object that intersects the table (excluding itself). 
+Find the smallest object that intersects the table (excluding itself).
 
 \begin{verbatim}
 (S1 ^svs S3)
@@ -572,7 +572,7 @@ Writing new filters for SVS is conceptually simple.
 	\vspace{-6pt}
 	\item Register the new class in a global table of all filters (\soar{filter\_table.cpp}).
 	\vspace{-6pt}
-	\item Recompile the kernel. 
+	\item Recompile the kernel.
 	\vspace{-6pt}
 \end{enumerate}
 
@@ -594,7 +594,7 @@ A filter of this class takes the Cartesian product of all input values in all pa
 and performs the same computation on each combination, generating one output.
 In other words, this class implements a one-to-one mapping from input combinations to output values.
 
-To write a new filter of this class, inherit from the \soar{map\_filter} class, 
+To write a new filter of this class, inherit from the \soar{map\_filter} class,
 and define the \soar{compute} function. Below is an example template:
 
 {\footnotesize
@@ -607,8 +607,8 @@ class new_map_filter : public map_filter<double> // templated with output type
     {}
 
     /* Compute
-       Do the proper computation based on the input filter_params 
-       and set the out parameter to the result 
+       Do the proper computation based on the input filter_params
+       and set the out parameter to the result
        Return true if successful, false if an error occured */
     bool compute(const filter_params* p, double& out){
       sgnode* a;
@@ -625,11 +625,11 @@ class new_map_filter : public map_filter<double> // templated with output type
 
 \subsubsection{Select filter}
 
-This is very similar to a map filter, except for each input combination from the 
+This is very similar to a map filter, except for each input combination from the
 Cartesian product the output is optional. This is useful for selecting and returning
-a subset of the outputs. 
+a subset of the outputs.
 
-To write a new filter of this class, inherit from the \soar{select\_filter} class, 
+To write a new filter of this class, inherit from the \soar{select\_filter} class,
 and define the \soar{compute} function. Below is an example template:
 
 {\footnotesize
@@ -642,9 +642,9 @@ class new_select_filter : public select_filter<double> // templated with output 
     {}
 
     /* Compute
-       Do the proper computation based on the input filter_params 
+       Do the proper computation based on the input filter_params
        and set the out parameter to the result (if desired)
-       Also set the select bit to true if you want to the result to be output. 
+       Also set the select bit to true if you want to the result to be output.
        Return true if successful, false if an error occured */
     bool compute(const filter_params* p, double& out, bool& select){
       sgnode* a;
@@ -663,11 +663,11 @@ class new_select_filter : public select_filter<double> // templated with output 
 \subsubsection{Rank filter}
 
 A filter where a ranking is computed for each combination from the Cartesian
-product of the input and only the combination which results in the highest 
-(or lowest) value is output. The default behavior is to select the highest, 
+product of the input and only the combination which results in the highest
+(or lowest) value is output. The default behavior is to select the highest,
 to select the lowest you can call \soar{set\_select\_highest(false)} on the filter.
 
-To write a new filter of this class, inherit from the \soar{rank\_filter} class, 
+To write a new filter of this class, inherit from the \soar{rank\_filter} class,
 and define the \soar{rank} function. Below is an example template:
 
 {\footnotesize
@@ -680,8 +680,8 @@ class new_rank_filter : public rank_filter
     {}
 
     /* Compute
-       Do the proper computation based on the input filter_params 
-       And set r to the ranking result. 
+       Do the proper computation based on the input filter_params
+       And set r to the ranking result.
        Return true if successful, false if an error occured */
     bool compute(const filter_params* p, double& r){
       sgnode* a;
@@ -698,7 +698,7 @@ class new_rank_filter : public rank_filter
 
 \subsection{Generic Node Filters}
 
-There are also a set of generic filters specialized for computations involving nodes. 
+There are also a set of generic filters specialized for computations involving nodes.
 With these you only need to specify a predicate function involving nodes. (Also see \\
 \soar{filters/base\_node\_filters.h}).
 
@@ -706,7 +706,7 @@ There are three types of these filters:
 
 \subsubsection{Node Test Filters}
 
-These filters involve a binary test between two nodes (e.g. intersection or larger). 
+These filters involve a binary test between two nodes (e.g. intersection or larger).
 You must specify a test function of the following form:
 
 \begin{verbatim}
@@ -724,7 +724,7 @@ For an example of how the following base filters are used, see \soar{filters/int
 \end{description}
 
 \subsubsection{Node Comparison Filters}
-These filters involve a numerical comparison between two nodes (e.g. distance). 
+These filters involve a numerical comparison between two nodes (e.g. distance).
 You must specify a comparison function of the following form:
 \begin{verbatim}
 double node_comparison(sgnode* a, sgnode* b, const filter_params* p)
@@ -734,9 +734,9 @@ For an example of how the following base filters are used, see \soar{filters/dis
 
 \begin{description}
 	\item[node\_comparison\_filter] \hfill \\
-		For each input pair (a, b), outputs the numerical result of \soar{node\_comparison(a, b)}. 
+		For each input pair (a, b), outputs the numerical result of \soar{node\_comparison(a, b)}.
 	\item[node\_comparison\_select\_filter] \hfill \\
-		For each input pair (a, b), outputs node b if \soar{min <= node\_comparison(a, b) <= max}. Min and max can be set through calling \soar{set\_min(double)} and \soar{set\_max(double)}, or as specified by the user through the filter\_params. 
+		For each input pair (a, b), outputs node b if \soar{min <= node\_comparison(a, b) <= max}. Min and max can be set through calling \soar{set\_min(double)} and \soar{set\_max(double)}, or as specified by the user through the filter\_params.
 	\item[node\_comparison\_rank\_filter] \hfill \\
 		This outputs the input pair (a, b) for which \soar{node\_comparison(a, b)} produces the highest value. To instead have the lowest value output call \soar{set\_select\_highest(true)}.
 \end{description}
@@ -744,7 +744,7 @@ For an example of how the following base filters are used, see \soar{filters/dis
 
 \subsubsection{Node Evaluation Filters}
 
-These filters involve a numerical evaluation of a single node (e.g. volume). 
+These filters involve a numerical evaluation of a single node (e.g. volume).
 You must specify an evaluation function of the following form:
 
 \begin{verbatim}
@@ -755,9 +755,9 @@ For an example of how the following base filters are used, see \soar{filters/vol
 
 \begin{description}
 	\item[node\_evaluation\_filter] \hfill \\
-		For each input node a, this outputs the numerical result of \soar{node\_evaluation(a)}. 
+		For each input node a, this outputs the numerical result of \soar{node\_evaluation(a)}.
 	\item[node\_evaluation\_select\_filter] \hfill \\
-		For each input node a, this outputs the node if \soar{min <= node\_evaluation(a) <= max}. Min and max can be set through calling \soar{set\_min(double)} and \soar{set\_max(double)}, or as specified by the user through the filter\_params. 
+		For each input node a, this outputs the node if \soar{min <= node\_evaluation(a) <= max}. Min and max can be set through calling \soar{set\_min(double)} and \soar{set\_max(double)}, or as specified by the user through the filter\_params.
 	\item[node\_evaluation\_rank\_filter] \hfill \\
 		This outputs the input node a for which \soar{node\_evaluation(a)} produces the highest value. To instead have the lowest value output call \soar{set\_select\_highest(true)}.
 \end{description}
@@ -772,7 +772,7 @@ The syntax of this command differs from other Soar commands due to the complexit
 The basic idea is to allow the user to access each object in the SVS implementation (not to be confused with objects in the scene graph) at runtime.
 Therefore, the command has the form \soar{svs PATH [ARGUMENTS]}, where \soar{PATH} uniquely identifies an object or the method of an object.
 \soar{ARGUMENTS} is a space separated list of strings that each object or function interprets in its own way.
-For example, \soar{svs S1.scene.world.car} identifies the car object 
+For example, \soar{svs S1.scene.world.car} identifies the car object
 in the scene graph of the top state.
 As another example, \verb|svs connect_viewer 5999| calls the method to connect to the SVS visualizer with 5999 being the TCP port to connect on.
 Every path has two special arguments.

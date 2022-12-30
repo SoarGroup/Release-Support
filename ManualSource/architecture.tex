@@ -17,7 +17,7 @@ This chapter gives an abstract description of Soar.  It starts by giving an over
 
 The design of Soar is based on the hypothesis that all deliberate \textit{goal}-oriented behavior can be cast as the selection and application of \textit{operators} to a \textit{state}. A \textbf{state} is a representation of the current problem-solving situation; an \textbf{operator} transforms a state (makes changes to the representation); and a \textbf{goal} is a desired outcome of the problem-solving activity.
 
-As Soar runs, it is continually trying to apply the current operator and select the next operator (a state can have only one operator at a time), until the goal has been achieved. The selection and application of operators is illustrated in Figure \ref{fig:select-apply}. 
+As Soar runs, it is continually trying to apply the current operator and select the next operator (a state can have only one operator at a time), until the goal has been achieved. The selection and application of operators is illustrated in Figure \ref{fig:select-apply}.
 
 \begin{figure}
 	\insertfigure{select-apply}{1.5in}
@@ -34,16 +34,16 @@ Soar has separate memories (and different representations) for descriptions of i
 Long-term procedural knowledge is held in \textbf{production memory}. Procedural knowledge specifies how to respond to different
 situations in working memory, can be thought of as the program for Soar. The Soar architecture cannot solve any problems without the addition of long-term procedural knowledge.  (Note the distinction between the ``Soar architecture'' and the ``Soar program'': The former refers to the system described in this manual, common to all users, and the latter refers to knowledge added to the architecture.)
 
-A Soar program contains the knowledge to be used for solving a specific task (or set of tasks), including information about how to select and apply operators to transform the states of the problem, and a means of recognizing that the goal has been achieved.  
+A Soar program contains the knowledge to be used for solving a specific task (or set of tasks), including information about how to select and apply operators to transform the states of the problem, and a means of recognizing that the goal has been achieved.
 
 \subsection{Types of Procedural Knowledge in Soar}
 \label{LIST:4KnowledgeTypes}
 
 Soar's procedural knowledge can be categorized into  four distinct types of knowledge:
 
-\vspace{-10pt} 
+\vspace{-10pt}
 \begin{enumerate}
-	\item \textit{Inference Rules} \newline 
+	\item \textit{Inference Rules} \newline
 		In Soar, we call these state elaborations. This knowledge provides monotonic inferences that can be made about the state in a given situation. The knowledge created by such rules are not persistent and exist only as long as the conditions of the rules are met.
 	\vspace{-6pt}
 	\item \textit{Operator Proposal Knowledge} \newline
@@ -70,7 +70,7 @@ Note that state elaborations can indirectly affect operator selection and applic
 \index{elaboration}
 
 These problem-solving functions are the primitives for generating behavior that is relevant to the current situation: elaborating the state, proposing candidate operators, comparing the candidates, and applying the operator by modifying the state. These functions are driven by the knowledge encoded in a Soar program.
- 
+
 \index{production}
 Soar represents that knowledge as \textbf{production rules}. Production rules are similar to ``if-then'' statements in conventional programming languages. (For example, a production might say something like ``if there are two blocks on the table, then suggest an operator to move one block on top of the other block''). The ``if'' part of the production is called its \textit{conditions} and the ``then'' part of the production is called its \textit{actions}. When the conditions are met in the current situation as defined by working memory, the production is \emph{matched} and it will \emph{fire}, which means that its actions are executed, making changes to working memory.
 
@@ -110,15 +110,15 @@ You do not need to look at the code at this point.
 	\label{fig:blocks}
 \end{figure}
 
-The operators in this task move a single block from its current location to a new location; each operator is represented with the following information: 
+The operators in this task move a single block from its current location to a new location; each operator is represented with the following information:
 
 \vspace{-12pt}
 \begin{itemize}
 	\item the name of the block being moved
 	\vspace{-9pt}
-	\item the current location of the block (the ``thing'' it is on top of) 
+	\item the current location of the block (the ``thing'' it is on top of)
 	\vspace{-9pt}
-	\item the destination of the block (the ``thing'' it will be on top of) 
+	\item the destination of the block (the ``thing'' it will be on top of)
 	\vspace{-9pt}
 \end{itemize}
 
@@ -174,7 +174,7 @@ As a first step in selecting an operator, one or more candidate operators are \t
 \index{preference}
 \index{preference memory}
 
-The second step Soar takes in selecting an operator is to evaluate or compare the candidate operators. In Soar, this is done via rules that test the proposed operators and the current state, and then create \textbf{preferences} (stored in \emph{preference memory}).  Preferences assert the relative or absolute merits of the candidate operators. For example, a preference may say that operator A is a ``better'' choice than operator B at this particular time, or a preference may say that operator A is the ``best'' thing to do at this particular time. Preferences are discussed in detail in section \ref{PREFERENCES}. 
+The second step Soar takes in selecting an operator is to evaluate or compare the candidate operators. In Soar, this is done via rules that test the proposed operators and the current state, and then create \textbf{preferences} (stored in \emph{preference memory}).  Preferences assert the relative or absolute merits of the candidate operators. For example, a preference may say that operator A is a ``better'' choice than operator B at this particular time, or a preference may say that operator A is the ``best'' thing to do at this particular time. Preferences are discussed in detail in section \ref{PREFERENCES}.
 
 % ----------------------------------------------------------------------------
 \subsection{Selecting a single operator: Decision}
@@ -212,7 +212,7 @@ Internal and external problem solving should not be viewed as mutually exclusive
 
 When Soar is doing internal problem solving, it must know how to modify the state descriptions appropriately when an operator is being applied. If it is solving the problem in an external environment, it must know what possible motor commands it can issue in order to affect its environment.
 
-The example blocks-world task described here does not interact with an external environment. Therefore, the Soar program directly makes changes to the state when operators are applied. There are four changes that may need to be made when a block is moved in our task: 
+The example blocks-world task described here does not interact with an external environment. Therefore, the Soar program directly makes changes to the state when operators are applied. There are four changes that may need to be made when a block is moved in our task:
 
 \vspace{-8pt}
 \begin{enumerate}\label{LIST:blocks-app}
@@ -261,7 +261,7 @@ The remaining sections in this chapter describe the memories and processes of So
 
 % ----------------------------------------------------------------------------
 % ----------------------------------------------------------------------------
-\section{Working memory: The Current Situation} 
+\section{Working memory: The Current Situation}
 \label{ARCH-wm}
 \index{working memory}
 
@@ -272,16 +272,16 @@ Soar represents the current problem-solving situation in its \emph{working memor
 \index{identifier}
 \index{attribute}
 \index{value}
-Working memory contains elements called working memory elements, or WMEs for short. Each WME contains a very specific piece of information; for example, a WME might say that ``B1 is a block''.  Several WMEs collectively may provide more information about the same \textit{object}, for example, ``B1 is a block'', ``B1 is named A'', ``B1 is on the table'', etc. These WMEs are related because they are all contributing to the description of something that is internally known to Soar as ``B1''. B1 is called an \textbf{\textit{identifier}}; the group of WMEs that share this identifier are referred to as an \textit{object} in working memory.  Each WME describes a different \textbf{\textit{attribute}} of the object, for example, its name or type or location; each \textit{attribute} has a \textbf{\textit{value}} associated with it, for example, the name is A, the type is block, and the position is on the table. Therefore, each WME is an identifier-attribute-value triple, and all WMEs with the same identifier are part of the same object. 
+Working memory contains elements called working memory elements, or WMEs for short. Each WME contains a very specific piece of information; for example, a WME might say that ``B1 is a block''.  Several WMEs collectively may provide more information about the same \textit{object}, for example, ``B1 is a block'', ``B1 is named A'', ``B1 is on the table'', etc. These WMEs are related because they are all contributing to the description of something that is internally known to Soar as ``B1''. B1 is called an \textbf{\textit{identifier}}; the group of WMEs that share this identifier are referred to as an \textit{object} in working memory.  Each WME describes a different \textbf{\textit{attribute}} of the object, for example, its name or type or location; each \textit{attribute} has a \textbf{\textit{value}} associated with it, for example, the name is A, the type is block, and the position is on the table. Therefore, each WME is an identifier-attribute-value triple, and all WMEs with the same identifier are part of the same object.
 
 \index{object}
 \index{working memory!object|see{object}}
 \index{value}
 \index{link}
-Objects in working memory are \emph{linked} to other objects: The value of one WME may be an identifier of another object. For example, a WME might say that ``B1 is ontop of T1'', and another collection of WMEs might describe the object T1: ``T1 is a table'', ``T1 is brown'', and ``T1 is ontop of F1''. And still another collection of WMEs might describe the object F1: ``F1 is a floor'', etc. All objects in working memory must be linked to a state, either directly or indirectly (through other objects). Objects that are not linked to a state will be automatically removed from working memory by the Soar architecture. 
+Objects in working memory are \emph{linked} to other objects: The value of one WME may be an identifier of another object. For example, a WME might say that ``B1 is ontop of T1'', and another collection of WMEs might describe the object T1: ``T1 is a table'', ``T1 is brown'', and ``T1 is ontop of F1''. And still another collection of WMEs might describe the object F1: ``F1 is a floor'', etc. All objects in working memory must be linked to a state, either directly or indirectly (through other objects). Objects that are not linked to a state will be automatically removed from working memory by the Soar architecture.
 
 \index{augmentation|see{working memory element}}
-WMEs are also often called \textit{augmentations} because they ``augment'' the object, providing more detail about it. While these two terms are somewhat redundant, WME is a term that is used more often to refer to the contents of working memory (as a single \textit{identifier-attribute-value} triple), while augmentation is a term that is used more often to refer to the description of an object. Working memory is illustrated at an abstract level in Figure \ref{fig:ab-wmem} on page \pageref{fig:ab-wmem}. 
+WMEs are also often called \textit{augmentations} because they ``augment'' the object, providing more detail about it. While these two terms are somewhat redundant, WME is a term that is used more often to refer to the contents of working memory (as a single \textit{identifier-attribute-value} triple), while augmentation is a term that is used more often to refer to the description of an object. Working memory is illustrated at an abstract level in Figure \ref{fig:ab-wmem} on page \pageref{fig:ab-wmem}.
 
 The attribute of an augmentation is usually a constant, such as ``\soar{name}'' or ``\soar{type}'', because in a sense, the attribute is just a label used to distinguish one link in working memory from another.\footnote{
 	In order to allow these links to have some substructure, the attribute name may be an identifier, which means that the attribute may itself have attributes and values, as specified by additional working memory elements.
@@ -301,24 +301,24 @@ The elements in working memory arise from one of four sources:
 \index{Spatial Visual System}
 \vspace{-12pt}
 \begin{enumerate}
-	\item \textbf{\textit{Productions:}} 
+	\item \textbf{\textit{Productions:}}
 		The actions on the RHS of productions create most working memory elements.
 	\vspace{-8pt}
-	\item \textbf{\textit{Architecture:}} 
+	\item \textbf{\textit{Architecture:}}
 	\vspace{-8pt}
 	\begin{enumerate}
-		\item \textit{State augmentations:} 
-			The decision procedure automatically creates some special state augmentations (type, superstate, impasse, ...) whenever a state is created.  States are created during initialization (the first state) or because of an impasse (a substate).  
+		\item \textit{State augmentations:}
+			The decision procedure automatically creates some special state augmentations (type, superstate, impasse, ...) whenever a state is created.  States are created during initialization (the first state) or because of an impasse (a substate).
 		\vspace{-4pt}
-		\item \textit{Operator augmentations:} 
+		\item \textit{Operator augmentations:}
 			The decision procedure creates the operator augmentation of the state based on preferences. This records the selection of the current operator.
 		\vspace{-8pt}
 	\end{enumerate}
-	\item \textbf{\textit{Memory Systems}} 
+	\item \textbf{\textit{Memory Systems}}
 	\vspace{-8pt}
-	\item \textbf{\textit{SVS}} 
+	\item \textbf{\textit{SVS}}
 	\vspace{-8pt}
-	\item \textbf{\textit{The Environment:}} 
+	\item \textbf{\textit{The Environment:}}
 		External I/O systems create working memory elements on the input-link for sensory data.
 	\vspace{-8pt}
 \end{enumerate}
@@ -339,7 +339,7 @@ The elements in working memory are removed in six different ways:
 	\vspace{-8pt}
 	\item The architecture automatically removes i-supported WMEs when the productions that created them no longer match.
 	\vspace{-8pt}
-	\item The I/O system removes sensory data from the input-link when it is no longer valid. 
+	\item The I/O system removes sensory data from the input-link when it is no longer valid.
 	\vspace{-8pt}
 	\item The architecture automatically removes WMEs that are no longer linked to a state (because some other WME has been removed).
 \end{enumerate}
@@ -352,7 +352,7 @@ Preferences are held in a separate \emph{preference memory} where they cannot be
 
 % ----------------------------------------------------------------------------
 % ----------------------------------------------------------------------------
-\section{\texorpdfstring{Production Memory:\\ Long-term Procedural Knowledge}{Production Memory: Long-term Procedural Knowledge}} 
+\section{\texorpdfstring{Production Memory:\\ Long-term Procedural Knowledge}{Production Memory: Long-term Procedural Knowledge}}
 \label{ARCH-pm}
 \index{production memory}
 \index{production}
@@ -376,8 +376,8 @@ Soar represents long-term procedural knowledge as \textbf{productions} that are 
 In the simplest form of a production, conditions and actions refer directly to the presence (or absence) of objects in working memory. For example, a production might say:
 
 \begin{verbatim}
-  CONDITIONS: block A is clear 
-              block B is clear 
+  CONDITIONS: block A is clear
+              block B is clear
   ACTIONS:    suggest an operator to move block A ontop of block B
 \end{verbatim}
 
@@ -418,7 +418,7 @@ Soar productions can fulfill the following four roles, by retrieving different t
 	\vspace{-6pt}
 \end{enumerate}
 
-A single production should not fulfill more than one of these roles (except for proposing an operator and creating an absolute preference for it). Although productions are not declared to be of one type or the other, Soar examines the structure of each production and classifies the rules automatically based on whether they propose and compare operators, apply operators, or elaborate the state. 
+A single production should not fulfill more than one of these roles (except for proposing an operator and creating an absolute preference for it). Although productions are not declared to be of one type or the other, Soar examines the structure of each production and classifies the rules automatically based on whether they propose and compare operators, apply operators, or elaborate the state.
 
 \subsection{Production Actions and Persistence}
 \index{i-support}
@@ -433,18 +433,18 @@ Generally, actions of a production either create preferences for operator select
 
 However, the actions of productions that \emph{apply} an operator, either by adding or removing elements from working memory, persist regardless of whether the operator is still selected or the operator application  production instantiation still matches. For example, in placing a block on another block, a condition is that the second block be clear. However, the action of placing the first block removes the fact that the second block is clear, so the condition will no longer be satisfied.
 
-Thus, operator application productions do not retract their actions, even if they no longer match working memory.  This is called \emph{o-support}  (for ``operator support''). Working memory elements that participate in the application of operators are maintained throughout the existence of the state in which the operator is applied, unless explicitly removed (or if they become unlinked).  Working memory elements are removed by a \emph{reject} action of a operator-application rule.  
+Thus, operator application productions do not retract their actions, even if they no longer match working memory.  This is called \emph{o-support}  (for ``operator support''). Working memory elements that participate in the application of operators are maintained throughout the existence of the state in which the operator is applied, unless explicitly removed (or if they become unlinked).  Working memory elements are removed by a \emph{reject} action of a operator-application rule.
 %\index{o-support!reject}
 
 Whether a working memory element receives o-support or i-support is determined by the structure of the production instantiation that creates the working memory element.  O-support is given only to working memory elements created by operator-application productions in the state where the operator was selected.
 
-An operator-application production tests the current operator of a state and modifies the state. Thus, a working memory element receives o-support if it is for an augmentation of the current state or substructure of the state, and the conditions of the instantiation that created it test augmentations of the current operator.  
+An operator-application production tests the current operator of a state and modifies the state. Thus, a working memory element receives o-support if it is for an augmentation of the current state or substructure of the state, and the conditions of the instantiation that created it test augmentations of the current operator.
 
 During productions matching, all productions that have their conditions met fire, creating preferences which may add or remove working memory elements.  Also, working memory elements and preferences that lose i-support are removed from working memory. Thus, several new working memory elements and preferences may be created, and several existing working memory elements and preferences may be removed at the same time. (Of course, all this doesn’t happen literally at the same time, but the order of firings and retractions is unimportant, and happens in parallel from a functional perspective.)
 
 % ----------------------------------------------------------------------------
 % ----------------------------------------------------------------------------
-\section{Preference Memory: Selection Knowledge} 
+\section{Preference Memory: Selection Knowledge}
 \label{ARCH-prefmem}
 \index{preference}
 \index{preference memory}
@@ -473,14 +473,14 @@ Only a single value can be selected as the current operator, that is, all values
 \index{preference!acceptable("+)}
 \index{"+|see{preference}}
 \index{acceptable preference|see{preference}}
-\item [Acceptable (+)] 
+\item [Acceptable (+)]
 	An \soar{acceptable} preference states that a value is a candidate for selection. All values, except those with \soar{require} preferences, must have an \soar{acceptable} preference in order to be selected. If there is only one value with an \soar{acceptable} preference (and none with a \soar{require} preference), that value will be selected as long as it does not also have a \soar{reject} or a \soar{prohibit} preference.
 \vspace{-8pt}
 
 \index{preference!reject(-)}
 \index{"-|see{preference}}
 \index{reject preference|see{preference}}
-\item [Reject ($-$)] 
+\item [Reject ($-$)]
 	A \soar{reject} preference states that the value is not a candidate for selection.
 \vspace{-8pt}
 
@@ -490,21 +490,21 @@ Only a single value can be selected as the current operator, that is, all values
 \index{preference!worse(\textless \textit{val})}
 \index{"<|see{preference}}
 \index{worse preference|see{preference}}
-\item [Better ($>$ \emph{value}), Worse ($<$ \emph{value})] 
+\item [Better ($>$ \emph{value}), Worse ($<$ \emph{value})]
 	A \soar{better} or \soar{worse} preference states, for the two values involved, that one value should not be selected if the other value is a candidate. \soar{Better} and \soar{worse} allow for the creation of a partial ordering between candidate values. \soar{Better} and \soar{worse} are simple inverses of each other, so that \soar{A} better than \soar{B} is equivalent to \soar{B} worse than \soar{A}.
 \vspace{-8pt}
 
 \index{preference!best(\textgreater)}
 \index{">|see{preference}}
 \index{best preference|see{preference}}
-\item [Best ($>$)] 
+\item [Best ($>$)]
 	A \soar{best} preference states that the value may be better than any competing value (unless there are other competing values that are also ``best''). If a value is \soar{best} (and not \soar{reject}ed, \soar{prohibit}ed, or \soar{worse} than another), it will be selected over any other value that is not also \soar{best} (or \soar{require}d). If two such values are \soar{best}, then any remaining preferences for those candidates (\soar{worst}, \soar{indifferent}) will be examined to determine the selection. Note that if a value (that is not \soar{reject}ed or \soar{prohibit}ed) is \soar{better} than a \soar{best} value, the \soar{better} value will be selected.  (This result is counter-intuitive, but allows explicit knowledge about the relative worth of two values to dominate knowledge of only a single value. A \soar{require} preference should be used when a value \emph{must} be selected for the goal to be achieved.)
 \vspace{-8pt}
 
 \index{preference!worst(\textless)}
 \index{"<|see{preference}}
 \index{worst preference|see{preference}}
-\item [Worst ($<$)] 
+\item [Worst ($<$)]
 	A \soar{worst} preference states that the value should be selected only if there are no alternatives.  It allows for a simple type of default specification. The semantics of the \soar{worst} preference are similar to those for the \soar{best} preference.
 \vspace{-8pt}
 
@@ -512,37 +512,37 @@ Only a single value can be selected as the current operator, that is, all values
 \index{"=|see{preference}}
 \index{indifferent preference|see{preference}}
 \index{indifferent-selection}
-\item [Unary Indifferent (=)] 
-	A \soar{unary indifferent} preference states that there is positive knowledge that a single value is as good or as bad a choice as other expected alternatives. 
-	
+\item [Unary Indifferent (=)]
+	A \soar{unary indifferent} preference states that there is positive knowledge that a single value is as good or as bad a choice as other expected alternatives.
+
 	When two or more competing values both have indifferent preferences, by default, Soar chooses randomly from among the alternatives. (The \soar{decide indifferent-selection} function can be used to change this behavior as described on page \pageref{decide-indifferent-selection} in Chapter \ref{INTERFACE}.)
 \vspace{-8pt}
 
 \index{preference!binary indifferent(=\textit{val})}
-\item [Binary Indifferent (= \emph{value})] 
+\item [Binary Indifferent (= \emph{value})]
 	A \soar{binary indifferent} preference states that two values are mutually indifferent and it does not matter which of these values are selected. It behaves like a \soar{unary indifferent} preference, except that the operator value given this preference is only made indifferent to the operator value given as the argument.
 \vspace{-8pt}
 
 \index{preference!numeric-indifferent("=\textit{num})}
 \index{numeric-indifferent preference|see{preference}}
 \item [Numeric-Indifferent (= \emph{number})]
-	A \soar{numeric-indifferent} preference is used to bias the random selection from mutually indifferent values. This preference includes a \soar{unary indifferent} preference, and behaves in that manner when competing with another value having a unary indifferent preference. 
-	%When a set of operators are determined to be indifferent based on all other asserted preference types and at least one operator has a numeric-indifferent preference, 
+	A \soar{numeric-indifferent} preference is used to bias the random selection from mutually indifferent values. This preference includes a \soar{unary indifferent} preference, and behaves in that manner when competing with another value having a unary indifferent preference.
+	%When a set of operators are determined to be indifferent based on all other asserted preference types and at least one operator has a numeric-indifferent preference,
 	But when a set of competing operator values have \soar{numeric-indifferent} preferences, the decision mechanism will choose an operator based on their numeric-indifferent values and the exploration policy. The available exploration policies and how they calculate selection probability are detailed in the documentation for the \soar{indifferent-selection} command on page \pageref{decide-indifferent-selection}. When a single operator is given multiple numeric-indifferent preferences, they are either averaged or summed into a single value based on the setting of the \soar{numeric-indifferent-mode} command (see page \pageref{decide-numeric-indifferent-mode}).
 
 	Numeric-indifferent preferences that are created by RL rules can be adjusted by the reinforcement learning mechanism. In this way, it's possible for an agent to begin a task with only arbitrarily initialized numeric indifferent preferences and with experience learn to make the optimal decisions. See chapter \ref{RL} for more information.
-	
+
 \index{preference!require("!)}
 \index{"!|see{preference}}
 \index{require preference|see{preference}}
-\item [Require (!)] 
+\item [Require (!)]
 	A \soar{require} preference states that the value \emph{must} be selected if the goal is to be achieved. A \soar{require}d value is preferred over all others. Only a single operator value should be given a \soar{require} preference at a time.
 \vspace{-8pt}
 
 \index{preference!prohibit}
 \index{"~|see{preference}}
 \index{prohibit preference|see{preference}}
-\item [Prohibit ($\tild$)] 
+\item [Prohibit ($\tild$)]
 	A \soar{prohibit} preference states that the value cannot be selected if the goal is to be achieved.  If a value has a \soar{prohibit} preference, it will not be selected for a value of an augmentation, independent of the other preferences.
 \vspace{-8pt}
 \end{description}
@@ -586,7 +586,7 @@ The procedure has several potential exit points. Some occur when the procedure h
 	impasse is generated and the filtering process is halted. The impasse
 	generation is handled as a special exit from a filter and is indicated with a
 	grey line in Figure \ref{fig:prefsem}.
-	
+
 	The preference semantics module takes as input one or more preferences for a
 	given identifier and attribute; its output includes: \vspace{-10pt}
 	\begin{enumerate}
@@ -615,14 +615,14 @@ Each step in Figure \ref{fig:prefsem} is described below:
 \begin{description}
 	\item[RequireTest (!)]
 		This test checks for required candidates in preference memory and also constraint-failure impasses involving require preferences (see Section \ref{ARCH-impasses} on page \pageref{ARCH-impasses}).
-	
+
 	\begin{itemize}
 		\item If there is exactly one candidate operator with a require preference and
 		that candidate does not have a prohibit preference, then that candidate
 		is the winner and preference semantics terminates.
 		\item Otherwise ---
 		If there is more than one required candidate, then a constraint-
-		failure impasse is recognized and preference semantics terminates 
+		failure impasse is recognized and preference semantics terminates
 		by returning the set of required candidates.
 		\item Otherwise ---
 		If there is a required candidate that is also prohibited, a
@@ -631,7 +631,7 @@ Each step in Figure \ref{fig:prefsem} is described below:
 		\item Otherwise ---
 		There is no required candidate; candidates are passed to AcceptableCollect.
 	\end{itemize}
-	
+
 	\index{+}
 	\index{preference!acceptable("+)}
 	\item[AcceptableCollect (+) ]
@@ -642,13 +642,13 @@ Each step in Figure \ref{fig:prefsem} is described below:
 			\item Otherwise --- The candidates are passed to the ProhibitFilter.
 		\end{itemize}
 	}
-	
+
 	\index{preference!prohibit}
 	\item[ProhibitFilter ($\sim$) ] This filter removes the candidates that have prohibit preferences in memory. The rest of the candidates are passed to the RejectFilter.
-	
+
 	\index{preference!reject(-)}
-	\item[RejectFilter ($-$) ] This filter removes the candidates that have reject preferences in memory. 
-	
+	\item[RejectFilter ($-$) ] This filter removes the candidates that have reject preferences in memory.
+
 	\index{-}
 	\item[Exit Point 1]:
 	\begin{itemize}
@@ -656,11 +656,11 @@ Each step in Figure \ref{fig:prefsem} is described below:
 		\item If the set has one member, preference semantics terminates and this set is returned.
 		\item Otherwise, the remaining candidates are passed to the BetterWorseFilter.
 	\end{itemize}
-	
+
 	\index{preference!worse(\textless \textit{val})}
 	\index{preference!better(\textgreater \textit{val})}
 	\item[BetterWorseFilter ($>$), ($<$) ] This filter removes any candidates that are worse than another candidate.
-	
+
 	\index{-}
 	\item[Exit Point 2]:
 	\begin{itemize}
@@ -668,10 +668,10 @@ Each step in Figure \ref{fig:prefsem} is described below:
 		\item If the set of remaining candidates has one member, preference semantics terminates and this set is returned.
 		\item Otherwise, the remaining candidates are passed to the BestFilter.
 	\end{itemize}
-	
+
 	\index{preference!best(\textgreater)}
 	\item[BestFilter ($>$) ] If some remaining candidate has a best preference, this filter removes any candidates that do not have a best preference. If there are no best preferences for any of the current candidates, the filter has no effect. The remaining candidates are passed to the WorstFilter.
-	
+
 	\index{-}
 	\item[Exit Point 3]:
 	\begin{itemize}
@@ -679,17 +679,17 @@ Each step in Figure \ref{fig:prefsem} is described below:
 		\item If  the set has one member, preference semantics terminates and this set is returned.
 		\item Otherwise, the remaining candidates are passed to the WorstFilter.
 	\end{itemize}
-	
+
 	\index{preference!worst(\textless)}
 	\item[WorstFilter ($<$) ] This filter removes any candidates that have a worst preference. If all remaining candidates have worst preferences or there are no worst preferences, this filter has no effect.
-	
+
 	\item[Exit Point 4]:
 	\begin{itemize}
-		\item At this point, if the set of remaining candidates is empty, a no-change impasse is created with no operators being selected. 
+		\item At this point, if the set of remaining candidates is empty, a no-change impasse is created with no operators being selected.
 		\item If the set has one member, preference semantics terminates and this set is returned.
 		\item Otherwise, the remaining candidates are passed to the IndifferentFilter.
 	\end{itemize}
-	
+
 	\index{preference!unary indifferent(=)}
 	\item[IndifferentFilter (=) ] This operation traverses the remaining candidates and marks each candidate for which one of the following is true:
 	\begin{itemize}
@@ -710,16 +710,16 @@ Each step in Figure \ref{fig:prefsem} is described below:
 
 The execution of a Soar program proceeds through a number of \textbf{decision cycles}. Each cycle has five phases:
 
-\begin{enumerate} 
-	\item \textbf{Input}: 
+\begin{enumerate}
+	\item \textbf{Input}:
 		New sensory data comes into working memory.
-	\item \textbf{Proposal}: 
-		Productions fire (and retract) to interpret new data (state elaboration), propose operators for the current situation (operator proposal), and compare proposed operators (operator comparison).  All of the actions of these productions are i-supported.  All matched productions fire in parallel (and all retractions occur in parallel), and matching and firing continues until there are no more additional complete matches or retractions of productions (\emph{quiescence}). 
+	\item \textbf{Proposal}:
+		Productions fire (and retract) to interpret new data (state elaboration), propose operators for the current situation (operator proposal), and compare proposed operators (operator comparison).  All of the actions of these productions are i-supported.  All matched productions fire in parallel (and all retractions occur in parallel), and matching and firing continues until there are no more additional complete matches or retractions of productions (\emph{quiescence}).
 	\item \textbf{Decision}:
 		A new operator is selected, or an impasse is detected and a new state is created.
-	\item \textbf{Application}: 
+	\item \textbf{Application}:
 		Productions fire to apply the operator (operator application).  The actions of these productions will be o-supported. Because of changes from operator application productions, other productions with i-supported actions may also match or retract. Just as during proposal, productions fire and retract in parallel until quiescence.
-	\item \textbf{Output}: 
+	\item \textbf{Output}:
 		Output commands are sent to the external environment.
 \end{enumerate}
 
@@ -739,22 +739,22 @@ An important aspect of productions in Soar to keep in mind is that all productio
 	\begin{verbatim}
 	Soar
 	  while (HALT not true) Cycle;
-	  
+
 	Cycle
 	  InputPhase;
 	  ProposalPhase;
 	  DecisionPhase;
 	  ApplicationPhase;
 	  OutputPhase;
-	
-	
+
+
 	ProposalPhase
 	  while (some i-supported productions are waiting to fire or retract)
 	    FireNewlyMatchedProductions;
 	    RetractNewlyUnmatchedProductions;
-	
+
 	DecisionPhase
-	  for (each state in the stack, 
+	  for (each state in the stack,
 	       starting with the top-level state)
 	  until (a new decision is reached)
 	    EvaluateOperatorPreferences; /* for the state being considered */
@@ -762,13 +762,13 @@ An important aspect of productions in Soar to keep in mind is that all productio
 	      SelectNewOperator;
 	    else                  /* could be no operator available or */
 	      CreateNewSubstate;  /* unable to decide between more than one */
-	
+
 	ApplicationPhase
 	  while (some productions are waiting to fire or retract)
 	    FireNewlyMatchedProductions;
 	    RetractNewlyUnmatchedProductions;
 	\end{verbatim}
-	
+
 	\insertcaption{A simplified version of the Soar algorithm.}
 	\label{fig:pseudocode}
 \end{figure}
@@ -794,7 +794,7 @@ When Soar interacts with an external environment, it must make use of mechanisms
 \begin{description}
 	\item[Input functions] add and delete elements from working memory in response to changes in the external environment.
 	\vspace{-6pt}
-	\item[Output functions] attempt to effect changes in the external environment. 
+	\item[Output functions] attempt to effect changes in the external environment.
 	\vspace{-6pt}
 \end{description}
 
@@ -831,7 +831,7 @@ There are four types of impasses that can arise from the preference scheme.
 \vspace{-12pt}
 
 \begin{description}
-\item[Tie impasse ---] 
+\item[Tie impasse ---]
 	A \emph{tie} impasse arises if the preferences do not distinguish between two or more operators that have \soar{acceptable} preferences. If two operators both have \soar{best} or \soar{worst} preferences, they will tie unless additional preferences distinguish between them.
 	\vspace{-8pt}
 \item[Conflict impasse ---]
@@ -842,11 +842,11 @@ There are four types of impasses that can arise from the preference scheme.
 	\vspace{-8pt}
 \item[No-change impasse ---]
 	A \emph{no-change} impasse arises if a new operator is not selected during the decision procedure. There are two types of no-change impasses: state no-change and operator no-change:
-	\vspace{-8pt} 
+	\vspace{-8pt}
 	\begin{description}
-		\item[State no-change impasse ---] 
+		\item[State no-change impasse ---]
 			A state no-change impasse occurs when there are no \soar{acceptable} (or \soar{require}) preferences to suggest operators for the current state (or all the \soar{acceptable} values have also been \soar{reject}ed). The decision procedure cannot select a new operator.\vspace{-8pt}
-        \item[Operator no-change impasse ---] 
+        \item[Operator no-change impasse ---]
 	        An operator no-change impasse occurs when either a new operator is selected for the current state but no additional productions match during the application phase, or a new operator is not selected during the next decision phase.
 	\end{description}
 	\index{impasse!state no-change}
@@ -897,7 +897,7 @@ In order to resolve impasses, subgoals must generate results that allow the prob
 These working memory elements and preferences will not be removed when the impasse is resolved because they are still linked to a superstate, and therefore, they are called the \textit{results of the subgoal}.  A result has either i-support or o-support; the determination of support is described below.
 
 %A production that creates a result is illustrated in Figure \ref{fig:result}.
-%The figure illustrates the result as a working memory element: 
+%The figure illustrates the result as a working memory element:
 %``\soar{new-attribute X1}''.
 
 %\begin{figure}
@@ -923,8 +923,8 @@ These working memory elements and preferences will not be removed when the impas
 
 A working memory element or preference will be a result if its identifier is already linked to a superstate.
 %(as illustrated inFigure \ref{fig:result})
-A working memory element or preference can also become a result indirectly if, after it is created and it is still in working memory or preference memory, its identifier becomes linked to a superstate through the creation of another result. For example, if the problem solving in a state constructs an operator for a superstate, it may wait until the operator structure is complete before creating an \soar{acceptable} preference for the operator in the superstate. The \soar{acceptable} preference is a result because it was created in the state and is linked to the superstate (and, through the superstate, is linked to the top-level state). The substructures of the operator then become results because the operator's identifier is now linked to the superstate. 
-% An indirect result is illustrated in Figure \ref{fig:result-indirect}). 
+A working memory element or preference can also become a result indirectly if, after it is created and it is still in working memory or preference memory, its identifier becomes linked to a superstate through the creation of another result. For example, if the problem solving in a state constructs an operator for a superstate, it may wait until the operator structure is complete before creating an \soar{acceptable} preference for the operator in the superstate. The \soar{acceptable} preference is a result because it was created in the state and is linked to the superstate (and, through the superstate, is linked to the top-level state). The substructures of the operator then become results because the operator's identifier is now linked to the superstate.
+% An indirect result is illustrated in Figure \ref{fig:result-indirect}).
 
 % ----------------------------------------------------------------------------
 \subsection{Justifications: Support for results}
@@ -934,7 +934,7 @@ A working memory element or preference can also become a result indirectly if, a
 \index{justification}
 
 Recall from Section \ref{ARCH-prefmem-persistence} that WMEs with \textit{i-support} disappear as soon as the production that created them retract,\footnote{
-	Technically, an i-supported WME is only retracted when it loses instantiation support, not when the creating production is retracting. For example, a WME could receive i-support from several different instantiated productions and the retraction of only one would not lead to the retraction of the WME.} 
+	Technically, an i-supported WME is only retracted when it loses instantiation support, not when the creating production is retracting. For example, a WME could receive i-support from several different instantiated productions and the retraction of only one would not lead to the retraction of the WME.}
 whereas WMEs with \textit{o-support} (created through applying an operator) persist in working memory until deliberately removed.
 
 Some results receive i-support, while others receive o-support.  The type of support received by a result is determined by the function it plays in the superstate, and not the function it played in the state in which it was created. For example, a result might be created through operator application in the state that created it; however, it might only be a state elaboration in the superstate. The first function would lead to o-support, but the second would lead to i-support.
@@ -946,7 +946,7 @@ In order for the architecture to determine whether a result receives i-support o
 	\item[The conditions] of a justification are those working memory elements that exist in the superstate (and above) that were necessary for producing the result.  This is determined by collecting all of the working memory elements tested by the productions that fired in the subgoal that led to the creation of the result, and then removing those conditions that test working memory elements created in the subgoal.
 	\vspace{-6pt}
 	\item[The action] of the justification is the result of the subgoal.
-\end{description} 
+\end{description}
 
 Thus, when the substate disappears, the generated justification serves as the production that supports any subgoal results.
 
@@ -956,27 +956,27 @@ Soar determines i-support or o-support for the justification and its actions jus
 Justifications include any negated conditions that were in the original productions that participated in producing the results, and that test for the absence of superstate working memory elements. Negated conditions that test for the absence of working memory elements that are local to the substate are not included, which can lead to overgeneralization in the justification (see Sections \ref{CHUNKING-during-backtracing-operationality} and \ref{CHUNKING-subtleties-overgeneralization} for details).
 
 %Justifications can also include operator evaluation knowledge that led to the selection of the operator that produced the result.  For example, the conditions of any production that creates a prohibit preference for an operator in the substate that was not selected will be backtraced through and may produce additional conditions in the justification.  Moreover, if the \soar{chunk add-desirability-prefs} setting is on, conditions from other preference types (better, best, worse, worst indifferent) can be included as well.  For a more complete description of how Soar chooses which desirability preferences to include, see Section \ref{CDPS} on page \pageref{CDPS}.
-%\index{desirability preference} 
+%\index{desirability preference}
 %\index{preference!desirability}
 %\index{Context-Dependent Preference Set}
 
 
 \subsection{Chunking: Learning Procedural Knowledge}
-\label{ARCH-learning} 
+\label{ARCH-learning}
 \index{chunking}
 \index{subgoal}
 
-When an operator impasse is resolved, it means that Soar has, through problem solving, gained access to knowledge that was not readily available before. Therefore, when an impasse is resolved, Soar has an opportunity to learn, by summarizing and generalizing the processing in the substate. 
+When an operator impasse is resolved, it means that Soar has, through problem solving, gained access to knowledge that was not readily available before. Therefore, when an impasse is resolved, Soar has an opportunity to learn, by summarizing and generalizing the processing in the substate.
 
 \index{chunk}
-One of Soar's learning mechanisms is called \textbf{chunking} (See chapter \ref{CHUNKING} for more information); it attempts to create a new production, called a \textbf{chunk}. The conditions of the chunk are the elements of the state that (through some chain of production firings) allowed the impasse to be resolved; the action of the production is the working memory element or preference that resolved the impasse (the result of the impasse). The conditions and action are variablized so that this new production may match in a similar situation in the future and prevent an impasse from arising. 
+One of Soar's learning mechanisms is called \textbf{chunking} (See chapter \ref{CHUNKING} for more information); it attempts to create a new production, called a \textbf{chunk}. The conditions of the chunk are the elements of the state that (through some chain of production firings) allowed the impasse to be resolved; the action of the production is the working memory element or preference that resolved the impasse (the result of the impasse). The conditions and action are variablized so that this new production may match in a similar situation in the future and prevent an impasse from arising.
 
 \index{justification}
 Chunks and justifications are very similar in that they both summarize substate results. They are, in fact, generated by the architecture using the same result dependency trace mechanisms. However, there are some important distinctions:
 
 \vspace{-12pt}
 \begin{enumerate}
-	\item Justifications disappear as soon as its conditions no longer match. 
+	\item Justifications disappear as soon as its conditions no longer match.
 	\vspace{-8pt}
 	\item Chunks contain variables so that they may match working memory in other situations; justifications are similar to an instantiated chunk.
 \end{enumerate}
@@ -993,7 +993,7 @@ In other words, a chunk might be thought of as a permanent and potentially more 
 \index{production!instantiation}
 
 This section provides a more detailed description of when an action is given o-support by an instantiation.\footnote{
-	In the past, Soar had various experimental support mode settings. Since version 9.6, the support mode used is what was previously called \soar{mode 4}.} 
+	In the past, Soar had various experimental support mode settings. Since version 9.6, the support mode used is what was previously called \soar{mode 4}.}
 The content here is somewhat more advanced, and the reader unfamiliar with rule syntax (explained in Chapter \ref{SYNTAX}) may wish to skip this section and return at a later point.
 
 Support is given by the production; that is, all working memory changes generated by the actions of a single instantiated production will have the same support (an action that is not given o-support will have i-support). The conditions and actions of a production rule will here be referred to using the shorthand of LHS and RHS (for Left-Hand Side and Right-Hand Side), respectively.
@@ -1029,7 +1029,7 @@ sp {operator*superstate*application
     (<s1> ^sub-operator-name <name>)}
 \end{verbatim}
 
-gives o-support to its RHS action, which remains after the substate bound to \soar{<s>} is destroyed. 
+gives o-support to its RHS action, which remains after the substate bound to \soar{<s>} is destroyed.
 
 An extension of condition 1 is that operator augmentations should always receive i-support (augmentations define the proposed operator). Soar has been written to recognize augmentations directly off the operator \\
 (ie, \soar{(<o> \carat augmentation value)}), and to attempt to give them i-support. However, what should be done about a production that simultaneously tests an operator, doesn't propose an operator, adds an operator augmentation, and adds a non-operator augmentation? For example:
@@ -1046,123 +1046,123 @@ sp {operator*augmentation*application
 
 In such cases, both receive i-support. Soar will print a warning on firing this production, because this is considered bad coding style.
 
-\nocomment{Support calculations are done at run time, as each production is fired. Could these decisions be done at compile time? Much of the decision is based on the structure of the production, which could be analyzed once as the production was loaded or chunked. However, it may be impossible to guarantee that a variable will be bound to a state id just by examining production syntax. Another issue is whether the state tested in condition 2 is the lowest state - this potentially could differ from instantiation to instantiation. For instance the operator*augmentation*application production above could match against multiple states in the state stack. 
-	
-	
+\nocomment{Support calculations are done at run time, as each production is fired. Could these decisions be done at compile time? Much of the decision is based on the structure of the production, which could be analyzed once as the production was loaded or chunked. However, it may be impossible to guarantee that a variable will be bound to a state id just by examining production syntax. Another issue is whether the state tested in condition 2 is the lowest state - this potentially could differ from instantiation to instantiation. For instance the operator*augmentation*application production above could match against multiple states in the state stack.
+
+
 	\subsection{Possible problems with implementation of modes 3 \& 4}
-	
+
 	\begin{enumerate}
 		\item Default mode is actually o-support mode 3. Do we not want 4 to be default?
 		\item There is still the bug Andy pointed out. In condition 1, the variable \soar{<s>} is \textit{supposed} to be bound to a state variable, but the code does not actually check for this.
 		\item There is one additional, strange difference between modes 3 \& 4. In condition 3, the \soar{id} of each RHS action is tested to see if it is the id of the operator. This id is represented either as a symbol or as a rete location. Mode 4 tests the id both as a symbol and as a rete location, while mode 3 does only the symbol test. The rete test should be added to mode 3.
 	\end{enumerate}
-	
-	
+
+
 	\subsection{O-support modes 1 \& 2}
-	
+
 	In o-support modes 1 \& 2, there are some of the same calculations as in 3 \& 4 when a production is matched (which occurs when a wme is added to the rete). In particular, if it is an operator proposal, it is set as IE\_PRODS. Otherwise, if it tests the current operator, it is set as PE\_PRODS, without testing for operator  elaborations. The match is placed on the appropriate dll, according to IE\_PRODS or PE\_PRODS.
-	
+
 	Later, when the production is instantiated and the new preferences are built, there are no support calculations for 3 \& 4. But 1 \& 2 have support calculations. I suppose that the purpose of the earlier support calculations is that it places the production on the proper list to be fired during apply or propose,that is, whether it is an IE\_PROD or a PE\_PROD.
-	
+
 	During this instantiation process, the function calculate\_support\_for\_instantiation\_preferences() is called to redo support IF the variable need\_to\_do\_support\_calculations is set to TRUE. This variable can be true only when-
-	
+
 	\begin{enumerate}
 		\item  called from chunk\_instantiation OR
 		\item  \#ifndef SOAR\_8\_ONLY
-		SOAR\_8\_ONLY is a compile option, which is not defined by default. I think that its purpose is that, when defined, there is no run-time option to switch out of Soar 8. This allows a significant portion of code to be left out. Check out function Soar\_Operand2. 
+		SOAR\_8\_ONLY is a compile option, which is not defined by default. I think that its purpose is that, when defined, there is no run-time option to switch out of Soar 8. This allows a significant portion of code to be left out. Check out function Soar\_Operand2.
 	\end{enumerate}
-	
-	
+
+
 	Mode 2 computes support in what is called 'Doug Pearson's way', which is described as-
-	
+
 	\begin{verbatim}
 	For a particular preference p=(id ^attr ...) on the RHS of an
 	instantiation [LHS,RHS]:
-	
-	RULE #1 (Context pref's): If id is the match state and attr="operator", 
+
+	RULE #1 (Context pref's): If id is the match state and attr="operator",
 	then p does NOT get o-support.  This rule overrides all other rules.
-	
+
 	RULE #2 (O-A support):  If LHS includes (match-state ^operator ...),
 	then p gets o-support.
-	
+
 	RULE #3 (O-M support):  If LHS includes (match-state ^operator ... +),
 	then p gets o-support.
-	
+
 	RULE #4 (O-C support): If RHS creates (match-state ^operator ... +/!),
 	and p is in TC(RHS-operators, RHS), then p gets o-support.
-	
-	Here "TC" means transitive closure; the starting points for the TC are 
-	all operators the RHS creates an acceptable/require preference for (i.e., 
-	if the RHS includes (match-state ^operator such-and-such +/!), then 
+
+	Here "TC" means transitive closure; the starting points for the TC are
+	all operators the RHS creates an acceptable/require preference for (i.e.,
+	if the RHS includes (match-state ^operator such-and-such +/!), then
 	"such-and-such" is one of the starting points for the TC).  The TC
 	is computed only through the preferences created by the RHS, not
 	through any other existing preferences or WMEs.
-	
+
 	If none of rules 1-4 apply, then p does NOT get o-support.
-	
-	Note that rules 1 through 3 can be handled in linear time (linear in 
-	the size of the LHS and RHS); rule 4 can be handled in time quadratic 
+
+	Note that rules 1 through 3 can be handled in linear time (linear in
+	the size of the LHS and RHS); rule 4 can be handled in time quadratic
 	in the size of the RHS (and typical behavior will probably be linear).
-	
-	
+
+
 	What is 'match state'? The match goal for the instantiation.
 	Match goal - (a match goal is associated with an instantiation).
 	Look through instantiated LHS conditions.
 	Find the lowest goal state matched to one of the condition's ids.
-	\end{verbatim}  
-	
+	\end{verbatim}
+
 	O-support mode 1 computes Doug's support and compares it to the poor cousin of mode 3 \& 4 support calculations, ie calculation without checking for operator elaboration. It prints any differences it finds.
-	
+
 }
 
 
 \nocomment{
-	
-	3. the RHS has no direct elaborations of the current operator, ie no actions of the form 
+
+	3. the RHS has no direct elaborations of the current operator, ie no actions of the form
 	(<o> ^augmentation value).
 	However, an indirect elaboration such as
 	(<o> ^name <d>)
 	-->
 	(<d> ^augmentation value)
 	will not prevent o-support.
-	
-	
+
+
 	In mode 3, an instantiation will generate o-supported preferences iff
 	1. the RHS has no operator proposals (nothing of the form (<s> ^operator <o> +))
-	2. the LHS has a condition that tests the current operator (something of the form 
+	2. the LHS has a condition that tests the current operator (something of the form
 	(<s> ^operator <o>))
-	3. 
-	
-	
+	3.
+
+
 	Operator proposal - a production whose RHS has action (<s> ^operator <o> +))
-	Operator test - 
+	Operator test -
 	LHS has condition of the form (<s> ^operator <o>)
 	Operator elaboration -
 	o_support_mode 3:
-	
+
 	o_support_mode 4:
-	
-	
-	o_support_mode 4: 
+
+
+	o_support_mode 4:
 	1. if an operator proposal - i-support
 	2. if not an operator test - i-support
 	3. if an operator test with no elaborations - o-support
 	4. if an operator test with some elaborations and some non-elaboration, non-function RHS action - i-support (warns)
 	5. if an operator test with only elaborations - i-support
-	
+
 	o_support_mode 3:
 	1. if an operator proposal - i-support
 	2. if not an operator test - i-support
 	3. if an operator test with no elaborations - o-support
 	4. if an operator test with some elaborations and some non-elaboration, non-function RHS action - o-support (warns)
 	5. if an operator test with only elaborations - i-support
-	
-	
+
+
 	o_support_mode 0:
 	1. if an operator proposal - i-support
 	2. if test operator - o-support
 	3. else - i-support
-	
+
 }
 
 % ----------------------------------------------------------------------------
@@ -1172,7 +1172,7 @@ In such cases, both receive i-support. Soar will print a warning on firing this 
 \index{impasse!resolution}
 \index{goal!termination}
 
-Problem solving in substates is an important part of what Soar \textit{does}, and an operator impasse does not necessarily indicate a problem in the Soar program.  They are a way to decompose a complex problem into smaller parts and they provide a context for a program to deliberate about which operator to select.  Operator impasses are necessary, for example, for Soar to do any learning about problem solving (as will be discussed in Chapter \ref{CHUNKING}). This section describes how impasses may be resolved during the execution of a Soar program, how they may be eliminated during execution without being resolved, and some tips on how to modify a Soar program to prevent a specific impasse from occurring in the first place.  
+Problem solving in substates is an important part of what Soar \textit{does}, and an operator impasse does not necessarily indicate a problem in the Soar program.  They are a way to decompose a complex problem into smaller parts and they provide a context for a program to deliberate about which operator to select.  Operator impasses are necessary, for example, for Soar to do any learning about problem solving (as will be discussed in Chapter \ref{CHUNKING}). This section describes how impasses may be resolved during the execution of a Soar program, how they may be eliminated during execution without being resolved, and some tips on how to modify a Soar program to prevent a specific impasse from occurring in the first place.
 
 \subsubsection*{Resolving Impasses}
 
@@ -1216,7 +1216,7 @@ An impasse is \textit{regenerated} when the problem solving in the subgoal becom
 
 The reason for regeneration is to guarantee that the working memory elements and preferences created in a substate are consistent with higher level states.  As stated above, inconsistency can arise when a higher level state changes either as a result of changes in what is sensed in the external environment, or from results produced in the subgoal.  The problem with inconsistency is that once inconsistency arises, the problem being solved in the subgoal may no longer be the problem that actually needs to be solved.  Luckily, not all changes to a superstate lead to inconsistency.
 
-\index{Goal Dependency Set} 
+\index{Goal Dependency Set}
 In order to detect inconsistencies, Soar maintains a \emph{Goal Dependency Set} (GDS) for every \\
 subgoal/substate. The dependency set consists of all working memory elements that were tested in the conditions of productions that created o-supported working memory elements that are directly or indirectly linked to the substate (in other words, any superstate knowledge  used to derive persistent substate knowledge). Whenever such an o-supported WME is created, Soar records which superstate WMEs were tested, directly or indirectly, to create it. Whenever any of the WMEs in the dependency set of a substate change, the substate is regenerated. (See Sections \ref{printing-the-goal-dependency-set} and \ref{trace-levels} for how to examine GDS information through the user-interface.)
 
@@ -1230,9 +1230,9 @@ Whenever a substate is removed, all working memory elements and preferences that
 \subsection{Soar's Cycle: With Substates}
 \label{ARCH-decision-substates}
 
-When there are multiple substates, Soar's cycle remains basically the same but has a few minor changes.  
+When there are multiple substates, Soar's cycle remains basically the same but has a few minor changes.
 
-%The first change is that during the decision procedure, Soar will detect impasses and create new substates. For example, following the proposal phase, the decision phase will detect if a decision cannot be made given the current preferences.  If an impasse arises, a new substate is created and added to working memory.  
+%The first change is that during the decision procedure, Soar will detect impasses and create new substates. For example, following the proposal phase, the decision phase will detect if a decision cannot be made given the current preferences.  If an impasse arises, a new substate is created and added to working memory.
 
 %The decision procedure will detect an operator no-change impasse as soon as an operator is selected and added to working memory by checking to see whether or not productions will create o-supported actions during the next application phase. If no o-supported actions will be created, the decision procedure will immediately create an operator no-change impasse, and then proceed to output, input, and so on.  In these cases, the operator no-change is made in the same decision as the operator selection.  There will be cases where the operator no-change happens on the following decisions, such as when there are o-supported productions that will fire, but do not lead to a change in the selected operator.
 
@@ -1240,13 +1240,13 @@ The main change when there are multiple substates is that at each phase of the d
 
 %-----------------------------------------------------
 \subsection{Removal of Substates: The Goal Dependency Set}
-\index{Goal Dependency Set} 
+\index{Goal Dependency Set}
 This subsection describes the Goal Dependency Set (GDS) with discussions on the motivation for the GDS and behavioral consequences of the GDS from a developer/modeler's point of view. It goes into greater detail than might be beneficial for someone becoming familiar with the general operation of Soar for the first time. Readers may skip this section and return later if desired.
 
 \subsubsection{Why the GDS was needed}
 
 As a symbol system, Soar attempts to approximate a true knowledge level but will necessarily always fall short\cite{Newell90:UTC}.  We can informally think of the way in which Soar falls short as its peculiar ``psychology.''  Those interested in using Soar to model human cognition would like Soar's psychology to approximate human psychology. Those using Soar to create agent systems would like to make Soar's processing approximate the knowledge level as closely as possible. Soar~7 had a number of symbol-level quirks that appeared inconsistent with human psychology and that made building large-scale, knowledge-based systems in Soar more difficult than necessary. Bob Wray's thesis\footnote{
-	Robert E. Wray. \textit{Ensuring Reasoning Consistency in Hierarchical Architectures}. PhD thesis, University of Michigan, 1998.} 
+	Robert E. Wray. \textit{Ensuring Reasoning Consistency in Hierarchical Architectures}. PhD thesis, University of Michigan, 1998.}
 addressed many of these symbol-level problems in Soar, among them logical inconsistency in symbol manipulations, non-contemporaneous constraints in chunks \cite{Wray96:Compilation}, race conditions in rule firings and in the decision process, and contention between original task knowledge and learned knowledge \cite{Wray01:Resolving}.
 
 The Goal Dependency Set implements a solution to logical inconsistencies between persistent (o-supported) WMEs in a substate and its ``context''. The context consists of all the WMEs in any superstates above the local goal/state.\footnote{
@@ -1255,7 +1255,7 @@ In Soar, any action (application) of an operator receives an o-support preferenc
 
 Persistent WMEs are pervasive in Soar, because operators are the main unit of problem solving. Persistence is necessary for taking any non-monotonic step in a problem space. However, persistent WMEs also are dependent on WMEs in the superstate context. The problem in Soar prior to GDS, especially when trying to create a large-scale system\cite{Jones99:Automated}, is that the knowledge developer must always think about which dependencies can be ``ignored'' and which may affect the persistent WME. For example, imagine an exploration robot that makes a persistent decision to travel to some distant destination based, in part, on its power reserves.  Now suppose that the agent notices that its power reserves have failed.  If this change is not communicated to the state where the travel decision was made, the agent will continue to act as if its full power reserves were still available.
 
-Of course, for this specific example, the knowledge designer can encode some knowledge to react to this inconsistency. The fundamental problem is that the knowledge designer has to consider \emph{all} possible interactions between all o-supported WMEs and all contexts. Soar systems often use the architecture's impasse mechanism to realize a form of decomposition. These potential interactions mean that the knowledge developer cannot focus on individual problem spaces in isolation when creating knowledge, which makes knowledge development more difficult. Further, in all but the simplest systems, the knowledge designer will miss some potential interactions. The result is that agents were unnecessarily brittle, failing in difficult-to-understand, difficult-to-duplicate ways.  
+Of course, for this specific example, the knowledge designer can encode some knowledge to react to this inconsistency. The fundamental problem is that the knowledge designer has to consider \emph{all} possible interactions between all o-supported WMEs and all contexts. Soar systems often use the architecture's impasse mechanism to realize a form of decomposition. These potential interactions mean that the knowledge developer cannot focus on individual problem spaces in isolation when creating knowledge, which makes knowledge development more difficult. Further, in all but the simplest systems, the knowledge designer will miss some potential interactions. The result is that agents were unnecessarily brittle, failing in difficult-to-understand, difficult-to-duplicate ways.
 
 The GDS also solves the the problem of non-contemporaneous constraints in chunks. A non-contemporaneous constraint refers to two or more conditions that never co-occur simultaneously. An example might be a driving robot that learned a rule that attempted to match ``red light'' and ``green light'' simultaneously. Obviously, for functioning traffic lights, this rule would never fire. By ensuring that local persistent elements are always consistent with the higher-level context, non-contemporaneous constraints in chunks are \emph{guaranteed} not to happen.
 
@@ -1296,11 +1296,11 @@ Three types of features can be tested in the creation of an o-supported feature.
 
 \vspace{-10pt}
 \begin{enumerate}
-	\item \textbf{Elements in the superstate:} 
+	\item \textbf{Elements in the superstate:}
 		WMEs in the superstate are added directly to the goal's dependency set. In Figure~\ref{'gds'}, the persistent subgoal item {\bf 3} is dependent upon {\bf A} and {\bf D}. These superstate WMEs are added to the subgoal's dependency set when {\bf 3} is added to working memory at time $t_1$. It does not matter that {\bf A} is i-supported and {\bf D} o-supported.
-	\item \textbf{Local i-supported features:} 
+	\item \textbf{Local i-supported features:}
 		Local i-supported features are not added to the goal dependency set.  Instead, the superstate WMEs that led to the creation of the i-supported feature are determined and added to the GDS. In the example, when {\bf 4} is created, {\bf A}, {\bf B} and {\bf C} must be added to the dependency set because they are the superstate features that led to {\bf 1}, which in turn led to {\bf 2} and finally {\bf 4}. However, because item {\bf A} was previously added to the dependency set at $t_1$, it is unnecessary to add it again.
-	\item \textbf{Local o-supported features:} 
+	\item \textbf{Local o-supported features:}
 		The dependencies of a local o-supported feature have already been added to the state's GDS. Thus, tests of local o-supported WMEs do not require additions to the dependency set. In Figure~\ref{'gds'}, the creation of element {\bf 5} does not change the dependency set because it is dependent only upon persistent items {\bf 3} and {\bf 4}, whose features had been previously added to the GDS.
 \end{enumerate}
 
@@ -1311,7 +1311,7 @@ At any time after $t_1$, either the {\bf D} to {\bf D'} or {\bf A} to {\bf A'} t
 The GDS places some design time constraints on operator implementation. These constraints are:
 
 \vspace{-10pt}
-\begin{itemize} 
+\begin{itemize}
 	\item Operator actions that are used to remember a previous state/situation should be asserted in the top state.
 	\vspace{-8pt}
 	\item All operator elaborations should be i-supported.
@@ -1319,26 +1319,26 @@ The GDS places some design time constraints on operator implementation. These co
 	\item Any operator with local actions should be designed to be re-entrant.
 \end{itemize}
 
-%Soar says any operator effect is o-supported, regardless of whether that assertion is entailed by the current situation, or whether it reflects an assumption about it. The GDS adds additional (needed) constraint.  
+%Soar says any operator effect is o-supported, regardless of whether that assertion is entailed by the current situation, or whether it reflects an assumption about it. The GDS adds additional (needed) constraint.
 Because any dependencies for o-supported subgoal WMEs will be added to the GDS, the developer must decide if an o-supported element should be represented in a substate or the top state.
-This decision is straightforward if the functional role of the persistent element is considered. Four important capabilities that require persistence are: 
+This decision is straightforward if the functional role of the persistent element is considered. Four important capabilities that require persistence are:
 
 \vspace{-8pt}
 \begin{enumerate}
-	\item \textbf{Reasoning hypothetically:} 
+	\item \textbf{Reasoning hypothetically:}
 		Some structures may need to	reflect hypothetical states. These are ``assumptions'' because a hypothetical inference cannot always be grounded in the current context. In problem solvers with truth maintenance, only assumptions are persistent.
 	\vspace{-8pt}
-	\item \textbf{Reasoning non-monotonically:} 
-		Sometimes the result of an inference changes one of the structures on which the inference is dependent. As an example, consider the task of counting. Each newly counted item replaces the old value of the count. 
+	\item \textbf{Reasoning non-monotonically:}
+		Sometimes the result of an inference changes one of the structures on which the inference is dependent. As an example, consider the task of counting. Each newly counted item replaces the old value of the count.
 	\vspace{-8pt}
-	\item \textbf{Remembering:} 
+	\item \textbf{Remembering:}
 		Agents oftentimes need to remember an external situation or stimulus, even when that perception is no longer available.
 	\vspace{-8pt}
-	\item \textbf{Avoiding Expensive Computations:} 
+	\item \textbf{Avoiding Expensive Computations:}
 		In some situations, an agent may have the information needed to derive some belief in a new world state but the expense of performing the necessary computation makes this derivation undesirable. For example, in dynamic, complex domains, determining when to make an expensive calculation is often formulated as an explicit agent task\cite{Jones99:Automated}.
 \end{enumerate}
 
-When remembering or avoiding an expensive computation, the agent/designer is making a commitment to retain something even though it might not be supported in the current context. These WMEs should be asserted in the top state. For many Soar systems, especially those focused on execution in a dynamic environment, most o-supported elements will need to be stored on the top state. 
+When remembering or avoiding an expensive computation, the agent/designer is making a commitment to retain something even though it might not be supported in the current context. These WMEs should be asserted in the top state. For many Soar systems, especially those focused on execution in a dynamic environment, most o-supported elements will need to be stored on the top state.
 
 For any kind of local, non-monotonic reasoning about the context (counting, projection planning), features should be stored locally. When a dependent context change occurs, the GDS interrupts the processing by removing the state. While this may seem like a severe over-reaction, formal and empirical analysis have suggested that this solution is less computationally expensive than attempting to identify the specific dependent assumption \cite{Wray03:Ensuring}.
 

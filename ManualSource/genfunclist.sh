@@ -35,9 +35,9 @@ do
 		}
 		BEGIN {cmd="'$cmd'"}
 		/^\\index/ {
-			insummary=1; next 
+			insummary=1; next
 		}
-		/^\\subsubsection/ { 
+		/^\\subsubsection/ {
 			if (cmd != "file-system")
 				printf("\\soar{%s} & %s & \\pageref{%s} \\\\\n", cmd, get_summary(cmd), cmd)
 			exit

@@ -16,13 +16,13 @@
 %       watch for ``overfull'' messages, which mean that your lines are too
 %       long. ``underfull'' can often be ignored.
 % 3b. run makeindex
-% 3c. edit manual.ind for special characters, such as & 
+% 3c. edit manual.ind for special characters, such as &
 %	I think the best approach here is probably to put \verb+ + around the
 %	special chars.
 %	Note that if we put the '\verb+ +' in the index command, the chars
 %       might be indexed under \verb...which would maybe be okay, now that I
 %       think about it. (should still be alphabetically at the front of the
-%       manual.) 
+%       manual.)
 % 3d. run latex yet again
 % 4. run dvips and use ghostview to have a peek.
 % 5. fix errors.
@@ -32,7 +32,7 @@
 % 6. pay particular attention to the toc (table of contents) and the function
 % 	summary and index.
 %    * the appendices often get screwed up, requiring a hand-edit of the toc
-%       file 
+%       file
 %    * the commands in the toc look better if you remove the args to
 %       user-interface commands (again, by hand)
 %    * if any of the commands in the user-interface has changed, chances are
@@ -90,10 +90,10 @@
 %    \comment environment to be the same as the \nocomment environment below,
 %    rather than searching through all files
 %  * to print only some of the chapters, use the \includeonly command; see
-%    below 
+%    below
 %  * for final version of manual, have to edit the TOC by hand:
 %    1. word ``APPENDIX'' appears the line *after* the listing of the first
-%       appendix 
+%       appendix
 %    2. looks a heck of a lot better if we remove the command arguments from
 %       the TOC listing for chapter 6. (This can be done in emacs with a
 %       replace-rexexp.) (Replace-regexp ``.\texttt.{.*}}'' with ``}'')
@@ -132,10 +132,10 @@
 %---------------------------------------------------------------------------
 % setup the environment
 %---------------------------------------------------------------------------
-\setlength{\topmargin}{-0.5in}		
+\setlength{\topmargin}{-0.5in}
 %\setlength{\oddsidemargin}{.5in}	% for binding, odd and even have
 %\setlength{\evensidemargin}{0in}	% different margins
-%\setlength{\textwidth}{6in}             % Gives 1 in. side margins; 1.5in on inside edge 
+%\setlength{\textwidth}{6in}             % Gives 1 in. side margins; 1.5in on inside edge
 \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 \setlength{\textwidth}{6.5in}
@@ -179,7 +179,7 @@
 %---------------------------------------------------------------------------
 % specify an alternate directory for the ps figures
 %---------------------------------------------------------------------------
-%\psfigsearchpath{Figures}   
+%\psfigsearchpath{Figures}
 \graphicspath{{Figures/}}   % at Bowdoin
 
 %---------------------------------------------------------------------------
@@ -195,7 +195,7 @@
 % to add functions to .glo file:
 \newcommand{\funsum}[2]{\glossary{#1 & #2 & \textit{#1}}}
 
-% to change spacing 
+% to change spacing
 \newcommand{\dou}{\renewcommand{\baselinestretch}{1.6}\small\normalsize}
 \newcommand{\singl}{\renewcommand{\baselinestretch}{1.0}\small\normalsize}
 \newcommand{\halfs}{\renewcommand{\baselinestretch}{0.5}\small\normalsize}
@@ -266,7 +266,7 @@
 \newcommand{\carat}{\^{}}  %{\ensuremath{^\wedge}}  %This is how to get a carat symbol
 					   %  (^) in the text
 \newcommand{\tild}{\ensuremath{\sim}}      %This is how to get a tilde (~) in
-					   %  the text 
+					   %  the text
 \newcommand{\cmark}{\ensuremath{\surd}}    %This is how to get a checkmark
 
 
@@ -393,7 +393,7 @@
 	Mazin Assanie, Nate Derbinsky and Joseph Xu  \\
     \vspace{20pt}
 \end{large}
-    
+
 	\vspace{20pt}
 \begin{large}
          Additional contributions by: \\
@@ -443,7 +443,7 @@ and Ocean Surveillance Center, RDT\&E division.
 	\item change format for user-interface syntax -- use italics to
 		specify args that are variable.
 	\item have to regenerate a lot of the examples for the user-interface
-		chapter. 
+		chapter.
 	\item the commands in the user-interface chapter may or may not
 		correspond to the final release
 	\item appendices are still on the sketchy side... getting better \\
@@ -453,7 +453,7 @@ and Ocean Surveillance Center, RDT\&E division.
 		section headings. (and i-support vs. I-support.) Looking over
 		TOC and List of Figures would be a good idea.
 	\item impasses are resolved; preferences are evaluated -- check for
-		consistency 
+		consistency
 	\item watch the difference between productions/operators making
 		changes to the state and suggesting changes
 	\item it would be nice to add a brief troubleshooting guide \\
@@ -488,7 +488,7 @@ and Ocean Surveillance Center, RDT\&E division.
 		have been used for different things: \begin{enumerate}
 		\item create THE version of the blocks-world to be used with
 			this manual (or possibly two versions, one with
-			subgoaling?) 
+			subgoaling?)
 		\item redo figures
 		\item include as an appendix
 		\item add to distribution
@@ -528,9 +528,9 @@ and Ocean Surveillance Center, RDT\&E division.
 	elaboration, but productions aren't those four types because
 	productions can create multiple preferences that fulfill different
 	roles.
-	
+
 	\end{enumerate}
-	}	 
+	}
 	}
         }
 \normalsize
@@ -605,7 +605,7 @@ and Ocean Surveillance Center, RDT\&E division.
 % References
 % ----------------------------------------------------------------------------
 %\addcontentsline{toc}{chapter}{Bibliography}
-%\bibliography{soarmanual} 
+%\bibliography{soarmanual}
 
 %---------------------------------------------------------------------------
 %\vspace{\fill}
@@ -631,7 +631,7 @@ and Ocean Surveillance Center, RDT\&E division.
 %   In case it isn't obvious, generating the index is one of the last things
 %     to do.
 % ----------------------------------------------------------------------------
-\cleardoublepage % had to add these things to get the clickable link in the pdf to 
+\cleardoublepage % had to add these things to get the clickable link in the pdf to
 \phantomsection  % link to the right page
 \addcontentsline{toc}{chapter}{Index}
 \small

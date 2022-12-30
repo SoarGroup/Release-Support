@@ -29,9 +29,9 @@ manual.ind : $(SRC)
 
 funclist.tex : wikicmd/tex
 	sh genfunclist.sh
-	
+
 clean :
 	rm -f manual.lof manual.log manual.toc manual.out manual.pdf manual.ind manual.ilg manual.glo manual.idx *.aux
 	rm -f funclist.tex
 	rm -rf wikicmd/wiki wikicmd/tex
-	
+

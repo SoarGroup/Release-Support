@@ -57,7 +57,7 @@
  \@ifnextchar [{\@tempswatrue\@citex}{\@tempswafalse\@citex[]}}
 
 % don't box citations, separate with ; and a space
-% also, make the penalty between citations a parameter, 
+% also, make the penalty between citations a parameter,
 % it may be a good place to break
 \def\@citex[#1]#2{%
   \def\@lastauthor{}\def\@citea{}%
@@ -80,7 +80,7 @@
 %\def\@biblabel#1{\def\citeauthoryear##1##2{##1, ##2}(#1)\hfill}
 
 %%%% no key in the reference list
-%\def\@lbibitem[#1]#2{\item\if@filesw 
+%\def\@lbibitem[#1]#2{\item\if@filesw
 %      { \def\protect##1{\string ##1\space}\immediate
 %        \write\@auxout{\string\bibcite{#2}{#1}}}\fi\ignorespaces}
 %\def\thebibliography#1{\section*{References\@mkboth

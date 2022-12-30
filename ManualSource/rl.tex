@@ -118,7 +118,7 @@ As an example, consider the following state:
     (R2 ^value 1.0)
   (R1 ^reward R3)
     (R3 ^value -0.2)
-\end{verbatim}  
+\end{verbatim}
 
 In this state, there are two reward signals with values 1.0 and -0.2.
 They will be summed together for a total reward of 0.8 and this will be the value given to the RL update algorithm.
@@ -158,10 +158,10 @@ For example:
     (R3 ^value -0.2)
     (R3 ^source intrinsic)
     (R3 ^duration 5)
-\end{verbatim}  
+\end{verbatim}
 
 The \verb=(R2 ^source environment)=, \verb=(R3 ^source intrinsic)=, and \verb=(R3 ^duration 5)= \\
-WMEs are arbitrary and ignored by RL, but were added by the agent to keep 
+WMEs are arbitrary and ignored by RL, but were added by the agent to keep
 track of where the rewards came from and for how long.
 
 Note that the \soar{reward-link} is not part of the \soar{io} structure and is not modified directly by the environment.
@@ -181,7 +181,7 @@ The update can be on-policy (Sarsa) or off-policy (Q-Learning), as controlled by
 Let $\delta_t$ be the amount of change for the Q-value of an RL operator in a single update.
 For Sarsa, we have
 $$ \delta_t = \alpha \left[ r_{t+1} + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t) \right] $$
-where 
+where
 \begin{itemize}
 	\item $Q(s_t, a_t)$ is the Q-value of the state and chosen operator in decision cycle $t$.
 	\item $Q(s_{t+1}, a_{t+1})$ is the Q-value of the state and chosen RL operator in the next decision cycle.
@@ -206,9 +206,9 @@ An example walkthrough of a Sarsa update with $\alpha = 0.3$ and $\gamma = 0.9$ 
 \begin{verbatim}
    rl-1: (S1 ^operator O1 = 2.3)
    rl-2: (S1 ^operator O1 =  -1)
-\end{verbatim}  
+\end{verbatim}
 	The Q-value for \textbf{O1} is $Q(s_t, \textbf{O1}) = 2.3 - 1 = 1.3$.
-	 
+
 \item \textbf{O1} is selected and executed, so $Q(s_t, a_t) = Q(s_t, \textbf{O1}) = 1.3$.
 
 \item In decision cycle $t+1$, a total reward of 1.0 is collected on the \soar{reward-link}, an operator \textbf{O2} is proposed, and another RL rule \soarb{rl-3} creates the following numeric-indifferent preference for it:
@@ -218,7 +218,7 @@ An example walkthrough of a Sarsa update with $\alpha = 0.3$ and $\gamma = 0.9$ 
 	So $Q(s_{t+1}, \textbf{O2}) = 0.5$.
 
 \item \textbf{O2} is selected, so $Q(s_{t+1}, a_{t+1}) = Q(s_{t+1}, \textbf{O2}) = 0.5$
-	Therefore, 
+	Therefore,
 	$$\delta_t = \alpha \left[r_{t+1} + \gamma Q(s_{t+1}, a_{t+1}) - Q(s_t, a_t) \right] = 0.3 \times [ 1.0 + 0.9 \times 0.5 - 1.3 ] = 0.045$$
 	Since \soarb{rl-1} and \soarb{rl-2} both contributed to the Q-value of \textbf{O1}, $\delta_t$ is evenly divided amongst them, resulting in updated values of
 \begin{verbatim}
@@ -297,7 +297,7 @@ Thus the update would be
 $$\delta_1 = \alpha \left[ r_2 + r_3 + r_4 + \gamma Q(s_5, \textbf{O5}) - Q(s_1, \textbf{O1}) \right]$$
 
 For impasses other than operator no-change, RL acts as if the impasse hadn't occurred.
-If \textbf{O1} is the last RL operator selected before the impasse, $r_2$ the reward received in the decision cycle immediately following, and \textbf{O}$_\textbf{n}$, the first operator selected after the impasse, then \textbf{O1} is updated with 
+If \textbf{O1} is the last RL operator selected before the impasse, $r_2$ the reward received in the decision cycle immediately following, and \textbf{O}$_\textbf{n}$, the first operator selected after the impasse, then \textbf{O1} is updated with
 $$\delta_1 = \alpha \left[ r_2 + \gamma Q(s_n, \textbf{O}_\textbf{n}) - Q(s_1, \textbf{O1}) \right]$$
 
 If an RL operator is selected in a substate immediately prior to the state's retraction, the RL rules will be updated based only on the reward signals present and not on the Q-values of future operators.
@@ -324,12 +324,12 @@ Soar's automatic subgoaling and RL mechanisms can be combined to naturally imple
 \index{rl (command)!eligibility-trace-decay-rate}
 \index{rl (command)!eligibility-trace-tolerance}
 
-The RL mechanism supports eligibility traces, which can improve the speed of learning by 
+The RL mechanism supports eligibility traces, which can improve the speed of learning by
 updating RL rules across multiple sequential steps. \\
 The \soarb{eligibility-trace-decay-rate} and \soarb{eligibility-trace-tolerance} parameters control this mechanism.
 By setting \soar{eligibility-trace-decay-rate} to \soar{0} (default), eligibility traces are in effect disabled.
 When eligibility traces are enabled, the particular algorithm used is dependent upon the learning policy.
-For Sarsa, the eligibility trace implementation is \emph{Sarsa($\lambda$)}. 
+For Sarsa, the eligibility trace implementation is \emph{Sarsa($\lambda$)}.
 For Q-Learning, the eligibility trace implementation is \emph{Watkin's Q($\lambda$)}.
 
 \subsubsection{Exploration}
@@ -362,7 +362,7 @@ The \soar{gp} command can be used to generate productions based on simple patter
 This is useful if the states and operators of the environment can be distinguished by a fixed number of dimensions with finite domains.
 An example is a grid world where the states are described by integer row/column coordinates, and the available operators are to move north, south, east, or west.
 In this case, a single \soar{gp} command will generate all necessary RL rules:
-	
+
 \begin{verbatim}
 gp {gen*rl*rules
    (state <s> ^name gridworld
@@ -375,7 +375,7 @@ gp {gen*rl*rules
    (<s> ^operator <o> = 0.0)
 }
 \end{verbatim}
-	
+
 For more information see the documentation for this command on page \pageref{gp}.
 
 \subsection{Rule Templates}
