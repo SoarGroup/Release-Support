@@ -1,35 +1,49 @@
-=========================================== 
-Soar 9.6.1 Release Notes,  2017
+===========================================
+Soar 9.6.1 Release Notes,  2022
 ===========================================
 
-This release of Soar includes...  
-
-It also includes many important bug fixes and code improvements.
+This release of Soar includes new RHS functions and improved compatibility with
+JSoar code, as well as many important bug fixes and code improvements.
 
 =================
 New Features
 =================
 () New (tcl) RHS function
-    When Tcl mode is enabled, rules may call the (tcl) RHS function, which 
-    evaluates a string in tcl and returns a string. The return can be cast to a 
+    When Tcl mode is enabled, rules may call the (tcl) RHS function, which
+    evaluates a string in tcl and returns a string. The return can be cast to a
     number with other existing RHS functions if desired.
-    
+
 () Ported the (from-st-xml) RHS function from jsoar
     The (from-st-xml) RHS function takes an XML string and returns an equivalent
     WME structure, which is placed in working memory wherever the calling rule
     dictates. This is unlikely to work properly in substates, and possibly
     substate code that tests a top-state structure created this way. Use with
     caution.
-    
+
+() New (string) RHS function returns a string representation of any input symbol.
+    Float symbols are printed with full precision to avoid data loss.
+
+() New set math RHS functions: set-{count,sum,multiply,min,max,range,mean,stdev,mac}.
+    These operate on multi-valued attributes instead of argument lists. See the new
+	manual sections for details.
+
+() When the parser encounters an RHS function that isn't one of the built-ins
+    (e.g. (float), (sum), etc.), it is automatically converted into an (exec) call,
+    which looks SML-registered RHS functions at run-time. This results in a warning
+    when the production is parsed: "adding exec to RHS function: ", and if the RHS
+    function is still not registered at run-time and the production fires, an error
+    will occur. This was done for compatibility with code written for jsoar, which
+    doesn't have (exec) at all.
+
 =================
 Other Changes
 =================
-      
+
 () Bug fixes
-    - Added work-around for TCL backwards-compatibility issue.  When Tcl mode was 
-      enabled in Soar 9.6.0, Soar would not perform alias replacement in sourced 
+    - Added work-around for TCL backwards-compatibility issue.  When Tcl mode was
+      enabled in Soar 9.6.0, Soar would not perform alias replacement in sourced
       files.  As a result, Soar was not performing the backwards compatibility
-      replacements and would return an error if the the sourced files contained 
+      replacements and would return an error if the the sourced files contained
       any commands that no longer existed in 9.6.0.
     - Fixed a shutdown bug when Tcl mode was enabled.
     - Fixed bug that could occur when retrieving long-term semantic memories
@@ -37,7 +51,12 @@ Other Changes
       memory may not have been returned.  (Cases < 100, should have been fine.
       Some special purpose code kicks in when there are that many augmentations
       to a single LTI.)
-          
+	- Fixed dozens of incorrect print formatting issues which lead to uninitialized
+	  memory accesses
+	- Fixed debugger phase diagram not updating when the user set the stop phase
+	- Fixed precision loss when serializing and deserializing float values via
+	  "save percepts" and "load percepts"
+
 () The (timestamp) RHS function now includes milliseconds
 
 () Unrecognized RHS functions are automatically converted to (exec) calls
@@ -47,7 +66,7 @@ Other Changes
     runtime, as has always been the case for (exec). As a side effect, it is no
     longer necessary to explicitly call (exec), which makes it easier to port
     agents from jsoar, where calling (exec) has never been required.
-    
+
 () Changed the signature of user-defined RHS functions
     User-defined functions registered through SML previously returned a
     std::string. This was the only place in the entire SML interface that did
@@ -57,20 +76,42 @@ Other Changes
     a char* buffer and an int* size. A RHS function implementation should check
     if the buffer specified is too small. If it is, it should return (via the
     size input pointer) what size the buffer needs to be, and null for the
-    actual return, and then SML will call it again with the correct size (i.e., 
+    actual return, and then SML will call it again with the correct size (i.e.,
     the user doesn't have to worry about triggering a second call). For the
     internally registered callbacks in SML (e.g., the language-specific ones for
-    SWIG), the result is cached from the first call, so the second time it just 
-    returns the result in the buffer (this is to avoid issues with possible side 
+    SWIG), the result is cached from the first call, so the second time it just
+    returns the result in the buffer (this is to avoid issues with possible side
     effects, where you wouldn’t want the code to actually be run a second time).
     For user-defined RHS functions in C++, the user may have to do this caching
-    themselves if they are concerned about side effects or the performance hit 
-    from multiple calls. However, we expect most users won't have to worry about 
+    themselves if they are concerned about side effects or the performance hit
+    from multiple calls. However, we expect most users won't have to worry about
     this.
 
 () Low-level architectural changes, code clean-up and refactoring
 
-    
+() The "collapse" button in the debugger will now collapse existing traces instead
+    of only collapsing traces output later.
+
+() The "proposal" and "decision" phases were renamed to "propose" and "decide" in
+    all code occurrences and commands. For example, "soar stop-phase proposal" is
+    now "soar stop-phase propose".
+
+() "--template" and "--default" have been changed to "--templates" and "--defaults"
+    in all commands (previously a mix of these were used). The singular forms are
+    still supported, as well.
+
+() Soar on macOS now comes with a script called "macOS_setup.command". When users
+    run this, macOS's gatekeeper no longer quarantines the Soar binaries, making it
+    possible to run them without security warnings and red tape.
+
+() The build has been extensively updated and automated in CI via GitHub actions.
+   * Binaries are built automatically for Windows, Linux, and macOS.
+   * 32-bit platforms are no longer supported.
+   * Python 3.10 is used, and SCons has been updated to 4.4.0
+   * C# bindings are now built for all platforms
+   * ActiveTcl is no longer installable in an automated way, so we build our Tcl
+    targets using either the system Tcl or a fresh copy built from source.
+
 ===================
 General Information
 ===================
@@ -85,7 +126,7 @@ applications that serve as examples of how to interface Soar to an
 external environment.  There is support for integrating Soar with C++,
 Java, Tcl and Python applications.  Many tools that aid in development
 of Soar programs are also available.  The download section of the web site
-allows you to browse and download all of the different distributions, 
+allows you to browse and download all of the different distributions,
 tools and agents.
 
 [Help and Contact information]
@@ -98,14 +139,14 @@ To contact the Soar group, you may join and post to one of our mailing
 lists:
 
 For general Soar-related announcements:
-        
+
         soar-group@lists.sourceforge.net
 
 For help:
-         
+
         soar-help@lists.sourceforge.net
 
-Also, please do not hesitate to file bugs or feature requests on our issue 
+Also, please do not hesitate to file bugs or feature requests on our issue
 tracker at github:
 
      https://github.com/SoarGroup/Soar/issues
