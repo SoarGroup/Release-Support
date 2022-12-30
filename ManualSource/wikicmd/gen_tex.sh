@@ -1,13 +1,6 @@
 #!/bin/bash
-PYTHON=python
 
 echo "Generating Soar CLI latex files. (../cli_help.cpp)"
-
-if ! $PYTHON -V 2>&1 | awk '{split($2, v, "."); if (v[1] != 2 || v[2] < 4) exit 1}'
-then
-	echo "moin2latex.py needs 2.4 <= Python version < 3.0"
-	exit 1
-fi
 
 rm -rf tex
 mkdir tex
@@ -24,8 +17,8 @@ for file in Soar.wiki/ManualsAndFAQs/CLI/cmd_*.md; do
 	stripped=${stripped#cmd_}
 	stripped=${stripped//_/-}
 
-	pandoc $file -f markdown_github -t latex -o tex/$stripped.tex
-    python soarman_format.py tex/$stripped.tex
+	pandoc $file -f gfm -t latex -o tex/$stripped.tex
+    python3 soarman_format.py tex/$stripped.tex
 	sed -i 's/\[c\]{@{}llll@{}}/{@{\\extracolsep{\\fill}}llll@{}}/g' tex/$stripped.tex
 	sed -i 's/\[c\]{@{}lll@{}}/{@{\\extracolsep{\\fill}}lll@{}}/g' tex/$stripped.tex
 	sed -i 's/\[c\]{@{}ll@{}}/{@{\\extracolsep{\\fill}}ll@{}}/g' tex/$stripped.tex

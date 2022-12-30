@@ -8,13 +8,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      # TODO: install on other platforms, too
-      - name: Setup LaTeX
-        run: sudo apt-get update && sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+
+      - name: install system dependencies
+        run: sudo apt-get update && sudo apt-get install pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
 
       - name: build
         working-directory: ManualSource
-        run: make all
+        run: make pull
 
       - name: upload artifacts
         uses: actions/upload-artifact@v3
