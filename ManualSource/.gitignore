@@ -2,3 +2,13 @@
 wikicmd/Soar.wiki/
 wikicmd/tex/
 funclist.tex
+
+# LaTeX
+*.log
+*.aux
+*.toc
+*.out
+*.pdf
+*.lof
+*.glo
+*.idx
