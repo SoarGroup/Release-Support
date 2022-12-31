@@ -1,7 +1,7 @@
 ===========================
 Soar Shuffler Documentation
 ===========================
-This python script creates zip files of the all the downloads that we post to the Soar web site.  It reads in a data file (Soar_Projects_Filelist.py) that contains a declarative representation of how the script should put together the zip file.  
+This python script creates zip files of the all the downloads that we post to the Soar web site.  It reads in a data file (Soar_Projects_Filelist.txt) that contains a declarative representation of how the script should put together the zip file.
 
 It can do a variety of different things based on the contents of that data file:
   - Create a zip
@@ -26,7 +26,7 @@ Output_Dir = "C:\\Soar\\output\\"
 
 The Output_Dir is where the script will place all the final files (usually zip files).  The Repository_Dir is where it pulls all the files from and should be an svn checkout of trunk.
 
-In addition to those two hard-coded paths, the project descriptions data file specifies exactly where it expects to find files.  Furthermore, the way that the script automates building multi-platform zips (five zips based on a single project description, not a single zip for multiple platforms) places a few other constraints.  
+In addition to those two hard-coded paths, the project descriptions data file specifies exactly where it expects to find files.  Furthermore, the way that the script automates building multi-platform zips (five zips based on a single project description, not a single zip for multiple platforms) places a few other constraints.
 
 Here is a summary of the directory structure you need to get the script to work with the included project description file:
 
@@ -38,10 +38,10 @@ Here is a summary of the directory structure you need to get the script to work 
     |   +---linux32
     |   |   +---out (out directory produced by building SoarSuite on 32-bit Linux)
     |   |   \---soar_robot_server (release directory produced by building RoomsWorld on 32-bit Linux)
-    |   +---linux64
+    |   +---linux_x86-64
     |   |   +---out (out directory produced by building SoarSuite on 64-bit Linux)
     |   |   \---soar_robot_server (release directory produced by building RoomsWorld on 64-bit Linux)
-    |   +---mac64
+    |   +---mac_x86-64
     |   |   +---out (out directory produced by building SoarSuite on OSX)
     |   |   \---soar_robot_server (release directory produced by building RoomsWorld on OSX)
     |   +---Soar2D (contains Eaters_TankSoar.jar)
@@ -49,7 +49,7 @@ Here is a summary of the directory structure you need to get the script to work 
     |   +---windows32
     |   |   +---out (out directory produced by building SoarSuite on 32-bit Windows)
     |   |   \---soar_robot_server (release directory produced by building RoomsWorld on 32-bit Windows)
-    |   \---windows64
+    |   \---win_x86-64
     |       +---out (out directory produced by building SoarSuite on 64-bit Windows)
     |       \---soar_robot_server (release directory produced by building RoomsWorld on 64-bit Windows)
     +---Deprecated
@@ -68,12 +68,12 @@ Here is a summary of the directory structure you need to get the script to work 
 ===================
 Data File Structure
 ===================
-This file specifies how projects are zipped up and files are moved around.  Currently, a single data file contains descriptions of every project.  This data file is called "Soar_Projects_Filelist.py" and should be in the same directory as "soar_shuffler.py".
+This file specifies how projects are zipped up and files are moved around.  Currently, a single data file contains descriptions of every project.  This data file is called "Soar_Projects_Filelist.txt" and should be in the same directory as "soar_shuffler.py".
 
 - The first line of each project contains only the project name and delimits one project from another.  Any line that does NOT contain an equal sign "=" is considered a new project name.
 - Other lines can either specify a parameter describing that project or how to move or organize files within the project
   - Parameters:  There are two parameters you can set for a project:  type and out
-      - Type 
+      - Type
           - 'zip': zip up the files described in the project
           - 'copy' : copy files from one directory to another as descirbed in the project
           - 'multiplatform-zip': zip up the files described in the project but copy different version of platform-specific items like libraries and launch scripts.  Project descriptions of this type contain variables telling it which files need special version and where it can find them.
@@ -91,7 +91,7 @@ This file specifies how projects are zipped up and files are moved around.  Curr
           - Spaces are fine in file names.
       - Multi-platform zips can also contain variables in the file organization descriptors to tell it how to specialize a release for a particular platform.  There are four different variables you can use:
           - RELEASE_DIR:  will instantiate as "win" for windows, "linux" for linux, and "osx" for mac.  This allows the utility to pull from different folders that are platform-specific but not 32 or 64 bit specific, for example launch scripts or build instructions.
-          - COMPILE_DIR: will instantiate as "windows64", "windows32", "linux64", "linux32", "mac64" depending on the platform.  This allows the utility to pull files from different folders that are specific to a particular architecture, most notably the compiled Soar binaries.
+          - COMPILE_DIR: will instantiate as "win_x86-64", "linux_x86-64", "mac_x86-64" depending on the platform.  This allows the utility to pull files from different folders that are specific to a particular architecture, most notably the compiled Soar binaries.
           - LAUNCH_EXTENSION: will instantiate as .bat, .sh or .command files inside a zip based on the platform in question.  This allows the utility to name the launch scripts appropriately.
               - Note: The script will automatically give those files executable privileges within the zip, which can be a bit tricky since how that works is different on each platform.
           - DLL_EXTENSION: Will instantiate as .dll, .so or .dylib based on the platform in question.

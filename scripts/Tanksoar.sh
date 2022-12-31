@@ -9,32 +9,48 @@ unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
   if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
     echo 'First time initialization of Soar for Linux...'
-    mv $SOAR_HOME/linux64/swt.jar $SOAR_HOME/java/
-    mv $SOAR_HOME/linux64/* $SOAR_HOME/
-    rm -rf $SOAR_HOME/mac64
-    rm -rf $SOAR_HOME/windows64
-    rm -rf $SOAR_HOME/linux64
+    mv $SOAR_HOME/linux_x86-64/swt.jar $SOAR_HOME/java/
+    mv $SOAR_HOME/linux_x86-64/* $SOAR_HOME/
+    rm -rf $SOAR_HOME/mac_x86-64
+    rm -rf $SOAR_HOME/mac_ARM64
+    rm -rf $SOAR_HOME/win_x86-64
+    rm -rf $SOAR_HOME/linux_x86-64
     rm -f $THISDIR/*.bat
   fi
 elif [[ "$unamestr" == 'Darwin' ]]; then
   if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
-    echo 'First time initialization of Soar for Mac OSX...'
-    mv $SOAR_HOME/mac64/swt.jar $SOAR_HOME/java/
-    mv $SOAR_HOME/mac64/* $SOAR_HOME/
-    rm -rf $SOAR_HOME/mac64
-    rm -rf $SOAR_HOME/linux64
-    rm -rf $SOAR_HOME/win64
-    rm -f $THISDIR/*.bat
+    if [ "$(uname -m)" == "arm64" ]; then
+      echo 'First time initialization of Soar for Mac OSX ARM64...'
+      mv $SOAR_HOME/mac_ARM64/swt.jar $SOAR_HOME/java/
+      mv $SOAR_HOME/mac_ARM64/* $SOAR_HOME/
+      ./macOS_setup.command $SOAR_HOME
+      rm -rf $SOAR_HOME/mac_x86-64
+      rm -rf $SOAR_HOME/mac_ARM64
+      rm -rf $SOAR_HOME/linux_x86-64
+      rm -rf $SOAR_HOME/win_x86-64
+      rm -f $THISDIR/*.bat
+    else
+      echo 'First time initialization of Soar for Mac OSX x86-64...'
+      mv $SOAR_HOME/mac_x86-64/swt.jar $SOAR_HOME/java/
+      mv $SOAR_HOME/mac_x86-64/* $SOAR_HOME/
+      ./macOS_setup.command $SOAR_HOME
+      rm -rf $SOAR_HOME/mac_x86-64
+      rm -rf $SOAR_HOME/mac_ARM64
+      rm -rf $SOAR_HOME/linux_x86-64
+      rm -rf $SOAR_HOME/win_x86-64
+      rm -f $THISDIR/*.bat
+    fi
   fi
   FLAG="-XstartOnFirstThread"
 else
   if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
     echo 'First time initialization of Soar for an unsupported OS.  Assuming Linux.'
-    mv $SOAR_HOME/linux64/swt.jar $SOAR_HOME/java/
-    mv $SOAR_HOME/linux64/* $SOAR_HOME/
-    rm -rf $SOAR_HOME/mac64
-    rm -rf $SOAR_HOME/win64
-    rm -rf $SOAR_HOME/linux64
+    mv $SOAR_HOME/linux_x86-64/swt.jar $SOAR_HOME/java/
+    mv $SOAR_HOME/linux_x86-64/* $SOAR_HOME/
+    rm -rf $SOAR_HOME/mac_x86-64
+    rm -rf $SOAR_HOME/mac_ARM64
+    rm -rf $SOAR_HOME/win_x86-64
+    rm -rf $SOAR_HOME/linux_x86-64
     rm -f $THISDIR/*.bat
   fi
 fi

@@ -16,7 +16,7 @@ if not exist %PYTHON_HOME%\python.exe (
 
 
 set PATH=%PYTHON_HOME%;%JAVA_HOME%\bin;%SWIG_HOME%;%PATH%
-%PYTHON_HOME%\python.exe scons\scons.py -Q %*  -u --jobs=1 --warn=cache-write-error --warn=future-deprecated --warn=reserved-variable --build=build_win --out=Z:\mazzin\git\Soar\Release\Shuffler_Input\windows64\out --opt
+%PYTHON_HOME%\python.exe scons\scons.py -Q %*  -u --jobs=1 --warn=cache-write-error --warn=future-deprecated --warn=reserved-variable --build=build_win --out=Z:\mazzin\git\Soar\Release\Shuffler_Input\win_x86-64\out --opt
 cd "Z:\mazzin\git\Soar\Domains\Eaters_TankSoar"
 call ant
 cd "Z:\mazzin\git\Soar\AgentDevelopmentTools\VisualSoar"
