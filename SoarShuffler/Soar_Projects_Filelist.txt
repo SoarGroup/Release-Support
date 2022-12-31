@@ -261,27 +261,6 @@ PDDL
   type=zip
   out=Domains/
   $SOAR_GROUP_REPOS_HOME/Domains-Planning-Domain-Definition-Language=PDDL/
-SoarSuite_$VERSION-source
-  type=zip
-  out=SoarSuite/
-  $SOAR_GROUP_REPOS_HOME/Soar/Core=Core
-  $SOAR_GROUP_REPOS_HOME/Soar/Java=Java
-  $SOAR_GROUP_REPOS_HOME/Soar/build_support=build_support
-  $SOAR_GROUP_REPOS_HOME/Soar/scons=scons
-  $SOAR_GROUP_REPOS_HOME/Soar/PerformanceTests=PerformanceTests
-  $SOAR_GROUP_REPOS_HOME/Soar/scripts=scripts
-  $SOAR_GROUP_REPOS_HOME/Soar/SoarCLI=SoarCLI
-  $SOAR_GROUP_REPOS_HOME/Soar/Tcl=Tcl
-  $SOAR_GROUP_REPOS_HOME/Soar/UnitTests=UnitTests
-  $SOAR_GROUP_REPOS_HOME/Soar/build_ios.sh=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Soar/build_lsb.sh=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Soar/build.bat=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Soar/SConstruct=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Soar/README.md=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Building_Soar.txt=Documentation
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.txt=Documentation
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=Documentation
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
 SoarSuite_$VERSION
   type=multiplatform-zip
   out=SoarSuite/
