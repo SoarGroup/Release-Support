@@ -23,7 +23,7 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
       echo 'First time initialization of Soar for Mac OSX ARM64...'
       mv $SOAR_HOME/mac_ARM64/swt.jar $SOAR_HOME/java/
       mv $SOAR_HOME/mac_ARM64/* $SOAR_HOME/
-      ./macOS_setup.command $SOAR_HOME
+      $THISDIR/macOS_setup.command $SOAR_HOME
       rm -rf $SOAR_HOME/mac_x86-64
       rm -rf $SOAR_HOME/linux_x86-64
       rm -rf $SOAR_HOME/win_x86-64
@@ -33,7 +33,7 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
       echo 'First time initialization of Soar for Mac OSX x86-64...'
       mv $SOAR_HOME/mac_x86-64/swt.jar $SOAR_HOME/java/
       mv $SOAR_HOME/mac_x86-64/* $SOAR_HOME/
-      ./macOS_setup.command $SOAR_HOME
+      $THISDIR/macOS_setup.command $SOAR_HOME
       rm -rf $SOAR_HOME/mac_x86-64
       rm -rf $SOAR_HOME/mac_ARM64
       rm -rf $SOAR_HOME/linux_x86-64

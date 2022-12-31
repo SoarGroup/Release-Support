@@ -15,12 +15,12 @@ if [ ! -e $SOAR_HOME/pkgIndex.tcl ]; then
       echo 'First time initialization of Soar for Mac OSX ARM64...'
       mv $SOAR_HOME/mac_ARM64/swt.jar $SOAR_HOME/java/
       mv $SOAR_HOME/mac_ARM64/* $SOAR_HOME/
-      ./macOS_setup.command $SOAR_HOME
+      $THISDIR/macOS_setup.command $SOAR_HOME
     else
       echo 'First time initialization of Soar for Mac OSX x86-64...'
       mv $SOAR_HOME/mac_x86-64/swt.jar $SOAR_HOME/java/
       mv $SOAR_HOME/mac_x86-64/* $SOAR_HOME/
-      ./macOS_setup.command $SOAR_HOME
+      $THISDIR/macOS_setup.command $SOAR_HOME
     fi
   else
       echo 'First time initialization of Soar for an unsupported OS.  Assuming Linux.'
