@@ -19,5 +19,5 @@ jobs:
       - name: upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: manual.pdf
-          path: ManualSource/manual.pdf
+          name: SoarManual.pdf
+          path: pdf/SoarManual.pdf
