@@ -13,4 +13,4 @@ if not exist "%SOAR_HOME%\pkgIndex.tcl" (
     del /F /Q "%~dp0*.sh"
 )
 
-java -Djava.library.path="%SOAR_HOME%" -jar bin\SoarJavaDebugger.jar %1 %2 %3 %4 %5
+start javaw -Djava.library.path="%SOAR_HOME%" -jar bin\SoarJavaDebugger.jar %1 %2 %3 %4 %5
