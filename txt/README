@@ -1,30 +1,21 @@
 =========================
-=    Soar 9.6.0 README  =
-=      July  2017       =
+=    Soar 9.6.1 README  =
+=      January  2022    =
 =========================
 
-Welcome to Soar!  Soar 9.6.0 is the current, stable version of Soar. It is the 
-first major release in a few years and includes six key new features and 
-hundreds of important bug fixes and code improvements:
+Welcome to Soar!  Soar 9.6.1 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements. Note that the included Java tools, such as the Soar Java Debugger, now require at least Java 11 to run.
 
-- Explanation-Based Chunking: ​ The first official release of a new, far more
-powerful rule learning algorithm that replaces chunking, Soar's original general
-learning mechanism
+* VisualSoar has been updated with support for all Soar commands and subsytems, improved reliability and usability, and lots of bug fixes.
 
-- Instance-based model of semantic memory: Can be used in a greater variety of
-ways and integrates with other aspects of Soar much more cleanly
+* Several Soar commands have been updated to be more consistent and easier to use.
 
-- Streamlined user interface: Has far fewer top-level commands with improved
-presentation and feedback
+* Soar now has better code compatibility with JSoar, supported by several new RHS functions and automatic conversion of unregistered RHS functions into exec calls.
 
-- Explanations: A new explain command provides interactive exploration of an
-agent's rule learning experiences
+* This release includes binaries for M1/M2 Macs for the first time.
 
-- Visualizations: A new visualize command creates graphical representations of
-Soar's memory systems and even some of its processing
+* This release includes C# bindings for all platforms for the first time.
 
-- Spreading activation: The first beta release of a model of spreading activation
-in semantic memory
+* GitHub Actions now build and test Soar on all supported platforms, making it easier than ever for you to contribute to Soar.
 
 The full release notes can be found in its own file.
 
@@ -58,14 +49,14 @@ Launch options for the CLI and the java debugger are listed at the bottom of thi
 Soar-CLI Command Line Options
 =============================
     -l            Listen on, i.e. launches Soar kernel in new thread
-    -n            No syntax coloring (for people on light background or on 
-                  Windows, which doesn't support our color codes.  Also turning 
+    -n            No syntax coloring (for people on light background or on
+                  Windows, which doesn't support our color codes.  Also turning
                   off color does speed up printing.)
     -p <port>     Listens on port <port>
     -s <file>     Sources file <file> on load
 
-To manage multiple agents, you can use the commands "create", "list", and 
-"switch".  These are Soar-CLI commands, not native Soar commands.  They are 
+To manage multiple agents, you can use the commands "create", "list", and
+"switch".  These are Soar-CLI commands, not native Soar commands.  They are
 not available in other interfaces, for example the Soar Java Debugger.
 
 =======================================
@@ -73,40 +64,40 @@ Soar Java Debugger Command Line Options
 =======================================
     -remote             Use a remote connection (with default ip/port)
     -ip xxx             Use this IP value (implies remote connection)
-    -port ppp           Use this port (implies remote connection, without any 
+    -port ppp           Use this port (implies remote connection, without any
                         remote options we start a local kernel)
-    -agent <name>       On a remote connection select this agent as initial 
+    -agent <name>       On a remote connection select this agent as initial
                         agent
-    -agent <name>       On a local connection use this as the name of the 
+    -agent <name>       On a local connection use this as the name of the
                         initial agent
-    -source <path>      Load this file of productions on launch (only valid 
+    -source <path>      Load this file of productions on launch (only valid
                         for local kernel)
-    -quitonfinish       When combined with source causes the debugger to exit 
+    -quitonfinish       When combined with source causes the debugger to exit
                         after sourcing that one file
-    -listen ppp         Use this port to listen for remote connections (only 
+    -listen ppp         Use this port to listen for remote connections (only
                         valid for a local kernel)
     -maximize           Start with maximized window
     -width <width>      Start with this window width
     -height <height>    Start with this window height
     -x <x> -y <y>       Start with this window position
-    -cascade            Cascade each window that starts (offseting from the 
-                        -x <x> -y <y> if given). This option now always on. 
-                        Note that providing width/height/x/y => not a maximized 
+    -cascade            Cascade each window that starts (offseting from the
+                        -x <x> -y <y> if given). This option now always on.
+                        Note that providing width/height/x/y => not a maximized
                         window.
 
-If you have problems with the debugger, try deleting any .soar* files in your 
+If you have problems with the debugger, try deleting any .soar* files in your
 home directory.  Corrupt settings can cause the java debugger to fail to launch.
 
 ===================================================
 Transitioning To Soar 9.6.0's New Command Structure
 ===================================================
 
-The following shows the new command structure for Soar 9.6.0 and how the 
+The following shows the new command structure for Soar 9.6.0 and how the
 commands from previous versions of Soar map to it. All of the new commands
 and their sub-commands will guess the command based on partial input.
 
-Note:  Soar 9.6.0 translates old commands in a way that it maintains 99.9% 
-       backwards compatibility with 9.5.1, so this transition should not be 
+Note:  Soar 9.6.0 translates old commands in a way that it maintains 99.9%
+       backwards compatibility with 9.5.1, so this transition should not be
        painful.
 
 ------------------                  ---------------------
@@ -195,7 +186,7 @@ wma                                 wm activation
 Problems?
 =========
 
-If you have any issues, send a message to the soar-help mailing list, which is 
+If you have any issues, send a message to the soar-help mailing list, which is
 read by many helpful members of the community.
 
 - First join the mailing list at https://lists.sourceforge.net/lists/listinfo/soar-help
