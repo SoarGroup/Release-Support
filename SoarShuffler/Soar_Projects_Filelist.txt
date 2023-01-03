@@ -303,6 +303,7 @@ SoarSuite_$VERSION
   $COMPILE_DIR/Soar.lib=bin/$PLATFORM_DIR^
   $COMPILE_DIR/Tcl_sml_ClientInterface.exp=bin/$PLATFORM_DIR^
   $COMPILE_DIR/Tcl_sml_ClientInterface.lib=bin/$PLATFORM_DIR^
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=$ROOT
 SoarTutorial_$VERSION
   type=multiplatform-zip
   out=SoarSuite/
@@ -382,3 +383,4 @@ SoarTutorial_$VERSION
   $COMPILE_DIR/Soar.lib=bin/$PLATFORM_DIR^
   $COMPILE_DIR/Tcl_sml_ClientInterface.exp=bin/$PLATFORM_DIR^
   $COMPILE_DIR/Tcl_sml_ClientInterface.lib=bin/$PLATFORM_DIR^
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=$ROOT
