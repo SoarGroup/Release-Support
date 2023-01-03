@@ -40,7 +40,7 @@ Launching
   - To launch Soar using a command line interface,
     - Windows users, run Soar_CLI.bat
     - Linux and Mac users, run Soar_CLI.sh
-    - You can also navigate to the /bin directory in a terminal and run the Soar executable directly
+    - You can also navigate to the /bin directory in a terminal and run the Soar executable directly. However, macOS users will need to run macOS_setup.command first (located in the root of the release directory) to avoid security warnings from the OS. This is done for you if you use one of the other launch scripts.
 
 Launch options for the CLI and the java debugger are listed at the bottom of this document.
 
