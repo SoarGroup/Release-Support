@@ -1950,7 +1950,7 @@ Any function with a certain signature may be registered with the Kernel (e.g. us
 RHS functions receive a single string argument and return a single string which is assigned to a symbol in Soar.
 
 RHS functions are most complex in C/C\texttt{++} due to the requirements of memory management.
-An RHS function must adhere to the signature of \soar{RHSEventHandler}:
+An RHS function must adhere to the signature of \soar{RhsEventHandler}:
 
 \begin{verbatim}
 	char const *(smlRhsEventId id, void* pUserData, Agent* pAgent,
