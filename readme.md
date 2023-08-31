@@ -49,3 +49,12 @@ You'll get the release directories wherever you specified in the `SOAR_SHUFFLER_
 * Share the release with others and get feedback.
 * Once you're happy with it, delete the directories you unzipped and, then zip up the `SoarRelease/SoarSuite` directory and upload it to the release on GitHub.
 * Push a releases/$VERSION tag for Soar, and $VERSION tags for other Release-Support and VisualSoar.
+
+# Building documentation via mkdocs
+
+In the main directory execute the following commands:
+
+```bash
+pip install -r requirements.txt
+mkdocs serve
+```
