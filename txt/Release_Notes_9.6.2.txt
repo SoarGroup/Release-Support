@@ -6,11 +6,18 @@ This release of Soar includes mostly quality of life improvements, but also many
 bug fixes and code improvements.
 
 =================
+Breaking Changes
+=================
+() Revert AddRhsFunction and RegisterForClientMessageEvent changes from 9.6.1
+    9.6.1 introduced breaking changes to these two functions for C/C++ clients.
+    We revert the change here (which breaks compatibility with 9.6.1, but restores
+    it with 9.6.0).
+
+=================
 New Features
 =================
 () More ergonomic RHS and client message handler registration
-    9.6.1 changed the interfaces for AddRhsFunction and RegisterForClientMessageEvent
-    significantly, making them difficult to use. 9.6.2 adds new overloads utilizing
+    We add new overloads for AddRhsFunction and RegisterForClientMessageEvent utilizing
     std::function to simplify usage in C++ clients. Clients using class methods for handlers
     will no longer need to pass the class instance separately as (void*)userData, and can
     instead simply pass in the result of std::bind.
@@ -19,24 +26,35 @@ New Features
     Previous versions of the debugger were very difficult to read on Mac in dark mode due
     to displaying black text on a dark background. The text now correctly shows as white.
 
+() Documentation in generated Python SML bindings
+    Doxygen comments from SML are now added as docstrings to the generated Python bindings
+    using SWIG's autodoc feature (thanks to Moritz Schmidt).
 =================
 Other Changes
 =================
 
 () Bug fixes
     - `smem --init` now connects to the DB so that a following `smem --clear` will not error out.
-    - `smem -x ...` when the DB is not yet loaded now fails gracefully (instead of segfaulting)
+    - `smem -x ...` when the DB is not yet loaded now fails gracefully instead of segfaulting
     - Improved stability of Python SML bindings
     - SoarCLI now properly exits on EOF. This means that it can be gracefully exited with
-        Ctrl-D, and it no longer hangs when reading from a pipe.
+        Ctrl-D, it no longer hangs when reading from a pipe, and it can be controlled with the
+        `expect` Unix utility.
 
 () Infrastructure improvements
+    - `load library` demo has been folded into automated tests
     - CI now runs Python SML tests
+    - Added support files for developing Soar with VSCode
+    - Python version is now pinned in CI. This release, the compiled Python SML bindings
+        are compatible with Python 3.11.X. The generated Python code is compatible with
+        older versions of Python, but the compiled bindings are not, so users with different
+        version needs will need to compile their own bindings.
 
 () Cruft and cleanup
     - stopped exporting a large number of internal SML classes to SWIG clients
     - documented portability requirements for building SWIG clients
     - eliminated potentially dangerous pointer size warnings from CSharp SML bindings
+    - removed broken IDE project files from the repository
 
 ===================
 General Information
