@@ -2,6 +2,7 @@
 
 ## Current Release Process
 
+* Add a new release notes file under the `txt/` directory
 * Clone all of SoarGroup's repos into a directory
 * generate the manual via the makefile under `ManualSource`, or grab the built one from this repository's GH action workflow result. It should be placed in the `pdf` directory.
 * Download the Windows, Mac (x86-64) and Linux builds of Soar from the desired GH action workflow result
@@ -12,7 +13,7 @@
     - commons-logging-1.1.1.jar
     - log4j-1.2.15.jar
     - stopwatch-0.4-with-deps.jar
- 
+
 VisualSoar and Eaters_TankSoar must be built from their repositories (although I had to fix VisualSoar, see https://github.com/SoarGroup/VisualSoar/issues/1), and the others are in the `lib/` directory in the VisualSoar repository. Note that the log4j one is *not* affected by the famous security bug.
 
 * Set your environment variables for SoarShuffler. Here's my .env for an example:
