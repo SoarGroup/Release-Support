@@ -2,6 +2,8 @@
 
 ## Current Release Process
 
+* Update version numbers in Soar everywhere (see `example_version_bump.patch`). TODO: write some awk to do this automatically.
+
 * Add a new release notes file under the `txt/` directory
 * Clone all of SoarGroup's repos into a directory
 * generate the manual via the makefile under `ManualSource`, or grab the built one from this repository's GH action workflow result. It should be placed in the `pdf` directory.

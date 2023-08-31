@@ -1,0 +1,122 @@
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+diff --git a/Core/CLI/src/cli_help.cpp b/Core/CLI/src/cli_help.cpp
+index 0fe017e06..4cb3d0221 100644
+--- a/Core/CLI/src/cli_help.cpp
++++ b/Core/CLI/src/cli_help.cpp
+@@ -3456,7 +3456,7 @@ void initdocstrings()
+ 		"current state of execution and which capabilities of Soar are enabled:\n"
+ 		"\n"
+ 		"  =======================================================\n"
+-		"                       Soar 9.6.1 Summary\n"
++		"                       Soar 9.6.2 Summary\n"
+ 		"  =======================================================\n"
+ 		"  Enabled:                         Core, EBC, SMem, EpMem\n"
+ 		"  Disabled:                             SVS, RL, WMA, SSA\n"
+diff --git a/Core/ClientSMLSWIG/Tcl/pkgIndex_linux.tcl b/Core/ClientSMLSWIG/Tcl/pkgIndex_linux.tcl
+index 9c1f6ef76..7ed4dfd00 100644
+--- a/Core/ClientSMLSWIG/Tcl/pkgIndex_linux.tcl
++++ b/Core/ClientSMLSWIG/Tcl/pkgIndex_linux.tcl
+@@ -8,4 +8,4 @@
+ # script is sourced, the variable $dir must contain the
+ # full path name of this file's directory.
+
+-package ifneeded tcl_sml_clientinterface 9.6.1 [list load [file join $dir libTcl_sml_ClientInterface.so]]
++package ifneeded tcl_sml_clientinterface 9.6.2 [list load [file join $dir libTcl_sml_ClientInterface.so]]
+diff --git a/Core/ClientSMLSWIG/Tcl/pkgIndex_mac.tcl b/Core/ClientSMLSWIG/Tcl/pkgIndex_mac.tcl
+index 1726976b9..c1ef12252 100644
+--- a/Core/ClientSMLSWIG/Tcl/pkgIndex_mac.tcl
++++ b/Core/ClientSMLSWIG/Tcl/pkgIndex_mac.tcl
+@@ -8,4 +8,4 @@
+ # script is sourced, the variable $dir must contain the
+ # full path name of this file's directory.
+
+-package ifneeded tcl_sml_clientinterface 9.6.1 [list load [file join $dir libTcl_sml_ClientInterface.dylib]]
++package ifneeded tcl_sml_clientinterface 9.6.2 [list load [file join $dir libTcl_sml_ClientInterface.dylib]]
+diff --git a/Core/ClientSMLSWIG/Tcl/pkgIndex_win.tcl b/Core/ClientSMLSWIG/Tcl/pkgIndex_win.tcl
+index d9921a7e3..6c153c10e 100755
+--- a/Core/ClientSMLSWIG/Tcl/pkgIndex_win.tcl
++++ b/Core/ClientSMLSWIG/Tcl/pkgIndex_win.tcl
+@@ -8,4 +8,4 @@
+ # script is sourced, the variable $dir must contain the
+ # full path name of this file's directory.
+
+-package ifneeded tcl_sml_clientinterface 9.6.1 [list load [file join $dir Tcl_sml_ClientInterface.dll]]
++package ifneeded tcl_sml_clientinterface 9.6.2 [list load [file join $dir Tcl_sml_ClientInterface.dll]]
+diff --git a/Core/shared/soarversion.h b/Core/shared/soarversion.h
+index c5a9aaa8b..bbd310677 100644
+--- a/Core/shared/soarversion.h
++++ b/Core/shared/soarversion.h
+@@ -17,7 +17,7 @@ soar-vars.bat in root
+ */
+ #define MAJOR_VERSION_NUMBER 9
+ #define MINOR_VERSION_NUMBER 6
+-#define MICRO_VERSION_NUMBER 1
++#define MICRO_VERSION_NUMBER 2
+ #define GREEK_VERSION_NUMBER 0
+ inline const char* VERSION_STRING()
+ {
+@@ -26,7 +26,7 @@ inline const char* VERSION_STRING()
+
+ #define SML_MAJOR_VERSION_NUMBER 9
+ #define SML_MINOR_VERSION_NUMBER 6
+-#define SML_MICRO_VERSION_NUMBER 1
++#define SML_MICRO_VERSION_NUMBER 2
+ #define SML_GREEK_VERSION_NUMBER 0
+ inline const char* SML_VERSION_STRING()
+ {
+diff --git a/Java/Debugger/manifest1 b/Java/Debugger/manifest1
+index 4ac151418..dc109b2e5 100644
+--- a/Java/Debugger/manifest1
++++ b/Java/Debugger/manifest1
+@@ -4,8 +4,8 @@ Created-By: 1.6.0_26-b03 (Sun Microsystems Inc.)
+ Title: soar-debugger
+ Vendor: University of Michigan
+ Date: February 24 2012 1742
+-Version: 9.6.1
+-Built-By: Mazin
++Version: 9.6.2
++Built-By: Nathan Glenn
+ Copyright: (c) The Regents of the University of Michigan, 2010
+ Main-Class: edu.umich.soar.debugger.Application
+ Class-Path: . soar-smljava.jar swt.jar swtgraphics2d.jar sml.jar soar-debugger-api.jar
+diff --git a/Kernel.doxyfile b/Kernel.doxyfile
+index f84717036..2aabbdd87 100644
+--- a/Kernel.doxyfile
++++ b/Kernel.doxyfile
+@@ -32,7 +32,7 @@ PROJECT_NAME           = "Soar Kernel"
+ # This could be handy for archiving the generated documentation or
+ # if some version control system is used.
+
+-PROJECT_NUMBER         = 9.3.2_2.04.13
++PROJECT_NUMBER         = 9.6.2_0.08.23
+
+ # Using the PROJECT_BRIEF tag one can provide an optional one line description
+ # for a project that appears at the top of each page and should give viewer
+diff --git a/SConstruct b/SConstruct
+index b35e81fae..a50c8f82d 100644
+--- a/SConstruct
++++ b/SConstruct
+@@ -19,7 +19,7 @@ from build_support.tcl import prepare_for_compiling_with_tcl
+
+ join = os.path.join
+
+-SOAR_VERSION = "9.6.1"
++SOAR_VERSION = "9.6.2"
+ CPP_STD_VERSION = "c++17"
+
+ soarversionFile = open('soarversion', 'w')
+diff --git a/SML.doxyfile b/SML.doxyfile
+index fb595773e..ed42b9479 100644
+--- a/SML.doxyfile
++++ b/SML.doxyfile
+@@ -32,7 +32,7 @@ PROJECT_NAME           = "Soar SML"
+ # This could be handy for archiving the generated documentation or
+ # if some version control system is used.
+
+-PROJECT_NUMBER         = 9.3.2_2.04.13
++PROJECT_NUMBER         = 9.6.2_0.08.23
+
+ # Using the PROJECT_BRIEF tag one can provide an optional one line description
+ # for a project that appears at the top of each page and should give viewer
