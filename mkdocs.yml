@@ -1,0 +1,14 @@
+site_name: Soar documentation
+theme: 
+  name: readthedocs
+  locale: en
+  highlightjs: true
+
+extra_javascript: 
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+markdown_extensions:
+  - extra
+  - tables
+  - mdx_math
+  - fenced_code
