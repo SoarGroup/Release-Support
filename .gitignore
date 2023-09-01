@@ -1,2 +1,3 @@
-pdf/
-.env
+SoarShuffler/SoarRelease/
+SoarShuffler/.env
+pdf/SoarManual.pdf

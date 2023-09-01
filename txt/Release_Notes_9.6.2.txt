@@ -16,6 +16,16 @@ Breaking Changes
 =================
 New Features
 =================
+
+() Lots of goodies for VisualSoar (thanks to amnuxoll)
+    - New user's manual (1.03)
+    - Support creating custom templates! See the manual for details.
+    - Parser now supports productions with multiple types
+    - Persist preferences for font size and divider location
+    - "Find all productions" search option
+    - New bottom status bar
+    - New template for compare operator
+
 () More ergonomic RHS and client message handler registration
     We add new overloads for AddRhsFunction and RegisterForClientMessageEvent utilizing
     std::function to simplify usage in C++ clients. Clients using class methods for handlers
@@ -29,6 +39,7 @@ New Features
 () Documentation in generated Python SML bindings
     Doxygen comments from SML are now added as docstrings to the generated Python bindings
     using SWIG's autodoc feature (thanks to Moritz Schmidt).
+
 =================
 Other Changes
 =================
@@ -40,6 +51,11 @@ Other Changes
     - SoarCLI now properly exits on EOF. This means that it can be gracefully exited with
         Ctrl-D, it no longer hangs when reading from a pipe, and it can be controlled with the
         `expect` Unix utility.
+
+() VisualSoar bug fixes (thanks to amnuxoll):
+    - Several issues with undo manager
+    - Highlighted text replace bug
+    - More Robust Handling of 'file already exists' error
 
 () Infrastructure improvements
     - `load library` demo has been folded into automated tests

@@ -289,7 +289,7 @@ SoarSuite_$VERSION
   $COMPILE_DIR/include=include
   $COMPILE_DIR/tcl=bin/tcl
   $COMPILE_DIR/settings.soar=bin
-  $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/VisualSoar.jar=bin
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/VisualSoar.jar=bin
   $SOAR_GROUP_REPOS_HOME/Agents/default=Agents/default
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarCLI.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Soar/scripts/macOS_setup.command=$ROOT
@@ -327,7 +327,8 @@ SoarTutorial_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/commons-logging-1.1.1.jar=bin/java
   $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/log4j-1.2.15.jar=bin/java
   $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/stopwatch-0.4-with-deps.jar=bin/java
-  $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/VisualSoar.jar=bin
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/VisualSoar.jar=bin
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=$ROOT
   $COMPILE_DIR/settings.soar=bin
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarCLI.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarJavaDebugger.$LAUNCH_EXTENSION=$ROOT
