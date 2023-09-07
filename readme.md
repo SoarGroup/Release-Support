@@ -2,10 +2,11 @@
 
 ## Current Release Process
 
+* Changes to `SoarTutorial/*.docx` need to be manually exported from Word to `pdf/`.
 * Update version numbers in Soar everywhere (see `example_version_bump.patch`). TODO: write some awk to do this automatically.
 * Add a new release notes file under the `txt/` directory
 * Clone all of SoarGroup's repos into a directory
-* generate the manual via the makefile under `ManualSource`, or grab the built one from this repository's GH action workflow result. It should be placed in the `pdf` directory.
+* generate the manual via the makefile under `ManualSource`, or grab the built one from this repository's GH action workflow result. It should be placed in the `pdf/` directory.
 * Download the Windows, Mac (x86-64) and Linux builds of Soar from the desired GH action workflow result
 * Build the mac_ARM64 version locally (hope you have an M1 or M2 computer :) GH doesn't offer CI for it yet)
 * Fix the classpath in the manifest (https://github.com/SoarGroup/VisualSoar/issues/1) and build VisualSoar
