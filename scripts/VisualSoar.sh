@@ -5,7 +5,7 @@ export SOAR_HOME="$THISDIR/bin"
 export DYLD_LIBRARY_PATH="$SOAR_HOME"
 
 if [ ! -e "$SOAR_HOME/pkgIndex.tcl" ]; then
-  unamestr=`uname`
+  unamestr=$(uname)
   if [[ "$unamestr" == 'Linux' ]]; then
       echo 'First time initialization of Soar for Linux...'
       mv "$SOAR_HOME/linux_x86-64/swt.jar" "$SOAR_HOME/java/"
@@ -16,12 +16,12 @@ if [ ! -e "$SOAR_HOME/pkgIndex.tcl" ]; then
       echo 'First time initialization of Soar for Mac OSX ARM64...'
       mv "$SOAR_HOME/mac_ARM64/swt.jar" "$SOAR_HOME/java/"
       mv "$SOAR_HOME/mac_ARM64"/* "$SOAR_HOME/"
-      "$THISDIR/macOS_setup.command" $SOAR_HOME
+      "$THISDIR/macOS_setup.command" "$SOAR_HOME"
     else
       echo 'First time initialization of Soar for Mac OSX x86-64...'
       mv "$SOAR_HOME/mac_x86-64/swt.jar" "$SOAR_HOME/java/"
       mv "$SOAR_HOME/mac_x86-64"/* "$SOAR_HOME/"
-      "$THISDIR/macOS_setup.command" $SOAR_HOME
+      "$THISDIR/macOS_setup.command" "$SOAR_HOME"
     fi
   else
       echo 'First time initialization of Soar for an unsupported OS.  Assuming Linux.'
@@ -36,6 +36,6 @@ if [ ! -e "$SOAR_HOME/pkgIndex.tcl" ]; then
   rm -f "$THISDIR"/*.bat
 fi
 
-pushd "$SOAR_HOME" > /dev/null
+pushd "$SOAR_HOME" > /dev/null || { echo "Failed to cd to $THISDIR"; exit 1; }
 java -Djava.library.path="$SOAR_HOME" -jar "$SOAR_HOME/VisualSoar.jar" &
-popd > /dev/null
+popd > /dev/null || { echo "popd failed"; exit 1; }

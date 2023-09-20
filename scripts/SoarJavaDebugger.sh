@@ -5,7 +5,7 @@ FLAG=""
 export SOAR_HOME="$THISDIR/bin"
 export DYLD_LIBRARY_PATH="$SOAR_HOME"
 
-unamestr=`uname`
+unamestr=$(uname)
 if [[ "$unamestr" == 'Linux' ]]; then
   if [ ! -e "$SOAR_HOME/pkgIndex.tcl" ]; then
     echo 'First time initialization of Soar for Linux...'
@@ -24,7 +24,7 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
       echo 'First time initialization of Soar for Mac OSX ARM64...'
       mv "$SOAR_HOME/mac_ARM64/swt.jar" "$SOAR_HOME/java/"
       mv "$SOAR_HOME/mac_ARM64"/* "$SOAR_HOME/"
-      "$THISDIR/macOS_setup.command" $SOAR_HOME
+      "$THISDIR/macOS_setup.command" "$SOAR_HOME"
       rm -rf "$SOAR_HOME/mac_x86-64"
       rm -rf "$SOAR_HOME/mac_ARM64"
       rm -rf "$SOAR_HOME/linux_x86-64"
@@ -34,7 +34,7 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
       echo 'First time initialization of Soar for Mac OSX x86-64...'
       mv "$SOAR_HOME/mac_x86-64/swt.jar" "$SOAR_HOME/java/"
       mv "$SOAR_HOME/mac_x86-64"/* "$SOAR_HOME/"
-      "$THISDIR/macOS_setup.command" $SOAR_HOME
+      "$THISDIR/macOS_setup.command" "$SOAR_HOME"
       rm -rf "$SOAR_HOME/mac_ARM64"
       rm -rf "$SOAR_HOME/mac_x86-64"
       rm -rf "$SOAR_HOME/linux_x86-64"
@@ -57,6 +57,6 @@ else
   fi
 fi
 
-pushd "$SOAR_HOME" > /dev/null
-java $FLAG -Djava.library.path="$SOAR_HOME" -jar "$SOAR_HOME/SoarJavaDebugger.jar" $1 $2 $3 $4 $5 &
-popd > /dev/null
+pushd "$THISDIR" > /dev/null || { echo "Failed to cd to $THISDIR"; exit 1; }
+java $FLAG -Djava.library.path="$SOAR_HOME" -jar "$SOAR_HOME/SoarJavaDebugger.jar" "$@" &
+popd > /dev/null || { echo "popd failed"; exit 1; }
