@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then
+    set -o xtrace
+fi
+
 THISDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 FLAG=""
 export SOAR_HOME="$THISDIR/bin"
