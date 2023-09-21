@@ -1566,6 +1566,62 @@ The expressions described in this section can be nested to any depth. For all of
 		     ^min (min <a> <b> 42 <c>)) }
 	\end{verbatim}
 
+% ----------------------------------------------------------------------------
+
+\index{RHS Function!set-count}
+\index{RHS Function!set-sum}
+\index{RHS Function!set-multiply}
+\index{RHS Function!set-min}
+\index{RHS Function!set-max}
+\index{RHS Function!set-range}
+\index{RHS Function!set-mean}
+\index{RHS Function!set-stdev}
+\item [\soarb{set-[count, sum, multiply, min, max, range, mean, stdev]} --- ]
+
+  These provide mathematical functions of sets stored as multi-valued attributes. Each takes two arguments: the first is the WME ID containing the set attribute, and the second is the name of the WME's multi-valued attribute containing the set.
+
+  set-count returns the number of elements in the set, and the elements of the set do not necessarily need to be numeric.
+
+  In contrast, the rest of the functions operate only on numeric values. They ignore all non-numeric (int, float) set members, and return \soar{|NaN|} if the set is empty or contains no numeric members. If there is an issue with the parameters, all of the functions (including set-count) return a string containing an error message.
+
+  set-range returns the maximum value minus the minimum value.
+
+  set-stdev returns the standard deviation of the set.
+
+	\begin{verbatim}
+    sp { propose*math
+      (state <s> ^superstate nil)
+      (<s> -^results <any>)
+      -->
+      (<s> ^operator <o> +
+           ^operator <o> =)
+      (<o> ^name do-math ^vals 100 ^vals 200 ^vals 40 ^vals -59)
+    }
+    sp { apply*math
+      (state <s> ^operator <o>)
+      (<o> ^name do-math)
+      -->
+      (<s> ^results done)
+      (write |count: |(set-count <o> vals)
+           |, sum: | (set-sum <o> vals)
+           |, multiply: | (set-multiply <o> vals)
+           |, min: | (set-min <o> vals)
+           |, max: | (set-max <o> vals)
+           |, range: | (set-range <o> vals)
+           |, mean: | (set-mean <o> vals)
+           |, stdev: | (set-stdev <o> vals))
+      }
+    step 2
+    \end{verbatim}
+
+  The above prints the following to the console:
+
+  \begin{verbatim}
+    1:    O: O1 (do-math)count: 4, sum: 281.000000,
+    multiply: -47200000.000000, min: -59.000000,
+    max: 200.000000, range: 259.000000,
+    mean: 70.250000, stdev: 93.995678
+  \end{verbatim}
 
 % ----------------------------------------------------------------------------
 \index{RHS Function!int}
@@ -1958,7 +2014,7 @@ The Tcl and Java interfaces have similar function signatures. Any arguments pass
 Such a function can be registered with the kernel via the client interface by calling:
 
 \begin{verbatim}
-Kernel::AddRhsFunction(char const* pRhsFunctionName, RhsEventHandler 
+Kernel::AddRhsFunction(char const* pRhsFunctionName, RhsEventHandler
                    handler, void* pUserData);
 \end{verbatim}
 
