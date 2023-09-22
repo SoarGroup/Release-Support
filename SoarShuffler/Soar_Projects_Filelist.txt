@@ -292,7 +292,7 @@ SoarSuite_$VERSION
   $SOAR_GROUP_REPOS_HOME/VisualSoar/VisualSoar.jar=bin
   $SOAR_GROUP_REPOS_HOME/Agents/default=Agents/default
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarCLI.$LAUNCH_EXTENSION=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Soar/scripts/macOS_setup.command=$ROOT
+  $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/setup.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarJavaDebugger.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/VisualSoar.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.txt=$ROOT
@@ -334,7 +334,7 @@ SoarTutorial_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarJavaDebugger.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/VisualSoar.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/Eaters.$LAUNCH_EXTENSION=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Soar/scripts/macOS_setup.command=$ROOT
+  $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/setup.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/TankSoar.$LAUNCH_EXTENSION=$ROOT
   $COMPILE_DIR/tcl=bin/tcl
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
