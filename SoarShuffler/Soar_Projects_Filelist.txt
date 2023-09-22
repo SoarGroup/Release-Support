@@ -339,7 +339,7 @@ SoarTutorial_$VERSION
   $COMPILE_DIR/tcl=bin/tcl
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Agents_readme.txt=Agents/
+  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Agents_readme.md=Agents/
   $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=Tutorial
   $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 2 - Interacting with an Environment.pdf=Tutorial
   $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 3 - Subgoals.pdf=Tutorial

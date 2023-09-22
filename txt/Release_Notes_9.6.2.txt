@@ -32,6 +32,12 @@ New Features
     will no longer need to pass the class instance separately as (void*)userData, and can
     instead simply pass in the result of std::bind.
 
+() More output filtering options in the debugger
+    We rename "hide all" to "show only errors and top-level", then add a true "hide
+    all" filter to complement that. We also separate messages from RHS writes, and add
+    additional filter options for error and top-level. This covers all 14 output
+    types, while still providing convenient checkboxes for common settings.
+
 () Better dark mode styling for the debugger
     Previous versions of the debugger were very difficult to read on Mac in dark mode due
     to displaying black text on a dark background. The text now correctly shows as white.

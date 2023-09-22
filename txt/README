@@ -1,9 +1,9 @@
 =========================
-=    Soar 9.6.1 README  =
-=      January  2023    =
+=    Soar 9.6.2 README  =
+=      September  2023    =
 =========================
 
-Welcome to Soar!  Soar 9.6.1 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements. Note that the included Java tools, such as the Soar Java Debugger, now require at least Java 11 to run.
+Welcome to Soar!  Soar 9.6.2 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements. Note that the included Java tools, such as the Soar Java Debugger, now require at least Java 11 to run.
 
 * VisualSoar has been updated with support for all Soar commands and subsytems, improved reliability and usability, and lots of bug fixes.
 
@@ -23,7 +23,7 @@ The full release notes can be found in its own file.
 Official Soar Manual
 ====================
 
-The 9.6.1 edition of the Soar Manual is included here for your reference. However, the manual is continually updated, and the latest version can be
+The 9.6.2 edition of the Soar Manual is included here for your reference. However, the manual is continually updated, and the latest version can be
 found at:
 
 https://soar.eecs.umich.edu/downloads/SoarManual.pdf
