@@ -16,7 +16,7 @@ import sys
 from typing import Dict, List
 import zipfile
 
-VERSION = os.environ.get("SOAR_RELEASE_VERSION", "9.6.1")
+VERSION = os.environ.get("SOAR_RELEASE_VERSION")
 
 ROOT_VAR = "$ROOT"
 
