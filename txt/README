@@ -185,8 +185,13 @@ wma                                 wm activation
 Problems?
 =========
 
-If you have any issues, send a message to the soar-help mailing list, which is
+If you have any issues running/building Soar or writing Soar agents, send a message to the soar-help mailing list, which is
 read by many helpful members of the community.
 
-- First join the mailing list at https://lists.sourceforge.net/lists/listinfo/soar-help
-- Then send your question to soar-help@lists.sourceforge.net
+- First join the mailing list at https://groups.google.com/d/forum/soar-help
+- Then send your question to soar-help@googlegroups.com
+
+Announcements and high-level questions and discussions related to Soar can be found at the soar-cognitive-architecture mailing list:
+
+- First join the mailing list at https://groups.google.com/g/soar-cognitive-architecture
+- Then send your questions to soar-cognitive-architecture@googlegroups.com
