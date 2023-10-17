@@ -6,6 +6,7 @@
 * Update version numbers in Soar everywhere (see `example_version_bump.patch`). TODO: write some awk to do this automatically.
 * Update version numbers in `txt/README`.
 * Add a new release notes file under the `txt/` directory
+* Add some cursory release notes in `txt/README`
 * Clone all of SoarGroup's repos into a directory
 * generate the manual via the makefile under `ManualSource`, or grab the built one from this repository's GH action workflow result. It should be placed in the `pdf/` directory.
 * Download the Windows, Mac (x86-64) and Linux builds of Soar from the desired GH action workflow result
@@ -33,9 +34,9 @@ export SOAR_SHUFFLER_OUTPUT_DIR=./SoarRelease
 export SOAR_WIN_X86_64_COMPILED_DIR=~/Downloads/Soar_windows-x86-64_out
 export SOAR_LINUX_X86_64_COMPILED_DIR=~/Downloads/Soar_linux-x86-64_out
 export SOAR_MAC_X86_64_COMPILED_DIR=~/Downloads/Soar_mac-x86-64_out
-echo -e "\e[93mReminder: Check that $SOAR_MAC_X86_64_COMPILED_DIR is checked out at the tag you desire and is freshly recompiled\e[0m"
 export SOAR_MAC_ARM64_COMPILED_DIR=~/dev/workspaces/release_soar_workspace/Soar/out
 export SOAR_GROUP_REPOS_HOME=~/dev/workspaces/release_soar_workspace
+echo -e "\e[93mReminder: Check that $SOAR_MAC_ARM64_COMPILED_DIR is checked out at the tag you desire and is freshly recompiled\e[0m"
 ```
 
 * Run SoarShuffle:

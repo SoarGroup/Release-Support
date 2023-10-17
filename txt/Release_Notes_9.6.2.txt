@@ -32,6 +32,13 @@ New Features
     will no longer need to pass the class instance separately as (void*)userData, and can
     instead simply pass in the result of std::bind.
 
+() Improved production validity tests and warnings
+    - Soar now properly detects ungrounded (LHS not connected to a state) productions, refuses
+        to source them, and tells the user how to fix them.
+    - Some warnings related to bad production structure were previously hidden behind tracing
+        flags for chunking, and are now exposed by default.
+    - See https://github.com/SoarGroup/Soar/issues/377
+
 () More output filtering options in the debugger
     We rename "hide all" to "show only errors and top-level", then add a true "hide
     all" filter to complement that. We also separate messages from RHS writes, and add
@@ -76,6 +83,8 @@ Other Changes
         are compatible with Python 3.11.X. The generated Python code is compatible with
         older versions of Python, but the compiled bindings are not, so users with different
         version needs will need to compile their own bindings.
+    - Setup logic is now encapsulated in setup.bat and setup.sh, which is easier and less
+        error-prone for other tools dependent on Soar to re-use.
 
 () Cruft and cleanup
     - stopped exporting a large number of internal SML classes to SWIG clients

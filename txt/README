@@ -1,30 +1,25 @@
 =========================
 =    Soar 9.6.2 README  =
-=      September  2023    =
+=      October  2023    =
 =========================
 
-Welcome to Soar!  Soar 9.6.2 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements. Note that the included Java tools, such as the Soar Java Debugger, now require at least Java 11 to run.
+Welcome to Soar!  Soar 9.6.2 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements.
 
-* VisualSoar has been updated with support for all Soar commands and subsytems, improved reliability and usability, and lots of bug fixes.
+* VisualSoar contains several new features, including custom support for custom templates and a new "find all productions" search option. There's also now a manual included.
 
-* Several Soar commands have been updated to be more consistent and easier to use.
+* The debugger now supports full-featured log filtering, and the display is now compatible with dark mode. We also include new shortcuts for zooming in and out.
 
-* Soar now has better code compatibility with JSoar, supported by several new RHS functions and automatic conversion of unregistered RHS functions into exec calls.
+* SoarCLI now exits on EOF, making it possible to control it via pipes (or tools like expect).
 
-* This release includes binaries for M1/M2 Macs for the first time.
+* Some Soar warnings and static analyses have been improved to give the user more actionable feedback around malformed rules.
 
-* This release includes C# bindings for all platforms for the first time.
-
-* GitHub Actions now build and test Soar on all supported platforms, making it easier than ever for you to contribute to Soar.
-
-The full release notes can be found in its own file.
+The full release notes can be found in their own file.
 
 ====================
 Official Soar Manual
 ====================
 
-The 9.6.2 edition of the Soar Manual is included here for your reference. However, the manual is continually updated, and the latest version can be
-found at:
+The 9.6.2 edition of the Soar Manual is included here for your reference. You can also view it online at:
 
 https://soar.eecs.umich.edu/downloads/SoarManual.pdf
 
@@ -38,9 +33,9 @@ Launching
     - Windows users, run SoarJavaDebugger.bat
     - Linux and Mac users, run SoarJavaDebugger.sh
   - To launch Soar using a command line interface,
-    - Windows users, run Soar_CLI.bat
-    - Linux and Mac users, run Soar_CLI.sh
-    - You can also navigate to the /bin directory in a terminal and run the Soar executable directly. However, macOS users will need to run macOS_setup.command first (located in the root of the release directory) to avoid security warnings from the OS. This is done for you if you use one of the other launch scripts.
+    - Windows users, run SoarCLI.bat
+    - Linux and Mac users, run SoarCLI.sh
+    - You can also navigate to the /bin directory in a terminal and run the Soar executable directly. However, users should first run setup.sh or setup.bat to avoid permission and path issues. This is done for you if you use one of the other launch scripts.
 
 Launch options for the CLI and the java debugger are listed at the bottom of this document.
 
