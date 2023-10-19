@@ -80,7 +80,7 @@ Other Changes
     - CI now runs Python and Tcl SML tests
     - Added support files for developing Soar with VSCode
     - Python version is now pinned in CI. This release, the compiled Python SML bindings
-        are compatible with Python 3.11.X. The generated Python code is compatible with
+        are compatible with Python 3.12.X. The generated Python code is compatible with
         older versions of Python, but the compiled bindings are not, so users with different
         version needs will need to compile their own bindings.
     - Setup logic is now encapsulated in setup.bat and setup.sh, which is easier and less
