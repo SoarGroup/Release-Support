@@ -30,7 +30,7 @@ VisualSoar and Eaters_TankSoar must be built from their repositories (although I
 
 ```bash
 export SOAR_RELEASE_VERSION=9.6.2
-export SOAR_SHUFFLER_OUTPUT_DIR=./SoarRelease
+export SOAR_SHUFFLER_OUTPUT_DIR=./Soar-Release-$SOAR_RELEASE_VERSION
 export SOAR_WIN_X86_64_COMPILED_DIR=~/Downloads/Soar_windows-x86-64_out
 export SOAR_LINUX_X86_64_COMPILED_DIR=~/Downloads/Soar_linux-x86-64_out
 export SOAR_MAC_X86_64_COMPILED_DIR=~/Downloads/Soar_mac-x86-64_out
@@ -51,6 +51,6 @@ You'll get the release directories wherever you specified in the `SOAR_SHUFFLER_
 * Finally, unzip the release directories in `SoarRelease/SoarSuite` and check that VisualSoar, the debugger, TankSoar, and SoarCLI all work with a simple double-click.
 * Share the release with others and get feedback.
 * Once you're happy with it, delete the directories you unzipped and, then zip/tarball up the `SoarRelease` directory and upload to the release on GitHub.
-  - `zip -r SoarRelease.zip SoarRelease`
-  - `tar -czvf SoarRelease.tar.gz SoarRelease`
+  - `zip -r Soar-Release-<version>.zip Soar-Release-<version>`
+  - `tar -czvf Soar-Release-<version>.tar.gz Soar-Release-<version>`
 * Push a releases/$VERSION tag for Soar, and $VERSION tags for other Release-Support and VisualSoar.
