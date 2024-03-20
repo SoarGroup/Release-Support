@@ -82,8 +82,6 @@ def __load_release_spec(spec_path):
     return projects
 
 def ignore_list(src, names):
-    import pdb
-    pdb.set_trace()
     return [n for n in names if n.startswith(".svn") or n.startswith(".git")]
 
 def copy_project(projectName, projects: Dict[str, ProjectEntry]):
@@ -261,8 +259,7 @@ def __generate_multiplatform_projects(projects: Dict[str, ProjectEntry]):
 def shuffle(spec_path):
     for path in chain(COMPILED_DIRS.values(), [SOAR_GROUP_REPOS_HOME]):
         if not Path(path).exists():
-            print(f"Error: {path} does not exist")
-            sys.exit(1)
+            raise ValueError(f"Error: {path} does not exist")
 
     clean_output_dir()
     all_projects = __load_release_spec(spec_path)
