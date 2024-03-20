@@ -50,5 +50,7 @@ You'll get the release directories wherever you specified in the `SOAR_SHUFFLER_
 
 * Finally, unzip the release directories in `SoarRelease/SoarSuite` and check that VisualSoar, the debugger, TankSoar, and SoarCLI all work with a simple double-click.
 * Share the release with others and get feedback.
-* Once you're happy with it, delete the directories you unzipped and, then zip up the `SoarRelease/SoarSuite` directory and upload it to the release on GitHub.
+* Once you're happy with it, delete the directories you unzipped and, then zip/tarball up the `SoarRelease` directory and upload to the release on GitHub.
+  - `zip -r SoarRelease.zip SoarRelease`
+  - `tar -czvf SoarRelease.tar.gz SoarRelease`
 * Push a releases/$VERSION tag for Soar, and $VERSION tags for other Release-Support and VisualSoar.
