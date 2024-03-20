@@ -134,6 +134,10 @@ SoarManual
   type=copy
   out=Documentation/
   $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=$ROOT
+VisualSoarManual
+  type=copy
+  out=Documentation/
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=$ROOT
 SoarTutorial
   type=copy
   out=Documentation/
@@ -290,6 +294,7 @@ SoarSuite_$VERSION
   $COMPILE_DIR/tcl=bin/tcl
   $COMPILE_DIR/settings.soar=bin
   $SOAR_GROUP_REPOS_HOME/VisualSoar/VisualSoar.jar=bin
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=$ROOT
   $SOAR_GROUP_REPOS_HOME/Agents/default=Agents/default
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarCLI.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/setup.$LAUNCH_EXTENSION=$ROOT
@@ -385,3 +390,4 @@ SoarTutorial_$VERSION
   $COMPILE_DIR/Tcl_sml_ClientInterface.exp=bin/$PLATFORM_DIR^
   $COMPILE_DIR/Tcl_sml_ClientInterface.lib=bin/$PLATFORM_DIR^
   $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=$ROOT
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=$ROOT
