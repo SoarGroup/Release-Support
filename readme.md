@@ -29,7 +29,7 @@ VisualSoar and Eaters_TankSoar must be built from their repositories (although I
 * Set your environment variables for SoarShuffler. Here's my .env for an example (you can source this automatically using tools like [dotenv](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/dotenv)):
 
 ```bash
-export SOAR_RELEASE_VERSION=9.6.2
+export SOAR_RELEASE_VERSION=9.6.3
 export SOAR_SHUFFLER_OUTPUT_DIR=./Soar-Release-$SOAR_RELEASE_VERSION
 export SOAR_WIN_X86_64_COMPILED_DIR=~/Downloads/Soar_windows-x86-64_out
 export SOAR_LINUX_X86_64_COMPILED_DIR=~/Downloads/Soar_linux-x86-64_out
@@ -53,4 +53,6 @@ You'll get the release directories wherever you specified in the `SOAR_SHUFFLER_
 * Once you're happy with it, delete the directories you unzipped and, then zip/tarball up the `SoarRelease` directory and upload to the release on GitHub.
   - `zip -r Soar-Release-<version>.zip Soar-Release-<version>`
   - `tar -czvf Soar-Release-<version>.tar.gz Soar-Release-<version>`
+* Upload the Soar and VisualSoar manuals to the release, as well
 * Push a releases/$VERSION tag for Soar, and $VERSION tags for other Release-Support and VisualSoar.
+* Update the Soar website with the new release information: https://github.com/SoarGroup/SoarGroup.github.io
