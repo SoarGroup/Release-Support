@@ -9,8 +9,7 @@
 * Add some cursory release notes in `txt/README`
 * Clone all of SoarGroup's repos into a directory
 * generate the manual via the makefile under `ManualSource`, or grab the built one from this repository's GH action workflow result. It should be placed in the `pdf/` directory.
-* Download the Windows, Mac (x86-64) and Linux builds of Soar from the desired GH action workflow result
-* Build the mac_ARM64 version locally (hope you have an M1 or M2 computer :) GH doesn't offer CI for it yet)
+* Download the Windows, macos-12 (x86-64), macos-latest (ARM) and Linux builds of Soar from the desired GH action workflow result.
 * Fix the classpath in the manifest (https://github.com/SoarGroup/VisualSoar/issues/1) and build VisualSoar
 * Convert VisualSoar's manual to pdf:
   - `brew install basictex`
