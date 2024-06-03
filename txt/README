@@ -30,6 +30,7 @@ Launching
 - Navigate to the folder you extracted to
 - Launch Soar
   - To launch Soar within a graphical user interface
+    - Install Java 11 or later
     - Windows users, run SoarJavaDebugger.bat
     - Linux and Mac users, run SoarJavaDebugger.sh
   - To launch Soar using a command line interface,
