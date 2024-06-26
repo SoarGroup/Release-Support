@@ -9,16 +9,21 @@ This release of Soar includes TODO: summary here
 
 ## New Features
 
-* TODO header
-    * TODO line item
-    * TODO line item
+* Visual-Soar improvements (thanks to amnuxoll)
+  * TODO
+
+* You can pip-install Soar! (thanks to ShadowJonathan)
+  * `pip install soar-sml[compat]` is a drop-in replacement for manually installing Soar somewhere and adding its path to your PYTHONPATH environment variable.
+  * Note that this does not come with the debugger or other Java applications.
+* New svs commands `--disable-in-substates` and `--enable-in-substates`. By default SVS copies the entire scene graph into each substate. This can be disabled with `--disable-in-substates` to save memory and improve performance. This can be re-enabled with `--enable-in-substates` if you need to access the scene graph in substates.
 
 ## Other Changes
 
 * Bug fixes
-    * TODO
+  * Improved Java Debugger stability when adding/removing multiple agents during an application lifetime
+  * SVS can no longer be disabled when the current state is a subgoal. Allowing this previously led to undefined behavior.
 
-* VisualSoar bug fixes (thanks to amnuxoll):
+* Visual-Soar bug fixes (thanks to amnuxoll):
   * TODO
 
 * Infrastructure improvements
