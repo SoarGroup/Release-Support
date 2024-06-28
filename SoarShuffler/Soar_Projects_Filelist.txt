@@ -300,8 +300,9 @@ SoarSuite_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/setup.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarJavaDebugger.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/VisualSoar.$LAUNCH_EXTENSION=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.md=$ROOT
+  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Building_Soar.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
+  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
   $COMPILE_DIR/libCSharp_sml_ClientInterface.$DLL_EXTENSION=bin/$PLATFORM_DIR
   $COMPILE_DIR/sml_csharp.dll=bin/$PLATFORM_DIR
@@ -390,4 +391,3 @@ SoarTutorial_$VERSION
   $COMPILE_DIR/Tcl_sml_ClientInterface.exp=bin/$PLATFORM_DIR^
   $COMPILE_DIR/Tcl_sml_ClientInterface.lib=bin/$PLATFORM_DIR^
   $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=$ROOT
-  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=$ROOT
