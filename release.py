@@ -246,7 +246,8 @@ def inspect_release(step: Step):
     print(
         (
             f"Step {step.value}: Unzip SoarShuffler/Soar-Release-{SOAR_RELEASE_VERSION}/Soar_{SOAR_RELEASE_VERSION}-Multiplatform.zip "
-            "and ensure everything is in order. Check that VisualSoar, the debugger, TankSoar, and SoarCLI all work with a simple double-click."
+            "and ensure everything is in order. Check that VisualSoar, the debugger, TankSoar, and SoarCLI all work with a simple double-click. "
+            "Test on Mac (Intel and ARM), Windows, and Linux."
         )
     )
     step.proceed()
