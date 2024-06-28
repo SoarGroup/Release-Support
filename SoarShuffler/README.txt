@@ -76,7 +76,7 @@ This file specifies how projects are zipped up and files are moved around.  Curr
       - Type
           - 'zip': zip up the files described in the project
           - 'copy' : copy files from one directory to another as descirbed in the project
-          - 'multiplatform-zip': zip up the files described in the project but copy different version of platform-specific items like libraries and launch scripts.  Project descriptions of this type contain variables telling it which files need special version and where it can find them.
+          - 'multiplatform-zip/copy': same as zip/copy, but copy different version of platform-specific items like libraries and launch scripts.  Project descriptions of this type contain variables telling it which files need special versions and where it can find them.
           - For example, "type=multiplatform-zip" will create five zips for a particular project description
       - Out
           - This parameter specified where in the output direct it places the final zip or copied files.

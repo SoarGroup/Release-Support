@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from itertools import chain
 import os
 from pathlib import Path
+import re
 import shutil
 import sys
 from typing import Dict, List
@@ -19,6 +20,16 @@ import zipfile
 VERSION = os.environ.get("SOAR_RELEASE_VERSION")
 
 ROOT_VAR = "$ROOT"
+COMPILE_DIR_VAR = "$COMPILE_DIR"
+LAUNCH_EXTENSION_VAR = ".$LAUNCH_EXTENSION"
+EXECUTABLE_VAR = ".$EXECUTABLE"
+DLL_EXTENSION_VAR = ".$DLL_EXTENSION"
+PLATFORM_DIR_VAR = "$PLATFORM_DIR"
+
+PLATFORM_SPECIFIC_VARS = [COMPILE_DIR_VAR, LAUNCH_EXTENSION_VAR, EXECUTABLE_VAR, DLL_EXTENSION_VAR, PLATFORM_DIR_VAR]
+
+# any of above strings appearing in a string would indicate that it's platform-specific
+PLATFORM_SPECIFIC_RE = re.compile("|".join(map(lambda v: re.escape(v), PLATFORM_SPECIFIC_VARS)))
 
 # Path to directory containing clones of all the SoarGroup repositories
 SOAR_GROUP_REPOS_HOME = os.environ["SOAR_GROUP_REPOS_HOME"]
@@ -175,68 +186,89 @@ def zip_project(projectName, projects: Dict[str, ProjectEntry]):
                 zinfo.internal_attr = 0
                 zinfo.create_system = 3
 
-def multiplatformize_project(projectName, projects: Dict[str, ProjectEntry]):
+def _specialize_for_windows(a: str, b:str):
+    a = a.replace(LAUNCH_EXTENSION_VAR, ".bat")
+    a = a.replace(EXECUTABLE_VAR, ".exe")
+    a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[WINDOWS_PLATFORM_ID])
+    b = b.replace("^", "")
+    b = b.replace(PLATFORM_DIR_VAR, WINDOWS_PLATFORM_ID)
+    if (DLL_EXTENSION_VAR in a):
+        if ("_Python_sml_ClientInterface" in a):
+            a = a.replace(DLL_EXTENSION_VAR, ".pyd")
+        else:
+            a = a.replace(DLL_EXTENSION_VAR, ".dll")
+            d,f = os.path.split(a)
+            if f.startswith('lib'):
+                a = os.path.join(d,f[3:])
+    return a, b
+
+def multiplatformize_project(projectName:str, project: ProjectEntry):
+    # remove leading "multiplatform-"
+    project_type = project.type[project.type.find("-")+1:]
+
     print (f"Creating multi-platform project {projectName}")
-    new_entry = ProjectEntry(type='zip', out=projects[projectName].out)
+    new_entry = ProjectEntry(type=project_type, out=project.out)
+
+    platform_specific_copy_list = []
+    for a,b in project.copyList:
+        if PLATFORM_SPECIFIC_RE.search(b):
+            platform_specific_copy_list.append((a,b))
+        elif PLATFORM_SPECIFIC_RE.search(a):
+            a, b = _specialize_for_windows(a, b)
+            new_entry.copyList.append((a,b))
+        else:
+            new_entry.copyList.append((a,b))
+
+    print(f" - Found {len(platform_specific_copy_list)} platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", platform_specific_copy_list)))
+    print(f" - Not platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", new_entry.copyList)))
+
 
     print (" - Specializing files for Windows...")
-    for a,b in projects[projectName].copyList:
-        a = a.replace(".$LAUNCH_EXTENSION", ".bat")
-        a = a.replace(".$EXECUTABLE", ".exe")
-        a = a.replace("$COMPILE_DIR", COMPILED_DIRS[WINDOWS_PLATFORM_ID])
-        b = b.replace("^", "")
-        b = b.replace("$PLATFORM_DIR", WINDOWS_PLATFORM_ID)
-        if (".$DLL_EXTENSION" in a):
-            if ("_Python_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".pyd")
-            else:
-                a = a.replace(".$DLL_EXTENSION", ".dll")
-                d,f = os.path.split(a)
-                if f.startswith('lib'):
-                    a = os.path.join(d,f[3:])
+    for a,b in platform_specific_copy_list:
+        a, b = _specialize_for_windows(a, b)
         new_entry.copyList.append((a,b))
         print (f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for Linux...")
-    for a,b in projects[projectName].copyList:
+    for a,b in platform_specific_copy_list:
         if (b.find("^") == -1):
-            a = a.replace(".$DLL_EXTENSION", ".so")
-            a = a.replace(".$EXECUTABLE", "")
-            a = a.replace(".$LAUNCH_EXTENSION", ".sh")
-            a = a.replace("$COMPILE_DIR", COMPILED_DIRS[LINUX_PLATFORM_ID])
-            b = b.replace("$PLATFORM_DIR", LINUX_PLATFORM_ID)
+            a = a.replace(DLL_EXTENSION_VAR, ".so")
+            a = a.replace(EXECUTABLE_VAR, "")
+            a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
+            a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[LINUX_PLATFORM_ID])
+            b = b.replace(PLATFORM_DIR_VAR, LINUX_PLATFORM_ID)
             new_entry.copyList.append((a,b))
             print(f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for macOS x86-64...")
-    for a,b in projects[projectName].copyList:
+    for a,b in platform_specific_copy_list:
         if (b.find("^") == -1):
-            a = a.replace("$COMPILE_DIR", COMPILED_DIRS[MAC_x86_64_PLATFORM_ID])
-            a = a.replace(".$LAUNCH_EXTENSION", ".sh")
-            a = a.replace(".$EXECUTABLE", "")
+            a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[MAC_x86_64_PLATFORM_ID])
+            a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
+            a = a.replace(EXECUTABLE_VAR, "")
             if ("libJava_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".jnilib")
+                a = a.replace(DLL_EXTENSION_VAR, ".jnilib")
             elif ("_Python_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".so")
+                a = a.replace(DLL_EXTENSION_VAR, ".so")
             else:
-                a = a.replace(".$DLL_EXTENSION", ".dylib")
-            b = b.replace("$PLATFORM_DIR", MAC_x86_64_PLATFORM_ID)
+                a = a.replace(DLL_EXTENSION_VAR, ".dylib")
+            b = b.replace(PLATFORM_DIR_VAR, MAC_x86_64_PLATFORM_ID)
             new_entry.copyList.append((a,b))
             print(f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for macOS ARM64...")
-    for a,b in projects[projectName].copyList:
+    for a,b in platform_specific_copy_list:
         if (b.find("^") == -1):
-            a = a.replace("$COMPILE_DIR", COMPILED_DIRS[MAC_ARM64_PLATFORM_ID])
-            a = a.replace(".$LAUNCH_EXTENSION", ".sh")
-            a = a.replace(".$EXECUTABLE", "")
+            a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[MAC_ARM64_PLATFORM_ID])
+            a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
+            a = a.replace(EXECUTABLE_VAR, "")
             if ("libJava_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".jnilib")
+                a = a.replace(DLL_EXTENSION_VAR, ".jnilib")
             elif ("_Python_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".so")
+                a = a.replace(DLL_EXTENSION_VAR, ".so")
             else:
-                a = a.replace(".$DLL_EXTENSION", ".dylib")
-            b = b.replace("$PLATFORM_DIR", MAC_ARM64_PLATFORM_ID)
+                a = a.replace(DLL_EXTENSION_VAR, ".dylib")
+            b = b.replace(PLATFORM_DIR_VAR, MAC_ARM64_PLATFORM_ID)
             new_entry.copyList.append((a,b))
             print(f"   - Adding zip operation: {a} --> {b}")
 
@@ -249,9 +281,10 @@ def print_attr(fileName):
 
 def __generate_multiplatform_projects(projects: Dict[str, ProjectEntry]):
     new_projects: Dict[str, ProjectEntry] = {}
-    for name in projects:
-        if projects[name].type == "multiplatform-zip":
-            new_projects[name + "-Multiplatform"] = multiplatformize_project(name, projects)
+    for name, project in projects.items():
+        project_type = projects[name].type
+        if project_type.startswith("multiplatform-"):
+            new_projects[name + "-Multiplatform"] = multiplatformize_project(name, project)
 
     return new_projects
 
