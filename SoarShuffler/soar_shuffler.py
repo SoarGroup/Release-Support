@@ -113,12 +113,12 @@ def copy_project(projectName, projects: Dict[str, ProjectEntry]):
                 print (f"Creating directory {destination}")
                 destination.mkdir(parents=True)
         if (source.is_dir()):
-            actual_dest = destination / os.path.basename(source)
-            if actual_dest.exists():
-                print (f" - Skipping directory copy: {source} --> {actual_dest} (already exists)")
+            # destination = destination / os.path.basename(source)
+            if destination.exists():
+                print (f" - Skipping directory copy: {source} --> {destination} (already exists)")
                 continue
-            print (f" - Performing dir copy: {source} --> {actual_dest}")
-            shutil.copytree(source, actual_dest, ignore=ignore_list)
+            print (f" - Performing dir copy: {source} --> {destination}")
+            shutil.copytree(source, destination, ignore=ignore_list)
         else:
             print (f" - Performing file copy: {source} --> {destination}")
             shutil.copy2(source, destination)
@@ -127,14 +127,16 @@ def zip_project(projectName, projects: Dict[str, ProjectEntry]):
     print(f"Zipping up project {projectName}")
     seen_list = list()
 
-    destination_zip = OUTPUT_DIR / projects[projectName].out / (projectName+".zip")
+    project = projects[projectName]
+
+    destination_zip = OUTPUT_DIR / project.out / (projectName+".zip")
     destination_dir = destination_zip.parent
     if (not destination_dir.exists()):
         print (" - Creating directory"), destination_dir
         destination_dir.mkdir(parents=True)
 
     with zipfile.ZipFile(destination_zip, 'w', compression=zipfile.ZIP_DEFLATED) as dest_zip:
-        for a,b in projects[projectName].copyList:
+        for a,b in project.copyList:
             source = Path(a)
             platform_suffix = ""
             for platform_id in PLATFORM_IDs:
@@ -142,10 +144,11 @@ def zip_project(projectName, projects: Dict[str, ProjectEntry]):
                     b = b.replace(f"$SPECIALIZE-{platform_id}", "")
                     platform_suffix = "-" + platform_id
             if b == ROOT_VAR:
-                destination = os.path.join(projectName)
+                destination = Path(projectName)
             else:
-                destination = os.path.join(projectName,b)
+                destination = Path(projectName, b)
             if (source.is_dir()):
+                # destination = destination / os.path.basename(source)
                 for root, dirs, files in os.walk(source):
                     if (".svn" in root or ".git" in root):
                         print (f" - Ignoring version control directory {root}")
@@ -212,20 +215,6 @@ def multiplatformize_project(projectName:str, project: ProjectEntry):
 
     print (f"Creating multi-platform project {projectName}")
     new_entry = ProjectEntry(type=project_type, out=project.out)
-
-    # platform_specific_copy_list = []
-    # for a,b in project.copyList:
-    #     if PLATFORM_SPECIFIC_RE.search(b):
-    #         platform_specific_copy_list.append((a,b))
-    #     elif PLATFORM_SPECIFIC_RE.search(a):
-    #         a, b = _specialize_for_windows(a, b)
-    #         new_entry.copyList.append((a,b))
-    #     else:
-    #         new_entry.copyList.append((a,b))
-
-    # print(f" - Found {len(platform_specific_copy_list)} platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", platform_specific_copy_list)))
-    # print(f" - Not platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", new_entry.copyList)))
-
 
     print (" - Specializing files for Windows...")
     for a,b in project.copyList:

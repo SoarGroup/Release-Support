@@ -72,13 +72,13 @@ This file specifies how projects are zipped up and files are moved around.  Curr
 
 - The first line of each project contains only the project name and delimits one project from another.  Any line that does NOT contain an equal sign "=" is considered a new project name.
 - Other lines can either specify a parameter describing that project or how to move or organize files within the project
-  - Parameters:  There are two parameters you can set for a project:  type and out
-      - Type
+  - Parameters:  There are three parameters you can set for a project:  type, out and copyContents
+      - type
           - 'zip': zip up the files described in the project
           - 'copy' : copy files from one directory to another as descirbed in the project
           - 'multiplatform-zip/copy': same as zip/copy, but copy different version of platform-specific items like libraries and launch scripts.  Project descriptions of this type contain variables telling it which files need special versions and where it can find them.
           - For example, "type=multiplatform-zip" will create five zips for a particular project description
-      - Out
+      - out
           - This parameter specified where in the output direct it places the final zip or copied files.
           - For example, "out=SoarSuite\" will move the final results into Output Directory\SoarSuite
   - File organization desciptors:
@@ -104,3 +104,9 @@ Known Issues
 ============
 - When launching, the script will empty out the output directory.  Sometimes it doesn't wait long enough for the the output directory to be deleted.  If you get an error related to that, just run it again.
 - There is code to only re-zip files whose contents have changed.  It doesn't seem to always work properly, but the whole script works fast enough that fixing it is not a high priority.
+
+============
+Wish List
+============
+
+* Differentiate directories and files in the project description file.  This would allow us to specify whether we want the directory contents or the directory itself, and would avoid headaches caused by accidentally nesting output directories.
