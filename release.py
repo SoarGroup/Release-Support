@@ -146,7 +146,7 @@ def clone_repos(step: Step):
 def manual_pdf(step: Step):
     print(
         (
-            f"Step {step.value}: Grab the latest manual build from this "
+            f"Step {step.value}: Grab the latest SoarManual build from this "
             "repository's GH Actions artifacts and place it in pdf/."
         )
     )
@@ -239,7 +239,7 @@ def run_soar_shuffler(step: Step):
             "between runs, just to make sure you aren't keeping any old files in the release."
         )
     )
-    step.proceed(check_function=lambda: SOAR_SHUFFLER_OUTPUT_DIR.resolve(strict=True))
+    step.proceed(check_function=lambda: (SOAR_SHUFFLER_OUTPUT_DIR/f"SoarSuite_{SOAR_RELEASE_VERSION}-Multiplatform.zip").resolve(strict=True))
 
 
 def inspect_release(step: Step):
@@ -304,6 +304,11 @@ def main(args):
     gather_jars(step_counter)
     run_soar_shuffler(step_counter)
     inspect_release(step_counter)
+    upload_to_github(step_counter)
+    git_tag(step_counter)
+    update_website(step_counter)
+
+    print("Release complete! 🎊🥳🥂, 😪🛌😴")
 
 
 if __name__ == "__main__":
