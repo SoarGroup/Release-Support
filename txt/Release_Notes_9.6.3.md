@@ -7,6 +7,8 @@ This release of Soar includes lots of VisualSoar goodies.
 * New chunking setting, automatically-create-singletons, on by default
   * In our work we've found that we usually want all attributes to be singletons by default unless explicitly specified otherwise. This setting attempts creating singletons for every string attribute. We expect this to be a saner default for all users, and think it unlikely to have a negative effect on existing projects. If you have a project that relies on non-singleton attributes, you can disable this setting by setting `chunking automatically-create-singletons off`.
 
+* Linux users: Soar was compiled on the recent Ubuntu 24.04, so you may need to update your system or libstdc++ to run the included binaries (or else build from source yourself).
+
 ## New Features
 
 * Visual-Soar improvements (thanks to amnuxoll)

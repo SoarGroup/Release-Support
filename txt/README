@@ -14,6 +14,8 @@ be disabled with `chunking automatically-create-singletons off`.
 
 * SVS can be disabled/enabled for just substates.
 
+* Linux users: Soar was compiled on the recent Ubuntu 24.04, so you may need to update your system or libstdc++ to run the included binaries (or else build from source yourself).
+
 The full release notes can be found in their own file.
 
 ====================
