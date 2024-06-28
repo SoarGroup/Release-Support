@@ -296,8 +296,6 @@ SoarSuite_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
-  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=$ROOT
 
 # can't compile at the moment
 #  $COMPILE_DIR/svs_viewer.$EXECUTABLE=bin/$PLATFORM_DIR
@@ -328,15 +326,6 @@ SoarSuite_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/VisualSoar.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/Eaters.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/TankSoar.$LAUNCH_EXTENSION=$ROOT
-
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=Tutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 2 - Interacting with an Environment.pdf=Tutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 3 - Subgoals.pdf=Tutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 4 - Simple Problem-Solving.pdf=Tutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 5 - Planning and Learning.pdf=Tutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 6 - Reinforcement Learning.pdf=Tutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 7 - SMem.pdf=Tutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 8 - EpMem.pdf=Tutorial
 
   $SOAR_GROUP_REPOS_HOME/Agents/default=Agents
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Agents_readme.md=Agents/

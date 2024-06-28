@@ -109,12 +109,16 @@ def copy_project(projectName, projects: Dict[str, ProjectEntry]):
         else:
             destination = destination_path / b
             print(f" - Checking if destination {destination} exists")
-            if (not destination.exists()):
+            if (not destination.exists() and not source.is_dir()):
                 print (f"Creating directory {destination}")
                 destination.mkdir(parents=True)
         if (source.is_dir()):
-            print (f" - Performing dir copy: {source} --> {destination}")
-            shutil.copytree(source, destination / os.path.basename(source), ignore=ignore_list)
+            actual_dest = destination / os.path.basename(source)
+            if actual_dest.exists():
+                print (f" - Skipping directory copy: {source} --> {actual_dest} (already exists)")
+                continue
+            print (f" - Performing dir copy: {source} --> {actual_dest}")
+            shutil.copytree(source, actual_dest, ignore=ignore_list)
         else:
             print (f" - Performing file copy: {source} --> {destination}")
             shutil.copy2(source, destination)
@@ -209,28 +213,28 @@ def multiplatformize_project(projectName:str, project: ProjectEntry):
     print (f"Creating multi-platform project {projectName}")
     new_entry = ProjectEntry(type=project_type, out=project.out)
 
-    platform_specific_copy_list = []
-    for a,b in project.copyList:
-        if PLATFORM_SPECIFIC_RE.search(b):
-            platform_specific_copy_list.append((a,b))
-        elif PLATFORM_SPECIFIC_RE.search(a):
-            a, b = _specialize_for_windows(a, b)
-            new_entry.copyList.append((a,b))
-        else:
-            new_entry.copyList.append((a,b))
+    # platform_specific_copy_list = []
+    # for a,b in project.copyList:
+    #     if PLATFORM_SPECIFIC_RE.search(b):
+    #         platform_specific_copy_list.append((a,b))
+    #     elif PLATFORM_SPECIFIC_RE.search(a):
+    #         a, b = _specialize_for_windows(a, b)
+    #         new_entry.copyList.append((a,b))
+    #     else:
+    #         new_entry.copyList.append((a,b))
 
-    print(f" - Found {len(platform_specific_copy_list)} platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", platform_specific_copy_list)))
-    print(f" - Not platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", new_entry.copyList)))
+    # print(f" - Found {len(platform_specific_copy_list)} platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", platform_specific_copy_list)))
+    # print(f" - Not platform-specific files: " + "\n".join(map(lambda pair: f"{pair[0]}->{pair[1]}", new_entry.copyList)))
 
 
     print (" - Specializing files for Windows...")
-    for a,b in platform_specific_copy_list:
+    for a,b in project.copyList:
         a, b = _specialize_for_windows(a, b)
         new_entry.copyList.append((a,b))
         print (f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for Linux...")
-    for a,b in platform_specific_copy_list:
+    for a,b in project.copyList:
         if (b.find("^") == -1):
             a = a.replace(DLL_EXTENSION_VAR, ".so")
             a = a.replace(EXECUTABLE_VAR, "")
@@ -241,7 +245,7 @@ def multiplatformize_project(projectName:str, project: ProjectEntry):
             print(f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for macOS x86-64...")
-    for a,b in platform_specific_copy_list:
+    for a,b in project.copyList:
         if (b.find("^") == -1):
             a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[MAC_x86_64_PLATFORM_ID])
             a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
@@ -257,7 +261,7 @@ def multiplatformize_project(projectName:str, project: ProjectEntry):
             print(f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for macOS ARM64...")
-    for a,b in platform_specific_copy_list:
+    for a,b in project.copyList:
         if (b.find("^") == -1):
             a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[MAC_ARM64_PLATFORM_ID])
             a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
