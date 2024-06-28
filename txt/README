@@ -1,17 +1,18 @@
 =========================
-=    Soar 9.6.2 README  =
-=      October  2023    =
+=    Soar 9.6.3 README  =
+=      June  2024    =
 =========================
 
-Welcome to Soar!  Soar 9.6.2 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements.
+Welcome to Soar!  Soar 9.6.3 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements.
 
-* VisualSoar contains several new features, including custom support for custom templates and a new "find all productions" search option. There's also now a manual included.
+* VisualSoar has improved support for version control and collaboration, including datamap import, opening projects read-only, and reduced commit noise.
 
-* The debugger now supports full-featured log filtering, and the display is now compatible with dark mode. We also include new shortcuts for zooming in and out.
+* The debugger has been made more stable for dynamic environments that add and remove many agents.
 
-* SoarCLI now exits on EOF, making it possible to control it via pipes (or tools like expect).
+* Chunking now creates singletons by default. This should be a better default for most projects, but it can
+be disabled with `chunking automatically-create-singletons off`.
 
-* Some Soar warnings and static analyses have been improved to give the user more actionable feedback around malformed rules.
+* SVS can be disabled/enabled for just substates.
 
 The full release notes can be found in their own file.
 
@@ -19,9 +20,9 @@ The full release notes can be found in their own file.
 Official Soar Manual
 ====================
 
-The 9.6.2 edition of the Soar Manual is included here for your reference. You can also view it online at:
+The 9.6.3 edition of the Soar Manual is included here for your reference. You can also view it online at:
 
-https://soar.eecs.umich.edu/downloads/SoarManual.pdf
+https://soar.eecs.umich.edu/soar_manual/
 
 =========
 Launching
@@ -191,3 +192,15 @@ Announcements and high-level questions and discussions related to Soar can be fo
 
 - First join the mailing list at https://groups.google.com/g/soar-cognitive-architecture
 - Then send your questions to soar-cognitive-architecture@googlegroups.com
+
+If you discover issues with Soar or would like to request a new feature or documentation,
+please do not hesitate to file bugs or feature requests on our issue tracker at github:
+
+     https://github.com/SoarGroup/Soar/issues
+
+To avoid redundant entries, please search for duplicate issues first.
+
+Pull requests and patches to improve Soar, its documentation or tools are very welcome.
+
+If you would like to fund further development of Soar, please reach out to John Laird:
+[laird@umich.edu](laird@umich.edu).

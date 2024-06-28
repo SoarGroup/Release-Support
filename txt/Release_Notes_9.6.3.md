@@ -1,6 +1,6 @@
 # Soar 9.6.3 Release Notes, 2024
 
-This release of Soar includes TODO: summary here
+This release of Soar includes lots of VisualSoar goodies.
 
 ## Breaking Changes
 
@@ -10,34 +10,51 @@ This release of Soar includes TODO: summary here
 ## New Features
 
 * Visual-Soar improvements (thanks to amnuxoll)
-  * TODO
+  * A datamap can import the datamap of another project
+  * Projects can be opened read-only
+  * Less change noise, i.e. more friendly towards version control
+  * Automatically opens the last project on startup; new "Open Recent" menu option
+  * Parser now supports LTI predicates
+  * Lots more smaller improvements
 
 * You can pip-install Soar! (thanks to ShadowJonathan)
   * `pip install soar-sml[compat]` is a drop-in replacement for manually installing Soar somewhere and adding its path to your PYTHONPATH environment variable.
   * Note that this does not come with the debugger or other Java applications.
 * New svs commands `--disable-in-substates` and `--enable-in-substates`. By default SVS copies the entire scene graph into each substate. This can be disabled with `--disable-in-substates` to save memory and improve performance. This can be re-enabled with `--enable-in-substates` if you need to access the scene graph in substates.
+* Python bindings are now compatible with all Python versions 3.2 and up, rather than only with the minor version that was used to build Soar. This is thanks to the work of ShadowJonathan.
+
+## New Website
+
+Thanks to Moritz Schmidt, we have a new website! The URL remains the same: https://soar.eecs.umich.edu. New features include:
+
+* HTML versions of the manual and the tutorial
+* Snappy full-text search based on lunr.js
+* Much improved editing/deployment workflow based on GitHub pages. We also get the full power of GitHub actions, and use it to automatically check for dead links, for example.
+
+Note that some pages and download links still need to be ported. The manual and tutorial still need to be fully inspected for correctness, and the images in particular still need work.
 
 ## Other Changes
 
 * Bug fixes
   * Improved Java Debugger stability when adding/removing multiple agents during an application lifetime
   * SVS can no longer be disabled when the current state is a subgoal. Allowing this previously led to undefined behavior.
+  * Fixed `Agent.GetLastCommandLineResult()` returning true when the last command actually failed
+  * Lots of Visual-Soar bug fixes (thanks to amnuxoll) around parsing, file saving, data preservation, and more
 
-* Visual-Soar bug fixes (thanks to amnuxoll):
-  * TODO
+* Java debugger can now be built for ARM Linux (though this is not distributed at this time)
 
 * Infrastructure improvements
-    * TODO
+    * ARM Mac now built in CI
 
 * Cruft and cleanup
-    * TODO
+    * lots of compiler warning fixes, and compiler strictness increased
 
 ## General Information
 
 Soar can be downloaded by following the download link on the Soar home
 page at:
 
-     http://soar.eecs.umich.edu/articles/downloads/soar-suite
+     https://soar.eecs.umich.edu/
 
 Soar releases include source code, demo programs, and a number of
 applications that serve as examples of how to interface Soar to an
@@ -70,3 +87,8 @@ tracker at github:
      https://github.com/SoarGroup/Soar/issues
 
 To avoid redundant entries, please search for duplicate issues first.
+
+Pull requests and patches to improve Soar, its documentation or tools are very welcome.
+
+If you would like to fund further development of Soar, please reach out to John Laird:
+[laird@umich.edu](laird@umich.edu).

@@ -2,12 +2,14 @@
 Building Soar
 =============
 
+TODO: Update this file to reflect the new build system.
+
 To get the most up-to-date build instructions and tips, please visit the
 following pages on the Soar wiki:
 
 (1) Windows Build Instructions
     http://soar.eecs.umich.edu/articles/articles/building-soar-aa/80-building-on-windows
-    
+
 (2) Linux Build Instructions
     http://soar.eecs.umich.edu/articles/articles/building-soar-aa/81-building-on-linux
 
