@@ -1,4 +1,15 @@
-
+Documentation
+  type=copy
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 2 - Interacting with an Environment.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 3 - Subgoals.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 4 - Simple Problem-Solving.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 5 - Planning and Learning.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 6 - Reinforcement Learning.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 7 - SMem.pdf=Documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 8 - EpMem.pdf=Documentation
 Algebra_Agent
   type=zip
   out=Agents/
@@ -131,25 +142,6 @@ Water_Jug_Tie_Agent
   type=zip
   out=Agents/
   $SOAR_GROUP_REPOS_HOME/Agents/water-jug-tie=$ROOT
-SoarManual
-  type=copy
-  out=Documentation/
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=$ROOT
-VisualSoarManual
-  type=copy
-  out=Documentation/
-  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=$ROOT
-SoarTutorial
-  type=copy
-  out=Documentation/
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=SoarTutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 2 - Interacting with an Environment.pdf=SoarTutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 3 - Subgoals.pdf=SoarTutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 4 - Simple Problem-Solving.pdf=SoarTutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 5 - Planning and Learning.pdf=SoarTutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 6 - Reinforcement Learning.pdf=SoarTutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 7 - SMem.pdf=SoarTutorial
-  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 8 - EpMem.pdf=SoarTutorial
 Episodic_Memory_Sizer
     type=zip
     out=AgentDevelopmentTools/
@@ -296,6 +288,17 @@ SoarSuite_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
+
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/doc/usersman/VisualSoar_UsersManual.pdf=documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/SoarManual.pdf=documentation
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=documentation/SoarTutorial
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 2 - Interacting with an Environment.pdf=documentation/SoarTutorial
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 3 - Subgoals.pdf=documentation/SoarTutorial
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 4 - Simple Problem-Solving.pdf=documentation/SoarTutorial
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 5 - Planning and Learning.pdf=documentation/SoarTutorial
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 6 - Reinforcement Learning.pdf=documentation/SoarTutorial
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 7 - SMem.pdf=documentation/SoarTutorial
+  $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 8 - EpMem.pdf=documentation/SoarTutorial
 
 # can't compile at the moment
 #  $COMPILE_DIR/svs_viewer.$EXECUTABLE=bin/$PLATFORM_DIR
