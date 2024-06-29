@@ -80,7 +80,7 @@ def bump_version(step: Step):
     )
     step.proceed()
 
-    print(f"Step {step.value}: Update version numbers in txt/README.")
+    print(f"Step {step.value}: Update version numbers in txt/README.md.")
     step.proceed()
 
 
@@ -98,7 +98,7 @@ def release_notes(step: Step):
 
     print(
         (
-            f"Step {step.value}: Add some cursory release notes in txt/README. "
+            f"Step {step.value}: Add some cursory release notes in txt/README.md. "
             "Ensure full correctness of file."
         )
     )
@@ -263,7 +263,7 @@ def upload_to_github(step: Step):
         (
             f"Step {step.value}: Create a new release on GitHub: https://github.com/SoarGroup/Soar/releases/new. "
             f"Type 'releases/{SOAR_RELEASE_VERSION} into the tag field and select 'Create new tag'."
-            "Copy the basic change notes from txt/README to the description and upload "
+            "Copy the basic change notes from txt/README.md to the description and upload "
             f"Soar_{SOAR_RELEASE_VERSION}-Multiplatform.zip and all of the documentation PDFs."
             "Leave 'Set as a pre-release' *unchecked*, 'Set as the latest release' *checked* and hit 'Publish release'."
         )

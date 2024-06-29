@@ -93,4 +93,4 @@ To avoid redundant entries, please search for duplicate issues first.
 Pull requests and patches to improve Soar, its documentation or tools are very welcome.
 
 If you would like to fund further development of Soar, please reach out to John Laird:
-[laird@umich.edu](laird@umich.edu).
+[laird@umich.edu](mailto:laird@umich.edu).

@@ -304,7 +304,7 @@ SoarSuite_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/SoarJavaDebugger.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/VisualSoar.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Building_Soar.md=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
+  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
   $COMPILE_DIR/libCSharp_sml_ClientInterface.$DLL_EXTENSION=bin/$PLATFORM_DIR
@@ -346,7 +346,7 @@ SoarTutorial_$VERSION
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/setup.$LAUNCH_EXTENSION=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/scripts/TankSoar.$LAUNCH_EXTENSION=$ROOT
   $COMPILE_DIR/tcl=bin/tcl
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
+  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Agents_readme.md=Agents/
   $SOAR_GROUP_REPOS_HOME/Release-Support/pdf/Soar Tutorial Part 1 - Simple Agents.pdf=Tutorial

@@ -23,7 +23,7 @@ SoarSuite_$VERSION
   $COMPILE_DIR/include=include
 
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Building_Soar.md=$ROOT
-  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README=$ROOT
+  $SOAR_GROUP_REPOS_HOME/Release-Support/txt/README.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/Release_Notes_$VERSION.md=$ROOT
   $SOAR_GROUP_REPOS_HOME/Release-Support/txt/license.txt=$ROOT
 
