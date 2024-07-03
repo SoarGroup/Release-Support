@@ -11,12 +11,22 @@ SOAR_SHUFFLER_DIR = PROJECT_DIR / "SoarShuffler"
 
 SOAR_SHUFFLER_OUTPUT_DIR = SOAR_SHUFFLER_DIR / f"Soar-Release-{SOAR_RELEASE_VERSION}"
 
-SOAR_GROUP_REPOS_HOME = Path(environ.get("SOAR_GROUP_REPOS_HOME"))
 
-SOAR_WIN_X86_64_COMPILED_DIR = Path(environ.get("SOAR_WIN_X86_64_COMPILED_DIR"))
-SOAR_LINUX_X86_64_COMPILED_DIR = Path(environ.get("SOAR_LINUX_X86_64_COMPILED_DIR"))
-SOAR_MAC_X86_64_COMPILED_DIR = Path(environ.get("SOAR_MAC_X86_64_COMPILED_DIR"))
-SOAR_MAC_ARM64_COMPILED_DIR = Path(environ.get("SOAR_MAC_ARM64_COMPILED_DIR"))
+def get_required_env_var_path(name):
+    if p := environ.get(name):
+        return Path(p)
+    else:
+        raise ValueError(f"{name} is not set")
+
+
+SOAR_GROUP_REPOS_HOME = get_required_env_var_path("SOAR_GROUP_REPOS_HOME")
+SOAR_WIN_X86_64_COMPILED_DIR = get_required_env_var_path("SOAR_WIN_X86_64_COMPILED_DIR")
+SOAR_WIN_X86_64_COMPILED_DIR = get_required_env_var_path("SOAR_WIN_X86_64_COMPILED_DIR")
+SOAR_LINUX_X86_64_COMPILED_DIR = get_required_env_var_path(
+    "SOAR_LINUX_X86_64_COMPILED_DIR"
+)
+SOAR_MAC_X86_64_COMPILED_DIR = get_required_env_var_path("SOAR_MAC_X86_64_COMPILED_DIR")
+SOAR_MAC_ARM64_COMPILED_DIR = get_required_env_var_path("SOAR_MAC_ARM64_COMPILED_DIR")
 
 
 @dataclass
@@ -239,7 +249,12 @@ def run_soar_shuffler(step: Step):
             "between runs, just to make sure you aren't keeping any old files in the release."
         )
     )
-    step.proceed(check_function=lambda: (SOAR_SHUFFLER_OUTPUT_DIR/f"SoarSuite_{SOAR_RELEASE_VERSION}-Multiplatform.zip").resolve(strict=True))
+    step.proceed(
+        check_function=lambda: (
+            SOAR_SHUFFLER_OUTPUT_DIR
+            / f"SoarSuite_{SOAR_RELEASE_VERSION}-Multiplatform.zip"
+        ).resolve(strict=True)
+    )
 
 
 def inspect_release(step: Step):
@@ -271,10 +286,12 @@ def upload_to_github(step: Step):
     step.proceed()
 
 
-def git_tag(step: Step):
+def commit_downloads(step: Step):
     print(
         (
-            f"Step {step.value}: Push {SOAR_RELEASE_VERSION} tags for Release-Support and VisualSoar."
+            f"Step {step.value}: Commit the various generated zip files to the SoarGroup/website-downloads repo "
+            f"(except for Soar_{SOAR_RELEASE_VERSION}-Multiplatform.zip). "
+            "It's likely that nothing here will have changed."
         )
     )
     step.proceed()
@@ -284,7 +301,17 @@ def update_website(step: Step):
     print(
         (
             f"Step {step.value}: Update the website with the new release information: https://github.com/SoarGroup/SoarGroup.github.io. "
-            "This includes adding a release announcement and updating download links for the manual and tutorial."
+            "This includes adding a release announcement and updating soar_version (which updates download links for the manual and tutorial), "
+            "as well as updating the release notes on the 'latest' download page."
+        )
+    )
+    step.proceed()
+
+
+def git_tag(step: Step):
+    print(
+        (
+            f"Step {step.value}: Push {SOAR_RELEASE_VERSION} tags for Release-Support, VisualSoar, SoarGroup.github.io, and website-downloads."
         )
     )
     step.proceed()
@@ -305,6 +332,7 @@ def main(args):
     run_soar_shuffler(step_counter)
     inspect_release(step_counter)
     upload_to_github(step_counter)
+    commit_downloads(step_counter)
     git_tag(step_counter)
     update_website(step_counter)
 

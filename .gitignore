@@ -1,3 +1,4 @@
-SoarShuffler/SoarRelease/
-SoarShuffler/.env
+.env
+SoarShuffler/Soar*/
+# changes often and is built in CI
 pdf/SoarManual.pdf
