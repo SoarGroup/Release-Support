@@ -32,15 +32,27 @@ New Features
     will no longer need to pass the class instance separately as (void*)userData, and can
     instead simply pass in the result of std::bind.
 
+() Improved production validity tests and warnings
+    - Soar now properly detects ungrounded (LHS not connected to a state) productions, refuses
+        to source them, and tells the user how to fix them.
+    - Some warnings related to bad production structure were previously hidden behind tracing
+        flags for chunking, and are now exposed by default.
+    - See https://github.com/SoarGroup/Soar/issues/377
+
 () More output filtering options in the debugger
     We rename "hide all" to "show only errors and top-level", then add a true "hide
     all" filter to complement that. We also separate messages from RHS writes, and add
     additional filter options for error and top-level. This covers all 14 output
     types, while still providing convenient checkboxes for common settings.
 
-() Better dark mode styling for the debugger
-    Previous versions of the debugger were very difficult to read on Mac in dark mode due
+() Ergonomic improvements to the debugger
+    - Previous versions of the debugger were very difficult to read on Mac in dark mode due
     to displaying black text on a dark background. The text now correctly shows as white.
+    - Scrolling behavior has been improved and stabilized. When the cursor is at the end of
+    the main window, newly-printed text triggers a scroll. Otherwise, the window stays put
+    where the user's cursor is.
+    - Shortcuts for copy/paste have been changed from ctrl to cmd on Mac
+    - New shortcuts have been added zooming in and out (increasing/decreasing the text size)
 
 () Documentation in generated Python SML bindings
     Doxygen comments from SML are now added as docstrings to the generated Python bindings
@@ -65,12 +77,14 @@ Other Changes
 
 () Infrastructure improvements
     - `load library` demo has been folded into automated tests
-    - CI now runs Python SML tests
+    - CI now runs Python and Tcl SML tests
     - Added support files for developing Soar with VSCode
     - Python version is now pinned in CI. This release, the compiled Python SML bindings
-        are compatible with Python 3.11.X. The generated Python code is compatible with
+        are compatible with Python 3.12.X. The generated Python code is compatible with
         older versions of Python, but the compiled bindings are not, so users with different
         version needs will need to compile their own bindings.
+    - Setup logic is now encapsulated in setup.bat and setup.sh, which is easier and less
+        error-prone for other tools dependent on Soar to re-use.
 
 () Cruft and cleanup
     - stopped exporting a large number of internal SML classes to SWIG clients

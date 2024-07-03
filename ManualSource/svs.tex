@@ -83,7 +83,7 @@ The working memory representation of the car and pole scene graph is
 
 Each state in working memory has its own scene graph.
 When a new state is created, it will receive an independent copy of its parent's scene graph.
-This is useful for performing look-ahead search, as it allows the agent to destructively modify the scene graph in a search state using mental imagery operations.
+This is useful for performing look-ahead search, as it allows the agent to destructively modify the scene graph in a search state using mental imagery operations. If you wish to turn off the scene graph copying behavior, you can disable it with \soar{svs --disable-in-substates}. You can also re-enable it with \soar{svs --enable-in-substates}.
 
 
 % ----------------------------------------------------------------------------

@@ -1,32 +1,30 @@
 =========================
-=    Soar 9.6.2 README  =
-=      September  2023    =
+=    Soar 9.6.3 README  =
+=      June  2024    =
 =========================
 
-Welcome to Soar!  Soar 9.6.2 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements. Note that the included Java tools, such as the Soar Java Debugger, now require at least Java 11 to run.
+Welcome to Soar!  Soar 9.6.3 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements.
 
-* VisualSoar has been updated with support for all Soar commands and subsytems, improved reliability and usability, and lots of bug fixes.
+* VisualSoar has improved support for version control and collaboration, including datamap import, opening projects read-only, and reduced commit noise.
 
-* Several Soar commands have been updated to be more consistent and easier to use.
+* The debugger has been made more stable for dynamic environments that add and remove many agents.
 
-* Soar now has better code compatibility with JSoar, supported by several new RHS functions and automatic conversion of unregistered RHS functions into exec calls.
+* Chunking now creates singletons by default. This should be a better default for most projects, but it can
+be disabled with `chunking automatically-create-singletons off`.
 
-* This release includes binaries for M1/M2 Macs for the first time.
+* SVS can be disabled/enabled for just substates.
 
-* This release includes C# bindings for all platforms for the first time.
+* Linux users: Soar was compiled on the recent Ubuntu 24.04, so you may need to update your system or libstdc++ to run the included binaries (or else build from source yourself).
 
-* GitHub Actions now build and test Soar on all supported platforms, making it easier than ever for you to contribute to Soar.
-
-The full release notes can be found in its own file.
+The full release notes can be found in their own file.
 
 ====================
 Official Soar Manual
 ====================
 
-The 9.6.2 edition of the Soar Manual is included here for your reference. However, the manual is continually updated, and the latest version can be
-found at:
+The 9.6.3 edition of the Soar Manual is included here for your reference. You can also view it online at:
 
-https://soar.eecs.umich.edu/downloads/SoarManual.pdf
+https://soar.eecs.umich.edu/soar_manual/
 
 =========
 Launching
@@ -35,12 +33,13 @@ Launching
 - Navigate to the folder you extracted to
 - Launch Soar
   - To launch Soar within a graphical user interface
+    - Install Java 11 or later
     - Windows users, run SoarJavaDebugger.bat
     - Linux and Mac users, run SoarJavaDebugger.sh
   - To launch Soar using a command line interface,
-    - Windows users, run Soar_CLI.bat
-    - Linux and Mac users, run Soar_CLI.sh
-    - You can also navigate to the /bin directory in a terminal and run the Soar executable directly. However, macOS users will need to run macOS_setup.command first (located in the root of the release directory) to avoid security warnings from the OS. This is done for you if you use one of the other launch scripts.
+    - Windows users, run SoarCLI.bat
+    - Linux and Mac users, run SoarCLI.sh
+    - You can also navigate to the /bin directory in a terminal and run the Soar executable directly. However, users should first run setup.sh or setup.bat to avoid permission and path issues. This is done for you if you use one of the other launch scripts.
 
 Launch options for the CLI and the java debugger are listed at the bottom of this document.
 
@@ -195,3 +194,15 @@ Announcements and high-level questions and discussions related to Soar can be fo
 
 - First join the mailing list at https://groups.google.com/g/soar-cognitive-architecture
 - Then send your questions to soar-cognitive-architecture@googlegroups.com
+
+If you discover issues with Soar or would like to request a new feature or documentation,
+please do not hesitate to file bugs or feature requests on our issue tracker at github:
+
+     https://github.com/SoarGroup/Soar/issues
+
+To avoid redundant entries, please search for duplicate issues first.
+
+Pull requests and patches to improve Soar, its documentation or tools are very welcome.
+
+If you would like to fund further development of Soar, please reach out to John Laird:
+[laird@umich.edu](mailto:laird@umich.edu).

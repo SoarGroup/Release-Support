@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from itertools import chain
 import os
 from pathlib import Path
+import re
 import shutil
 import sys
 from typing import Dict, List
@@ -19,6 +20,16 @@ import zipfile
 VERSION = os.environ.get("SOAR_RELEASE_VERSION")
 
 ROOT_VAR = "$ROOT"
+COMPILE_DIR_VAR = "$COMPILE_DIR"
+LAUNCH_EXTENSION_VAR = ".$LAUNCH_EXTENSION"
+EXECUTABLE_VAR = ".$EXECUTABLE"
+DLL_EXTENSION_VAR = ".$DLL_EXTENSION"
+PLATFORM_DIR_VAR = "$PLATFORM_DIR"
+
+PLATFORM_SPECIFIC_VARS = [COMPILE_DIR_VAR, LAUNCH_EXTENSION_VAR, EXECUTABLE_VAR, DLL_EXTENSION_VAR, PLATFORM_DIR_VAR]
+
+# any of above strings appearing in a string would indicate that it's platform-specific
+PLATFORM_SPECIFIC_RE = re.compile("|".join(map(lambda v: re.escape(v), PLATFORM_SPECIFIC_VARS)))
 
 # Path to directory containing clones of all the SoarGroup repositories
 SOAR_GROUP_REPOS_HOME = os.environ["SOAR_GROUP_REPOS_HOME"]
@@ -82,8 +93,6 @@ def __load_release_spec(spec_path):
     return projects
 
 def ignore_list(src, names):
-    import pdb
-    pdb.set_trace()
     return [n for n in names if n.startswith(".svn") or n.startswith(".git")]
 
 def copy_project(projectName, projects: Dict[str, ProjectEntry]):
@@ -100,12 +109,16 @@ def copy_project(projectName, projects: Dict[str, ProjectEntry]):
         else:
             destination = destination_path / b
             print(f" - Checking if destination {destination} exists")
-            if (not destination.exists()):
+            if (not destination.exists() and not source.is_dir()):
                 print (f"Creating directory {destination}")
                 destination.mkdir(parents=True)
         if (source.is_dir()):
+            # destination = destination / os.path.basename(source)
+            if destination.exists():
+                print (f" - Skipping directory copy: {source} --> {destination} (already exists)")
+                continue
             print (f" - Performing dir copy: {source} --> {destination}")
-            shutil.copytree(source, destination / os.path.basename(source), ignore=ignore_list)
+            shutil.copytree(source, destination, ignore=ignore_list)
         else:
             print (f" - Performing file copy: {source} --> {destination}")
             shutil.copy2(source, destination)
@@ -114,14 +127,16 @@ def zip_project(projectName, projects: Dict[str, ProjectEntry]):
     print(f"Zipping up project {projectName}")
     seen_list = list()
 
-    destination_zip = OUTPUT_DIR / projects[projectName].out / (projectName+".zip")
+    project = projects[projectName]
+
+    destination_zip = OUTPUT_DIR / project.out / (projectName+".zip")
     destination_dir = destination_zip.parent
     if (not destination_dir.exists()):
         print (" - Creating directory"), destination_dir
         destination_dir.mkdir(parents=True)
 
     with zipfile.ZipFile(destination_zip, 'w', compression=zipfile.ZIP_DEFLATED) as dest_zip:
-        for a,b in projects[projectName].copyList:
+        for a,b in project.copyList:
             source = Path(a)
             platform_suffix = ""
             for platform_id in PLATFORM_IDs:
@@ -129,10 +144,11 @@ def zip_project(projectName, projects: Dict[str, ProjectEntry]):
                     b = b.replace(f"$SPECIALIZE-{platform_id}", "")
                     platform_suffix = "-" + platform_id
             if b == ROOT_VAR:
-                destination = os.path.join(projectName)
+                destination = Path(projectName)
             else:
-                destination = os.path.join(projectName,b)
+                destination = Path(projectName, b)
             if (source.is_dir()):
+                # destination = destination / os.path.basename(source)
                 for root, dirs, files in os.walk(source):
                     if (".svn" in root or ".git" in root):
                         print (f" - Ignoring version control directory {root}")
@@ -177,68 +193,75 @@ def zip_project(projectName, projects: Dict[str, ProjectEntry]):
                 zinfo.internal_attr = 0
                 zinfo.create_system = 3
 
-def multiplatformize_project(projectName, projects: Dict[str, ProjectEntry]):
+def _specialize_for_windows(a: str, b:str):
+    a = a.replace(LAUNCH_EXTENSION_VAR, ".bat")
+    a = a.replace(EXECUTABLE_VAR, ".exe")
+    a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[WINDOWS_PLATFORM_ID])
+    b = b.replace("^", "")
+    b = b.replace(PLATFORM_DIR_VAR, WINDOWS_PLATFORM_ID)
+    if (DLL_EXTENSION_VAR in a):
+        if ("_Python_sml_ClientInterface" in a):
+            a = a.replace(DLL_EXTENSION_VAR, ".pyd")
+        else:
+            a = a.replace(DLL_EXTENSION_VAR, ".dll")
+            d,f = os.path.split(a)
+            if f.startswith('lib'):
+                a = os.path.join(d,f[3:])
+    return a, b
+
+def multiplatformize_project(projectName:str, project: ProjectEntry):
+    # remove leading "multiplatform-"
+    project_type = project.type[project.type.find("-")+1:]
+
     print (f"Creating multi-platform project {projectName}")
-    new_entry = ProjectEntry(type='zip', out=projects[projectName].out)
+    new_entry = ProjectEntry(type=project_type, out=project.out)
 
     print (" - Specializing files for Windows...")
-    for a,b in projects[projectName].copyList:
-        a = a.replace(".$LAUNCH_EXTENSION", ".bat")
-        a = a.replace(".$EXECUTABLE", ".exe")
-        a = a.replace("$COMPILE_DIR", COMPILED_DIRS[WINDOWS_PLATFORM_ID])
-        b = b.replace("^", "")
-        b = b.replace("$PLATFORM_DIR", WINDOWS_PLATFORM_ID)
-        if (".$DLL_EXTENSION" in a):
-            if ("_Python_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".pyd")
-            else:
-                a = a.replace(".$DLL_EXTENSION", ".dll")
-                d,f = os.path.split(a)
-                if f.startswith('lib'):
-                    a = os.path.join(d,f[3:])
+    for a,b in project.copyList:
+        a, b = _specialize_for_windows(a, b)
         new_entry.copyList.append((a,b))
         print (f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for Linux...")
-    for a,b in projects[projectName].copyList:
+    for a,b in project.copyList:
         if (b.find("^") == -1):
-            a = a.replace(".$DLL_EXTENSION", ".so")
-            a = a.replace(".$EXECUTABLE", "")
-            a = a.replace(".$LAUNCH_EXTENSION", ".sh")
-            a = a.replace("$COMPILE_DIR", COMPILED_DIRS[LINUX_PLATFORM_ID])
-            b = b.replace("$PLATFORM_DIR", LINUX_PLATFORM_ID)
+            a = a.replace(DLL_EXTENSION_VAR, ".so")
+            a = a.replace(EXECUTABLE_VAR, "")
+            a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
+            a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[LINUX_PLATFORM_ID])
+            b = b.replace(PLATFORM_DIR_VAR, LINUX_PLATFORM_ID)
             new_entry.copyList.append((a,b))
             print(f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for macOS x86-64...")
-    for a,b in projects[projectName].copyList:
+    for a,b in project.copyList:
         if (b.find("^") == -1):
-            a = a.replace("$COMPILE_DIR", COMPILED_DIRS[MAC_x86_64_PLATFORM_ID])
-            a = a.replace(".$LAUNCH_EXTENSION", ".sh")
-            a = a.replace(".$EXECUTABLE", "")
+            a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[MAC_x86_64_PLATFORM_ID])
+            a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
+            a = a.replace(EXECUTABLE_VAR, "")
             if ("libJava_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".jnilib")
+                a = a.replace(DLL_EXTENSION_VAR, ".jnilib")
             elif ("_Python_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".so")
+                a = a.replace(DLL_EXTENSION_VAR, ".so")
             else:
-                a = a.replace(".$DLL_EXTENSION", ".dylib")
-            b = b.replace("$PLATFORM_DIR", MAC_x86_64_PLATFORM_ID)
+                a = a.replace(DLL_EXTENSION_VAR, ".dylib")
+            b = b.replace(PLATFORM_DIR_VAR, MAC_x86_64_PLATFORM_ID)
             new_entry.copyList.append((a,b))
             print(f"   - Adding zip operation: {a} --> {b}")
 
     print (" - Specializing files for macOS ARM64...")
-    for a,b in projects[projectName].copyList:
+    for a,b in project.copyList:
         if (b.find("^") == -1):
-            a = a.replace("$COMPILE_DIR", COMPILED_DIRS[MAC_ARM64_PLATFORM_ID])
-            a = a.replace(".$LAUNCH_EXTENSION", ".sh")
-            a = a.replace(".$EXECUTABLE", "")
+            a = a.replace(COMPILE_DIR_VAR, COMPILED_DIRS[MAC_ARM64_PLATFORM_ID])
+            a = a.replace(LAUNCH_EXTENSION_VAR, ".sh")
+            a = a.replace(EXECUTABLE_VAR, "")
             if ("libJava_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".jnilib")
+                a = a.replace(DLL_EXTENSION_VAR, ".jnilib")
             elif ("_Python_sml_ClientInterface" in a):
-                a = a.replace(".$DLL_EXTENSION", ".so")
+                a = a.replace(DLL_EXTENSION_VAR, ".so")
             else:
-                a = a.replace(".$DLL_EXTENSION", ".dylib")
-            b = b.replace("$PLATFORM_DIR", MAC_ARM64_PLATFORM_ID)
+                a = a.replace(DLL_EXTENSION_VAR, ".dylib")
+            b = b.replace(PLATFORM_DIR_VAR, MAC_ARM64_PLATFORM_ID)
             new_entry.copyList.append((a,b))
             print(f"   - Adding zip operation: {a} --> {b}")
 
@@ -251,9 +274,10 @@ def print_attr(fileName):
 
 def __generate_multiplatform_projects(projects: Dict[str, ProjectEntry]):
     new_projects: Dict[str, ProjectEntry] = {}
-    for name in projects:
-        if projects[name].type == "multiplatform-zip":
-            new_projects[name + "-Multiplatform"] = multiplatformize_project(name, projects)
+    for name, project in projects.items():
+        project_type = projects[name].type
+        if project_type.startswith("multiplatform-"):
+            new_projects[name + "-Multiplatform"] = multiplatformize_project(name, project)
 
     return new_projects
 
@@ -261,8 +285,7 @@ def __generate_multiplatform_projects(projects: Dict[str, ProjectEntry]):
 def shuffle(spec_path):
     for path in chain(COMPILED_DIRS.values(), [SOAR_GROUP_REPOS_HOME]):
         if not Path(path).exists():
-            print(f"Error: {path} does not exist")
-            sys.exit(1)
+            raise ValueError(f"Error: {path} does not exist")
 
     clean_output_dir()
     all_projects = __load_release_spec(spec_path)
