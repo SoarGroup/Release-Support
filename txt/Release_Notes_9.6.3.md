@@ -2,6 +2,10 @@
 
 This release of Soar includes lots of VisualSoar goodies.
 
+## Addendum Aug. 19, 2024
+
+The release was re-created due to issues running on Mac.
+
 ## Breaking Changes
 
 * New chunking setting, automatically-create-singletons, on by default

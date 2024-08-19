@@ -27,7 +27,11 @@ macOS_quarantine_fix () {
   echo "macOS setup: removing quarantine attributes from Soar binaries..."
   for file in "soar" "libSoar.dylib" "libTcl_sml_ClientInterface.dylib" "libtclsoarlib.dylib" "_Python_sml_ClientInterface.so" "libCSharp_sml_ClientInterface.dylib" "sml_csharp.dll" "libJava_sml_ClientInterface.jnilib"; do
     echo "  Removing quarantine attributes from $file..."
-    xattr -d com.apple.quarantine "$THISDIR/$file" >/dev/null 2>&1 || { echo "   File already unquarantined"; true; }
+    if [ ! -f "$THISDIR/bin/$file" ]; then
+      echo "Error: could not unquarantine '$THISDIR/bin/$file' because it does not exist."
+      exit 1
+    fi
+    xattr -d com.apple.quarantine "$THISDIR/bin/$file" >/dev/null 2>&1 || { echo "   File already unquarantined"; true; }
   done
 }
 
