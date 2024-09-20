@@ -46,7 +46,7 @@ SoarSuite_$VERSION
   $COMPILE_DIR/tcl=bin/tcl
   $COMPILE_DIR/settings.soar=bin
   $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/Eaters_TankSoar.jar=bin
-  $SOAR_GROUP_REPOS_HOME/VisualSoar/VisualSoar.jar=bin
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/build/libs/VisualSoar.jar=bin
 
   $COMPILE_DIR/java/swt.jar=bin/$PLATFORM_DIR
   $COMPILE_DIR/java/jcommon-1.0.10.jar=bin/java

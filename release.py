@@ -194,6 +194,7 @@ def build_visual_soar(step: Step):
             "  - `sudo tlmgr install soul`"
             "  - `cd VisualSoar/doc/usersman`"
             "  - `pandoc -o VisualSoar_UsersManual.pdf VisualSoar_UsersManual.docx`"
+            " Then rename VisualSoar/build/libs/VisualSoar-<version>.jar without the version number."
         )
     )
 
@@ -204,6 +205,13 @@ def build_visual_soar(step: Step):
             / "doc"
             / "usersman"
             / "VisualSoar_UsersManual.pdf"
+        ).resolve(strict=True)
+        (
+            SOAR_GROUP_REPOS_HOME
+            / "VisualSoar"
+            / "build"
+            / "libs"
+            / "VisualSoar.jar"
         ).resolve(strict=True)
 
     step.proceed(check_function=check)
