@@ -130,10 +130,29 @@ smem --add {
 \end{verbatim}
 
 Unlike agent storage, declarative storage is automatically recursive.
-Thus, this command instance will add a new long-term identifier (represented by the temporary 'arithmetic' variable) with three augmentations.
+Thus, this command instance will add a new long-term identifier (represented by the temporary `arithmetic' variable) with three augmentations.
 The value of each augmentation will each become an LTI with two constant attribute/value pairs.
 Manual storage can be arbitrarily complex and use standard dot-notation.
-The add command also supports hardcoded LTI ids such as \soar{{@}1} in place of variables.
+
+The \soar{add} command also supports two methods for hardcoding LTIs.
+You can use an integer, such as \soar{{@}123}, which will be the literal ID in semantic memory.
+You can also use a string, such as \soar{{@}table}, which defines a name, or alias, for an LTI.
+This is purely a user convenience; it allows you to refer to an LTI by name
+or connect the same LTI across different \soar{add}s or files.
+
+For Example:
+
+\begin{verbatim}
+smem --add {
+    (@red ^name red ^is-a color)
+}
+smem --add {
+    (<rouge> ^word rouge ^concept @red)
+}
+\end{verbatim}
+
+These aliases are not visible to the agent and cannot be used in productions.
+However, they can be used in other CLI commands, such as \nameref{print}.
 
 \subsection{Storage Location}
 \index{smem!storage}
