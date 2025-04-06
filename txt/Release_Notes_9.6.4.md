@@ -47,7 +47,7 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
   * Far less likely to be corrupted
   * More human-readable
   * More machine readable (tool developers welcome!)
-  * More robust to collaboration (no non-deterministic output, fewer git conflicts)
+  * More robust to collaboration (no non-deterministic output, fewer git conflicts, easier to resolve if they do occur)
   * Handles arbitrary enum strings, attribute and operator names, etc.
   * VisualSoar will write your project in the new format automatically, but will ask you to delete the old project files yourself. Effort was taken to eliminate any chance of data loss or other unwanted surprises.
 * Read/write project and config files atomically
@@ -88,7 +88,7 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 * Account for half-scrolled lines in right-click ([#417](https://github.com/SoarGroup/Soar/issues/417))
 * Fix preference file issues ([#509](https://github.com/SoarGroup/Soar/issues/509))
   * Don't enter infinite loop when reading an incomplete XML file
-  * Read preference XML file atomically
+  * Read/write preference XML file atomically to avoid corruption
 * Fix broken `cd` button on Windows ([#452](https://github.com/SoarGroup/Soar/issues/452))
 * Improved CLI parameter handling for debugger ([#510](https://github.com/SoarGroup/Soar/issues/510))
   * Parameters are now parsed with the `commons-cli` library
