@@ -12,7 +12,7 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
   * `predict-x`
   * `predict-y`
   * `compute-closest-intercept`
-* Scene names (`S1`, `S2`, etc.) used in SVS commands are now case-insensitive, which is consistent with Soar's handling of state names ([#487](https://github.com/SoarGroup/Soar/issues/487))
+* Scene names (`S1`, `S2`, etc.) used in SVS commands are now case-insensitive, which is consistent with Soar's handling of state names ([#426](https://github.com/SoarGroup/Soar/issues/426))
 * Soar now supports LTI aliases. Thanks to Aaron Mininger!
   * This means you can assign permanent aliases to LTIs in commands such as `smem --add { (@test1 ^name test1 ^info @info1) (@info1 ^number 1) }`.
   * These are then referenceable in commands such as `smem --query` and `smem --remove`.
