@@ -12,22 +12,22 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
   * `predict-x`
   * `predict-y`
   * `compute-closest-intercept`
-* Scene names (S1, S2, etc.) used in SVS commands are now case-insensitive, which is consistent with Soar's handling of state names (#487)
+* Scene names (`S1`, `S2`, etc.) used in SVS commands are now case-insensitive, which is consistent with Soar's handling of state names ([#487](https://github.com/SoarGroup/Soar/issues/487))
 * Soar now supports LTI aliases. Thanks to Aaron Mininger!
   * This means you can assign permanent aliases to LTIs in commands such as `smem --add { (@test1 ^name test1 ^info @info1) (@info1 ^number 1) }`.
   * These are then referenceable in commands such as `smem --query` and `smem --remove`.
   * Also printed in the output of `smem --print`, as well as `smem --history`, `smem --export` and `visualize smem`.
-* Java SML bindings: Don't throw exception in static block when Soar lib isn't found (#491)
+* Java SML bindings: Don't throw exception in static block when Soar lib isn't found ([#491](https://github.com/SoarGroup/Soar/issues/491))
   * Previous behavior was to throw an exception at class load time, which would completely prevent an application from loading
 
 ## Bug fixes
 
-* Fix compilation with `--no-scu` (#500). Thanks to James Boggs!
-* Escape empty strings when printing symbols in productions, etc. (#484)
+* Fix compilation with `--no-scu` ([#500](https://github.com/SoarGroup/Soar/issues/500)). Thanks to James Boggs!
+* Escape empty strings when printing symbols in productions, etc. ([#484](https://github.com/SoarGroup/Soar/issues/484))
   * Without the escaping, productions printed this way are not correct Soar syntax and therefore are not sourceable!
-* Don't ignore duplicate justifications (#529)
+* Don't ignore duplicate justifications ([#529](https://github.com/SoarGroup/Soar/issues/529))
   * O-supported justifications that are duplicates can be created when the state changes but returns to its original value again. Previously Soar would ignore duplicate justifications, which would then prevent the expected RHS changes from being applied. Now, the previous justification is removed and the new one is added.
-* `cd` command with no parameters now works as documented in the manual (previous behavior was a simple segfault!) (#494)
+* `cd` command with no parameters now works as documented in the manual (previous behavior was a simple segfault!) ([#494](https://github.com/SoarGroup/Soar/issues/494))
 
 ### Infrastructure improvements
 
@@ -43,7 +43,7 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 
 ### Project Stability Improvements
 
-* Newly designed JSON format for VisualSoar projects combining the datamap, operator hierarchy/project layout, and comment files into one file
+* Newly designed JSON format for VisualSoar projects combining the datamap, operator hierarchy/project layout, and comment files into one file ([#38](https://github.com/SoarGroup/VisualSoar/issues/38), [#5](https://github.com/SoarGroup/VisualSoar/issues/5))
   * Far less likely to be corrupted
   * More human-readable
   * More machine readable (tool developers welcome!)
@@ -61,11 +61,11 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 
 ### Ergonomics and Bug Fixes
 
-* Fix Soar Runtime menu functions (connect to kernel, source agent, etc.)
+* Fix Soar Runtime menu functions (connect to kernel, source agent, etc.) ([#33](https://github.com/SoarGroup/VisualSoar/issues/33))
 * Make comment/uncomment actions inverses of each other and fix issues with extra lines getting commented
 * Display number of feedback messages in the status bar
   * A quick way to see if you are making progress on eliminating datamap errors
-* allow underscores in attribute names
+* allow underscores in attribute names ([#32](https://github.com/SoarGroup/VisualSoar/issues/32))
 * Support ctrl-A "select all" shortcut
 * Fix undo/redo shortcuts
 * Fix website links in help menu, and open the browser automatically
@@ -75,21 +75,22 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 * Add continuous integration (via GitHub actions)
 * Introduce JUnit for unit testing
 * Build native binaries in CI via jpackage
-* Update to Java 11, which is already required by other Soar tools
+* Update to Java 11, which is already required by other Soar tools ([#29](https://github.com/SoarGroup/VisualSoar/issues/29))
 
 ## Debugger
 
-* Update links in help menu and open them in a browser automatically (#482)
+* Update links in help menu and open them in a browser automatically ([#482](https://github.com/SoarGroup/Soar/issues/482))
 * Add new "Browse settings files..." option in file menu
 * Support select-all shortcut in all text windows via cmd/ctrl-a
 * Copy/paste fixes
   * Paste directly into command box instead of the output window
   * Fix issue causing paste of 'c' or 'v' into the command box upon copy/paste
-* Account for half-scrolled lines in right-click (#417)
-* Fix infinite loop issue caused by incomplete XML file (#509)
-* Atomic XML file writing (#509)
-* Fix broken `cd` button on Windows (#452)
-* Improved CLI parameter handling for debugger (#510)
+* Account for half-scrolled lines in right-click ([#417](https://github.com/SoarGroup/Soar/issues/417))
+* Fix preference file issues ([#509](https://github.com/SoarGroup/Soar/issues/509))
+  * Don't enter infinite loop when reading an incomplete XML file
+  * Read preference XML file atomically
+* Fix broken `cd` button on Windows ([#452](https://github.com/SoarGroup/Soar/issues/452))
+* Improved CLI parameter handling for debugger ([#510](https://github.com/SoarGroup/Soar/issues/510))
   * Parameters are now parsed with the `commons-cli` library
   * `--help` and incorrect parameters now show CLI parameter documentation, so users don't have to go to the website
 
