@@ -17,7 +17,7 @@ jobs:
         run: make pull
 
       - name: upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SoarManual.pdf
           path: pdf/SoarManual.pdf
