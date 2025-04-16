@@ -4,11 +4,7 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 
 ## New Features
 
-* New special-purpose RHS functions for computing headings and range for navigation domains:
-  * `round-off-heading`
-  * `round-off`
-  * `compute-heading`
-  * `compute-range`
+* New special-purpose RHS functions for working with headings and range in navigation domains:
   * `predict-x`
   * `predict-y`
   * `compute-closest-intercept`
@@ -16,7 +12,7 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 * Soar now supports LTI aliases. Thanks to Aaron Mininger!
   * This means you can assign permanent aliases to LTIs in commands such as `smem --add { (@test1 ^name test1 ^info @info1) (@info1 ^number 1) }`.
   * These are then referenceable in commands such as `smem --query` and `smem --remove`.
-  * Also printed in the output of `smem --print`, as well as `smem --history`, `smem --export` and `visualize smem`.
+  * Also printed in the output of `print`, as well as `smem --history`, `smem --export` and `visualize smem`.
 * Java SML bindings: Don't throw exception in static block when Soar lib isn't found ([#491](https://github.com/SoarGroup/Soar/issues/491))
   * Previous behavior was to throw an exception at class load time, which would completely prevent an application from loading
 
