@@ -55,6 +55,12 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
   * Fixed issues that caused the undo stack to be unexpectedly cleared
 * Improve close/save action workflows to reduce surprises (such as closing and saving everything without confirmation!)
 
+### CLI Support
+
+VisualSoar can now run project datamap validation from the command line by passing the arguments `--check productionsAgainstDatamap --project <path>`, where `<path>` is the path to your project `.vsa` or `.vsa.json`.
+
+There is a also a [new GitHub Action](https://github.com/marketplace/actions/soar-datamap-validation) to enable you to check your projects automatically when you push to GitHub.
+
 ### Ergonomics and Bug Fixes
 
 * Fix Soar Runtime menu functions (connect to kernel, source agent, etc.) ([#33](https://github.com/SoarGroup/VisualSoar/issues/33))
@@ -65,6 +71,13 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 * Support ctrl-A "select all" shortcut
 * Fix undo/redo shortcuts
 * Fix website links in help menu, and open the browser automatically
+* Improve searchbox and related ergonomics (#57)
+  * Wrap search by default
+  * Don't close the searchbox after searching
+  * Populate the searchbox with selected text (for the editor view)
+  * Fix shortcuts for searchbox and many other commands
+  * Use command on Mac instead of ctrl for all shortcuts
+  * Allow closing any dialog box with the escape key
 
 ### Infrastructure
 
