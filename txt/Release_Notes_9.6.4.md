@@ -5,9 +5,10 @@ This release of Soar includes new features and bug fixes for Soar as well as usa
 ## New Features
 
 * New special-purpose RHS functions for working with headings and range in navigation domains:
-  * `predict-x`
-  * `predict-y`
-  * `compute-closest-intercept`
+  * `extrapolate-x-position`
+  * `extrapolate-y-position`
+  * `select-point-closest-to-vector`
+  * `haversine`
 * Scene names (`S1`, `S2`, etc.) used in SVS commands are now case-insensitive, which is consistent with Soar's handling of state names ([#426](https://github.com/SoarGroup/Soar/issues/426))
 * Soar now supports LTI aliases. Thanks to Aaron Mininger!
   * This means you can assign permanent aliases to LTIs in commands such as `smem --add { (@test1 ^name test1 ^info @info1) (@info1 ^number 1) }`.
@@ -78,6 +79,15 @@ There is a also a [new GitHub Action](https://github.com/marketplace/actions/soa
   * Fix shortcuts for searchbox and many other commands
   * Use command on Mac instead of ctrl for all shortcuts
   * Allow closing any dialog box with the escape key
+* New shortcut: ctrl/cmd-, to open preferences
+* New preferences:
+  * Save project when datamap check passes
+  * Run datamap check after saving project
+* ctrl/cmd-= and ctrl/cmd-- to increase/decrease font size
+* Responsively re-tile all frames when main window is resized
+* Better resizing of feedback list when the main window is resized
+* Improved auto-complete UI
+* Auto-complete for variables that match their attribute name
 
 ### Infrastructure
 
