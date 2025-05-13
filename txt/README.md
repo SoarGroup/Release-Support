@@ -1,20 +1,17 @@
 =========================
-=    Soar 9.6.3 README  =
-=      June  2024    =
+=    Soar 9.6.4 README  =
+=        May 2025       =
 =========================
 
-Welcome to Soar!  Soar 9.6.3 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements.
+Welcome to Soar!  Soar 9.6.4 is the current, stable version of Soar. It is a maintenance release, meaning no major features were added, but it does still represent a lot of work in the form of bug fixes, code modernization, and usability improvements.
 
-* VisualSoar has improved support for version control and collaboration, including datamap import, opening projects read-only, and reduced commit noise.
+* VisualSoar has improved ergonomics, stability and data integrity. It now uses an open project format and supports datamap checking via CI.
 
-* The debugger has been made more stable for dynamic environments that add and remove many agents.
+* The debugger has several important bugs fixed, including issues with copy/paste and misaligned right-click targets.
 
-* Chunking now creates singletons by default. This should be a better default for most projects, but it can
-be disabled with `chunking automatically-create-singletons off`.
+* Semantic memory now supports LTI aliases, which means you can assign permanent aliases to LTIs in commands such as `smem --add { (@test1 ^name test1 ^info @info1) (@info1 ^number 1) }`. These are then referenceable in commands such as `smem --query` and `smem --remove`.
 
-* SVS can be disabled/enabled for just substates.
-
-* Linux users: Soar was compiled on the recent Ubuntu 24.04, so you may need to update your system or libstdc++ to run the included binaries (or else build from source yourself).
+* Duplicate justifications with o-support now correctly update working memory. This is done by removing the previous justification and adding the new one.
 
 The full release notes can be found in their own file.
 
@@ -22,7 +19,7 @@ The full release notes can be found in their own file.
 Official Soar Manual
 ====================
 
-The 9.6.3 edition of the Soar Manual is included here for your reference. You can also view it online at:
+The 9.6.4 edition of the Soar Manual is included here for your reference. You can also view it online at:
 
 https://soar.eecs.umich.edu/soar_manual/
 
