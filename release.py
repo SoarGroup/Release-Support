@@ -287,7 +287,7 @@ def upload_to_github(step: Step):
             f"Step {step.value}: Create a new release on GitHub: https://github.com/SoarGroup/Soar/releases/new. "
             f"Type 'releases/{SOAR_RELEASE_VERSION} into the tag field and select 'Create new tag'."
             "Copy the basic change notes from txt/README.md to the description and upload "
-            f"Soar_{SOAR_RELEASE_VERSION}-Multiplatform.zip and all of the documentation PDFs."
+            f"Soar_{SOAR_RELEASE_VERSION}-Multiplatform.zip, the DEB package, and all of the documentation PDFs."
             "Leave 'Set as a pre-release' *unchecked*, 'Set as the latest release' *checked* and hit 'Publish release'."
         )
     )
