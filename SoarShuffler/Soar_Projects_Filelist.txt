@@ -57,6 +57,10 @@ SoarSuite_$VERSION
   $COMPILE_DIR/java/soar-debugger.jar=bin/java
   $COMPILE_DIR/java/soar-smljava.jar=bin/java
   $COMPILE_DIR/java/swtgraphics2d.jar=bin/java
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/lib/commons-cli-1.9.0.jar=bin/java
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/lib/jackson-annotations-2.18.2.jar=bin/java
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/lib/jackson-core-2.18.2.jar=bin/java
+  $SOAR_GROUP_REPOS_HOME/VisualSoar/lib/jackson-databind-2.18.2.jar=bin/java
   $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/commons-logging-1.1.1.jar=bin/java
   $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/log4j-1.2.15.jar=bin/java
   $SOAR_GROUP_REPOS_HOME/Release-Support/SoarShuffler/jars/stopwatch-0.4-with-deps.jar=bin/java
