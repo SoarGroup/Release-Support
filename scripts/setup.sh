@@ -35,12 +35,22 @@ macOS_quarantine_fix () {
   done
 }
 
+detect_architecture() {
+  # Detect if running under Rosetta
+  if [[ "$(sysctl -n sysctl.proc_translated 2>/dev/null)" == "1" ]]; then
+    echo "x86_64" # Rosetta forces x86_64
+  else
+    uname -m # Native architecture
+  fi
+}
+
 if [ ! -e "$SOAR_HOME/pkgIndex.tcl" ]; then
   unamestr=$(uname)
   if [[ "$unamestr" == 'Linux' ]]; then
       linux64_setup
   elif [[ "$unamestr" == 'Darwin' ]]; then
-    if [ "$(uname -m)" == "arm64" ]; then
+    arch=$(detect_architecture)
+    if [ "$arch" == "arm64" ]; then
       echo_yellow 'First time initialization of Soar for Mac OSX ARM64...'
       mv "$SOAR_HOME/mac_ARM64/swt.jar" "$SOAR_HOME/java/"
       mv "$SOAR_HOME/mac_ARM64"/* "$SOAR_HOME/"
