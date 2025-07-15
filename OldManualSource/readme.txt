@@ -1,3 +1,7 @@
+This is the OLD LaTeX source for the Soar Manual. We use the SoarGroup.github.io repository
+to build the manual now, so this source is no longer maintained. It's only here for reference
+in case there's something we need to migrate to the new source, as well as for historical purposes.
+
 Instructions on compiling the Soar Manual:
 
 Prerequisites:

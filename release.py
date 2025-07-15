@@ -73,15 +73,6 @@ def export_tutorial(step: Step):
 
 
 def bump_version(step: Step):
-    # TODO: manual source will be unified with website version in the future.
-    print(
-        (
-            f"Step {step.value}: Update version number in ManualSource/manual.tex (look for 'SoarVersionRevision'). "
-            "Then push the changes so that the manual is rebuilt. "
-        )
-    )
-    step.proceed()
-
     print(
         (
             f"Step {step.value}: Update version numbers in Soar everywhere (see example_version_bump.patch). "
@@ -156,8 +147,10 @@ def clone_repos(step: Step):
 def manual_pdf(step: Step):
     print(
         (
-            f"Step {step.value}: Grab the latest SoarManual build from this "
-            "repository's GH Actions artifacts and place it in pdf/."
+            f"Step {step.value}: Grab the latest SoarManual build from the website's "
+            "build_pdf action "
+            "(https://github.com/SoarGroup/SoarGroup.github.io/actions/workflows/build_pdf.yml)"
+            "and place it in pdf/ in this repository."
         )
     )
     step.proceed()
