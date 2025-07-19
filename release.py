@@ -75,7 +75,8 @@ def export_tutorial(step: Step):
 def bump_version(step: Step):
     print(
         (
-            f"Step {step.value}: Update version numbers in Soar everywhere (see example_version_bump.patch). "
+            f"Step {step.value}: Update version numbers in Soar everywhere. See example_version_bump.patch, or "
+            "for an internal release (.a1, .a2, etc.) see example_internal_version_update.patch. "
             "Then push the changes so that Soar is rebuilt with the correct version info."
         )
     )
@@ -143,14 +144,22 @@ def clone_repos(step: Step):
 
     step.proceed(check_function=check)
 
+def update_manual_version(step: Step):
+    print(
+        (
+            f"Step {step.value}: Update the manual version in the website repository: https://github.com/SoarGroup/SoarGroup.github.io, under docs/soar_manual/template.tex. "
+            "Push your changes and allow the PDF build to complete."
+        )
+    )
+    step.proceed()
 
 def manual_pdf(step: Step):
     print(
         (
             f"Step {step.value}: Grab the latest SoarManual build from the website's "
             "build_pdf action "
-            "(https://github.com/SoarGroup/SoarGroup.github.io/actions/workflows/build_pdf.yml)"
-            "and place it in pdf/ in this repository."
+            "(https://github.com/SoarGroup/SoarGroup.github.io/actions/workflows/build_pdf.yml) "
+            "and place it in pdf/SoarManual.pdf in this repository."
         )
     )
     step.proceed()
@@ -226,9 +235,12 @@ def gather_jars(step: Step):
         "commons-logging-1.1.1.jar",
         "log4j-1.2.15.jar",
         "stopwatch-0.4-with-deps.jar",
+        "jackson-annotations-2.18.2.jar",
+        "jackson-core-2.18.2.jar",
+        "jackson-databind-2.18.2.jar",
     ]
     print(
-        f"Step {step.value}: Gather the following jar's under SoarShuffler/jars:\n"
+        f"Step {step.value}: Gather the following JARs from the various Java projects and place them under SoarShuffler/jars. The jackson JARs specifically are in the VisualSoar repo.\n"
         + "\n".join(map(lambda j: f" - {j}", required_jars))
     )
 
@@ -244,6 +256,7 @@ def run_soar_shuffler(step: Step):
         (
             f"Step {step.value}: Run SoarShuffler:\n"
             " - cd SoarShuffle\n"
+            " - Be sure that the env vars we checked in step 1) are still correctly loaded.\n"
             " - python3 soar_shuffler.py Soar_Projects_Filelist.txt\n"
             "The script will tell you if it can't find any files that it needs. You'll probably need to run it "
             "a couple of times to hunt down all of the files you need. You'll probably want to `rm -rf SoarSuite` "
@@ -325,6 +338,7 @@ def main(args):
     bump_version(step_counter)
     release_notes(step_counter)
     clone_repos(step_counter)
+    update_manual_version(step_counter)
     manual_pdf(step_counter)
     download_builds(step_counter)
     build_visual_soar(step_counter)
