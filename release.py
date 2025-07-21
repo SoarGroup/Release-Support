@@ -291,13 +291,24 @@ def upload_to_github(step: Step):
     print(
         (
             f"Step {step.value}: Create a new release on GitHub: https://github.com/SoarGroup/Soar/releases/new. "
-            f"Type 'releases/{SOAR_RELEASE_VERSION} into the tag field and select 'Create new tag'."
+            f"Type 'releases/{SOAR_RELEASE_VERSION} into the tag field and select 'Create new tag'. "
             "Copy the basic change notes from txt/README.md to the description and upload "
-            f"Soar_{SOAR_RELEASE_VERSION}-Multiplatform.zip, the DEB package, and all of the documentation PDFs."
+            f"Soar_{SOAR_RELEASE_VERSION}-Multiplatform.zip, and all of the documentation PDFs. "
             "Leave 'Set as a pre-release' *unchecked*, 'Set as the latest release' *checked* and hit 'Publish release'."
         )
     )
     step.proceed()
+
+def ensure_pypi_release(step: Step):
+    print(
+        (
+            f"Step {step.value}: Check that the release triggered the pypi publication workflow (GH Action), "
+            "and that it finished successfully. If there are errors, you can fix the issue in the repo code "
+            "and re-trigger the workflow from the Actions UI on GitHub."
+        )
+    )
+    step.proceed()
+
 
 
 def commit_downloads(step: Step):
@@ -317,6 +328,16 @@ def update_website(step: Step):
             f"Step {step.value}: Update the website with the new release information: https://github.com/SoarGroup/SoarGroup.github.io. "
             "This includes adding a release announcement and updating soar_version (which updates download links for the manual and tutorial), "
             "as well as updating the release notes on the 'latest' download page."
+        )
+    )
+    step.proceed()
+
+
+def announce_on_mailing_list(step: Step):
+    print(
+        (
+            f"Step {step.value}: Announce the release on the Soar mailing list: soar-cognitive-architecture@googlegroups.com. "
+            "Include a link to the release notes and a brief description of the changes."
         )
     )
     step.proceed()
@@ -347,9 +368,11 @@ def main(args):
     run_soar_shuffler(step_counter)
     inspect_release(step_counter)
     upload_to_github(step_counter)
+    ensure_pypi_release(step_counter)
     commit_downloads(step_counter)
-    git_tag(step_counter)
     update_website(step_counter)
+    announce_on_mailing_list(step_counter)
+    git_tag(step_counter)
 
     print("Release complete! 🎊🥳🥂, 😪🛌😴")
 
