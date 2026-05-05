@@ -11,6 +11,7 @@ THISDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 FLAG=""
 export SOAR_HOME="$THISDIR/bin"
 export DYLD_LIBRARY_PATH="$SOAR_HOME"
+export LD_LIBRARY_PATH="$SOAR_HOME"
 
 "$THISDIR/setup.sh"
 
