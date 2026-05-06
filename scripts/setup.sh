@@ -25,7 +25,7 @@ linux64_setup () {
 
 macOS_quarantine_fix () {
   echo "macOS setup: removing quarantine attributes from Soar binaries..."
-  for file in "soar" "libSoar.dylib" "libTcl_sml_ClientInterface.dylib" "libtclsoarlib.dylib" "_Python_sml_ClientInterface.so" "libCSharp_sml_ClientInterface.dylib" "sml_csharp.dll" "libJava_sml_ClientInterface.jnilib"; do
+  for file in "soar" "libSoar.dylib" "libTcl_sml_ClientInterface.dylib" "libtclsoarlib.dylib" "_Python_sml_ClientInterface.abi3.so" "libCSharp_sml_ClientInterface.so" "sml_csharp.dll" "libJava_sml_ClientInterface.jnilib"; do
     echo "  Removing quarantine attributes from $file..."
     if [ ! -f "$THISDIR/bin/$file" ]; then
       echo "Error: could not unquarantine '$THISDIR/bin/$file' because it does not exist."
